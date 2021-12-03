@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React from "react";
+import reactDom from "react-dom";
+import Header from "./components/header";
+import Footer from "./components/footer";
+import Hero from "./components/hero";
+import Fullfill from "./components/fullfill";
+import Standout from './components/standout'
+import Customize from "./components/customize";
+import Connect from "./components/connect";
+import Bulk from "./components/bulk";
+import Hustler from "./components/hustler";
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Header/>
+    <Hero/>
+    <Fullfill/>
+    <Standout/>
+    <Customize/>
+    <Bulk/>
+    <Connect/>
+    <Hustler/>
+    <Footer/>
+    </>
   );
 }
 
