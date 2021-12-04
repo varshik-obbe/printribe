@@ -1,17 +1,18 @@
+import { faFacebook, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-import { faFacebook, faInstagram, faTwitter, faYoutube } from "@fortawesome/free-brands-svg-icons";
 
 function Footer() {
   return (
     <>
       <div className="container">
         <div className="row">
-          <div className="col-lg-8">
+          <div className="col-sm-8 col-12 text-center text-sm-start">
             <p className="h2 text-dark text-uppercase px-5">Printribe</p>
           </div>
-          <div className="col-lg-4">
-            <div className="d-flex">
+          <div className="col-sm-4 col-12">
+            <div className="d-flex justify-content-center">
               <div className="p-2 h3">
                 <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
               </div>
@@ -104,7 +105,7 @@ function Footer() {
 
       </div>
       <div className="container-fluid text-center" style={{ background: "rgb(31 100 159)" }}>
-        <p className="text-light p-3">
+        <p className="text-light p-3 m-0">
           Copyright Ⓒ 2021 Printribe. All rights reserved.</p>
       </div>
     </>

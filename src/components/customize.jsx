@@ -7,13 +7,16 @@ function Customize() {
     return (
         <>
             <div className="container mt-5 mb-5">
-                <div className="h2 fw-bold">
-
+                <div className="h2 fw-bold text-center mb-3">
+                Customize and sell premium products
                 </div>
+                <p className="h5 mb-5 text-center">
+                Print and stitch on demand with your brand name
+                        </p>
                 <div className="row">
-                    <div className="col-lg-3 col-md-6 col-sm-12">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1} alt="img1" />
+                    <div className="col-lg-3 col-sm-6">
+                        <div className="card" style={{ maxWidth: "100%" }}>
+                            <img className="card-img-top" src={img1} alt="img1" style={{maxHeight:"50vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -22,7 +25,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img2} />
                             <div className="card-body">
@@ -33,7 +36,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img3} />
                             <div className="card-body">
@@ -44,7 +47,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img1} />
                             <div className="card-body">
@@ -55,7 +58,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img2} alt="img1" />
                             <div className="card-body">
@@ -66,7 +69,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img1} />
                             <div className="card-body">
@@ -77,7 +80,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img3} />
                             <div className="card-body">
@@ -88,7 +91,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-md-6 col-sm-12">
+                    <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img1} />
                             <div className="card-body">

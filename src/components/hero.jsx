@@ -1,5 +1,6 @@
 import React from 'react'
 import img from '../assets/hero.PNG'
+
 function Hero() {
     return (
         <>
@@ -22,8 +23,8 @@ function Hero() {
                         </div>
                         <p>No sign up fee. No minimums. Fast fulfillment.</p>
                     </div>
-                    <div className="col-lg-6 col-md-12">
-                        <img src={img}></img>
+                    <div className="col-lg-6 col-md-12 text-center">
+                        <img src={img} style={{ maxWidth: "100%", maxHeight:"60vh" }}></img>
                     </div>
                 </div>
 
