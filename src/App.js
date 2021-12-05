@@ -1,26 +1,24 @@
 import React from "react";
 import reactDom from "react-dom";
-import Header from "./components/header";
-import Footer from "./components/footer";
-import Hero from "./components/hero";
-import Fullfill from "./components/fullfill";
-import Standout from './components/standout'
-import Customize from "./components/customize";
-import Connect from "./components/connect";
-import Bulk from "./components/bulk";
-import Hustler from "./components/hustler";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import Homelayout from "./pages/homelayout";
+import Productataloglayout from "./pages/productcataloglayout";
 function App() {
   return (
     <>
-    <Header/>
-    <Hero/>
-    <Fullfill/>
-    <Standout/>
-    <Customize/>
-    <Bulk/>
-    <Connect/>
-    <Hustler/>
-    <Footer/>
+      {/*  */}
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Homelayout/>}/>
+          <Route exact path="/product-catalog" element={<Productataloglayout/>}/>
+          <Route exact path="/product-catalog" element={<Productataloglayout/>}/>
+        </Routes>
+      </Router>
     </>
   );
 }
