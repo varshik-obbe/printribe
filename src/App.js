@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Homelayout from "./pages/homelayout";
 import Productataloglayout from "./pages/productcataloglayout";
+import Productpage from "./pages/productpage";
 function App() {
   return (
     <>
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" element={<Homelayout/>}/>
           <Route exact path="/product-catalog" element={<Productataloglayout/>}/>
           <Route exact path="/product-catalog" element={<Productataloglayout/>}/>
+          <Route exact path="/product-page" element={<Productpage/>}/>
         </Routes>
       </Router>
     </>

@@ -9,10 +9,11 @@ import Connect from "../components/connect";
 import Bulk from "../components/bulk";
 import Hustler from "../components/hustler";
 import Footer from '../components/footer'
+import Layout from '../components/layout'
 function Homelayout() {
     return (
         <>
-            <Header />
+        <Layout>
             <Navbar />
             <Hero />
             <Fullfill />
@@ -21,7 +22,7 @@ function Homelayout() {
             <Bulk />
             <Connect />
             <Hustler />
-            <Footer />
+            </Layout>
         </>
     )
 }
