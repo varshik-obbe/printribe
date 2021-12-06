@@ -6,6 +6,7 @@ import Custom from '../components/custom'
 import Catalog from '../components/catalog'
 import Join from '../components/join'
 import Layout from '../components/layout'
+import Catagories from '../components/catagories'
 function Productataloglayout() {
     return (
         <>
@@ -14,10 +15,10 @@ function Productataloglayout() {
             <div className="row">
             <Navbar />
             <Custom />
-                <div className="col-lg-3 border border-danger">
-
+                <div className="col-lg-2">
+                    <Catagories/>
                 </div>
-                <div className="col-lg-9 ">
+                <div className="col-lg-10 ">
                     <Catalog />
                 </div>
                 <Join />
