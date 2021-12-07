@@ -1,0 +1,6 @@
+.catalogcontainer{
+    cursor: pointer;
+}
+.catalogcontainer:hover{
+    box-shadow: 2px 4px 4px 2px rgba(176, 176, 192, 0.2);
+}

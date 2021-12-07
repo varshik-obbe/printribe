@@ -1,5 +1,4 @@
 import React from 'react'
-import styles from '../styles/fulfill.module.css'
 import img1 from '../assets/fulfill1.PNG'
 import img2 from '../assets/fullfill2.PNG'
 import img3 from '../assets/fullfill3.PNG'
