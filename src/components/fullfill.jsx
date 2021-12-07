@@ -1,6 +1,8 @@
 import React from 'react'
 import styles from '../styles/fulfill.module.css'
-import img from '../assets/tshirtblue.PNG'
+import img1 from '../assets/fulfill1.PNG'
+import img2 from '../assets/fullfill2.PNG'
+import img3 from '../assets/fullfill3.PNG'
 function Fullfill() {
     return (
         <>
@@ -10,7 +12,9 @@ function Fullfill() {
                     <div className="row">
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
                             <div className=" p-3" style={{ width: "100%" }}>
-                                <img className="card-img-top" src={img} />
+                                <div className=" p-3">
+                                <img className="card-img-top img-fluid" src={img1} style={{height:"200px"}}/>
+                                </div>
                                 <div className="card-body text-center">
                                     <p className="card-text fw-bold">Create custom products</p>
                                     <p>Use design tribe to create designs and add them to a wide range of products</p>
@@ -19,7 +23,9 @@ function Fullfill() {
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
                             <div className=" p-3" style={{ width: "100%" }}>
-                                <img className="card-img-top" src={img} />
+                            <div className=" p-3">
+                                <img className="card-img-top img-fluid" src={img2} style={{height:"200px"}}/>
+                                </div>
                                 <div className="card-body text-center">
                                     <p className="card-text fw-bold">Sell on your own terms</p>
                                     <p>Choose the products, market your designs, set price and make a sale</p>
@@ -28,7 +34,9 @@ function Fullfill() {
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
                             <div className="p-3" style={{ width: "100%" }}>
-                                <img className="card-img-top" src={img} />
+                            <div className=" p-3" >
+                                <img className="card-img-top img-fluid" src={img3} style={{height:"200px"}}/>
+                                </div>
                                 <div className="card-body text-center">
                                     <p className="card-text fw-bold">We handle the fulfillment</p>
                                     <p>We take care of printing and shipping the order directly to your customer</p>
@@ -38,6 +46,7 @@ function Fullfill() {
                     </div>
                 </div>
             </div>
+            
         </>
     )
 }

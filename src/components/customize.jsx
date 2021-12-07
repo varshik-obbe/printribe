@@ -16,7 +16,7 @@ function Customize() {
                 <div className="row">
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ maxWidth: "100%" }}>
-                            <img className="card-img-top" src={img1} alt="img1" style={{maxHeight:"50vh", maxWidth:"100%" }}/>
+                            <img className="card-img-top" src={img1} alt="img1" style={{height:"37vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -27,7 +27,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img2} />
+                            <img className="card-img-top" src={img2}  style={{height:"37vh", maxWidth:"100%" }} />
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -38,7 +38,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img3} />
+                            <img className="card-img-top" src={img3}  style={{height:"37vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -49,7 +49,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1} />
+                            <img className="card-img-top" src={img1}  style={{height:"37vh", maxWidth:"100%" }} />
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -60,7 +60,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img2} alt="img1" />
+                            <img className="card-img-top" src={img2} alt="img1"  style={{height:"37vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -71,7 +71,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1} />
+                            <img className="card-img-top" src={img1}  style={{height:"37vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -82,7 +82,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img3} />
+                            <img className="card-img-top" src={img3}  style={{height:"37vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
@@ -93,7 +93,7 @@ function Customize() {
                     </div>
                     <div className="col-lg-3 col-sm-6">
                         <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1} />
+                            <img className="card-img-top" src={img1}  style={{height:"37vh", maxWidth:"100%" }}/>
                             <div className="card-body">
                                 <p className="card-text fw-bold">T-shirts</p>
                                 <p>
