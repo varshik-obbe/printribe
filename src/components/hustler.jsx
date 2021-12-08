@@ -7,7 +7,7 @@ function Hustler() {
             <div className="container mt-5 mb-5">
                 <div className="row py-3 px-sm-5">
                     <div className="col-lg-6 col-md-6 pe-sm-0">
-                        <div className="h-100 w-100 bg-dark" style={{ borderRadius: "30px", borderBottomRightRadius: "0" }}>
+                        <div className="w-100 bg-dark" style={{ borderRadius: "30px", borderBottomRightRadius: "0" }}>
                             <div className="p-3 ">
                                 <p className="h2 fw-bold mt-3 mb-3 text-light">Start Your Side Hustle Today</p>
                                 <p className="text-light">Pay only when you make a sale</p>
@@ -23,7 +23,7 @@ function Hustler() {
                                             <p className={styles.text}>You pay for its production</p>
                                         </div>
                                         <div className="col-3">
-                                            <p className={styles.text}>₹499</p>
+                                            <p className={styles.text}>₹299</p>
                                         </div>
                                     </div>
                                     <div className={styles.line}/>
@@ -44,7 +44,7 @@ function Hustler() {
                         </div>
                     </div>
                     <div className="col-lg-6 col-md-6 text-start ps-sm-0 ">
-                        <img src={hustler} className={styles.hustler} style={{  }} />
+                        <img src={hustler} className={styles.hustler} style={{}} />
                     </div>
                 </div>
             </div>

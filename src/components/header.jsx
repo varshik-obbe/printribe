@@ -16,12 +16,12 @@ function Header() {
                         <img src={logo} alt="" style={{ height: "35px", maxWidth: "100%" }} />
 
                     </div>
-                    <div className="col-lg-5 col-10 px-3 py-2">
+                    <div className="col-lg-5 col-8 px-3 py-2">
                         <input className="form-control" placeholder="search"></input>
                     </div>
-                    <div className="col-lg-3 col-2">
+                    <div className="col-lg-3 col-4">
                         
-                        <Navbar expand="lg">
+                        <Navbar expand="lg" className="">
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                                 <Nav className="mx-auto justify-content-evenly w-100">

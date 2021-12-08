@@ -21,10 +21,10 @@ function Connect() {
                         <img src={img3} className={styles.img3}/>
                     </div>
                     <div className={styles.img4pos}>
-                        <img src={img4} className={styles.img1}/>
+                        <img src={img4} className={styles.img4}/>
                     </div>
                     <div className={styles.img5pos}>
-                        <img src={img5} className={styles.img1}/>
+                        <img src={img5} className={styles.img5}/>
                     </div>
 
                 </div>
