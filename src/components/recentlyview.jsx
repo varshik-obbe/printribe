@@ -14,10 +14,11 @@ function Recentlyview() {
                                     Unisex Round Neck Cotton T-shirt</p>
                                 <p>₹175.00</p>
                                 <div className="d-flex mb-3">
-                                    <div className="border border-dark bg-danger mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
-                                    <div className="border border-dark bg-warning mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
-                                    <div className="border border-dark bg-black mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
-                                    <div className="border border-dark bg-light mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
+                                <div className="border  bg-black mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-light mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-danger mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-warning mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-info mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                                     <p>+14 colors</p>
                                 </div>
                                 <p>XS - XXL</p>
@@ -32,10 +33,11 @@ function Recentlyview() {
                                     Unisex Round Neck Cotton T-shirt</p>
                                 <p>₹175.00</p>
                                 <div className="d-flex mb-3">
-                                    <div className="border border-dark bg-danger mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
-                                    <div className="border border-dark bg-warning mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
-                                    <div className="border border-dark bg-black mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
-                                    <div className="border border-dark bg-light mx-1 " style={{ height: "2.4vh", width: "1.4vw" }}></div>
+                                <div className="border  bg-black mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-light mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-danger mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-warning mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
+                            <div className="border  bg-info mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                                     <p>+14 colors</p>
                                 </div>
                                 <p>XS - XXL</p>

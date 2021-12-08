@@ -6,7 +6,7 @@ function Catalog() {
     return (
         <>
             <div className={`container `}>
-                <div className="row mt-3 mb-3">
+                <div className="row mt-3 mb-3 mx-0">
                     <div className="col-lg-4 col-md-6 col-sm-12 p-2">
                         <div className={`card ${styles.catalogcontainer}`} >
                             <img class="card-img-top" src={img} alt="mensclothing"/>

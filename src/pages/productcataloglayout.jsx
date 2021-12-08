@@ -12,7 +12,7 @@ function Productataloglayout() {
         <>
             <Layout>
             
-            <div className="row">
+            <div className="row mx-0">
             <Navbar />
             <Custom />
                 <div className="col-lg-2">

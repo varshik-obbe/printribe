@@ -2,6 +2,7 @@ import React from 'react'
 import img1 from '../assets/fulfill1.PNG'
 import img2 from '../assets/fullfill2.PNG'
 import img3 from '../assets/fullfill3.PNG'
+import styles from '../styles/home.module.css'
 function Fullfill() {
     return (
         <>
@@ -9,10 +10,10 @@ function Fullfill() {
                 <p className="mt-3 mb-3 h2 text-center fw-bold">How you can fulfill your products using Printribe</p>
                 <div className="row">
                     <div className="row">
-                        <div className="col-lg-4 col-md-4 col-sm-12 p-3">
-                            <div className=" p-3" style={{ width: "100%" }}>
-                                <div className=" p-3">
-                                <img className="card-img-top img-fluid" src={img1} style={{height:"200px"}}/>
+                        <div className="col-lg-4 col-md-4 col-sm-12 ">
+                            <div className={styles.imgcontainer} >
+                                <div className=" p-3" style={{height:"55%"}}>
+                                <img className={`card-img-top img-fluid  ${styles.img}`} src={img1}/>
                                 </div>
                                 <div className="card-body text-center">
                                     <p className="card-text fw-bold">Create custom products</p>
@@ -21,9 +22,9 @@ function Fullfill() {
                             </div>
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
-                            <div className=" p-3" style={{ width: "100%" }}>
-                            <div className=" p-3">
-                                <img className="card-img-top img-fluid" src={img2} style={{height:"200px"}}/>
+                            <div className={styles.imgcontainer} >
+                            <div className=" p-3" style={{height:"55%"}}>
+                                <img className={`card-img-top img-fluid  ${styles.img}`} src={img2}/>
                                 </div>
                                 <div className="card-body text-center">
                                     <p className="card-text fw-bold">Sell on your own terms</p>
@@ -32,9 +33,9 @@ function Fullfill() {
                             </div>
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
-                            <div className="p-3" style={{ width: "100%" }}>
-                            <div className=" p-3" >
-                                <img className="card-img-top img-fluid" src={img3} style={{height:"200px"}}/>
+                            <div className={styles.imgcontainer} >
+                            <div className=" p-3"style={{height:"55%"}} >
+                                <img className={`card-img-top img-fluid  ${styles.img}`} src={img3}/>
                                 </div>
                                 <div className="card-body text-center">
                                     <p className="card-text fw-bold">We handle the fulfillment</p>
