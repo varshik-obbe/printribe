@@ -6,8 +6,8 @@ function Catagories() {
         <>
 
             <Accordion>
-                <Accordion.Item eventKey="0">
-                    <Accordion.Header>Men's clothing</Accordion.Header>
+                <Accordion.Item eventKey="0" className={styles.accordin}>
+                    <Accordion.Header><span className="fw-bold">Men's clothing</span></Accordion.Header>
                     <Accordion.Body>
                         Lorem ipsum
                     </Accordion.Body>
@@ -19,8 +19,8 @@ function Catagories() {
                         Lorem ipsum
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="1">
-                    <Accordion.Header>Women's clothing</Accordion.Header>
+                <Accordion.Item eventKey="1" className={styles.accordin}>
+                    <Accordion.Header><span className="fw-bold">Women's clothing</span></Accordion.Header>
                     <Accordion.Body>
                         Lorem ipsum
                     </Accordion.Body>
@@ -30,8 +30,8 @@ function Catagories() {
                         Lorem ipsum
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="2">
-                    <Accordion.Header>Accessories</Accordion.Header>
+                <Accordion.Item eventKey="2" className={styles.accordin}>
+                    <Accordion.Header><span className="fw-bold">Accessories</span></Accordion.Header>
                     <Accordion.Body>
                         Lorem ipsum
                     </Accordion.Body>
@@ -43,8 +43,8 @@ function Catagories() {
                         Lorem ipsum
                     </Accordion.Body>
                 </Accordion.Item>
-                <Accordion.Item eventKey="3">
-                    <Accordion.Header>Home & living</Accordion.Header>
+                <Accordion.Item eventKey="3" className={styles.accordin}>
+                    <Accordion.Header><span className="fw-bold">Home & living</span></Accordion.Header>
                    <Accordion.Body>Mugs</Accordion.Body>
                    <Accordion.Body>Water Bottles</Accordion.Body>
                    <Accordion.Body>Mouse pads</Accordion.Body>

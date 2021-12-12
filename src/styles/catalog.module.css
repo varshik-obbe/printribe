@@ -4,3 +4,7 @@
 .catalogcontainer:hover{
     box-shadow: 2px 4px 4px 2px rgba(176, 176, 192, 0.2);
 }
+.accordin{
+    border: none !important;
+    border-bottom: 1px solid black !important;
+}
