@@ -2,14 +2,17 @@ import { faFacebook, faInstagram, faTwitter, faYoutube } from "@fortawesome/free
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
-
+import logo from '../assets/Printribe-logo.png'
 function Footer() {
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col-sm-8 col-12 text-center text-sm-start">
-            <p className="h2 text-dark text-uppercase px-5">Printribe</p>
+          <div className=" col-lg-4 col-12 logo text-center mb-3 mb-sm-0 py-2">
+                        <img src={logo} alt="" style={{ height: "35px", maxWidth: "100%" }} />
+
+                    </div>
           </div>
           <div className="col-sm-4 col-12">
             <div className="d-flex justify-content-center">
