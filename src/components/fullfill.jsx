@@ -1,13 +1,15 @@
 import React from 'react'
 import img1 from '../assets/fulfill1.PNG'
-import img2 from '../assets/fullfill2.PNG'
-import img3 from '../assets/fullfill3.PNG'
+import img2 from '../assets/fullfill2.webp'
+import img3 from '../assets/fulfill3.webp'
 import styles from '../styles/home.module.css'
 function Fullfill() {
     return (
-        <>
-            <div className="container mt-5 mb-5">
-                <p className="mt-3 mb-3 h2 text-center fw-bold">How you can fulfill your products using Printribe</p>
+        <div style={{background:"rgb(255 241 201)"}}>
+            <div className="container mt-5 mb-5" >
+               <div className='pt-5'>
+               <p className=" mb-3 h2 text-center fw-bold">How you can fulfill your products using Printribe</p>
+               </div>
                 <div className="row">
                     <div className="row">
                         <div className="col-lg-4 col-md-4 col-sm-12 ">
@@ -47,7 +49,7 @@ function Fullfill() {
                 </div>
             </div>
             
-        </>
+        </div>
     )
 }
 
