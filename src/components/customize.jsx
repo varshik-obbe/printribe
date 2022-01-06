@@ -6,7 +6,7 @@ import img3 from '../assets/tshirtwhite.PNG'
 function Customize() {
     return (
         <>
-            <div className="container mt-5 mb-5">
+            <div className="container pt-5 pb-5">
                 <div className="h2 fw-bold text-center mb-3">
                 Customize and sell premium products
                 </div>
@@ -15,96 +15,97 @@ function Customize() {
                         </p>
                 <div className="row">
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ maxWidth: "100%" }}>
-                            <img className="card-img-top" src={img1} alt="img1" style={{height:"37vh", maxWidth:"100%" }}/>
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img1} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img2}  style={{height:"37vh", maxWidth:"100%" }} />
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img2} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img3}  style={{height:"37vh", maxWidth:"100%" }}/>
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img3} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1}  style={{height:"37vh", maxWidth:"100%" }} />
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img1} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img2} alt="img1"  style={{height:"37vh", maxWidth:"100%" }}/>
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img2} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1}  style={{height:"37vh", maxWidth:"100%" }}/>
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img3} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img3}  style={{height:"37vh", maxWidth:"100%" }}/>
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img1} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
                     <div className="col-lg-3 col-sm-6 p-3">
-                        <div className="card" style={{ width: "100%" }}>
-                            <img className="card-img-top" src={img1}  style={{height:"37vh", maxWidth:"100%" }}/>
-                            <div className="card-body">
-                                <p className="card-text fw-bold">T-shirts</p>
-                                <p>
-                                    Starting from ₹175 only</p>
+                        <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
+                            <img className="card-img-top" src={img2} alt="img1" style={{height:"75%", maxWidth:"100%", objectFit:"contain" }}/>
+                            <div className="card-body" style={{height:"25%"}}>
+                                <p className="card-text fw-bold mb-1">T-shirts</p>
+                                <span style={{fontWeight:"300"}}>
+                                    Starting from ₹175 only</span>
                             </div>
                         </div>
 
                     </div>
+                    
                 </div>
                 <div className="text-center mt-4 mb-4">
-                <button className="btn btn-danger">All Products</button>
+                <button className="btn btn-danger px-4 py-2"><h5 class="m-0">All Products</h5></button>
                 </div>
             </div>
         </>

@@ -3,10 +3,11 @@ import { faFacebook, faInstagram, faTwitter, faYoutube } from "@fortawesome/free
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import logo from '../assets/Printribe-logo.png'
+
 function Footer() {
   return (
     <>
-      <div className="container">
+      <div className="container" style={{padding:"0 8%"}}>
         <div className="row">
           <div className="col-sm-8 col-12 text-center text-sm-start">
           <div className=" col-lg-4 col-12 logo text-center mb-3 mb-sm-0 py-2">
@@ -34,7 +35,7 @@ function Footer() {
         </div>
 
       </div>
-      <div className="conatiner-fluid" style={{ background: "#116dff" }}>
+      <div className="conatiner-fluid" style={{ background: "#116dff", padding:"0 8%"}}>
         <div className="container">
           <div className="row p-5">
             <div className="col-lg-3 col-md-12 text-light">

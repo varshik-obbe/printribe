@@ -3,6 +3,7 @@ import img1 from '../assets/fulfill1.PNG'
 import img2 from '../assets/fullfill2.webp'
 import img3 from '../assets/fulfill3.webp'
 import styles from '../styles/home.module.css'
+
 function Fullfill() {
     return (
         <div style={{background:"rgb(255 241 201)"}}>
@@ -10,8 +11,8 @@ function Fullfill() {
                <div className='pt-5'>
                <p className=" mb-3 h2 text-center fw-bold">How you can fulfill your products using Printribe</p>
                </div>
-                <div className="row">
-                    <div className="row">
+                <div className="row m-0" style={{padding:"0 8%"}}>
+                    {/* <div className="row m-0"> */}
                         <div className="col-lg-4 col-md-4 col-sm-12 ">
                             <div className={styles.imgcontainer} >
                                 <div className=" p-3" style={{height:"55%"}}>
@@ -45,7 +46,7 @@ function Fullfill() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {/* </div> */}
                 </div>
             </div>
             
