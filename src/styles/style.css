@@ -1,0 +1,22 @@
+.ti {
+    width:12%;
+	padding-top:10px;
+	float:left;
+}
+
+.ti img {
+	width:100%;
+}
+
+.ti>div:hover {
+	border:3px solid black;
+}
+
+.fi {
+	width:88%;
+	margin-left:20%;
+	padding:25px 0px;
+}
+.fi>img{
+	width:80%;
+}
