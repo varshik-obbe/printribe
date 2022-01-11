@@ -1,0 +1,38 @@
+.ppheader{
+    background-color: #1f649f;
+    color:White;
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    padding:40px;
+    margin-top: 10px;
+}
+
+.bodycontainer{
+    background-color: #fafafa;
+    text-align: center;
+    padding:5%;
+}
+
+.bodytopic{
+    font-size: 20px;
+    font-weight: 700;
+    padding:1% 0%;
+}
+
+.bodydata{
+    text-align: left;
+    padding:0% 15%;
+    font-size:17px;
+}
+
+.bodySmallHeader{
+    font-size: 18px;
+    font-weight: 700;
+    padding:1% 0%;
+    color:#444;
+}
+
+.bulletPoints{
+    font-size: 18px;
+}

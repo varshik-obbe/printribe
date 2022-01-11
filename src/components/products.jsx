@@ -3,14 +3,23 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { default as img1, default as img3 } from "../assets/tshirtblack.PNG";
 import img2 from "../assets/tshirtblue.PNG";
 import style from "../styles/style.css";
-function Products() {
-  let design = style;
-  const [imgSrc, setImgSrc] = useState(img1);
 
-  const imgChangeHandler = (evt) => {
-    setImgSrc(evt.target.src);
+
+class Products extends React.Component {
+  state={img:img2}
+  customize(){
+    var formCustomizer = document.getElementById("frmCustomizer");
+        var formProductPage = document.getElementById("{idFormProduct}");
+        console.log(formCustomizer,formProductPage);
+        formCustomizer.elements["productid"].value = "1";
+        formCustomizer.elements["quantity"].value ="1";
+        formCustomizer.submit();
+  }
+  imgChangeHandler = (evt) => {
+    this.setState({img:evt.target.src});
   };
-
+  render(){
+    let design=style;
   return (
     <>
       <div className="container ">
@@ -20,27 +29,27 @@ function Products() {
               <div className="">
                 <div className="ti">
                   <div>
-                    <img src={img1} onClick={imgChangeHandler} />
+                    <img src={img1} onClick={this.imgChangeHandler} />
                   </div>
                   <div>
-                    <img src={img2} onClick={imgChangeHandler} />
+                    <img src={img2} onClick={this.imgChangeHandler} />
                   </div>
                   <div>
-                    <img src={img3} onClick={imgChangeHandler} />
+                    <img src={img3} onClick={this.imgChangeHandler} />
                   </div>
                   <div>
-                    <img src={img1} onClick={imgChangeHandler} />
+                    <img src={img1} onClick={this.imgChangeHandler} />
                   </div>
                   <div>
-                    <img src={img2} onClick={imgChangeHandler} />
+                    <img src={img2} onClick={this.imgChangeHandler} />
                   </div>
                   <div>
-                    <img src={img3} onClick={imgChangeHandler} />
+                    <img src={img3} onClick={this.imgChangeHandler} />
                   </div>
                 </div>
 
                 <div className="fi">
-                  <img className="fi_image" src={imgSrc} />
+                  <img className="fi_image" src={this.state.img} />
                 </div>
               </div>
             </div>
@@ -133,14 +142,23 @@ function Products() {
             </div>
             <div className=""></div>
             <p className="fw-bold h3 mt-3 mb-3">₹155.00</p>
-            <button className="fw-bold h3 text-light btn btn-danger px-3">
+            <button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={this.customize}>
               Start Designing
             </button>
           </div>
         </div>
+        <div>
+        <form id="frmCustomizer" action="/customizer">
+          <input type="hidden" name="quantity" value={1}/>
+          <input type="hidden" name="productid" value={"object123"}/>
+        </form>
+        </div>
       </div>
     </>
   );
+  }
+  
 }
+
 
 export default Products;
