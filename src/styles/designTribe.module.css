@@ -27,12 +27,12 @@
     text-align: center;
 }
 .featureHeader,.howToHeader{
-    font-size: 36px;
-    font-weight: 700;
+    font-size: 36px !important;
+    font-weight: 700 !important;
     line-height: 46px;
     letter-spacing: -1px;
     font-family: inherit;
-    padding-bottom: 20px!important;
+    padding-bottom: 20px !important;
 }
 .featureSubHeader{
     font-family: ProximaNova,sans-serif;
@@ -67,7 +67,7 @@
 }
 
 .howToContainer{
-    padding:4% 8%;
+    /* padding:4% 8%; */
     text-align: center;
 }
 

@@ -2,6 +2,7 @@ import React from 'react'
 import img1 from '../assets/tshirtblack.PNG'
 import img2 from '../assets/tshirtblue.PNG'
 import img3 from '../assets/tshirtwhite.PNG'
+import Script from '@gumgum/react-script-tag'
 
 function Customize() {
     return (
@@ -107,6 +108,9 @@ function Customize() {
                 <div className="text-center mt-4 mb-4">
                 <button className="btn btn-danger px-4 py-2"><h5 class="m-0">All Products</h5></button>
                 </div>
+                <Script src="https://portal.zakeke.com/scripts/config.js"></Script>
+                <Script src="https://portal.zakeke.com/scripts/integration/api/customizer.js"></Script>
+                <Script src="./design-tribe-components/script.js"></Script>
             </div>
         </>
     )
