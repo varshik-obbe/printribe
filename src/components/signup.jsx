@@ -1,4 +1,9 @@
 import React from "react";
+import axios from "axios";
+import { useNavigate, Link } from 'react-router-dom';
+
+// ---- import ApiUrl ----- //
+import Api from '../api/api';
 
 // ---- import Google Icon from ReactIcons ---- //
 import {FcGoogle} from "react-icons/all";
@@ -11,6 +16,17 @@ import ClothingRock from "../assets/Clothing Rack.png";
 import classes from "../styles/signinsignup.module.css";
 
 function Signup() {
+	
+	let navigate = useNavigate();
+
+	const [ state, setState ] = React.useState({
+		email: '',
+		userName: '',
+		password: '',
+		confPassword: '',
+		error: false
+	})
+
 	const handleGoogleSignIn = () => {
 		// Google SignUp Event
 		alert("Google SignUp");
@@ -21,25 +37,47 @@ function Signup() {
 		alert("Email Sign In");
 	};
 
-	const handleChangeEmail = () => {
-		// Change Email Event
+	const handleChangeEmail = (event) => {
+		// handle Input Email //
+		setState((prev) => ({...prev, email: event.target.value}))
 	};
 
-	const handleChangeUsername = () => {
-		// Change Username Event
+	const handleChangeUsername = (event) => {
+		// handle Input Username //
+		setState((prev) => ({...prev, userName: event.target.value}))
 	};
 
-	const handleChangePassword = () => {
-		// Change Password Event
+	const handleChangePassword = (event) => {
+		// handle Input Password //
+		setState((prev) => ({...prev, password: event.target.value}))
 	};
 
-	const handleChangeConfirmPassword = () => {
-		// Change Confirm Password Event
+	const handleChangeConfirmPassword = (event) => {
+		// handle Input Confirm Password //
+		setState((prev) => ({...prev, confPassword: event.target.value}))
 	};
 
+	// Add User Api Call //
 	const handleSignUp = () => {
-		// SignIn Button Press
-		alert("Sign in");
+		if(state.password === state.confPassword){
+			axios.post(Api.customers.SIGNUP, {
+				"customerRegisterdata": {
+					"email": state.email,
+					"username": state.userName,
+					"password": state.password,
+					"role": "customer",
+				}
+			}).then(res => {
+				console.log(res.data.customerRecord._id)
+				localStorage.setItem('customerId', res.data.customerRecord._id)
+				setState((prev) => ({...prev, error: false}))
+				navigate("/my-account");
+			}).catch(err => {
+				setState((prev) => ({...prev, error: 'Error in SignUp'}))
+			})	
+		} else {
+			setState((prev) => ({...prev, error: 'Please make sure your passwords match'}))
+		}
 	};
 
 	const handleGoogleSignUp = () => {
@@ -51,7 +89,7 @@ function Signup() {
 		// ---- Main Container ---- //
 		<div className="container-fluid">
 			<div className="row">
-				<div className="col-12 px-5 py-5">
+				<div className="col-12 px-5 pt-5 pb-4">
 					<img src={PrintribeLogo} alt="" style={{height: "40px"}} />
 				</div>
 			</div>
@@ -70,6 +108,7 @@ function Signup() {
 									class="btn btn-outline-secondary w-100"
 									style={{color: "#000", marginTop: "10px"}}
 									onClick={handleGoogleSignIn} // Sign Up with Google Click Event //
+									disabled
 								>
 									<span>
 										<FcGoogle style={{fontSize: "25px"}} /> Sign in with Google
@@ -78,6 +117,8 @@ function Signup() {
 							</div>
 							{/* ----- Sign Up with Email Button ----- */}
 							<div>
+								
+							<Link to='/signin'>
 								<button
 									type="button"
 									class="btn btn-primary w-100 fw-bold"
@@ -86,10 +127,10 @@ function Signup() {
 										background: "#1F649F",
 										marginTop: "10px",
 									}}
-									onClick={handleEmailSignIn} // Sign Up with Email Click Event //
 								>
 									Sign in with your email
 								</button>
+								</Link>
 							</div>
 							<div class="d-flex mt-3">
 								<span>Don't Have an Account?</span>
@@ -102,7 +143,7 @@ function Signup() {
 								</label>
 								<div class="input-group mb-2">
 									<input
-										type="text"
+										type="email"
 										class="form-control"
 										id="basic-url"
 										aria-describedby="basic-addon3"
@@ -132,10 +173,11 @@ function Signup() {
 								</label>
 								<div class="input-group mb-2">
 									<input
-										type="text"
+										type="password"
 										class="form-control"
 										id="basic-url"
 										aria-describedby="basic-addon3"
+										minlength="8"
 										onChange={handleChangePassword} // Password Change Event //
 									/>
 								</div>
@@ -147,20 +189,29 @@ function Signup() {
 								</label>
 								<div class="input-group mb-2">
 									<input
-										type="text"
+										type="password"
 										class="form-control"
 										id="basic-url"
 										aria-describedby="basic-addon3"
+										minlength="8"
 										onChange={handleChangeConfirmPassword} // Confirm Password Change Event //
 									/>
 								</div>
 							</div>
+							{
+								state.error !== false &&
+								<div>
+									<label class="mb-2 text-danger">
+										{state.error}
+									</label>
+								</div>
+							}
 							{/* ----- SignIn Button ----- */}
 							<button
-								type="button"
+								type="submit"
 								class="btn w-100"
 								style={{background: "#EE3C2F", color: "#FFF"}}
-								onClick={handleSignUp} // Sign In Click Event //
+								onClick={handleSignUp}
 							>
 								Sign Up
 							</button>
@@ -172,10 +223,10 @@ function Signup() {
 
 							{/* ----- Sign in with Google Button ----- */}
 							<button
-								type="button"
 								class="btn btn-outline-secondary w-100"
 								style={{color: "#000"}}
 								onClick={handleGoogleSignUp}
+								disabled
 							>
 								<span>
 									<FcGoogle style={{fontSize: "25px"}} /> Sign up with Google
