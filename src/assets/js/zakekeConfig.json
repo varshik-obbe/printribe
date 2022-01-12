@@ -1,0 +1,24 @@
+{
+    "tokenoauth": "Token Oauth",
+    "mobileversion": false,
+    "cartbuttontext": "Add to cart",
+    "shoppingcarturl": "[url-endpoint-add-to-cart]",
+    "shoppingcartcallback": {},
+    "editshoppingcarturl": "[url-endpoint-edit-product-into-cart]",
+    "editshoppingcartcallback": {},
+    "savedesigncallback": {},
+    "productinfourl": "[url-endpoint-info-product]",
+    "additionaldata": {},
+    "canSaveDesign": false,
+    "culture": "en-US",
+    "currency": "USD",
+    "designid": "",
+    "pricetaxincluded": true,
+    "labeltax": "hidden",
+    "quantity": 1,
+    "sides": [],
+    "selectedattributes": {
+        "attributekey1": "selectedattributevalue1",
+        "attributekeyn": "selectedattributevaluen"
+    }
+}

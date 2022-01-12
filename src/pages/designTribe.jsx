@@ -1,28 +1,31 @@
-import React from 'react';
-import Header from '../components/header';
-import Footer from "../components/footer";
-import Navbar from '../components/navbar';
-import Hero from "../components/design-tribe-components/hero"
 import Feature from '../components/design-tribe-components/feature'
+import Footer from "../components/footer";
+import Header from '../components/header';
+import Hero from "../components/design-tribe-components/hero"
 import HowTo from '../components/design-tribe-components/howTo'
-import WhyUs from '../components/design-tribe-components/whyUs'
 import MockUps from '../components/design-tribe-components/mockUps'
-import PrintfulPro from '../components/design-tribe-components/printfulPro'
+import Navbar from '../components/navbar';
 import OthersDesign from '../components/design-tribe-components/othersDesign'
+import PrintfulPro from '../components/design-tribe-components/printfulPro'
+import React from 'react';
 import SignUpTile from '../components/design-tribe-components/signUpTile';
+import WhyUs from '../components/design-tribe-components/whyUs'
 
 function designTribe(){
     return(<>
     <Header/>
-    <div className='container'>
     <Navbar/>
     <Hero/>
+    <div className='container'>
     <Feature/>
     <HowTo/>
     <WhyUs/>
     <MockUps/>
     <PrintfulPro/>
+    </div>
+
     <OthersDesign/>
+    <div className='container'>
     <SignUpTile/>
     </div>
     <Footer/>
