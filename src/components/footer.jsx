@@ -55,29 +55,13 @@ function Footer() {
                   <a href="#!" class="text-white text-decoration-none ">About us</a>
                 </li>
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Terms of service</a>
+                  <a href="/terms-conditions" class="text-white text-decoration-none ">Terms of service</a>
                 </li>
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none">Privacy policy</a>
+                  <a href="/privacy-policy" class="text-white text-decoration-none">Privacy policy</a>
                 </li>
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
-                </li>
-
-              </ul>
-            </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <p className="h3 text-light text-uppercase fw-bold">Company</p>
-
-              <ul class="list-unstyled mb-0">
-                <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">About us</a>
-                </li>
-                <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Terms of service</a>
-                </li>
-                <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none">Privacy policy</a>
+                  <a href="/return-refund" class="text-white text-decoration-none">Returns and Refunds</a>
                 </li>
                 <li className="mt-3">
                   <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
@@ -93,10 +77,35 @@ function Footer() {
                   <a href="#!" class="text-white text-decoration-none ">About us</a>
                 </li>
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Terms of service</a>
+                  <a href="/terms-conditions" class="text-white text-decoration-none ">Terms of service</a>
                 </li>
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none">Privacy policy</a>
+                  <a href="/privacy-policy" class="text-white text-decoration-none">Privacy policy</a>
+                </li>
+                <li className="mt-3">
+                  <a href="/return-refund" class="text-white text-decoration-none">Returns and Refunds</a>
+                </li>
+                <li className="mt-3">
+                  <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
+                </li>
+
+              </ul>
+            </div>
+            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
+              <p className="h3 text-light text-uppercase fw-bold">Company</p>
+
+              <ul class="list-unstyled mb-0">
+                <li className="mt-3">
+                  <a href="#!" class="text-white text-decoration-none ">About us</a>
+                </li>
+                <li className="mt-3">
+                  <a href="/terms-conditions" class="text-white text-decoration-none ">Terms of service</a>
+                </li>
+                <li className="mt-3">
+                  <a href="/privacy-policy" class="text-white text-decoration-none">Privacy policy</a>
+                </li>
+                <li className="mt-3">
+                  <a href="/return-refund" class="text-white text-decoration-none">Returns and Refunds</a>
                 </li>
                 <li className="mt-3">
                   <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
