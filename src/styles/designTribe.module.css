@@ -1,0 +1,271 @@
+.heroHeader{
+    font-size: 50px;
+    font-weight: 700;
+}
+.heroContainer{
+    padding:5% 30%;
+    text-align: center;
+    background-color: #f8f8f8;
+}
+.heroBody{
+    font-size: 25px;
+    padding:7% 0%;
+    color:#555;
+}
+.herobtn{
+    font-size: 18px;
+    color:white;
+    background-color: #e40f0b;
+    padding: 15px;
+    border-radius: 5px;
+    border:1px solid #e40f0b;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+}
+.featureContainer{
+    padding-top:4%;
+    text-align: center;
+}
+.featureHeader,.howToHeader{
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 46px;
+    letter-spacing: -1px;
+    font-family: inherit;
+    padding-bottom: 20px!important;
+}
+.featureSubHeader{
+    font-family: ProximaNova,sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 34px;
+    color: #222;
+    text-shadow: rgb(0 0 0 / 1%) 0 0 1px;
+    padding-bottom: 40px!important;
+}
+.featuresSection{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.featureBox{
+    width:30%;
+    padding:1%;
+}
+.featureTitle{
+    font-size: 24px;
+    line-height: 34px;
+    font-weight: 700;
+    padding-top: 8px!important;
+    font-family: inherit;
+}
+.featureBody{
+    font-family: ProximaNova,sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.howToContainer{
+    padding:4% 8%;
+    text-align: center;
+}
+
+.howToImgSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.howToSteps{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding:2% 8%;
+}
+.howToStepsCircle{
+    border:3px solid #ccc;
+    border-radius: 50%;
+    padding:3px 12px;
+    color: #555;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 31px;
+}
+.howToStepsLine{
+    content: " ";
+    border-bottom: 1px solid #e5e5e5;
+    top: -20px;
+    position: relative;
+    z-index: -1;
+    width: 25%;
+}
+.howToAboutSteps{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.howToAboutStepsContainer{
+    width:20%;
+    margin:0% 4%;
+}
+
+.howToAboutStepsHeader{
+    font-family: ProximaNova, sans-serif;
+    font-size: 18px;
+    line-height: 26px;
+    text-align: center;
+    color:#222;
+    font-weight: 700;
+}
+
+.howToAboutStepsBody{
+    font-family: ProximaNova, sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color:#555;
+}
+
+
+.howtobtn{
+    font-size: 18px;
+    color:#222;
+    background-color: #e5e5e5;
+    padding:15px 20px;
+    border-radius: 5px;
+    border:1px solid #e5e5e5;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+    box-shadow: rgb(177,177,177) 0px 0px 0px 1px inset;
+    margin-top:6%;
+}
+
+.howToAds{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 1%;
+    background-color: #ecfbfa;
+    border-radius: 5px;
+}
+
+.mockUpContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin:0% 8%;
+    padding:0%;
+    background-color: #ecfbfa;
+    border-radius: 10px;
+}
+
+.howToAdsText{
+    font-size: 36px;
+    line-height: 46px;
+    font-weight: 700;
+    text-align: left!important;
+    color: #222;
+
+}
+.howToAdsSubText{
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 24px;
+    line-height: 34px;
+    text-align: left!important;
+    padding-top: 8px!important;
+    color: #555!important;
+}
+.howToAdsTexts{
+    padding:0% 8%;
+}
+.adIMGs{
+    margin:4% 2% 1% 2%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.adIMG{
+    border:1px solid #ccc;
+    padding:7px;
+    border-radius: 2px;
+}
+
+.whyUsImg{
+    display: block;
+    max-width: 100%;
+    height: auto;
+    background-color: #e3ebff;
+    margin:2% 2%;
+    background-image: url("https://static.cdn.printful.com/static/images/layout/design-maker/waves-pattern.svg");
+    border-radius: 5px;
+    
+}
+.whyUsTick{
+    font-size: 20px;
+    color:lightsalmon;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+}
+.whyUsBox{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 10px;
+}
+.whyUsBoxTopic{
+    font-weight: 700;
+    letter-spacing: 0;
+    font-size: 24px;
+    line-height: 34px;
+    margin-bottom: 4px!important;
+    color: #222;
+    font-family: inherit;
+    text-align: left;
+}
+.whyUsBoxText{
+    text-align: left;
+    margin-left:10px;
+}
+.whyUsAllTopics{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin:7% 5%;
+}
+
+.proTile{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8%;
+    background-color: #faf2fe;
+    border-radius: 5px;
+}
+
+.signUpTile{
+    padding:48px 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 8%;
+    background-color: #3d3733;
+    color:white;
+    border-radius: 10px;
+}
+
+.signUpSubText{
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 24px;
+    line-height: 34px;
+    text-align: left!important;
+    padding-top: 8px!important;
+    color: #fff!important;
+}
+
+.othersDesignContainer{
+    text-align: center;
+}
