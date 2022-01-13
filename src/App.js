@@ -1,16 +1,17 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 import Account from "./components/account";
-import Signin from "./components/signin";
-import Signup from "./components/signup";
+import Customizer from './pages/customizer';
+import DesignTribe from './pages/designTribe'
 import Homelayout from "./pages/homelayout";
+import PrivacyPolicy from './pages/privacypolicy';
 import Productataloglayout from "./pages/productcataloglayout";
 import Productpage from "./pages/productpage";
-import DesignTribe from './pages/designTribe'
-import PrivacyPolicy from './pages/privacypolicy';
+import React from "react";
 import ReturnRefund from './pages/returnrefund';
+import Signin from "./components/signin";
+import Signup from "./components/signup";
 import TermsPage from './pages/termspage';
-import Customizer from './pages/customizer';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             path="/product-catalog"
             element={<Productataloglayout />}
           />
+          <Route exact path="/products/:category" element={<Productataloglayout />} />
+          <Route exact path="/products/:category/:subCat" element={<Productataloglayout />} />
+          <Route exact path="/products/:category/:subCat/:subSubCat" element={<Productataloglayout />} />
           <Route exact path="/product-page" element={<Productpage />} />
           <Route exact path="/design-tribe" element={<DesignTribe />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
