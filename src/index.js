@@ -4,8 +4,9 @@ import App from './App';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-
+import "dotenv";
 require('dotenv').config();
+
 
 
 axios.defaults.baseURL = 'https://api.theprintribe.com/api';

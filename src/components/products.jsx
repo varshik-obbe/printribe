@@ -1,27 +1,48 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
-import React, { useState } from "react";
+import React, { useState ,useEffect,useRef} from "react";
 import { default as img1, default as img3 } from "../assets/tshirtblack.PNG";
 
 import img2 from "../assets/tshirtblue.PNG";
 import style from "../styles/style.css";
+import axios from "axios"
+import { useParams } from "react-router-dom";
 
-class Products extends React.Component {
-  state = { img: img2 }
-  customize() {
-    var formCustomizer = document.getElementById("frmCustomizer");
-    var formProductPage = document.getElementById("{idFormProduct}");
-    console.log(formCustomizer, formProductPage);
-    formCustomizer.elements["productid"].value = "1";
-    formCustomizer.elements["quantity"].value = "1";
-    formCustomizer.submit();
+const Products = () => {
+
+  const {prodid} = useParams()
+  const [product, setproduct] = useState({})
+
+  const getProduct = ()=>{
+    axios.get(`/products/getproduct/${prodid}`)
+    .then(({data})=>{
+        setproduct(data.product.productdata[0])
+        console.log(data.product.productdata[0])
+    })
+    .catch(({err})=>{
+      console.log(err)
+    })
   }
-  imgChangeHandler = (evt) => {
-    this.setState({ img: evt.target.src });
-  };
-  render() {
-    // let design = style;
-    return (
+
+  const handleSizeChange = (e)=>{
+      console.log(e.target.id)
+
+      const color = document.getElementById(e.target.id).style.backgroundColor 
+
+     if( color !== "black"  ){
+       document.getElementById(e.target.id).style.backgroundColor ="black"
+       document.getElementById(e.target.id).style.color ="white"
+      } else{
+        document.getElementById(e.target.id).style.backgroundColor ="white"
+        document.getElementById(e.target.id).style.color ="black"
+      }
+  }
+
+  useEffect(() => {
+    getProduct()
+  }, [])
+
+   return (
       <>
         <div className="container ">
           <div className="row ">
@@ -30,41 +51,41 @@ class Products extends React.Component {
                 <div className="">
                   <div className="ti">
                     <div>
-                      <img src={img1} onClick={this.imgChangeHandler} />
+                      <img src={img1}  />
                     </div>
                     <div>
-                      <img src={img2} onClick={this.imgChangeHandler} />
+                      <img src={img2}  />
                     </div>
                     <div>
-                      <img src={img3} onClick={this.imgChangeHandler} />
+                      <img src={img3}  />
                     </div>
                     <div>
-                      <img src={img1} onClick={this.imgChangeHandler} />
+                      <img src={img1}  />
                     </div>
                     <div>
-                      <img src={img2} onClick={this.imgChangeHandler} />
+                      <img src={img2}  />
                     </div>
                     <div>
-                      <img src={img3} onClick={this.imgChangeHandler} />
+                      <img src={img3}  />
                     </div>
                   </div>
 
                   <div className="fi">
-                    <img className="fi_image" src={this.state.img} />
+                    <img src={product.img} alt={product.title} />
                   </div>
                 </div>
               </div>
             </div>
 
             <div className="col-lg-6 col-md-12 p-5">
-              <p className="h4 fw-bold mb-5">Unisex Round Neck Cotton T-shirt</p>
-              <p className="mt-3 fw-bold">Choose technique</p>
-              <p className="btn btn-md btn-light fw-bold  mb-3 border-dark">
+              <p className="h4 fw-bold mb-5">{product.title}</p>
+              <p className="mt-3 fw-bold">{product.description}</p>
+              {/* <p className="btn btn-md btn-light fw-bold  mb-3 border-dark">
                 Printing (DTG)
-              </p>
+              </p> */}
               <p className="mt-3 fw-bold">Choose color</p>
               <div className="d-flex mb-3">
-                <div
+                <div 
                   className="border  bg-black mx-1 "
                   style={{ height: "20px", width: "20px", borderRadius: "5px" }}
                 ></div>
@@ -102,48 +123,67 @@ class Products extends React.Component {
                 <div className="mx-5 text-info">Size chart</div>
               </div>
               <div className="d-flex mt-3 mb-3">
-                <div className="d-flex mb-3">
-                  <div
-                    className="border p-2 fw-bold text-center mx-1 "
-                    style={{ height: "40px", width: "40px", borderRadius: "5px" }}
-                  >
-                    XS
-                  </div>
-                  <div
-                    className="border p-2 fw-bold text-center mx-1 "
-                    style={{ height: "40px", width: "40px", borderRadius: "5px" }}
+                <div  className="d-flex mb-3">
+                  <div id="S"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                    onClick={(e)=>handleSizeChange(e)}
                   >
                     S
                   </div>
-                  <div
-                    className="border p-2 fw-bold border-dark text-center mx-1 "
-                    style={{ height: "40px", width: "40px", borderRadius: "5px" }}
+                  <div id="M"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                    onClick={(e)=>handleSizeChange(e)}
                   >
                     M
                   </div>
                   <div
-                    className="border p-2 fw-bold text-center mx-1 "
-                    style={{ height: "40px", width: "40px", borderRadius: "5px" }}
+                  id="L"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                    onClick={(e)=>handleSizeChange(e)}
                   >
                     L
                   </div>
                   <div
-                    className="border p-2 fw-bold text-center mx-1 "
-                    style={{ height: "40px", width: "40px", borderRadius: "5px" }}
+                  id="XL"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                    onClick={(e)=>handleSizeChange(e)}
                   >
                     XL
                   </div>
-                  <div
-                    className="border p-2 fw-bold text-center mx-1 "
-                    style={{ height: "40px", width: "40px", borderRadius: "5px" }}
+                   <div
+                   id="2XL"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                     onClick={(e)=>handleSizeChange(e)}
+
                   >
-                    XXL
+                    2XL
                   </div>
-                </div>
+                   <div
+                   id="3XL"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                     onClick={(e)=>handleSizeChange(e)}
+                  >
+                    3XL
+                  </div>
+                   <div
+                   id="4XL"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                     onClick={(e)=>handleSizeChange(e)}
+                  >
+                    4XL
+                  </div>
+                   <div
+                   id="5XL"
+                    className="border p-2 fw-bold text-center mx-1 sizes"
+                     onClick={(e)=>handleSizeChange(e)}
+                  >
+                   5XL
+                  </div>
+                 </div>
               </div>
               <div className=""></div>
-              <p className="fw-bold h3 mt-3 mb-3">₹155.00</p>
-              <button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={this.customize}>
+              <p className="fw-bold h3 mt-3 mb-3">₹{product.price}</p>
+              <button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" >
                 Start Designing
               </button>
             </div>
@@ -159,7 +199,7 @@ class Products extends React.Component {
     );
   }
 
-}
 
 
-export default Products;
+
+export default Products
