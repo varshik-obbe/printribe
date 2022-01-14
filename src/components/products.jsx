@@ -188,13 +188,15 @@ const Products = () => {
                   </div>
                  </div>
               </div>
-            </div>
+            
+            
             <div className=""></div>
             <p className="fw-bold h3 mt-3 mb-3">₹{product.price}</p>
             <button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={(e) => customize(e)}>
               Start Designing
             </button>
           </div>
+        </div>
         </div>
         <div>
           <form id="frmCustomizer" action="/customizer">
