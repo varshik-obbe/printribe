@@ -1,11 +1,21 @@
+*{
+    font-family: ProximaNova,sans-serif;
+}
+
 .heroHeader{
     font-size: 50px;
     font-weight: 700;
+    padding:4%;
 }
 .heroContainer{
-    padding:5% 30%;
+    padding:0% 30%;
+    margin-bottom:5%;
     text-align: center;
     background-color: #f8f8f8;
+    background-image: url('https://static.cdn.printful.com/static/images/layout/design-maker/confetti-pattern.svg');
+}
+.heroTextContainer{
+    padding:10% 0%;
 }
 .heroBody{
     font-size: 25px;
@@ -22,11 +32,34 @@
     font-weight: 700;
     font-family: ProximaNova,sans-serif;
 }
+.heroImgContainer{
+    position:'absolute';
+    left:0;
+    padding:5% 0%;
+}
 .featureContainer{
     padding-top:4%;
     text-align: center;
+    
 }
-.featureHeader,.howToHeader{
+.featureHeader{
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    line-height: 46px;
+    letter-spacing: -1px;
+    font-family: inherit;
+    padding-bottom: 20px !important;
+}
+.howToHeader, .othersHeader{
+    font-size: 36px !important;
+    font-weight: 700 !important;
+    line-height: 46px;
+    letter-spacing: -1px;
+    font-family: inherit;
+    padding-bottom: 20px !important;
+    margin-top:4%;
+}
+.whyUsHeader{
     font-size: 36px !important;
     font-weight: 700 !important;
     line-height: 46px;
@@ -38,7 +71,7 @@
     font-family: ProximaNova,sans-serif;
     font-size: 24px;
     font-weight: 400;
-    line-height: 34px;
+    line-height: 36px;
     color: #222;
     text-shadow: rgb(0 0 0 / 1%) 0 0 1px;
     padding-bottom: 40px!important;
@@ -48,9 +81,13 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
+.featuresSectionMobile{
+    display: none;
+}
 .featureBox{
     width:30%;
-    padding:1%;
+    padding:3% 0%;
+    text-align: left;
 }
 .featureTitle{
     font-size: 24px;
@@ -58,19 +95,31 @@
     font-weight: 700;
     padding-top: 8px!important;
     font-family: inherit;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 .featureBody{
     font-family: ProximaNova,sans-serif;
-    font-weight: 400;
-    font-size: 16px;
+    font-weight: 100;
+    font-size: 15px;
     line-height: 24px;
+    color:gray;
 }
 
 .howToContainer{
-    /* padding:4% 8%; */
+    margin-top: 20px;
+    margin-bottom: 10px;
     text-align: center;
 }
+.howToAdsImg{
+    width:40%;
+}
 
+.whyUsContainer{
+    margin-top:10%;
+    text-align: center;
+    position: relative;
+}
 .howToImgSection{
     display: flex;
     flex-direction: row;
@@ -146,7 +195,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 1%;
+    margin-top: 10%;
     background-color: #ecfbfa;
     border-radius: 5px;
 }
@@ -155,11 +204,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin:0% 8%;
-    padding:0%;
+    margin:0%;
+    padding:0% 3%;
     background-color: #ecfbfa;
     border-radius: 10px;
 }
+
 
 .howToAdsText{
     font-size: 36px;
@@ -167,7 +217,13 @@
     font-weight: 700;
     text-align: left!important;
     color: #222;
-
+}
+.signUpText{
+    font-size: 32px;
+    line-height: 46px;
+    font-weight: 700;
+    text-align: left!important;
+    color: #222;
 }
 .howToAdsSubText{
     font-weight: 400;
@@ -179,40 +235,53 @@
     color: #555!important;
 }
 .howToAdsTexts{
-    padding:0% 8%;
+    padding:0% 16%;
 }
 .adIMGs{
     margin:4% 2% 1% 2%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 .adIMG{
     border:1px solid #ccc;
     padding:7px;
     border-radius: 2px;
+    width:23%;
 }
 
 .whyUsImg{
-    display: block;
-    max-width: 100%;
-    height: auto;
-    background-color: #e3ebff;
-    margin:2% 2%;
-    background-image: url("https://static.cdn.printful.com/static/images/layout/design-maker/waves-pattern.svg");
     border-radius: 5px;
-    
+    height:500px;
+    position: relative;
+    top:-430px;
+    margin-bottom: -510px;
+    z-index: 1;
+}
+.whyUsImgContainer{
+    margin-top:2%;
+    height:400px;
+    background-color: #e3ebff;
+    background-image: url("https://static.cdn.printful.com/static/images/layout/design-maker/waves-pattern.svg");
 }
 .whyUsTick{
     font-size: 20px;
-    color:lightsalmon;
-    font-weight: 700;
-    font-family: ProximaNova,sans-serif;
+    color:#ddbba0;
+    -webkit-text-stroke: 1px background-color;
+    margin-bottom: 40px;
 }
 .whyUsBox{
     display: flex;
     flex-direction: row;
     margin-bottom: 10px;
+    width:50%;
+}
+
+.signUpTickBox{
+    display: flex;
+    flex-direction: row;
+    margin: 10px 0px;
 }
 .whyUsBoxTopic{
     font-weight: 700;
@@ -233,24 +302,45 @@
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin:7% 5%;
+    margin:7% 3%;
+}
+
+.proHeadText{
+    font-size: 36px;
+    line-height: 46px;
+    font-weight: 900;
+    text-align: left!important;
+    color: #222;
+}
+.proBtn{
+    font-size: 18px;
+    color:white;
+    background-color: #e40f0b;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border:1px solid #e40f0b;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
 }
 
 .proTile{
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 8%;
+    margin: 8% 0%;
     background-color: #faf2fe;
     border-radius: 5px;
 }
+.othersImg{
+    width:12.5%;
+}
 
 .signUpTile{
-    padding:48px 64px;
+    padding:48px 60px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    margin: 8%;
+    margin: 8% 0%;
     background-color: #3d3733;
     color:white;
     border-radius: 10px;
@@ -268,4 +358,263 @@
 
 .othersDesignContainer{
     text-align: center;
+}
+
+.mockUpsTileImg{
+    width:90%;
+}
+
+.signUpTextContainer{
+    width:100%;
+    padding-right:0% 5%;
+}
+.signUpImgCointer{
+    background-color:'white';
+    border-radius:10;
+    text-align:'center';
+}
+
+.signUpTickStyle{
+    color:#ddbba0;
+    margin-right:10px;
+}
+
+@media (max-width:700px) {
+    *{
+        overflow-x: hidden;
+    }
+    .heroImgContainer{
+        display: none;
+    }
+    .heroContainer{
+        padding:1%;
+        margin:0%;
+        margin-bottom:5%;
+        text-align: center;
+            
+    }
+    .heroHeader{
+        padding: 0%;
+        margin:0%;
+        font-weight: 700;
+    letter-spacing: -1px;
+    font-size: 40px;
+    line-height: 48px;
+    }
+    
+    .herobtn{
+    font-size: 18px;
+    color:white;
+    background-color: #e40f0b;
+    padding: 3% 25%;
+    border-radius: 5px;
+    border:1px solid #e40f0b;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+}
+.featuresSection{
+    display: none;
+}
+.featuresSectionMobile{
+    display: block;
+}
+.featureBox{
+    width:100%;
+    padding:5% 1%;
+    text-align: center;
+}
+.featureTitle{
+    font-size: 22px;
+}
+.featureBody{
+    font-size: 15px;
+}
+.featureMobileBtn{
+    padding:2%;
+    border-radius: 50%;
+    border:black;
+    margin:0% 2%;
+    border:1px solid gray;
+}
+.howToSlides{
+    display:none;
+}
+.howToAds{
+    flex-direction: column;
+}
+.howToAdsImg{
+    width:95%;
+}
+.howToAdsTexts{
+    padding:0% 5%;
+    text-align: center;
+}
+.howToAdsText{
+    font-size: 30px;
+    line-height: 46px;
+    font-weight: 600;
+    text-align: center;
+    color: #222;
+}
+.howToAdsSubText{
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 22px;
+    line-height: 30px;
+    text-align: left!important;
+    padding-top: 8px!important;
+    color: #555!important;
+}
+.adIMG{
+    border:1px solid #ccc;
+    padding:7px;
+    border-radius: 2px;
+    width:47%;
+    margin-bottom:5%;
+}
+
+.whyUsImg{
+    border-radius: 5px;
+    width: 100px;
+    height:100px;
+    position: relative;
+    z-index: 10;
+    display: none;
+}
+.whyUsImgContainer{
+    margin-top:2%;
+    height:150px;
+    background-color: #e3ebff;
+    background-image: url("https://static.cdn.printful.com/static/images/layout/design-maker/waves-pattern.svg");
+}
+.whyUsAllTopics{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin:10% 5%;
+}
+.whyUsBox{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    width:100%;
+}
+.whyUsBoxText{
+    text-align: left;
+    margin-left:10px;
+    width:90%;
+}
+
+.whyUsBoxTopic{
+    font-weight: 700;
+    letter-spacing: 0;
+    font-size: 22px;
+    line-height: 34px;
+    margin-bottom: 4px!important;
+    color: #222;
+    font-family: inherit;
+    text-align: left;
+}
+.mockUpContainer{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin:0%;
+    padding:5%;
+    background-color: #ecfbfa;
+    border-radius: 10px;
+    text-align: center !important;
+}
+.mockUpsTileImg{
+    width:100%;
+}
+.proTile{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20% 1%;
+    padding:5% 1%;
+    background-color: #faf2fe;
+    border-radius: 5px;
+}
+.proHeadText{
+    font-size: 28px;
+    line-height: 40px;
+    font-weight: 700;
+    text-align: left!important;
+    color: #222;
+}
+.proBtn{
+    font-size: 18px;
+    color:white;
+    background-color: #e40f0b;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border:1px solid #e40f0b;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+}
+.othersHeader{
+    font-size: 30px !important;
+    font-weight: 700 !important;
+    line-height: 40px;
+    letter-spacing: -1px;
+    font-family: inherit;
+    padding-bottom: 20px !important;
+    margin-top:4%;
+}
+.othersImg{
+width:25%;
+}
+.signUpImg{
+    width:75%;
+}
+.signUpTile{
+    padding:0% 0% 10% 0%;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin: 8% 0%;
+    background-color: #3d3733;
+    color:white;
+    border-radius: 10px;
+}
+.signUpImg{
+    width:100%;
+    background-color:white;
+}
+.signUpImgCointer{
+    background-color:white;
+    border-radius:10;
+    text-align:'center';
+    margin-bottom: 10%;
+}
+.signUpText{
+    font-size: 28px;
+    line-height: 35px;
+    font-weight: 700;
+    text-align: center;
+    color: #222;
+}
+.signUpTextContainer{
+    width:100%;
+    padding:0% 5%;
+}
+.signUpBtn{
+    text-align: center;
+
+}
+.signUpBtn{
+    font-size: 18px;
+    color:white;
+    background-color: #e40f0b;
+    padding: 2% 30%;
+    border-radius: 5px;
+    border:1px solid #e40f0b;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+    margin-top:5%;
+}
 }
