@@ -1,7 +1,7 @@
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "dotenv";
-import React from "react";
+import { default as React, default as React } from "react";
 import ReactDOM from "react-dom";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
 import App from "./App";

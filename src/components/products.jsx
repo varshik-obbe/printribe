@@ -99,7 +99,8 @@ const Products = () => {
                 </div>
 
                 <div className="fi">
-                  <img src={product.img} alt={product.title} />
+                  <img src={process.env.REACT_APP_IMAGE_BASE_URL+product.img} alt={product.title} />
+                  {console.log(process.env.REACT_APP_IMAGE_BASE_URL+product.img)}
                 </div>
               </div>
             </div>
@@ -187,7 +188,13 @@ const Products = () => {
                    5XL
                   </div>
                  </div>
+                
               </div>
+
+              <div className="d-flex mt-3 mb-3 fw-bold">
+              <label htmlFor="quantity">Quantity</label>
+              <textarea style={{textAlign:"center",marginLeft:"15px"}} name="" id="" cols="5" rows="1"  value={product.quantity}></textarea>
+            </div>
             
             
             <div className=""></div>
