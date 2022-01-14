@@ -29,9 +29,9 @@ const Products = () => {
     var formCustomizer =
       document.getElementById("frmCustomizer");
     // var formProductPage = document.getElementById("{ idFormProduct }");
-    formCustomizer.elements["productid"].value = 'Blue61d5bb7d1ed8c4d5cbb9d162';
+    formCustomizer.elements["productid"].value = 'Red61e1a843536bb33f542ec69d,';
     formCustomizer.elements["quantity"].value = '1';
-    formCustomizer.elements["masterProductId"].value = '61d5bb7d1ed8c4d5cbb9d162';
+    formCustomizer.elements["masterProductId"].value = '61e1a843536bb33f542ec69d';
     formCustomizer.submit();
   }
 

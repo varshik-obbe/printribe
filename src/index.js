@@ -1,10 +1,11 @@
-import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "dotenv";
-import { default as React, default as React } from "react";
-import ReactDOM from "react-dom";
 import "../node_modules/font-awesome/css/font-awesome.min.css";
+
 import App from "./App";
+import { default as React } from "react";
+import ReactDOM from "react-dom";
+import axios from "axios";
 
 require("dotenv").config();
 

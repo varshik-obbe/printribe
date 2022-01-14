@@ -1,5 +1,6 @@
-import React from "react";
 import { Nav, Navbar } from "react-bootstrap";
+
+import React from "react";
 import logo from "../assets/Printribe-logo.png";
 
 function Header() {
@@ -26,7 +27,7 @@ function Header() {
                 <Nav className="mx-auto justify-content-evenly w-100">
                   {localStorage.getItem("customerId") ? (
                     <>
-                      <Nav.Link href="#">My Cart</Nav.Link>
+                      <Nav.Link href="/cart">My Cart</Nav.Link>
                       <Nav.Link href="/my-account">My Account</Nav.Link>
                       <Nav.Link
                         href="/"

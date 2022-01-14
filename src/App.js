@@ -1,22 +1,22 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 import Account from "./components/account";
 import Cart from "./components/add-product";
-import Signin from "./components/signin";
-import Signup from "./components/signup";
 import CatalogsubProducts from "./pages/catalogProducts";
 import Customizer from './pages/customizer';
 import DesignTribe from './pages/designTribe';
 import Homelayout from "./pages/homelayout";
 import PrivacyPolicy from './pages/privacypolicy';
+import Productataloglayout from "./styles/productcataloglayout";
 import Productpage from "./pages/productpage";
+import React from "react";
 import ReturnRefund from './pages/returnrefund';
+import Signin from "./components/signin";
+import Signup from "./components/signup";
 import SubCatMen from "./pages/SubCatMen";
 import SubCatWomen from "./pages/SubCatWomen";
 import SubSubCat from "./pages/SubSubCat";
 import TermsPage from './pages/termspage';
-import Productataloglayout from "./styles/productcataloglayout";
-
 
 function App() {
   return (
@@ -35,8 +35,8 @@ function App() {
            <Route exact path="/product-catalog/womens-clothing/:subcatid" element={<SubCatWomen /> } />
            <Route exact path="/product-catalog/:subcatid/:id" element={<SubSubCat /> } />
             <Route exact path="/product-catalog/products/:subCat/:productid" element={<CatalogsubProducts />} />    
-          <Route exact path="/products/:category/:subCat" element={<Productataloglayout />} />
-          <Route exact path="/products/:category/:subCat/:subSubCat" element={<Productataloglayout />} />
+          {/* <Route exact path="/products/:category/:subCat" element={<Productataloglayout />} />
+          <Route exact path="/products/:category/:subCat/:subSubCat" element={<Productataloglayout />} /> */}
                 
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/product-page/:prodid" element={<Productpage />} />

@@ -17,7 +17,7 @@ export default class customizer extends React.Component {
             // "savedesigncallback": {javascript function object},
             "productinfourl": "https://api.theprintribe.com/api/zakekeCustomize/productinfo",
             "additionaldata": {
-                "mainProductid": "12324",
+                "mainProductid": "61e1a843536bb33f542ec69d",
                 "customerUniqueId": "2131412"
             },
             "canSaveDesign": false,
@@ -30,7 +30,7 @@ export default class customizer extends React.Component {
             "sides": ['Front', 'Back'],
             "selectedattributes": {
                 "color": "1",
-                "VariantName": "Blue",
+                "VariantName": "Red",
                 "SideName": "Front",
                 "AreaName": "Front Area"
             }
@@ -45,7 +45,7 @@ export default class customizer extends React.Component {
                 this.state.config.tokenoauth = data.returndata.access_token;
                 console.log(this.state.config);
                 var config = this.state.config;
-                var productJson = { "id": "Blue61d5bb7d1ed8c4d5cbb9d162", "name": "[productname]" };
+                var productJson = { "id": "61e1a843536bb33f542ec69d", "name": "test2" };
                 var customizer = new window.zakekeDesigner(config, productJson);
             })
             .catch((resp) => {
@@ -75,7 +75,7 @@ export default class customizer extends React.Component {
             />
             <Header />
             <div className="container">
-                <div id="zakeke-container"></div>
+                <div id="zakeke-container" style={{ height:"100vh", width:"100%" }}></div>
             </div>
 
             <Footer />
