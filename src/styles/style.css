@@ -1,22 +1,52 @@
 .ti {
-    width:12%;
-	padding-top:10px;
-	float:left;
+  width: 12%;
+  padding-top: 10px;
+  float: left;
 }
 
 .ti img {
-	width:100%;
+  width: 100%;
 }
 
-.ti>div:hover {
-	border:3px solid black;
+.ti > div:hover {
+  border: 3px solid black;
 }
 
 .fi {
-	width:88%;
-	margin-left:20%;
-	padding:25px 0px;
+  width: 88%;
+  margin-left: 20%;
+  padding: 25px 0px;
 }
-.fi>img{
-	width:80%;
+.fi > img {
+  width: 80%;
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+
+  color: wheat;
+  border: none !important;
+}
+.accordion-button:not(.collapsed) {
+  box-shadow: none !important;
+
+  color: wheat;
+  border: none !important;
+}
+
+.sizes {
+  height: 40px;
+  width: 40px;
+  border-radius: 5px;
+}
+.sizes:hover {
+  cursor: pointer;
+  background-color: rgb(49, 41, 41);
+  color: white;
+}
+.sizes:focus {
+  background-color: black;
+}
+.colors:hover {
+  cursor: pointer;
 }

@@ -10,14 +10,15 @@ function Navbar() {
                 <div className="row m-0 text-center p-2 fw-bold" style={{ borderTop: "1px solid grey", borderBottom: "1px solid grey" }}>
 
                     <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-                        <div className={styles.dropdown}>
+                        {/* <div className={styles.dropdown}>
                             <button className={styles.dropbtn}>Product catalog</button>
-                            <div className={styles.dropdowncontent}>
-                                <Link to="/product-catalog">Product Catalog</Link>
-                                <Link to="/product-page">Product page</Link>
-                            </div>
-                        </div>
+                            <div className={styles.dropdowncontent}> */}
+                                <Link to="/product-catalog" className={styles.navLink}>Product Catalog</Link>
+                                {/* <Link to="/product-page">Product page</Link> */}
+                            {/* </div>
+                        </div> */}
                     </div>
+                   
                     <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
                         {/* <div className={styles.dropdown}> */}
                         <Link to="/design-tribe" className={styles.navLink}>Design Tribe</Link>

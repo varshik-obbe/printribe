@@ -1,10 +1,23 @@
-.catalogcontainer{
-    cursor: pointer;
+.catalogcontainer {
+  cursor: pointer;
 }
-.catalogcontainer:hover{
-    box-shadow: 2px 4px 4px 2px rgba(176, 176, 192, 0.2);
+.catalogcontainer:hover {
+  box-shadow: 2px 4px 4px 2px rgba(176, 176, 192, 0.2);
 }
-.accordin{
-    border: none !important;
-    border-bottom: 1px solid black !important;
+.accordin {
+  border: none !important;
+  border-bottom: 1px solid black !important;
+}
+.catalogText {
+  text-decoration: none;
+  color: #000;
+}
+
+.Link {
+  text-decoration: none;
+  color: black;
+}
+
+a {
+  color: black;
 }
