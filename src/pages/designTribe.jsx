@@ -25,9 +25,7 @@ function designTribe(){
     </div>
 
     <OthersDesign/>
-    <div className='container'>
     <SignUpTile/>
-    </div>
     <Footer/>
     </>)
 }

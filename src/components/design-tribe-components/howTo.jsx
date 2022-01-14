@@ -19,7 +19,8 @@ const adIMGs = ['https://static.cdn.printful.com/static/v838/images/layout/desig
 function howTo(){
     return(
         <div className={styles.howToContainer}>
-            <div className={styles.howToHeader} style={{marginBottom:'4%'}}>How to use the Design Maker</div>
+            <div className={styles.howToSlides}>
+            <div className={styles.howToHeader}>How to use the Design Maker</div>
             <div className={styles.howToImgSection}>
             {imgs.map(item=>(<img src={item} width="180px"/>))}
             </div>
@@ -36,15 +37,16 @@ function howTo(){
                 ))}
             </div>
             <button className={styles.howtobtn}>Design Now &nbsp; &nbsp; &gt; </button>
+            </div>
             <div className={styles.howToAds}>
-                <img src="https://static.cdn.printful.com/static/v838//images/layout/design-maker/no-time-to-design-banner-img.png" alt="AD IMG" width="40%"/>
+                <img className={styles.howToAdsImg} src="https://static.cdn.printful.com/static/v838//images/layout/design-maker/no-time-to-design-banner-img.png" alt="AD IMG" width="60%"/>
                 <div className={styles.howToAdsTexts}>
                     <div className={styles.howToAdsText}>No time to design?</div>
                     <div className={styles.howToAdsSubText}>Choose one of our pre-made Quick Designs and make it yours! Edit the text, graphics, and colors, and order straight away.</div>
                 </div>
             </div>
             <div className={styles.adIMGs}>
-                {adIMGs.map(item=>(<img src={item} width="22%" className={styles.adIMG}/>))}
+                {adIMGs.map(item=>(<img src={item} className={styles.adIMG}/>))}
             </div>
         </div>
     )
