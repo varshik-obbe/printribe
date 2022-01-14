@@ -47,3 +47,6 @@
 .sizes:focus {
   background-color: black;
 }
+.colors:hover {
+  cursor: pointer;
+}

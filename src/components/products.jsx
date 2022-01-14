@@ -38,6 +38,23 @@ const Products = () => {
       }
   }
 
+  const handleColorsclick = (e)=>{
+    
+      const color = document.getElementById(e.target.id).style.border
+      
+     if( color === "none"  ){
+       console.log(e.target.id)
+       console.log(color)
+       document.getElementById(e.target.id).style.border= "2px solid black"
+      //  document.getElementById(e.target.id).style.color ="white"
+      } else{
+         console.log(e.target.id)
+       console.log(color)
+        document.getElementById(e.target.id).style.border= "none"
+        // document.getElementById(e.target.id).style.color ="black"
+      }
+  }
+
   useEffect(() => {
     getProduct()
   }, [])
@@ -85,38 +102,16 @@ const Products = () => {
               </p> */}
               <p className="mt-3 fw-bold">Choose color</p>
               <div className="d-flex mb-3">
-                <div 
-                  className="border  bg-black mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
+                {
+                 product.productcolors !== undefined ? product.productcolors.map((color)=>{
+                  return   <div id={color}
+                  className="mx-1 colors"
+                  style={{ height: "20px", width: "20px", borderRadius: "5px" ,backgroundColor:color,border:"none"}}
+                  onClick={(e)=>handleColorsclick(e)}
                 ></div>
-                <div
-                  className="border  bg-light mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
-                <div
-                  className="border  bg-danger mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
-                <div
-                  className="border  bg-warning mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
-                <div
-                  className="border  bg-info mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
-                <div
-                  className="border  bg-danger mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
-                <div
-                  className="border  bg-info mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
-                <div
-                  className="border border-dark bg-warning mx-1 "
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" }}
-                ></div>
+                  }) : null
+                }
+               
               </div>
               <div className="d-flex mt-3 mb-3">
                 <div className="me-5 fw-bold">Choose size</div>
