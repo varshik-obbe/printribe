@@ -1,9 +1,11 @@
-import React,{useState,useEffect} from 'react'
+import { Link, useParams } from 'react-router-dom';
+import React,{useEffect, useState} from 'react'
+
 import axios from 'axios'
 import img from '../assets/mensclothing.PNG'
 import img1 from '../assets/womensclothing.PNG'
 import styles from '../styles/catalog.module.css'
-import { useParams,Link } from 'react-router-dom';
+
 require('dotenv').config();
 
 const SubCatalog = () => {
@@ -39,7 +41,7 @@ const SubCatalog = () => {
                 <div className={`card ${styles.catalogcontainer}`} >
                     <Link to={`/product-catalog/products/${category.name}/${category.id}`} className={styles.catalogText}>
                         <img class="card-img-top" src={process.env.REACT_APP_IMAGE_BASE_URL+category.img} alt={category.name} />
-                        <div class="card-body">
+                        <div class="card_body h-25 p-2" className={styles.card_body}>
                             <p class="card-text fw-bold">{category.name}</p>
                         </div></Link>
                 </div>

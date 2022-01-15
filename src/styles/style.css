@@ -1,7 +1,10 @@
 .ti {
-  width: 12%;
+  width: 20%;
   padding-top: 10px;
-  float: left;
+  display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  /* float: left; */
 }
 
 .ti img {
@@ -13,9 +16,13 @@
 }
 
 .fi {
-  width: 88%;
-  margin-left: 20%;
+  width: 100%;
+  /* margin-left: 20%; */
+  text-align: center;
   padding: 25px 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .fi > img {
   width: 80%;

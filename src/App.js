@@ -7,7 +7,7 @@ import Customizer from './pages/customizer';
 import DesignTribe from './pages/designTribe';
 import Homelayout from "./pages/homelayout";
 import PrivacyPolicy from './pages/privacypolicy';
-import Productataloglayout from "./styles/productcataloglayout";
+import Productataloglayout from "./pages/productcataloglayout";
 import Productpage from "./pages/productpage";
 import React from "react";
 import ReturnRefund from './pages/returnrefund';
