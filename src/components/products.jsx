@@ -11,13 +11,20 @@ import { useParams } from "react-router-dom";
 const Products = () => {
 
   const { prodid } = useParams()
+  const [quantity,setQuantity] = useState("1")
   const [product, setproduct] = useState({})
+  const [color, setColor] = useState("")
+  const [productName,setProductName] = useState("")
+  const [colorId,setColorId]=useState('0');
+
 
   const getProduct = () => {
     axios.get(`/products/getproduct/${prodid}`)
       .then(({ data }) => {
+        console.log(data.product.productdata[0]);
         setproduct(data.product.productdata[0])
-        console.log(data.product.productdata[0])
+        setColor(data.product.productdata[0].productcolors[0].colorName);
+        setProductName(data.product.productdata[0].title);
       })
       .catch(({ err }) => {
         console.log(err)
@@ -29,9 +36,13 @@ const Products = () => {
     var formCustomizer =
       document.getElementById("frmCustomizer");
     // var formProductPage = document.getElementById("{ idFormProduct }");
-    formCustomizer.elements["productid"].value = 'Red61e1a843536bb33f542ec69d,';
-    formCustomizer.elements["quantity"].value = '1';
-    formCustomizer.elements["masterProductId"].value = '61e1a843536bb33f542ec69d';
+    formCustomizer.elements["productid"].value = color+product.id;
+    console.log(formCustomizer.elements["productid"].value);
+    formCustomizer.elements["quantity"].value = quantity;
+    formCustomizer.elements["masterProductId"].value = product.id;
+    formCustomizer.elements["color"].value = color;
+    formCustomizer.elements["colorId"].value = colorId;
+    formCustomizer.elements["title"].value = productName;
     formCustomizer.submit();
   }
 
@@ -116,11 +127,13 @@ const Products = () => {
         
               <div className="d-flex mb-3">
                 {
-                 product.productcolors !== undefined ? product.productcolors.map((color)=>{
+                 product.productcolors !== undefined ? product.productcolors.map((color,index)=>{
                   return   <div id={color}
                   className="mx-1 colors"
-                  style={{ height: "20px", width: "20px", borderRadius: "5px" ,backgroundColor:color,border:"none"}}
-                  onClick={(e)=>handleColorsclick(e)}
+                  style={{ height: "20px", width: "20px", borderRadius: "5px" ,backgroundColor:color.colorName,border:"none"}}
+                  onClick={(e)=>{handleColorsclick(e);
+                  setColor(color.colorName);
+                setColorId(index+1);}}
                 ></div>
                   }) : null
                 }
@@ -193,7 +206,7 @@ const Products = () => {
 
               <div className="d-flex mt-3 mb-3 fw-bold">
               <label htmlFor="quantity">Quantity</label>
-              <textarea style={{textAlign:"center",marginLeft:"15px"}} name="" id="" cols="5" rows="1"  value={product.quantity}></textarea>
+              <textarea style={{textAlign:"center",marginLeft:"15px"}} name="" id="" cols="50" rows="1"  value={quantity} onChange={event => setQuantity(event.target.value)}></textarea>
             </div>
             
             
@@ -210,6 +223,9 @@ const Products = () => {
             <input type="hidden" name="quantity" value={1} />
             <input type="hidden" name="productid" value={"object123"} />
             <input type="hidden" name="masterProductId" value={"object123"} />
+            <input type="hidden" name="color" value={1} />
+            <input type="hidden" name="colorId" value={1} />
+            <input type="hidden" name="title" value={1} />
           </form>
         </div>
       

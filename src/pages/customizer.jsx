@@ -4,6 +4,7 @@ import React from 'react'
 import Script from '@gumgum/react-script-tag';
 import axios from 'axios'
 import styles from "../styles/customize.module.css"
+import {useParams} from "react-router-dom";
 
 export default class customizer extends React.Component {
     state = {
@@ -18,8 +19,8 @@ export default class customizer extends React.Component {
             // "savedesigncallback": {javascript function object},
             "productinfourl": "https://api.theprintribe.com/api/zakekeCustomize/productinfo",
             "additionaldata": {
-                "mainProductid": "61e1a843536bb33f542ec69d",
-                "customerUniqueId": "2131412"
+                "mainProductid": "",
+                "customerUniqueId": ""
             },
             "canSaveDesign": false,
             "culture": "en-US",
@@ -30,8 +31,8 @@ export default class customizer extends React.Component {
             "quantity": 1,
             "sides": ['Front', 'Back'],
             "selectedattributes": {
-                "color": "1",
-                "VariantName": "Red",
+                "color": "",
+                "VariantName": "",
                 "SideName": "Front",
                 "AreaName": "Front Area"
             }
@@ -44,9 +45,23 @@ export default class customizer extends React.Component {
             .then(({ data }) => {
                 console.log(data);
                 this.state.config.tokenoauth = data.returndata.access_token;
-                console.log(this.state.config);
+                console.log("data recieved:",this.state.config);
                 var config = this.state.config;
-                var productJson = { "id": "61e1a843536bb33f542ec69d", "name": "test2" };
+                const queryParams = new URLSearchParams(window.location.search);
+                const productid = queryParams.get('productid');
+                const quantity = queryParams.get('quantity');
+                const masterProductId = queryParams.get('masterProductId');
+                const colorName = queryParams.get('color');
+                const colorId = queryParams.get('colorId');
+                const title = queryParams.get('title');
+                console.log(productid,quantity,masterProductId,colorName);
+                config.quantity=quantity;
+                config.selectedattributes.VariantName=colorName;
+                config.selectedattributes.color=colorId;
+                config.additionaldata.customerUniqueId=""+(Math.floor(Math.random()*89999)+100000);
+                console.log("config:",config);
+                config.additionaldata.mainProductid = masterProductId;
+                var productJson = { "id": masterProductId, "name": title };
                 var customizer = new window.zakekeDesigner(config, productJson);
             })
             .catch((resp) => {
