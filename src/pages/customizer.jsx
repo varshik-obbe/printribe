@@ -3,6 +3,7 @@ import Header from '../components/header';
 import React from 'react'
 import Script from '@gumgum/react-script-tag';
 import axios from 'axios'
+import styles from "../styles/customize.module.css"
 
 export default class customizer extends React.Component {
     state = {
@@ -75,7 +76,7 @@ export default class customizer extends React.Component {
             />
             <Header />
             <div className="container">
-                <div id="zakeke-container" style={{ height:"100vh", width:"100%" }}></div>
+                <div id="zakeke-container" className={styles.zakekeContainer} style={{ height:"100vh", width:"100%" }}></div>
             </div>
 
             <Footer />
