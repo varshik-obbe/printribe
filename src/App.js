@@ -27,19 +27,18 @@ function App() {
           <Route exact path="/" element={<Homelayout />} />
           <Route
             exact
-            path="/product-catalog"
+            path="/products"
             element={<Productataloglayout />}
           />
-          <Route exact path="/products/:category" element={<Productataloglayout />} />
-           <Route exact path="/product-catalog/mens-clothing/:subcatid" element={<SubCatMen /> } />
-           <Route exact path="/product-catalog/womens-clothing/:subcatid" element={<SubCatWomen /> } />
-           <Route exact path="/product-catalog/:subcatid/:id" element={<SubSubCat /> } />
-            <Route exact path="/product-catalog/products/:subCat/:productid" element={<CatalogsubProducts />} />    
+          {/* <Route exact path="/products/:category" element={<Productataloglayout />} /> */}
+           <Route exact path="/products/:category/:subcatid" element={<SubCatMen /> } />
+           <Route exact path="/products/:category/:subcatid/:id" element={<SubSubCat /> } />
+            <Route exact path="/products/:productid" element={<CatalogsubProducts />} />    
           {/* <Route exact path="/products/:category/:subCat" element={<Productataloglayout />} />
           <Route exact path="/products/:category/:subCat/:subSubCat" element={<Productataloglayout />} /> */}
                 
           <Route exact path="/cart" element={<Cart />} />
-          <Route exact path="/product-page/:prodid" element={<Productpage />} />
+          <Route exact path="/product/:prodid" element={<Productpage />} />
           <Route exact path="/design-tribe" element={<DesignTribe />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route exact path="/terms-conditions" element={<TermsPage />} />

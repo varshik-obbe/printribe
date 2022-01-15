@@ -39,7 +39,7 @@ const SubCatalog = () => {
             { products != undefined ?  products.map((category)=>{
                 return <div className="col-lg-4 col-md-6 col-sm-12 p-2" key={category.id}>
                 <div className={`card ${styles.catalogcontainer}`} >
-                    <Link to={`/product-catalog/products/${category.name}/${category.id}`} className={styles.catalogText}>
+                    <Link to={`/products/${category.id}`} className={styles.catalogText}>
                         <img class="card-img-top" src={process.env.REACT_APP_IMAGE_BASE_URL+category.img} alt={category.name} />
                         <div class="card_body h-25 p-2" className={styles.card_body}>
                             <p class="card-text fw-bold">{category.name}</p>

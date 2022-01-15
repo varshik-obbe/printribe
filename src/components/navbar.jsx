@@ -13,7 +13,7 @@ function Navbar() {
                         {/* <div className={styles.dropdown}>
                             <button className={styles.dropbtn}>Product catalog</button>
                             <div className={styles.dropdowncontent}> */}
-                                <Link to="/product-catalog" className={styles.navLink}>Product Catalog</Link>
+                                <Link to="/products" className={styles.navLink}>Product Catalog</Link>
                                 {/* <Link to="/product-page">Product page</Link> */}
                             {/* </div>
                         </div> */}

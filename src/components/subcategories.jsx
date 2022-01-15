@@ -27,6 +27,7 @@ const SubCatalog = () => {
 
     useEffect(() => {
        getPost()
+
     }, [])
 
 
@@ -35,9 +36,10 @@ const SubCatalog = () => {
               <div className={`container `}>
              <div className="row mt-3 mb-3 mx-0">
             {products.map((category)=>{
+                console.log(category)
                 return <div className="col-lg-4 col-md-6 col-sm-12 p-2" key={category.id}>
                 <div className={`card ${styles.catalogcontainer}`} >
-                    <Link to={category.subsubCategories ? `/product-catalog/${category.name}/${category.id}`: `/product-catalog/products/${category.name}/${category.id}`  }  className={styles.catalogText}>
+                    <Link to={category.subsubCategories ? `/products${category.url}/${category.id}`: `/products/${category.id}`  }  className={styles.catalogText}>
                         <img class="card-img-top" src={process.env.REACT_APP_IMAGE_BASE_URL+category.img} alt={category.name} />
                         <div class="card_body h-25 p-2" className={styles.card_body}>
                             <p class="card-text fw-bold">{category.name}</p>
