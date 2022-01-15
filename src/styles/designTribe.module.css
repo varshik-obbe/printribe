@@ -335,16 +335,6 @@
     width:12.5%;
 }
 
-.signUpTile{
-    padding:48px 60px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    margin: 8% 0%;
-    background-color: #3d3733;
-    color:white;
-    border-radius: 10px;
-}
 
 .signUpSubText{
     font-weight: 400;
@@ -378,8 +368,37 @@
     color:#ddbba0;
     margin-right:10px;
 }
+.signUpTile{
+    padding:48px 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8% 5%;
+    background-color: #3d3733;
+    color:white;
+    border-radius: 10px;
+}
+.signUpImg{
+    width:80%;
+    background-color:white;
+    border-radius: 10px;
+}
+.signUpBtn{
+    font-size: 18px;
+    color:white;
+    background-color: #e40f0b;
+    padding: 2% 10%;
+    border-radius: 5px;
+    border:1px solid #e40f0b;
+    font-weight: 700;
+    font-family: ProximaNova,sans-serif;
+    margin-top:5%;
+}
 
-@media (max-width:700px) {
+
+
+@media (max-width:800px) {
     *{
         overflow-x: hidden;
     }
@@ -460,6 +479,15 @@
     font-weight: 400;
     letter-spacing: 0;
     font-size: 22px;
+    line-height: 30px;
+    text-align: left!important;
+    padding-top: 8px!important;
+    color: #555!important;
+}
+.proSubText{
+    font-weight: 400;
+    letter-spacing: 0;
+    font-size: 20px;
     line-height: 30px;
     text-align: left!important;
     padding-top: 8px!important;
@@ -568,22 +596,11 @@
 .othersImg{
 width:25%;
 }
-.signUpImg{
-    width:75%;
-}
-.signUpTile{
-    padding:0% 0% 10% 0%;
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    margin: 8% 0%;
-    background-color: #3d3733;
-    color:white;
-    border-radius: 10px;
-}
+
 .signUpImg{
     width:100%;
     background-color:white;
+    border-radius: 10px;
 }
 .signUpImgCointer{
     background-color:white;
@@ -604,7 +621,6 @@ width:25%;
 }
 .signUpBtn{
     text-align: center;
-
 }
 .signUpBtn{
     font-size: 18px;
@@ -617,4 +633,15 @@ width:25%;
     font-family: ProximaNova,sans-serif;
     margin-top:5%;
 }
+.signUpTile{
+    padding:0% 0% 10% 0;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin: 8% 0%;
+    background-color: #3d3733;
+    color:white;
+    border-radius: 10px;
+}
+
 }
