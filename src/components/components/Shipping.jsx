@@ -26,11 +26,12 @@ function Shipping(props) {
   return (
     <React.Fragment>
       <div
-        class="w-100 mt-5 mb-4"
+        class="w-100"
         style={{
           padding: "30px 40px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <b class="fs-4">Shipping Address</b>
@@ -137,11 +138,12 @@ function Shipping(props) {
         </div>
       </div>
       <div
-        class="w-100 mb-5"
+        class="w-100 mt-4"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFF",
         }}
       >
         <div class="d-flex justify-content-center align-items-center">

@@ -6,11 +6,12 @@ function Products(props) {
   return (
     <React.Fragment>
       <div
-        class="w-100 mt-5 mb-4"
+        class="w-100"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <div class="">
@@ -75,25 +76,10 @@ function Products(props) {
                     />
                   </div>
                   <div class="mt-3" />
-                  <button
-                    style={{
-                      background: "transparent",
-                      border: "0",
-                      color: "blue",
-                      padding: "0",
-                    }}
-                  >
+                  <button class="p-0 border-0 bg-transparent text-primary">
                     Edit
                   </button>
-                  <button
-                    style={{
-                      background: "transparent",
-                      border: "0",
-                      color: "blue",
-                      marginLeft: "15px",
-                      padding: "0",
-                    }}
-                  >
+                  <button class="p-0 ms-3 border-0 bg-transparent text-primary">
                     Copy
                   </button>
                 </div>
@@ -295,11 +281,12 @@ function Products(props) {
         </div>
       </div>
       <div
-        class="w-100 mb-5"
+        class="w-100 mt-4"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <div class="d-flex justify-content-center align-items-center">

@@ -11,11 +11,12 @@ function ReviewOrder(props) {
   return (
     <React.Fragment>
       <div
-        class="w-100 my-5"
+        class="w-100"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFF",
         }}
       >
         <div class="mb-3">
@@ -259,11 +260,12 @@ function ReviewOrder(props) {
         </div>
       </div>
       <div
-        class="w-100 mb-5"
+        class="w-100 mt-4"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <div class="col-12">
@@ -310,11 +312,12 @@ function ReviewOrder(props) {
         )}
       </div>
       <div
-        class="w-100 mb-5"
+        class="w-100 mt-4"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <b class="fs-4">Shipping</b>
@@ -373,11 +376,12 @@ function ReviewOrder(props) {
         </div>
       </div>
       <div
-        class="w-100 mb-5"
+        class="w-100 mt-4"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <div class="col-12">
@@ -415,11 +419,12 @@ function ReviewOrder(props) {
         <PaymentComp />
       </React.Fragment>
       <div
-        class="w-100 mb-5"
+        class="w-100 mt-4"
         style={{
           padding: "30px",
           boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
           borderRadius: "8px",
+          background: "#FFFFFF",
         }}
       >
         <div class="d-flex justify-content-center align-items-center">

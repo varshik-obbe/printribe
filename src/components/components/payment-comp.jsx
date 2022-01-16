@@ -18,16 +18,21 @@ function PyamentComp() {
   const [billing, setBilling] = React.useState("same");
   return (
     <div
-      class="w-100 mb-5"
+      class="w-100 mt-4"
       style={{
         padding: "30px",
         boxShadow: "rgba(0, 0, 0, 0.16) 0px 1px 4px",
         borderRadius: "8px",
+        background: "#FFFFFF",
       }}
     >
       <div class="col-12">
         <ul class="nav nav-tabs">
-          <li class="nav-item" onClick={() => setActivePayment("wallet")}>
+          <li
+            class="nav-item"
+            onClick={() => setActivePayment("wallet")}
+            style={{ cursor: "pointer" }}
+          >
             <span
               class={
                 activePayment === "wallet" ? "nav-link active" : "nav-link"
@@ -36,7 +41,11 @@ function PyamentComp() {
               Wallet
             </span>
           </li>
-          <li class="nav-item" onClick={() => setActivePayment("other")}>
+          <li
+            class="nav-item"
+            onClick={() => setActivePayment("other")}
+            style={{ cursor: "pointer" }}
+          >
             <span
               class={activePayment === "other" ? "nav-link active" : "nav-link"}
             >
