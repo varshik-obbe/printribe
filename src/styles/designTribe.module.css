@@ -114,7 +114,6 @@
 .howToAdsImg{
     width:40%;
 }
-
 .whyUsContainer{
     margin-top:10%;
     text-align: center;
@@ -250,20 +249,19 @@
     border-radius: 2px;
     width:23%;
 }
-
-.whyUsImg{
-    border-radius: 5px;
-    height:500px;
-    position: relative;
-    top:-430px;
-    margin-bottom: -510px;
-    z-index: 1;
+.whyUsIMG{
+    display: block;
 }
+.whyUsIMGMobile{
+    display: none;
+}
+
 .whyUsImgContainer{
-    margin-top:2%;
-    height:400px;
     background-color: #e3ebff;
     background-image: url("https://static.cdn.printful.com/static/images/layout/design-maker/waves-pattern.svg");
+}
+.whyUsImg{
+    width:60%;
 }
 .whyUsTick{
     font-size: 20px;
@@ -397,7 +395,6 @@
 }
 
 
-
 @media (max-width:800px) {
     *{
         overflow-x: hidden;
@@ -501,20 +498,6 @@
     margin-bottom:5%;
 }
 
-.whyUsImg{
-    border-radius: 5px;
-    width: 100px;
-    height:100px;
-    position: relative;
-    z-index: 10;
-    display: none;
-}
-.whyUsImgContainer{
-    margin-top:2%;
-    height:150px;
-    background-color: #e3ebff;
-    background-image: url("https://static.cdn.printful.com/static/images/layout/design-maker/waves-pattern.svg");
-}
 .whyUsAllTopics{
     display: flex;
     flex-direction: column;
@@ -643,5 +626,7 @@ width:25%;
     color:white;
     border-radius: 10px;
 }
-
+.whyUsImg{
+    width:100%;
+}
 }

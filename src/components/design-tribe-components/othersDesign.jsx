@@ -21,7 +21,7 @@ const designsIMG = ["https://static.cdn.printful.com/static/v838/images/layout/d
 function othersDesign(){
     return(
         <div className={styles.othersDesignContainer}>
-        <div className={styles.othersHeader}>See what other creatives have made with the Design Maker</div>
+        <div className={styles.othersHeader}>See what other creatives have made with the Design Tribe</div>
         <div className={styles.featureSubHeader}>Get inspiration for your own daring designs</div>
         <div>
             {designsIMG.map(item=>(<img src={item} className={styles.othersImg}/>))}

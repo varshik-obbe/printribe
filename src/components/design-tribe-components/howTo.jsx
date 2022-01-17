@@ -20,7 +20,7 @@ function howTo(){
     return(
         <div className={styles.howToContainer}>
             <div className={styles.howToSlides}>
-            <div className={styles.howToHeader}>How to use the Design Maker</div>
+            <div className={styles.howToHeader}>How to use the Design Tribe</div>
             <div className={styles.howToImgSection}>
             {imgs.map(item=>(<img src={item} width="180px"/>))}
             </div>

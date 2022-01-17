@@ -23,7 +23,6 @@ function designTribe(){
     <MockUps/>
     <PrintfulPro/>
     </div>
-
     <OthersDesign/>
     <SignUpTile/>
     <Footer/>

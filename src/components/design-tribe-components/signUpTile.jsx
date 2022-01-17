@@ -5,7 +5,7 @@ function signUpTile(){
     return(<div>
         <div className={styles.signUpTile}>
                 <div className={styles.signUpTextContainer}>
-                    <div className={styles.signUpText} style={{color:'white'}}>Sign up to access all of the Design Maker's free features</div>
+                    <div className={styles.signUpText} style={{color:'white'}}>Sign up to access all of the Design Tribe's free features</div>
                     <div className={styles.signUpSubText} style={{margin:'3% 0%'}}>Set up your Printful account in seconds</div>
                     <div>
                         <div className={styles.signUpTickBox}>
