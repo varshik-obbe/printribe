@@ -7,6 +7,7 @@ import axios from "axios"
 import img2 from "../assets/tshirtblue.PNG";
 import style from "../styles/style.css";
 import { useParams } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const Products = () => {
 
@@ -14,24 +15,59 @@ const Products = () => {
   const [quantity, setQuantity] = useState("1")
   const [product, setproduct] = useState({})
   const [color, setColor] = useState("")
+  const [size, setSize] = useState("")
   const [productName, setProductName] = useState("")
   const [colorId, setColorId] = useState('0');
+  const [isLogged,setIsLogged] = useState(false);
+  const [isCustomizeable,setIsCustomizeable] = useState(false);
 
 
   const getProduct = () => {
+    if(checkLogin()){
+      setIsLogged(true);
+    }else{
+      setIsLogged(false);
+    }
     axios.get(`/products/getproduct/${prodid}`)
       .then(({ data }) => {
         console.log(data.product.productdata[0]);
         setproduct(data.product.productdata[0])
-        setColor(data.product.productdata[0].productcolors[0].colorName);
         setProductName(data.product.productdata[0].title);
       })
       .catch(({ err }) => {
         console.log(err)
       })
+
+      axios.get(`https://api.theprintribe.com/api/zakekeVariant/isZakekeProduct/${prodid}`)
+      .then(({data})=>{
+        if(data.success!=undefined & data.success!=null & data.success){
+          setIsCustomizeable(true);
+          console.log(data.success)
+        }
+      }).catch(({err})=>console.log(err));
+  }
+
+  const checkColorAndSize = ()=>{
+    if(color!="" & color!=null & color!=undefined & size!="" & size!=null & size!=undefined ){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  const checkLogin = () =>{
+    const token = localStorage.getItem('token');
+    const customerId = localStorage.getItem('customerId');
+    if(token!="" & token!=null & token!=undefined & customerId!="" & customerId!=null & customerId!=undefined ){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   const customize = (evt) => {
+    if(checkColorAndSize()){
+    if(checkLogin()){
     evt.preventDefault();
     var formCustomizer =
       document.getElementById("frmCustomizer");
@@ -44,13 +80,26 @@ const Products = () => {
     formCustomizer.elements["colorId"].value = colorId;
     formCustomizer.elements["title"].value = productName;
     formCustomizer.submit();
+    }else{
+      window.location.href="/signin";
+    }
+    }else{
+      Swal.fire(
+        'Error',
+        'Please Select all the options',
+        'error'
+      )
+    }
   }
 
   const handleSizeChange = (e) => {
     console.log(e.target.id)
-
+    setSize(e.target.id)
     const color = document.getElementById(e.target.id).style.backgroundColor
-
+    for(var i=0;i<product.productsizes.length;i++){
+      document.getElementById(product.productsizes[i]).style.backgroundColor = "white"
+      document.getElementById(product.productsizes[i]).style.color = "black"
+    }
     if (color !== "black") {
       document.getElementById(e.target.id).style.backgroundColor = "black"
       document.getElementById(e.target.id).style.color = "white"
@@ -64,15 +113,19 @@ const Products = () => {
 
     const color = document.getElementById(e.target.id).style.border
 
+    for(var i=0;i<product.productcolors.length;i++){
+      document.getElementById(product.productcolors[i].colorName).style.border = "none";
+    }
+  
     if (color === "none") {
       console.log(e.target.id)
       console.log(color)
-      document.getElementById(e.target.id).style.border = "2px solid black"
+      document.getElementById(e.target.id).style.border = "2px solid black";
       //  document.getElementById(e.target.id).style.color ="white"
     } else {
       console.log(e.target.id)
       console.log(color)
-      document.getElementById(e.target.id).style.border = "none"
+      document.getElementById(e.target.id).style.border = "1px solid black"
       // document.getElementById(e.target.id).style.color ="black"
     }
   }
@@ -127,16 +180,21 @@ const Products = () => {
 
             <div className="d-flex mb-3">
               {
-                product.productcolors !== undefined ? product.productcolors.map((color, index) => {
-                  return <div id={color}
-                    className="mx-1 colors"
-                    style={{ height: "20px", width: "20px", borderRadius: "5px", backgroundColor: color.colorName, border: "none" }}
+                product.productcolors !== undefined ? product.productcolors.map((item, index) => {
+                  return <div id={item.colorName}
+                    className="mx-1 colors shadow-lg border"
+                    style={{ height: "20px", width: "20px", borderRadius: "5px", backgroundColor: item.colorName,display:'flex',justifyContent:'center',alignItems:'center'}}
                     onClick={(e) => {
                       handleColorsclick(e);
-                      setColor(color.colorName);
+                      setColor(item.colorName);
                       setColorId(index + 1);
                     }}
-                  ></div>
+                  >
+                    {
+                      // console.log(color,item.colorName)
+                      color===item.colorName?(<i class="fa fa-check" aria-hidden="true"></i>):(<></>)
+                    }
+                  </div>
                 }) : null
               }
 
@@ -147,61 +205,13 @@ const Products = () => {
             </div>
             <div className="d-flex mt-3 mb-3">
               <div className="d-flex mb-3">
-                <div id="S"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  S
+                {
+                  product.productsizes!==undefined?product.productsizes.map((item)=>(
+                  <div id={item} className="border p-2 fw-bold text-center mx-1 sizes" onClick={(e) => handleSizeChange(e)}>
+                  {item}
                 </div>
-                <div id="M"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  M
-                </div>
-                <div
-                  id="L"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  L
-                </div>
-                <div
-                  id="XL"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  XL
-                </div>
-                <div
-                  id="2XL"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-
-                >
-                  2XL
-                </div>
-                <div
-                  id="3XL"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  3XL
-                </div>
-                <div
-                  id="4XL"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  4XL
-                </div>
-                <div
-                  id="5XL"
-                  className="border p-2 fw-bold text-center mx-1 sizes"
-                  onClick={(e) => handleSizeChange(e)}
-                >
-                  5XL
-                </div>
+                  )):(<>Sizes Not Found</>)
+                }
               </div>
 
             </div>
@@ -216,9 +226,12 @@ const Products = () => {
 
             <div className=""></div>
             <p className="fw-bold h3 mt-3 mb-3">₹{product.price}</p>
-            <button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={(e) => customize(e)}>
-              Start Designing
-            </button>
+            {
+              isLogged?(isCustomizeable?
+              (<button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={(e) => customize(e)}>Start Designing</button>)
+              :(<button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize">Add to cart</button>))
+              :(<button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={(e) => customize(e)}>Start Designing</button>)
+            }
           </div>
         </div>
       </div>

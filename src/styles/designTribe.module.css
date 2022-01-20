@@ -382,6 +382,9 @@
     background-color:white;
     border-radius: 10px;
 }
+.nav-link {
+    color:white;
+}
 .signUpBtn{
     font-size: 18px;
     color:white;

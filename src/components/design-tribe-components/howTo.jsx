@@ -17,6 +17,15 @@ const adIMGs = ['https://static.cdn.printful.com/static/v838/images/layout/desig
 "https://static.cdn.printful.com/static/v838/images/layout/design-maker/no-time-to-design-block/valentines-mug.jpg"]
 
 function howTo(){
+    const goToDesign=()=>{   
+        const token = localStorage.getItem('token');
+        const customerId = localStorage.getItem('customerId');
+        if(token!="" & token!=null & token!=undefined & customerId!="" & customerId!=null & customerId!=undefined ){
+            window.location.href="/products";
+        }else{
+            window.location.href="/signin";
+        }
+    }
     return(
         <div className={styles.howToContainer}>
             <div className={styles.howToSlides}>
@@ -36,7 +45,7 @@ function howTo(){
                     </div>
                 ))}
             </div>
-            <button className={styles.howtobtn}>Design Now &nbsp; &nbsp; &gt; </button>
+            <button className={styles.howtobtn} onClick={goToDesign}>Design Now &nbsp; &nbsp; &gt; </button>
             </div>
             <div className={styles.howToAds}>
                 <img className={styles.howToAdsImg} src="https://static.cdn.printful.com/static/v838//images/layout/design-maker/no-time-to-design-banner-img.png" alt="AD IMG" width="60%"/>

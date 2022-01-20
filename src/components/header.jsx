@@ -1,6 +1,6 @@
 import { Nav, Navbar } from "react-bootstrap";
 
-import React from "react";
+import React,{useState} from "react";
 import logo from "../assets/Printribe-logo.png";
 
 function Header() {
