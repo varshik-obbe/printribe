@@ -6,10 +6,11 @@ import styles from '../styles/home.module.css'
 function Navbar() {
     return (
         <>
-            <div className="">
-                <div className="row m-0 text-center p-2 fw-bold" style={{ borderTop: "1px solid grey", borderBottom: "1px solid grey" }}>
+            <div className="" style={{ borderTop: "1px solid #ccc", borderBottom: "1px solid #ccc",fontFamily:'Avenir Light' }}>
+                <div className={styles.navBars+' '+"container"}>
+                <div className="row m-0 text-center p-2 fw-bold " >
 
-                    <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
+                    <div className="col-lg-3 col-md-2 col-sm-2 text-uppercase p-1">
                         {/* <div className={styles.dropdown}>
                             <button className={styles.dropbtn}>Product catalog</button>
                             <div className={styles.dropdowncontent}> */}
@@ -32,7 +33,7 @@ function Navbar() {
                         {/* </div> */}
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-                        <button className={styles.dropbtn}>Services</button>
+                    <Link to="/"  className={styles.navLink}>Services</Link>
                         {/* <div className={styles.dropdowncontent}>
                                 <a href="#">Link 1</a>
                                 <a href="#">Link 2</a>
@@ -40,7 +41,7 @@ function Navbar() {
                             </div> */}
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-                        <button className={styles.dropbtn}>How it works</button>
+                    <Link to="/"  className={styles.navLink}>How it works</Link>
                         {/* <div className={styles.dropdowncontent}>
                                 <a href="#">Link 1</a>
                                 <a href="#">Link 2</a>
@@ -48,21 +49,22 @@ function Navbar() {
                             </div> */}
                     </div>
                     <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-                        <button className={styles.dropbtn}>Resources</button>
+                    <Link to="/"  className={styles.navLink}>Resources</Link>
                         {/* <div className={styles.dropdowncontent}>
                                 <a href="#">Link 1</a>
                                 <a href="#">Link 2</a>
                                 <a href="#">Link 3</a>
                             </div> */}
                     </div>
-                    <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-                        <button className={styles.dropbtn}>faq</button>
+                    <div className="col-lg-1 col-md-2 col-sm-2 text-uppercase p-1">
+                    <Link to="/"  className={styles.navLink}>faq</Link>
                         {/* <div className={styles.dropdowncontent}>
                                 <a href="#">Link 1</a>
                                 <a href="#">Link 2</a>
                                 <a href="#">Link 3</a>
                             </div> */}
                     </div>
+                </div>
                 </div>
             </div>
         </>
