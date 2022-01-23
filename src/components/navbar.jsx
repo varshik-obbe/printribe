@@ -6,7 +6,7 @@ import styles from '../styles/home.module.css'
 function Navbar() {
     return (
         <>
-            <div className="" style={{ borderTop: "1px solid #ccc", borderBottom: "1px solid #ccc",fontFamily:'Avenir Light' }}>
+            <div className="" style={{ borderTop: "1px solid #ccc", borderBottom: "1px solid #ccc"}}>
                 <div className={styles.navBars+' '+"container"}>
                 <div className="row m-0 text-center p-2 fw-bold " >
 

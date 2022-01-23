@@ -1,11 +1,12 @@
 import { Nav, Navbar } from "react-bootstrap";
 import React,{useState} from "react";
+
 import logo from "../assets/Printribe-logo.png";
 import styles from '../styles/home.module.css';
 
 function Header() {
   return (
-    <div style={{ fontFamily:"Avenir Light"}}>
+    <div style={{ fontFamily:"Avenir"}}>
     <div className="pt-1 pb-2" style={{backgroundColor:"#ffd680",position:'relative'}}>
       <div className="text-center" style={{maxWidth:'60%',margin:'auto'}}>* Message to be edited from admin panel </div> 
       <div className="" style={{position:'absolute',right:'10%',top:'5px'}}>X</div>

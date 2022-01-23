@@ -1,5 +1,5 @@
 .searchBox{
-  font-family:'Avenir Light', FontAwesome;
+  font-family:'Avenir', FontAwesome;
   padding:10px;
   font-size:18px;
   border:1px solid black;
@@ -19,7 +19,8 @@
   text-decoration:none;
   color:#000;
   letter-spacing: 1px;
-  font-size: 18px;
+  font-size: 15px;
+  font-family: "Avenir";
 }
 .img {
   object-fit: contain;
