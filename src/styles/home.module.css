@@ -1,16 +1,23 @@
 .searchBox{
-  font-family:'Avenir', FontAwesome;
   padding:10px;
-  font-size:18px;
   border:1px solid black;
-  
 }
-.searchBox:focus, .searchBox:active{
-  border:1px solid black !important;
+.searchInput{
+  font-family:'Avenir', FontAwesome;
+  font-size:18px;
+  margin-left:10px;
+}
+.searchInput:focus, .searchInput:active{
+  border:0px solid black !important;
   outline: none !important;
 }
-.searchBox::placeholder{
+.searchInput::placeholder{
   color:black;
+}
+.searchIcon{
+  color:black;
+  -webkit-text-stroke: 1px white;
+  font-size:18px;
 }
 .navBars{
   padding:0% 11%;
@@ -22,6 +29,20 @@
   font-size: 15px;
   font-family: "Avenir";
 }
+.crossIcon{
+  color:black;
+  -webkit-text-stroke: 2px #ffd680;
+}
+
+.heroTitle{
+  font-family: 'Roboto Bold',Arial;
+  font-weight:700 !important;
+  font-size:40px;
+  line-height: 48px;
+  letter-spacing: 0.2px;
+  color:#000;
+}
+
 .img {
   object-fit: contain;
   max-width: 100%;

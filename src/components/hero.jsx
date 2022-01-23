@@ -1,15 +1,15 @@
 import React from 'react'
 import img from '../assets/hero.PNG'
-
+import styles from '../styles/home.module.css';
 
 function Hero() {
     return (
         <>
             <div className="container mt-5 mb-5" style={{padding:"0 8%"}}>
                 <div className="row">
-                    <div className="col-lg-6 col-md-12 p-5">
+                    <div className="col-lg-6 col-md-12 p-3">
                         <div>
-                        <p style={{fontFamily:'Roboto',fontWeight:'900 !important',fontSize:'40px'}}>Create and sell custom <div className="text-left">products</div></p>
+                        <p className={styles.heroTitle}>Create and sell custom <div className="text-left">products</div></p>
                         </div>
                         <p className="h4 mt-5 mb-5">
                         Turn your design ideas into premium products and drop ship to your customers under your brand

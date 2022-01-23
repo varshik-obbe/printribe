@@ -5,12 +5,13 @@ import logo from "../assets/Printribe-logo.png";
 import styles from '../styles/home.module.css';
 
 function Header() {
+  const [messageVisible,setMessageVisible] = useState(true);
   return (
     <div style={{ fontFamily:"Avenir"}}>
-    <div className="pt-1 pb-2" style={{backgroundColor:"#ffd680",position:'relative'}}>
+    {messageVisible?(<div className="pt-1 pb-2" style={{backgroundColor:"#ffd680",position:'relative'}}>
       <div className="text-center" style={{maxWidth:'60%',margin:'auto'}}>* Message to be edited from admin panel </div> 
-      <div className="" style={{position:'absolute',right:'10%',top:'5px'}}>X</div>
-    </div>
+      <div className="" style={{position:'absolute',right:'10%',top:'5px'}} onClick={()=>setMessageVisible(!messageVisible)}><i className={styles.crossIcon+' '+"fa fa-times"}></i></div>
+    </div>):(<></>)}
       <div className="container-fluid p-3">
         <div className="row">
           <div className=" col-lg-3 col-12 logo text-center mb-3 mb-sm-0 py-2">
@@ -23,7 +24,11 @@ function Header() {
             </a>
           </div>
           <div className="col-lg-5 col-8 px-4 py-2">
-            <input className={styles.searchBox} size="40" placeholder="&#xF002;   Search..."  ></input>
+            <div style={{position:'absolute'}} className={styles.searchBox}>
+            <i className={"fas fa-search "+styles.searchIcon} ></i>
+            <input  size="40" className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black'}}></input>
+            </div>
+            
           </div>
           <div className="col-4">
             <Navbar expand="lg" className="">
