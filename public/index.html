@@ -9,11 +9,12 @@
   <meta name="description" content="Web site created using create-react-app" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
-  <link href="https://allfont.net/allfont.css?fonts=roboto-bold" rel="stylesheet" type="text/css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital@1&display=swap" rel="stylesheet">
   <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -28,13 +29,53 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-  
+
   <title>Printribe</title>
   <style>
-    @import url(//db.onlinewebfonts.com/c/05663321f7477456a65e0c363c777377?family=Avenir);
+    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+    /* @import url(https://db.onlinewebfonts.com/c/05663321f7477456a65e0c363c777377?family=Avenir); */
+
+    /* @import url(https://db.onlinewebfonts.com/c/55c4f556836775174bfac94178a3fe82?family=ProximaNW01-Reg); */
     @font-face {
-      font-family: 'Avenir';
-      src: local('Avenir'), url('../src/assets/fonts/Avenir LT 35 Light.ttf') format('ttf');
+  font-family: 'Avenir LT 35 Light';
+  src: url('fonts/Avenir LT 35 Light.eot');
+  src: url('fonts/Avenir LT 35 Light.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Avenir';
+  src: url('fonts/AvenirLT-Light.svg#AvenirLT-Light') format('svg'),
+       url('fonts/AvenirLT-Light.ttf') format('truetype'),
+       url('fonts/AvenirLT-Light.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+    @font-face {
+      font-family: 'Proxima N W01 Reg';
+      src: url('fonts/Proxima N W01 Reg.eot');
+      src: url('fonts/Proxima N W01 Reg.eot?#iefix') format('embedded-opentype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'ProximaNW01-Reg';
+      src: url('fonts/ProximaNW01-Reg.svg#ProximaNW01-Reg') format('svg'),
+        url('fonts/ProximaNW01-Reg.ttf') format('truetype'),
+        url('fonts/ProximaNW01-Reg.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+
+    #root {
+      font-family: Avenir, sans-serif;
+      line-height: normal;
     }
   </style>
 </head>
@@ -54,7 +95,7 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  
+
 </body>
 
 </html>

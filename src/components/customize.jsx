@@ -8,9 +8,9 @@ function Customize() {
     return (
         <>
             <div className="container pt-5 pb-5">
-                <div className="h2 fw-bold text-center mb-3">
+            <h2 className="mt-3 mb-3 text-center" style={{fontFamily:"ProximaNW01-Reg, sans-serif", fontWeight:"700"}}>
                     Customize and sell premium products
-                </div>
+                </h2>
                 <p className="h5 mb-5 text-center">
                     Print and stitch on demand with your brand name
                 </p>
@@ -106,7 +106,7 @@ function Customize() {
 
                 </div>
                 <div className="text-center mt-4 mb-4">
-                    <button className="btn btn-danger px-4 py-2"><h5 class="m-0">All Products</h5></button>
+                  <a href="/products"> <button className="btn btn-danger px-4 py-2"><h5 class="m-0">All Products</h5></button></a> 
                 </div>
                 {/* <Script src="https://portal.zakeke.com/scripts/config.js"></Script> */}
                 {/* <Script src="https://portal.zakeke.com/scripts/integration/api/customizer.js"></Script> */}

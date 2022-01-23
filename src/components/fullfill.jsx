@@ -11,38 +11,38 @@ function Fullfill() {
                <div className='pt-5'>
                <p className=" mb-3 h2 text-center fw-bold">How you can fulfill your products using Printribe</p>
                </div>
-                <div className="row m-0" style={{padding:"0 8%"}}>
+                <div className="row m-0" style={{padding:"0 3%"}}>
                     {/* <div className="row m-0"> */}
                         <div className="col-lg-4 col-md-4 col-sm-12 ">
                             <div className={styles.imgcontainer} >
-                                <div className=" p-3" style={{height:"55%"}}>
+                                <div className="p-3">
                                 <img className={`card-img-top img-fluid  ${styles.img}`} src={img1}/>
                                 </div>
                                 <div className="card-body text-center">
-                                    <p className="card-text fw-bold">Create custom products</p>
-                                    <p>Use design tribe to create designs and add them to a wide range of products</p>
+                                    <p className="card-text fw-bold" style={{fontSize:"22px"}}>Create custom products</p>
+                                    <p className="px-lg-4 px-0">Use design tribe to create designs and add them to a wide range of products</p>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
                             <div className={styles.imgcontainer} >
-                            <div className=" p-3" style={{height:"55%"}}>
+                            <div className="p-3">
                                 <img className={`card-img-top img-fluid  ${styles.img}`} src={img2}/>
                                 </div>
                                 <div className="card-body text-center">
-                                    <p className="card-text fw-bold">Sell on your own terms</p>
-                                    <p>Choose the products, market your designs, set price and make a sale</p>
+                                    <p className="card-text fw-bold" style={{fontSize:"22px"}}>Sell on your own terms</p>
+                                    <p className="px-lg-4 px-0">Choose the products, market your designs, set price and make a sale</p>
                                 </div>
                             </div>
                         </div>
                         <div className="col-lg-4 col-md-4 col-sm-12 p-3">
                             <div className={styles.imgcontainer} >
-                            <div className=" p-3"style={{height:"55%"}} >
+                            <div className="p-3">
                                 <img className={`card-img-top img-fluid  ${styles.img}`} src={img3}/>
                                 </div>
                                 <div className="card-body text-center">
-                                    <p className="card-text fw-bold">We handle the fulfillment</p>
-                                    <p>We take care of printing and shipping the order directly to your customer</p>
+                                    <p className="card-text fw-bold" style={{fontSize:"22px"}}>We handle the fulfillment</p>
+                                    <p className="px-lg-4 px-0">We take care of printing and shipping the order directly to your customer</p>
                                 </div>
                             </div>
                         </div>
