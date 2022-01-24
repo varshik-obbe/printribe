@@ -9,8 +9,9 @@ function Hustler() {
                 <div className="row py-3 px-sm-5">
                     <div className="col-lg-6 pe-lg-0">
                         <div className="p-sm-4" className={styles.hustlerContainer} style={{ background: "#151C29", borderRadius: "30px", borderBottomRightRadius: "0" }}>
-                            <div className="p-3 ">
-                                <p className="h2 fw-bold mt-3 mb-3 text-light px-sm-4">Start Your Side Hustle Today</p>
+                            <div className="px-5 py-4">
+                            <h2 className="mt-3 mb-3 text-light px-sm-5" style={{fontFamily:"ProximaNW01-Reg, sans-serif", fontWeight:"700", fontSize:"30px"}}>
+                                Start Your Side Hustle Today</h2>
                                 <p className="text-light px-sm-4 mb-4">Pay only when you make a sale</p>
                                 <div className="text-light p-0 p-sm-4" style={{ background: "#2B3953", borderRadius: "10px" }}>
                                     <div className={`row p-1`}>

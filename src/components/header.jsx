@@ -8,31 +8,31 @@ function Header() {
   const [messageVisible,setMessageVisible] = useState(true);
   return (
     <div style={{ fontFamily:"Avenir"}}>
-    {messageVisible?(<div className="pt-1 pb-2" style={{backgroundColor:"#ffd680",position:'relative'}}>
-      <div className="text-center" style={{maxWidth:'60%',margin:'auto'}}>* Message to be edited from admin panel </div> 
-      <div className="" style={{position:'absolute',right:'10%',top:'5px'}} onClick={()=>setMessageVisible(!messageVisible)}><i className={styles.crossIcon+' '+"fa fa-times"}></i></div>
+    {messageVisible?(<div style={{backgroundColor:"#ffd680",position:'relative', padding:"7px 0 12px 0"}}>
+      <div className="text-center" style={{maxWidth:'60%',margin:'auto', fontSize:"14px"}}>* Message to be edited from admin panel </div> 
+      <div className="" style={{position:'absolute',right:'17%',top:'5px'}} onClick={()=>setMessageVisible(!messageVisible)}><i className={styles.crossIcon+' '+"fa fa-times"}></i></div>
     </div>):(<></>)}
-      <div className="container-fluid p-3">
+      <div className="container-fluid py-2">
         <div className="row">
-          <div className=" col-lg-3 col-12 logo text-center mb-3 mb-sm-0 py-2">
+          <div className="col-10 col-sm-9 col-md-3 logo mb-3 mb-sm-0 py-2 text-center text-lg-end ps-sm-5 ps-lg-2 pe-lg-5" style={{lineHeight:"45px"}}>
             <a href="/">
               <img
                 src={logo}
                 alt=""
-                style={{ height: "35px", maxWidth: "100%" }}
+                style={{ height: "40px",width:"206px", maxWidth: "100%" }}
               />
             </a>
           </div>
-          <div className="col-lg-5 col-8 px-4 py-2">
-            <div style={{position:'absolute'}} className={styles.searchBox}>
+          <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-2 order-2 order-md-1">
+            <div className={styles.searchBox}>
             <i className={"fas fa-search "+styles.searchIcon} ></i>
-            <input  size="40" className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black'}}></input>
+            <input className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black', width:"80%"}}></input>
             </div>
             
           </div>
-          <div className="col-4">
+          <div className="col-2 col-sm-3 col-md-3 col-lg-4 order-1 order-md-2">
             <Navbar expand="lg" className="">
-              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Toggle aria-controls="basic-navbar-nav" className="px-2" style={{width:"45px"}}/>
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mx-auto justify-content-evenly w-100">
                   {localStorage.getItem("customerId") ? (

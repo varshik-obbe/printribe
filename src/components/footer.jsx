@@ -8,15 +8,15 @@ function Footer() {
   return (
     <>
       <div className="container" style={{padding:"0 8%"}}>
-        <div className="row">
-          <div className="col-sm-8 col-12 text-center text-sm-start">
-          <div className=" col-lg-4 col-12 logo text-center mb-3 mb-sm-0 py-2">
+        <div className="row px-sm-5">
+          <div className="col-6 text-center text-sm-start mb-3 mb-sm-0 py-2">
+
                         <img src={logo} alt="" style={{ height: "35px", maxWidth: "100%" }} />
 
-                    </div>
+                    
           </div>
-          <div className="col-sm-4 col-12">
-            <div className="d-flex justify-content-center">
+          <div className="col-6">
+            <div className="d-flex justify-content-end">
               <div className="p-2 h3">
                 <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
               </div>

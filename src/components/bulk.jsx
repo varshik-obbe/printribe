@@ -5,11 +5,11 @@ function Bulk() {
     return (
         <>
             <div className="container-fluid" style={{ background: "rgb(255 241 201)" }}>
-                <div className="container " style={{padding:"0 8%"}}>
-                    <div className="row p-3 ">
-                        <div className="col-lg-6 col-md-12 px-4">
-                            <p className="fw-bold h2 mt-5 mb-2" style={{color:"#064378"}}>
-                                Need Help with Bulk Orders ?</p>
+                <div className="container " style={{padding:"2% 8%"}}>
+                    <div className="row p-sm-3 ">
+                        <div className="col-lg-6 col-md-12 px-sm-4">
+                        <h2 className="mt-3 mb-3" style={{fontFamily:"ProximaNW01-Reg, sans-serif", fontWeight:"700",color:"#064378"}}>
+                                Need Help with Bulk Orders ?</h2>
                             <div className="mt-4" style={{ background: "rgb(29 103 205)", padding: "20px", borderRadius: "15px"}}>
                                 {/* <p className="h5">Box 1:</p> */}
                                 <form>
