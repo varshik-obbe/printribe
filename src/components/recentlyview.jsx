@@ -1,5 +1,6 @@
 import React from 'react'
 import img from '../assets/tshirtblue.PNG'
+import style from '../styles/style.css';
 function Recentlyview() {
     return (
         <>
@@ -10,10 +11,10 @@ function Recentlyview() {
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img} />
                             <div className="card-body">
-                                <p className="card-text ">
+                                <p className="card-text recentlyText">
                                     Unisex Round Neck Cotton T-shirt</p>
-                                <p>₹175.00</p>
-                                <div className="d-flex mb-3">
+                                <p className='recentlyCost'>₹175.00</p>
+                                <div className="d-flex">
                                 <div className="border  bg-black mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                             <div className="border  bg-light mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                             <div className="border  bg-danger mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
@@ -21,7 +22,7 @@ function Recentlyview() {
                             <div className="border  bg-info mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                                     <p>+14 colors</p>
                                 </div>
-                                <p>XS - XXL</p>
+                                <p className='recentlySizes'>XS - XXL</p>
                             </div>
                         </div>
                     </div>
@@ -29,10 +30,10 @@ function Recentlyview() {
                         <div className="card" style={{ width: "100%" }}>
                             <img className="card-img-top" src={img} />
                             <div className="card-body">
-                                <p className="card-text ">
+                                <p className="card-text recentlyText">
                                     Unisex Round Neck Cotton T-shirt</p>
-                                <p>₹175.00</p>
-                                <div className="d-flex mb-3">
+                                <p className='recentlyCost'>₹175.00</p>
+                                <div className="d-flex">
                                 <div className="border  bg-black mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                             <div className="border  bg-light mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                             <div className="border  bg-danger mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
@@ -40,7 +41,7 @@ function Recentlyview() {
                             <div className="border  bg-info mx-1 " style={{ height: "20px", width: "20px", borderRadius: "5px" }}></div>
                                     <p>+14 colors</p>
                                 </div>
-                                <p>XS - XXL</p>
+                                <p className='recentlySizes'>XS - XXL</p>
                             </div>
                         </div>
                     </div>

@@ -136,47 +136,49 @@ const Products = () => {
 
   return (
     <>
-      <div className="container ">
-        <div className="row ">
-          <div className="col-lg-6 col-md-12">
+      <div>
+      <div className="mx-4 my-2 px-5 py-4">
+              <a href="/products">Product catalog</a> / <a href=""></a> / {productName}
+            </div>
+        <div className="row mx-0">
+          <div className={"col-lg-6 col-md-12 imgSection"}>
             <div className="row h-100">
               <div className="d-flex">
                 <div className="ti">
-                  <div>
-                    <img src={img1} />
+                  <div className="product_imgs">
+                    <img src={"https://static.wixstatic.com/media/f1c4b5_d94a53ee5bb24e5d9ec1abff8caa0f3f~mv2.png/v1/fill/w_77,h_115,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_2.webp"}/>
                   </div>
-                  <div>
-                    <img src={img2} />
+                  <div className="product_imgs">
+                    <img src={"https://static.wixstatic.com/media/f1c4b5_85c4b674adc54b63ad52bcd285ec879b~mv2.png/v1/crop/x_302,y_0,w_1002,h_1544/fill/w_75,h_115,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Womens%20clothing_3.webp"} />
                   </div>
-                  <div>
-                    <img src={img3} />
+                  <div className="product_imgs">
+                    <img src={"https://static.wixstatic.com/media/f1c4b5_4c020413427d41948ae2e7295ee7c056~mv2.png/v1/fill/w_137,h_115,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_4.webp"}/>
                   </div>
-                  <div>
-                    <img src={img1} />
+                  <div className="product_imgs">
+                    <img src={"https://static.wixstatic.com/media/f1c4b5_cd214bda508445329ef088347211ab2b~mv2.png/v1/fill/w_85,h_115,al_c,q_85,usm_0.66_1.00_0.01/Main%20Strip%20Mockup.webp"} />
                   </div>
-                  <div>
-                    <img src={img2} />
-                  </div>
-                  <div>
-                    <img src={img3} />
-                  </div>
+                  {/* <div className="product_imgs">
+                    <img src={"https://static.wixstatic.com/media/f1c4b5_cd214bda508445329ef088347211ab2b~mv2.png/v1/fill/w_85,h_115,al_c,q_85,usm_0.66_1.00_0.01/Main%20Strip%20Mockup.webp"} />
+                  </div> */}
                 </div>
 
-                <div className="fi">
-                  <img src={process.env.REACT_APP_IMAGE_BASE_URL +'/'+ product.img} alt={product.title} />
+                <div className="">
+                  {/* <img src={process.env.REACT_APP_IMAGE_BASE_URL +'/'+ product.img} alt={product.title}/> */}
+                  <img src={"https://static.wixstatic.com/media/f1c4b5_f1f33ab2c3584186b83a0276b11f19c1~mv2.png/v1/fill/w_418,h_565,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_3.webp"} className="mainImgs" alt={product.title}/>
                   {/* {console.log(process.env.REACT_APP_IMAGE_BASE_URL + product.img)} */}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="col-lg-6 col-md-12 p-5">
-            <p className="h4 fw-bold mb-3">{product.title}</p>
+          <div className="col-lg-6 col-md-12 ">
+            <div className="desciptionSection">
+            <p className="h4 fw-bold mb-3 descriptionTitle">{product.title}</p>
             <p className="mt-3 fw-bold">{product.description}</p>
             {/* <p className="btn btn-md btn-light fw-bold  mb-3 border-dark">
                 Printing (DTG)
               </p> */}
-            <p className="mt-3 fw-bold">Choose color</p>
+            <p className="mt-3 fw-bold choosingStyle">Choose color</p>
 
             <div className="d-flex mb-3">
               {
@@ -199,11 +201,11 @@ const Products = () => {
               }
 
             </div>
-            <div className="d-flex mt-3 mb-3">
-              <div className="me-5 fw-bold">Choose size</div>
-              <div className="mx-5 text-info">Size chart</div>
+            <div className="d-flex mt-3 mb-3 ">
+              <div className="me-5 fw-bold choosingStyle">Choose size</div>
+              <div className="mx-5 px-5 choosingSize">Size chart</div>
             </div>
-            <div className="d-flex mt-3 mb-3">
+            <div className="d-flex mt-4 mb-4">
               <div className="d-flex mb-3">
                 {
                   product.productsizes!==undefined?product.productsizes.map((item)=>(
@@ -222,19 +224,18 @@ const Products = () => {
                 name="" id="" cols="50" rows="1" value={quantity}
                 onChange={event => setQuantity(event.target.value)} />
             </div>
-
-
-            <div className=""></div>
-            <p className="fw-bold h3 mt-3 mb-3">₹{product.price}</p>
+            <p className="fw-bold h3 mt-5 mb-4 productPrice">₹{product.price}</p>
             {
               isLogged?(isCustomizeable?
-              (<button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={(e) => customize(e)}>Start Designing</button>)
-              :(<button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize">Add to cart</button>))
-              :(<button className="fw-bold h3 text-light btn btn-danger px-3" id="btnCustomize" onClick={(e) => customize(e)}>Start Designing</button>)
+              (<button className="fw-bold h3 text-light btn px-5 py-2 descriptionBtn" id="btnCustomize" onClick={(e) => customize(e)}>Start designing</button>)
+              :(<button className="fw-bold h3 text-light btn px-5 py-2 descriptionBtn" id="btnCustomize">Add to cart</button>))
+              :(<button className="fw-bold h3 text-light btn px-5 py-2 descriptionBtn" id="btnCustomize" onClick={(e) => customize(e)}>Start designing</button>)
             }
+          </div>
           </div>
         </div>
       </div>
+      <p className="greyArea"></p>
       <div>
         <form id="frmCustomizer" action="/customizer">
           <input type="hidden" name="quantity" value={1} />

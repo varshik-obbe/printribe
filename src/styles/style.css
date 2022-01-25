@@ -57,3 +57,94 @@
 .colors:hover {
   cursor: pointer;
 }
+
+.product_imgs{
+  border:0.1px solid rgba(232, 230, 230, 1);
+  background-color:rgba(249, 249, 249, 1);
+  border-radius: 5px;
+  width:86px;
+  height:126px;
+  object-fit: cover;
+  font-size: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+  margin:0% 10%;
+  margin-bottom:20%;
+}
+.imgSection{
+  padding-left:4%;
+}
+.desciptionSection{
+  padding-left:18%;
+}
+
+.descriptionTitle{
+  font-family: roboto-bold,roboto,sans-serif;
+  font-size: 25px;
+}
+
+.descriptionBtn{
+  background-color: #EE3C2F;
+  border-radius: 5px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  font-weight: 700;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 1.8em;
+    max-width: 100%;
+    text-align: center;
+}
+.choosingStyle{
+  font-family:sans-serif;
+  font-size: 17px;
+  word-wrap: break-word;
+  text-align: start;
+  padding-top:3%;
+}
+.choosingSize{
+  font-family:"Avenir";
+  color:#1D67CD;
+  font-size: 16px;
+  word-wrap: break-word;
+  text-align: start;
+  padding-top:3%;
+}
+.productPrice{
+  font-family: roboto-bold,roboto,sans-serif;
+  font-size: 25px;
+  word-wrap: break-word;
+  text-align: start;
+}
+.greyArea{
+  height: 400px;
+  background-color: #fcfcfc;
+}
+.mainImgs{
+  border:0.1px solid rgba(232, 230, 230, 1);
+  background-color:rgba(249, 249, 249, 1);
+  width: 100%;
+}
+
+.recentlyText{
+  font-size:17px;
+  font-family: "Avenir",sans-serif;
+  line-height: normal;
+  pointer-events: auto;
+  color: #000000;
+  word-wrap: break-word;
+  text-align: start;
+  margin-bottom:8px;
+}
+.recentlyCost{
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 15px;
+  font-family: "Avenir",sans-serif;
+}
+.recentlySizes{
+  font-size:14px;
+  font-family: "Avenir",sans-serif;
+  margin:0%;
+}

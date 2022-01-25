@@ -1,5 +1,4 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-
 import Account from "./components/account";
 import Cart from "./components/add-product";
 import CatalogsubProducts from "./pages/catalogProducts";
