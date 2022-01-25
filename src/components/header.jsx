@@ -7,7 +7,7 @@ import styles from '../styles/home.module.css';
 function Header() {
   const [messageVisible,setMessageVisible] = useState(true);
   return (
-    <div style={{ fontFamily:"Avenir"}}>
+    <div>
     {messageVisible?(<div style={{backgroundColor:"#ffd680",position:'relative', padding:"7px 0 12px 0"}}>
       <div className="text-center" style={{maxWidth:'60%',margin:'auto', fontSize:"14px"}}>* Message to be edited from admin panel </div> 
       <div className="" style={{position:'absolute',right:'17%',top:'5px'}} onClick={()=>setMessageVisible(!messageVisible)}><i className={styles.crossIcon+' '+"fa fa-times"}></i></div>
