@@ -13,7 +13,7 @@ function Fullfill() {
                </div>
                 <div className="row m-0" style={{padding:"0 3%"}}>
                     {/* <div className="row m-0"> */}
-                        <div className="col-lg-4 col-md-4 col-sm-12 ">
+                        <div className="col-lg-4 col-md-4 col-sm-12 p-3">
                             <div className={styles.imgcontainer} >
                                 <div className="p-3">
                                 <img className={`card-img-top img-fluid  ${styles.img}`} src={img1}/>
