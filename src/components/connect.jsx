@@ -10,7 +10,7 @@ function Connect() {
     return (
         <>
             <div className="container mt-5 mb- 5">
-                <h1 className="pt-3 mb-3 text-center" style={{ fontFamily: "ProximaNW01-Reg, sans-serif", fontWeight: "700" }}>Connect Printribe to major e-commerce platforms and marketplaces</h1>
+                <h1 className="pt-3 mb-3 text-center" style={{ fontFamily: "roboto-bold,roboto,sans-serif", fontWeight: "700" }}>Connect Printribe to major e-commerce platforms and marketplaces</h1>
                 <div className={styles.connectContainer}>
                     <div className={styles.img1pos}>
                         <img src={img1} className={styles.img1} />

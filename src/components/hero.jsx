@@ -3,9 +3,10 @@ import img from '../assets/hero.PNG'
 import styles from '../styles/home.module.css';
 
 function Hero() {
+   
     return (
         <>
-            <div className="container mb-5" style={{ padding: "0 11%", marginTop: "90px" }}>
+            <div className="container mb-5" id={styles.padStyle}>
                 <div className="row">
                     <div className="col-lg-6 col-md-12 p-3">
                         <div>
@@ -25,7 +26,7 @@ function Hero() {
                         <p style={{fontSize:"15px", fontFamily:"ProximaNW01-Reg", letterSpacing:"normal"}}>No sign up fee. No minimums. Fast fulfillment.</p>
                     </div>
                     <div className="col-lg-6 pt-4 col-md-12 text-center">
-                        <img src={img} style={{ maxWidth: "100%", maxHeight: "420px" }}></img>
+                        <img src={img} className={styles.heroImage} ></img>
                     </div>
                 </div>
 

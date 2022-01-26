@@ -5,6 +5,8 @@ import React from "react";
 import logo from '../assets/Printribe-logo.png'
 
 function Footer() {
+  const d = new Date();
+  const year = d.getFullYear();
   return (
     <>
       <div className="container" style={{padding:"0 8%"}}>
@@ -35,20 +37,21 @@ function Footer() {
         </div>
 
       </div>
-      <div className="conatiner-fluid" style={{ background: "#116dff", padding:"0 8%"}}>
+      <div className="conatiner-fluid" style={{ background: "#1F649F", padding:"0 8%"}}>
         <div className="container">
           <div className="row p-5">
-            <div className="col-lg-3 col-md-12 text-light">
-              <p className="h2  text-uppercase fw-bold">contact us</p>
+            <div className="col-lg-3 col-md-12 text-light" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+              <p className="h2  text-uppercase fw-bold " style={{fontSize:"18px" ,fontFamily:"Avenir"}}>contact us</p>
 
-              <p className="h4 fw-bold">Address:</p>
+              <p className="h4 fw-bold" style={{fontSize:"15px" ,fontFamily:"Avenir"}}><b>Address:</b></p>
               Kereguddadahalli, Chikkabanavara, Bangalore, Karnataka - 560032
-              <div className="h4 fw-bold">Email:</div>
+
+              <div className="h4 fw-bold" style={{marginTop:"20px", fontSize:"15px" ,fontFamily:"Avenir"}}>Email:</div>
               info@theprintribe.com
             </div>
 
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <p className="h3 text-light text-uppercase fw-bold">Company</p>
+            <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
@@ -69,8 +72,8 @@ function Footer() {
 
               </ul>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <p className="h3 text-light text-uppercase fw-bold">Company</p>
+            <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
@@ -91,8 +94,8 @@ function Footer() {
 
               </ul>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0">
-              <p className="h3 text-light text-uppercase fw-bold">Company</p>
+            <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
@@ -119,7 +122,7 @@ function Footer() {
       </div>
       <div className="container-fluid text-center" style={{ background: "rgb(31 100 159)" }}>
         <p className="text-light p-3 m-0">
-          Copyright Ⓒ 2021 Printribe. All rights reserved.</p>
+          Copyright Ⓒ {year} Printribe. All rights reserved.</p>
       </div>
     </>
   );
