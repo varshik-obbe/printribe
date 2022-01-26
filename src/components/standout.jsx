@@ -6,7 +6,7 @@ function Standout() {
         <>
             <div className="container mt-5 mb-5" style={{padding:"0 5%"}}>
                 <h2 className={styles.fulfill_title}>What makes Printribe stand out</h2>
-                <div className="row">
+                <div className="row ">
                     <div className={`col-lg-4 col-md-12 p-4 ${styles.standoutText}` }>
                         <p style={{fontSize:"22px", fontWeight:"950"}}><b>No sign up fee</b></p>
                         <p className='' style={{fontSize:"19px"}}>Printribe offers free signup with no charge or minimum deposit. Simply signup and start placing your orders.</p>

@@ -12,11 +12,11 @@ function Customize() {
             <h2 className={styles.fulfill_title}>
                     Customize and sell premium products
                 </h2>
-                <p className="h5 mb-5 text-center">
+                <p className="h5 mb-4 text-center">
                     Print and stitch on demand with your brand name
                 </p>
                 <div className="row">
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3 mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img1} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -27,7 +27,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img2} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -38,7 +38,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img3} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -49,7 +49,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img1} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -60,7 +60,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img2} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -71,7 +71,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img3} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -82,7 +82,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img1} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>
@@ -93,7 +93,7 @@ function Customize() {
                         </div>
 
                     </div>
-                    <div className="col-lg-3 col-sm-6 p-3">
+                    <div className="col-lg-3 col-sm-6 p-3  mb-4">
                         <div className="card" style={{ maxWidth: "100%", height: "100%" }}>
                             <img className="card-img-top" src={img2} alt="img1" style={{ height: "75%", maxWidth: "100%", objectFit: "contain" }} />
                             <div className="card-body" style={{ height: "25%" }}>

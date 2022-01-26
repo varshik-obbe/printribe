@@ -40,7 +40,7 @@ function Catagories() {
                                             <Accordion.Item eventKey="1" style={{ border: "none" }}>
                                                 <Accordion.Header style={{ border: "none" }}> <Link className='Link' style={{ textDecoration: "none" }} to={`/products${subproduct.url}/${subproduct.id}`}><span className="fw-bold">{subproduct.name}</span></Link></Accordion.Header>
 
-                                                <Accordion.Body style={{ border: "none" }}>
+                                                <Accordion.Body style={{ border: "none" ,padding:"0px" }}>
                                                     {
                                                         subproduct.subsubCategories ? subproduct.subsubCategories.map((subsubproduct) => {
                                                             return <Accordion.Body><Link className='Link' to={`/products/${subsubproduct.id}`} style={{ textDecoration: "none", color: "black" }} >  <span style={{ colorL: "black" }} className="fw-bold">{subsubproduct.name}</span> </Link></Accordion.Body>

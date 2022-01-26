@@ -23,7 +23,7 @@ function Header() {
               />
             </a>
           </div>
-          <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-2 order-2 order-md-1">
+          <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-6 order-2 order-md-1">
             <div className={styles.searchBox}>
             <i className={"fas fa-search "+styles.searchIcon} ></i>
             <input className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black', width:"80%"}}></input>

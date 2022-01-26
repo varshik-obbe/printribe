@@ -8,7 +8,7 @@ function Fullfill() {
     return (
         <div style={{background:"rgb(255 241 201)"}}>
             <div className="container mt-5 mb-5" >
-               <div className='pt-5'>
+               <div className='pt-5 mb-5'>
                <p className={styles.fulfill_title}>How you can fulfill your products using Printribe</p>
                </div>
                 <div className="row m-0" style={{padding:"0 3%"}}>

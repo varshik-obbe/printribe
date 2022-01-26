@@ -43,8 +43,9 @@ export default class customizer extends React.Component {
   componentDidMount() {
     // Code for componentWillMount here
     // This code is called only one time before intial render
+    const customerId = localStorage.getItem("customerId");
     axios
-      .get("/zakekeCustomize/getToken")
+      .get(`/zakekeCustomize/getToken/${customerId}`)
       .then(({ data }) => {
         console.log(data);
         this.state.config.tokenoauth = data.returndata.access_token;
@@ -61,16 +62,16 @@ export default class customizer extends React.Component {
         config.quantity = quantity;
         config.selectedattributes.VariantName = colorName;
         config.selectedattributes.color = colorId;
-        config.additionaldata.customerUniqueId =
-          "" + (Math.floor(Math.random() * 89999) + 100000);
-        console.log("config:", config);
+        config.additionaldata.customerUniqueId = customerId;
         config.additionaldata.mainProductid = masterProductId;
         var productJson = { id: masterProductId, name: title };
         var customizer = new window.zakekeDesigner(config, productJson);
+
       })
       .catch((resp) => {
         console.error(resp);
       });
+    
   }
 
   render() {

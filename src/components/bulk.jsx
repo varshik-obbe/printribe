@@ -14,15 +14,15 @@ function Bulk() {
                                 {/* <p className="h5">Box 1:</p> */}
                                 <form>
                                     <div class="form-group" style={{paddingBottom:"12px"}}>
-                                        <label className='text-light fw-bold m-2' for="exampleInputName">Full name</label>
+                                        <label className='text-light  m-2' for="exampleInputName" style={{fontSize:"18px", fontWeight:"600"}}>Full name</label>
                                         <input type="text" class="form-control" id="exampleInputName"  />
                                     </div>
                                     <div class="form-group" style={{paddingBottom:"12px"}}>
-                                        <label className='text-light fw-bold m-2' for="exampleInputEmail">Email</label>
+                                        <label className='text-light  m-2' for="exampleInputEmail" style={{fontSize:"18px" , fontWeight:"600"}}>Email</label>
                                         <input type="email" class="form-control" id="exampleInputEmail"/>
                                     </div>
                                     <div class="form-group" style={{paddingBottom:"12px"}}>
-                                        <label className='text-light fw-bold m-2' for="exampleInputMessage">Message</label>
+                                        <label className='text-light  m-2' for="exampleInputMessage" style={{fontSize:"18px" , fontWeight:"600"}}>Message</label>
                                         <textarea class="form-control" rows="4" id="exampleInputMessage" style={{resize:"none"}}/>
                                     </div>
                                     <div className="w-100 text-center mt-4">
