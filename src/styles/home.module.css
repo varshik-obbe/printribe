@@ -34,11 +34,12 @@
   padding: 0% 13%;
 }
 
-.navLink {
+.navItem {
   text-decoration: none;
   color: #000;
   letter-spacing: 1px;
   font-size: 15px;
+  font-weight: 600;
   /* font-family: "Avenir"; */
 }
 

@@ -38,7 +38,7 @@ function Footer() {
 
       </div>
       <div className="conatiner-fluid" style={{ background: "#1F649F", padding:"0 8%"}}>
-        <div className="container">
+        <div className="container" >
           <div className="row p-5">
             <div className="col-lg-3 col-md-12 text-light" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
               <p className="h2  text-uppercase fw-bold " style={{fontSize:"18px" ,fontFamily:"Avenir"}}>contact us</p>
@@ -73,46 +73,41 @@ function Footer() {
               </ul>
             </div>
             <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
-              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>RESOURCES</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">About us</a>
+                  <a href="#!" class="text-white text-decoration-none ">Blog</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/terms-conditions" class="text-white text-decoration-none ">Terms of service</a>
+                  <a href="/terms-conditions" class="text-white text-decoration-none ">Help Center</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/privacy-policy" class="text-white text-decoration-none">Privacy policy</a>
+                  <a href="/privacy-policy" class="text-white text-decoration-none">Mockup generator</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/return-refund" class="text-white text-decoration-none">Returns and Refunds</a>
-                </li>
-                <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
+                  <a href="/return-refund" class="text-white text-decoration-none">Community</a>
                 </li>
 
               </ul>
             </div>
             <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
-              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>SELL WITH PRINTRIBE</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">About us</a>
+                  <a href="/products" class="text-white text-decoration-none">Product Catalog</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/terms-conditions" class="text-white text-decoration-none ">Terms of service</a>
+                  <a href="/design-tribe" class="text-white text-decoration-none ">Design Tribe</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/privacy-policy" class="text-white text-decoration-none">Privacy policy</a>
+                  <a href="/privacy-policy" class="text-white text-decoration-none">Integrations</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/return-refund" class="text-white text-decoration-none">Returns and Refunds</a>
+                  <a href="/return-refund" class="text-white text-decoration-none">Merchant Panel</a>
                 </li>
-                <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
-                </li>
+
 
               </ul>
             </div>
