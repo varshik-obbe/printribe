@@ -17,10 +17,10 @@ function SubCatMen() {
             <div className="row mx-0">
             <Navbar />
             <Custom />
-                <div className="col-md-3 col-lg-2">
+               <div className="col-md-3 col-lg-3 d-flex align-items-end flex-column">
                     <Catagories/>
                 </div>
-                <div className="col-md-9 col-lg-10">
+                <div className="col-md-9 col-lg-8">
                     <SubCatalog />
                 </div>
                 <Join />

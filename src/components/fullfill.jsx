@@ -20,7 +20,7 @@ function Fullfill() {
                                 </div>
                                 <div className="card-body text-center">
                                     <p className={styles.card_text}>Create custom products</p>
-                                    <p className="px-lg-4 px-0">Use design tribe to create designs and add them to a wide range of products</p>
+                                    <p className={`px-lg-4 px-0 ${styles.avenir}`}>Use design tribe to create designs and add them to a wide range of products</p>
                                 </div>
                             </div>
                         </div>
@@ -32,7 +32,7 @@ function Fullfill() {
                                 </div>
                                 <div className="card-body text-center">
                                     <p  className={styles.card_text}>Sell on your own terms</p>
-                                    <p className="px-lg-4 px-0">Choose the products, market your designs, set price and make a sale</p>
+                                    <p className={`px-lg-4 px-0 ${styles.avenir}`}>Choose the products, market your designs, set price and make a sale</p>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +43,7 @@ function Fullfill() {
                                 </div>
                                 <div className="card-body text-center">
                                     <p  className={styles.card_text}>We handle the fulfillment</p>
-                                    <p className="px-lg-4 px-0">We take care of printing and shipping the order directly to your customer</p>
+                                    <p className={`px-lg-4 px-0 ${styles.avenir}`}>We take care of printing and shipping the order directly to your customer</p>
                                 </div>
                             </div>
                         </div>

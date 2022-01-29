@@ -18,14 +18,15 @@ function designTribe(){
     <Hero/>
     <div className='container'>
     <Feature/>
-    <HowTo/>
+    </div>
+    {/* <HowTo/>
     <WhyUs/>
     <MockUps/>
     <PrintfulPro/>
     </div>
     <OthersDesign/>
     <SignUpTile/>
-    <Footer/>
+    <Footer/> */}
     </>)
 }
 

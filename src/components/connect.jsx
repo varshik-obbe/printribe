@@ -9,7 +9,7 @@ import styles from '../styles/home.module.css'
 function Connect() {
     return (
         <>
-            <div className="container mt-5 mb- 5">
+            <div className="mt-5 mb- 5">
                 <h1 className={`pt-2 mb-3 text-center ${styles.connectsectionheading}`} style={{ }}>Connect Printribe to major e-commerce platforms and marketplaces</h1>
                 <div className={styles.connectContainer}>
                     <div className={styles.img1pos}>

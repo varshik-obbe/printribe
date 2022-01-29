@@ -6,7 +6,9 @@
   display: flex;
   align-items: center;
 }
-
+.avenir {
+  font-family: "Avenir", sans-serif;
+}
 .searchInput {
   font-family: "ProximaNW01-Reg";
   font-size: 16px;
@@ -77,6 +79,7 @@
   font-size: 16px;
   letter-spacing: 1.6px;
   font-weight: bold;
+  font-family: "Avenir", sans-serif;
 }
 
 .orderNowBtn {
@@ -85,6 +88,7 @@
   font-size: 16px;
   letter-spacing: 1.6px;
   font-weight: bold;
+  font-family: "Avenir", sans-serif;
 }
 
 .startSellingBtn:hover,
@@ -161,7 +165,7 @@
   box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px 0px;
   border-radius: 30px;
   top: 33%;
-  left: 19%;
+  left: 22%;
   height: 120px;
   aspect-ratio: 1/1;
   display: flex;
@@ -187,8 +191,8 @@
   position: absolute;
   box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px 0px;
   border-radius: 30px;
-  top: 85%;
-  left: 60%;
+  top: 82%;
+  left: 55%;
   height: 120px;
   aspect-ratio: 1/1;
   padding: 15px;
@@ -209,7 +213,7 @@
   box-shadow: rgba(0, 0, 0, 0.6) 0px 1px 3px 0px;
   border-radius: 30px;
   top: 22%;
-  left: 73%;
+  left: 68%;
   height: 120px;
   aspect-ratio: 1/1;
   display: flex;
@@ -342,25 +346,25 @@
   }
 }
 @media screen and (max-width: 785px) {
-  .connectContainer {
+  /* .connectContainer {
     height: 95vh;
     margin-bottom: 0;
-  }
+  } */
   .img2pos {
-    left: 0%;
-    top: 20%;
+    left: 5%;
+    top: 35%;
   }
   .img3pos {
-    left: 27%;
-    top: 46%;
+    left: 33%;
+    top: 66%;
   }
   .img4pos {
-    top: 50%;
-    left: 71%;
+    top: 78%;
+    left: 61%;
   }
   .img5pos {
-    top: 15%;
-    left: 80%;
+    top: 30%;
+    left: 75%;
   }
   /* 
     .img2pos {

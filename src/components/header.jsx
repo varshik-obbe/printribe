@@ -16,6 +16,7 @@ function Header() {
         <div className="row">
           <div className="col-10 col-sm-9 col-md-3 logo mb-3 mb-sm-0 py-2 text-center text-lg-end ps-sm-5 ps-lg-2 pe-lg-5" style={{lineHeight:"45px"}}>
             <a href="/">
+           
               <img
                 src={logo}
                 alt=""
