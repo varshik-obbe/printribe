@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect,useState } from "react";
 import classes from "../../styles/add-product.module.css";
+import axios from "axios";
 
 function Products(props) {
+
   const { products,handleNext } = props;
+
+
+
   return (
     <React.Fragment>
       <div
@@ -15,6 +20,7 @@ function Products(props) {
         }}
       >
         <div class="">
+        
           <div class="row">
             <div class="col-12 col-md-6 col-lg-4 px-0">
               <span class="fs-6">PRODUCTS</span>
@@ -37,7 +43,7 @@ function Products(props) {
                 </div>
                 <div class="col-8 col-sm-9">
                   <b class=" text-break">
-                    Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL)
+                   Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL)
                   </b>
                   <hr class="my-2" />
                   <span>Thread colors</span>

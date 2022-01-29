@@ -14,16 +14,31 @@ const steps = ["Products", "Shipping", "Review Order"];
 function AddProduct() {
   const [activeStep, setActiveStep] = React.useState(0);
   const [products, setproducts] = useState([]);
-
   const getCart =async () => {
     const visitorId = localStorage.getItem("visitorId");
-  
+    
     if (visitorId) {
      let data = await axios.get(`https://api.theprintribe.com/api/zakekeCustomize/getCartInfo/${visitorId}`)
       data = data.data
       data = data.designInfo
-      console.log(data.products_info);
-      setproducts(data.products_info)
+      data = data.products_info
+      const printFile = data.printFile
+      var productInfo = []
+    data.map(async(product) => {
+      const productDetails = await axios.get(`http://103.235.106.235:500/api/products/getproduct/${product.ProductId}`)
+      var data = productDetails.data
+      data = data.product
+      const prod = data.productdata[0]
+      const productDetail = {}
+      productDetail.qty = data.count
+      productDetail.name = prod.title
+      productDetail.price = prod.price
+      productDetail.retail =  productDetail.qty*productDetail.price
+      productDetail.image =  prod.img
+      productInfo.push(productDetail)
+    })
+    console.log(productInfo)
+    setproducts(productInfo)
     }
   }
   
@@ -37,7 +52,7 @@ function AddProduct() {
   const renderComp = () => {
     switch (activeStep) {
       case 0:
-        return <Products products={products} handleNext={() => setActiveStep(activeStep + 1)} />;
+        return <Products products={products}  handleNext={() => setActiveStep(activeStep + 1)} />;
       case 1:
         return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
       case 2:
