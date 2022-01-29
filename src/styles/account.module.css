@@ -1,19 +1,19 @@
 .mainContainer {
-    padding: 0 15%;
+  padding: 0 15%;
 }
 
 .topProfileDiv {
-    padding: 20px 40px;
+  padding: 20px 40px;
 }
 
 @media screen and (max-width: 1080px) {
-    .mainContainer {
-        padding: 0 0;
-    }
+  .mainContainer {
+    padding: 0 0;
+  }
 }
 
 @media screen and (max-width: 525px) {
-    .topProfileDiv {
-        padding: 10px 20px;
-    }
+  .topProfileDiv {
+    padding: 10px 20px;
+  }
 }

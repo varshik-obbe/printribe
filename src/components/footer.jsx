@@ -3,6 +3,7 @@ import { faFacebook, faInstagram, faTwitter, faYoutube } from "@fortawesome/free
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import logo from '../assets/Printribe-logo.png'
+import styles from "../styles/home.module.css"
 
 function Footer() {
   const d = new Date();
@@ -13,7 +14,7 @@ function Footer() {
         <div className="row px-sm-5">
           <div className="col-6 text-center text-sm-start mb-3 mb-sm-0 py-2">
 
-                        <img src={logo} alt="" style={{ height: "35px", maxWidth: "100%" }} />
+                        <img src={logo} alt="" style={{ height: "30px", maxWidth: "100%" }} />
 
                     
           </div>
@@ -39,8 +40,8 @@ function Footer() {
       </div>
       <div className="conatiner-fluid" style={{ background: "#1F649F", padding:"0 8%"}}>
         <div className="container" >
-          <div className="row p-5">
-            <div className="col-lg-3 col-md-12 text-light" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+          <div className ={`row ${styles.footerrow}`} style={{width:"100%"}} >
+            <div className={`col-lg-3 col-md-12  text-light mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
               <p className="h2  text-uppercase fw-bold " style={{fontSize:"18px" ,fontFamily:"Avenir"}}>contact us</p>
 
               <p className="h4 fw-bold" style={{fontSize:"15px" ,fontFamily:"Avenir"}}><b>Address:</b></p>
@@ -50,7 +51,7 @@ function Footer() {
               info@theprintribe.com
             </div>
 
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
               <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
 
               <ul class="list-unstyled mb-0">
@@ -72,7 +73,7 @@ function Footer() {
 
               </ul>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
               <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>RESOURCES</p>
 
               <ul class="list-unstyled mb-0">
@@ -91,7 +92,7 @@ function Footer() {
 
               </ul>
             </div>
-            <div className="col-lg-3 col-md-6 mb-4 mb-md-0" style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
               <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>SELL WITH PRINTRIBE</p>
 
               <ul class="list-unstyled mb-0">

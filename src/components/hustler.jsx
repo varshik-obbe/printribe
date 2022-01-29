@@ -31,15 +31,15 @@ function Hustler() {
                                     <div className={styles.line} />
                                     <div className="row mt-3">
                                         <div className="col-9">
-                                            <p className={styles.text}><b>Your profit</b>  </p>
+                                            <p className={styles.totaltext}><b>Your profit</b>  </p>
                                         </div>
                                         <div className="col-3">
-                                            <p className={styles.text}><b>₹200</b></p>
+                                            <p className={styles.totaltext}><b>₹200</b></p>
                                         </div>
                                     </div>
 
                                 </div>
-                                <button className="btn btn-danger mt-4 mx-4  mb-3 px-4" style={{backgroundColor:"#EE3C2F"}}>Start Selling</button>
+                                <button className="btn btn-danger mt-4 mx-4  mb-3 px-4" style={{backgroundColor:"#EE3C2F",fontFamily:"Avenir,sans-serif",fontSize:"16px",letterSpacing:"1.6px",fontWeight:"700"}}>Start Selling</button>
                                 <p className="text-light mx-4">No sign up fee. No minimums.</p>
                             </div>
 

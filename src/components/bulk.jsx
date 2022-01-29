@@ -9,7 +9,7 @@ function Bulk() {
                     <div className="row p-sm-3 ">
                         <div className="col-lg-6 col-md-12 px-sm-4">
                         <h2 className="mt-3 mb-3" style={{fontFamily:"ProximaNW01-Reg, sans-serif", fontWeight:"700",color:"#064378"}}>
-                                Need Help with Bulk Orders ?</h2>
+                                Need Help with Bulk Orders?</h2>
                             <div className="mt-4" style={{ background: "rgb(29 103 205)", padding: "30px", borderRadius: "15px"}}>
                                 {/* <p className="h5">Box 1:</p> */}
                                 <form>
@@ -26,7 +26,8 @@ function Bulk() {
                                         <textarea class="form-control" rows="4" id="exampleInputMessage" style={{resize:"none"}}/>
                                     </div>
                                     <div className="w-100 text-center mt-4">
-                                        <div className="btn btn-warning py-2 px-4">Send</div>
+                                        {/* <div className="btn btn-warning py-2 px-4">Send</div> */}
+                                       <button className="btn btn-danger px-4 py-2" style={{backgroundColor:"#EE3C2F",fontFamily:"Avenir,sans-serif",fontSize:"16px",letterSpacing:"1.6px",fontWeight:"700"}}>Send</button>
                                     </div>
                                 </form>
 
