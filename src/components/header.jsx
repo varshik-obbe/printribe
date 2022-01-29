@@ -65,7 +65,7 @@ function Header() {
                       <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>Sign in</span>
                       </Nav.Link>
                       <Nav.Link href="#">
-                      {/* <i class="fa fa-shopping-cart" style={{fontSize:24}}></i> */}
+                      <i class="fa fa-shopping-cart" style={{fontSize:24}}></i>
                       <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>My Cart</span>
                       </Nav.Link>
                     </>
