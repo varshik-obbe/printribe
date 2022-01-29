@@ -34,7 +34,7 @@ function Bulk() {
                             </div>
                         </div>
                         <div className="col-lg-6 col-md-0 px-4">
-                            <img src={bulk} style={{height:"100%", width:"130%", objectFit:"contain"}} />
+                            <img src={bulk} style={{height:"100%", width:"100%", objectFit:"contain"}} />
                         </div>
                     </div>
                 </div>
