@@ -46,7 +46,7 @@ export default class customizer extends React.Component {
     // Code for componentWillMount here
     // This code is called only one time before intial render
     const customerId = localStorage.getItem("customerId");
-
+    const visitorId = localStorage.getItem("visitorId");
     axios
       .get(`/zakekeCustomize/getToken/${customerId}`)
       .then(({ data }) => {
@@ -63,7 +63,13 @@ export default class customizer extends React.Component {
         const title = queryParams.get("title");
         console.log(productid, quantity, masterProductId, colorName);
         config.quantity = quantity;
-        config.additionaldata.visitorId =  Math.floor(Math.random() * 1000000);
+        if(!visitorId){
+          config.additionaldata.visitorId =  Math.floor(Math.random() * 1000000);
+           localStorage.setItem("visitorId",config.additionaldata.visitorId );
+
+        }else{
+          config.additionaldata.visitorId = visitorId;
+        }
         config.selectedattributes.VariantName = colorName;
         config.selectedattributes.color = colorId;
         config.additionaldata.customerUniqueId = customerId;

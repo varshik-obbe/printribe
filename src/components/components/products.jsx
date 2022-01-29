@@ -2,7 +2,7 @@ import React from "react";
 import classes from "../../styles/add-product.module.css";
 
 function Products(props) {
-  const { handleNext } = props;
+  const { products,handleNext } = props;
   return (
     <React.Fragment>
       <div
@@ -273,7 +273,7 @@ function Products(props) {
               class="col-12 px-0 d-flex justify-content-center align-content-center"
               style={{ height: "50px" }}
             >
-              <button class="btn btn-secondary" style={{ height: "40px" }}>
+              <button class="btn btn-secondary"  style={{ height: "40px", backgroundColor:"#EE3C2F",color:"#fff",fontWeight:"bold",border:"none" }}>
                 Add Product
               </button>
             </div>
@@ -316,7 +316,7 @@ function Products(props) {
               </div>
             </div>
             <div class="col-12 d-flex justify-content-center mt-5 mb-3">
-              <button class="btn btn-danger" onClick={handleNext}>
+              <button class="btn btn-danger" onClick={handleNext} style={{ height: "40px", backgroundColor:"#EE3C2F",color:"#fff",fontWeight:"bold",border:"none" }}>
                 Continue to shipping
               </button>
             </div>
