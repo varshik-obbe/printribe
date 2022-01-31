@@ -26,7 +26,7 @@ function Hero() {
                         <p style={{fontSize:"15px", fontFamily:"ProximaNW01-Reg", letterSpacing:"normal"}}>No sign up fee. No minimums. Fast fulfillment.</p>
                     </div>
                     <div className="col-lg-6 pt-4 col-md-12 text-center">
-                        <img src={img} className={styles.heroImage} ></img>
+                        <img src={img} className={styles.heroImage} style={{maxWidth:"100%"}} ></img>
                     </div>
                 </div>
 

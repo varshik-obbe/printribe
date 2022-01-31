@@ -6,6 +6,13 @@ import styles from '../styles/home.module.css';
 
 function Header() {
   const [messageVisible,setMessageVisible] = useState(true);
+  const [crossBtn, setcrossBtn] = useState(false);
+  const [searchValue, setsearchValue] = useState('');
+
+  const clearInpuBox = ()=>{
+    setsearchValue('')
+  }
+
   return (
     <div>
     {messageVisible?(<div style={{backgroundColor:"#ffd680",position:'relative', padding:"7px 0 12px 0"}}>
@@ -27,7 +34,14 @@ function Header() {
           <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-6 order-2 order-md-1">
             <div className={styles.searchBox}>
             <i className={"fas fa-search "+styles.searchIcon} ></i>
-            <input className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black', width:"80%"}}></input>
+            <input className={styles.searchInput} placeholder="Search..." value={searchValue} style={{border:'0px solid black', width:"80%"}} 
+            onChange={(e)=>{
+            setcrossBtn(true)
+            setsearchValue(e.target.value)
+            }
+            } ></input>
+
+            {crossBtn && searchValue !== "" ? <i class="fas fa-times" onClick={clearInpuBox} ></i> : null}
             </div>
             
           </div>

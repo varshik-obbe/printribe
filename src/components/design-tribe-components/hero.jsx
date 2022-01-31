@@ -1,15 +1,18 @@
 import React from 'react'
 import styles from '../../styles/designTribe.module.css'
+import {useNavigate} from "react-router-dom"
 
 
-function hero(){
+function Hero(){
+    const navigate = useNavigate()
     const goToDesign=()=>{   
     const token = localStorage.getItem('token');
+    // console.log(token)
     const customerId = localStorage.getItem('customerId');
     if(token!="" & token!=null & token!=undefined & customerId!="" & customerId!=null & customerId!=undefined ){
-        window.location.href="/products";
+       navigate("/products");
     }else{
-        window.location.href="/signin";
+       navigate("/signin");
       }
     }
 
@@ -27,4 +30,4 @@ function hero(){
     </div>)
 }
 
-export default hero;
+export default Hero;

@@ -49,7 +49,7 @@ const Catalogproducts = () => {
 
     useEffect(() => {
        getPost()
-    }, [])
+    }, [productid])
 
     return (
         <>
