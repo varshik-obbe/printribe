@@ -6,13 +6,6 @@ import styles from '../styles/home.module.css';
 
 function Header() {
   const [messageVisible,setMessageVisible] = useState(true);
-  const [crossBtn, setcrossBtn] = useState(false);
-  const [searchValue, setsearchValue] = useState('');
-
-  const clearInpuBox = ()=>{
-    setsearchValue('')
-  }
-
   return (
     <div>
     {messageVisible?(<div style={{backgroundColor:"#ffd680",position:'relative', padding:"7px 0 12px 0"}}>
@@ -23,7 +16,6 @@ function Header() {
         <div className="row">
           <div className="col-10 col-sm-9 col-md-3 logo mb-3 mb-sm-0 py-2 text-center text-lg-end ps-sm-5 ps-lg-2 pe-lg-5" style={{lineHeight:"45px"}}>
             <a href="/">
-           
               <img
                 src={logo}
                 alt=""
@@ -34,14 +26,7 @@ function Header() {
           <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-6 order-2 order-md-1">
             <div className={styles.searchBox}>
             <i className={"fas fa-search "+styles.searchIcon} ></i>
-            <input className={styles.searchInput} placeholder="Search..." value={searchValue} style={{border:'0px solid black', width:"80%"}} 
-            onChange={(e)=>{
-            setcrossBtn(true)
-            setsearchValue(e.target.value)
-            }
-            } ></input>
-
-            {crossBtn && searchValue !== "" ? <i class="fas fa-times" onClick={clearInpuBox} ></i> : null}
+            <input className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black', width:"80%"}}></input>
             </div>
             
           </div>
@@ -53,6 +38,7 @@ function Header() {
                   {localStorage.getItem("customerId") ? (
                     <>
                       <Nav.Link href="/my-account">
+                        <i className="fas fa-user-circle" style={{fontSize:"19px"}}></i>
                       <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>My Account</span>
                       </Nav.Link>
                       <Nav.Link
@@ -62,10 +48,11 @@ function Header() {
                           localStorage.removeItem("customerId");
                         }}
                       >
+                        <i className="fas fa-sign-out-alt" style={{fontSize:"19px"}}></i>
                         <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>Logout</span>
                       </Nav.Link>
                       <Nav.Link href="/cart">
-                        
+                       <i className="fas fa-shopping-cart" style={{fontSize:"19px"}}></i> 
                       <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>My Cart</span>
                       </Nav.Link>
                     </>
@@ -96,3 +83,5 @@ function Header() {
 }
 
 export default Header;
+
+

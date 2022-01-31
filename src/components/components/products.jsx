@@ -7,7 +7,6 @@ function Products(props) {
   const { products,handleNext } = props;
 
 
-
   return (
     <React.Fragment>
       <div
@@ -19,6 +18,7 @@ function Products(props) {
           background: "#FFFFFF",
         }}
       >
+
         <div class="">
         
           <div class="row">
@@ -41,6 +41,7 @@ function Products(props) {
                     }}
                   />
                 </div>
+
                 <div class="col-8 col-sm-9">
                   <b class=" text-break">
                    Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL)

@@ -11,26 +11,29 @@ const steps = ["Products", "Shipping", "Review Order"];
 
 
 
-function AddProduct() {
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [products, setproducts] = useState([]);
-  const getCart =async () => {
+export default class AddProduct extends React.Component{
+ state = {
+  activeStep : 0,
+  products : [],
+ }
+
+ async componentDidMount (){
     const visitorId = localStorage.getItem("visitorId");
     
     if (visitorId) {
-     let data = await axios.get(`https://api.theprintribe.com/api/zakekeCustomize/getCartInfo/${visitorId}`)
+     let data =await axios.get(`/zakekeCustomize/getCartInfo/${visitorId}`)
       data = data.data
       data = data.designInfo
       data = data.products_info
       const printFile = data.printFile
       var productInfo = []
     data.map(async(product) => {
-      const productDetails = await axios.get(`http://103.235.106.235:500/api/products/getproduct/${product.ProductId}`)
-      var data = productDetails.data
-      data = data.product
-      const prod = data.productdata[0]
+      const productDetails = await axios.get(`/products/getproduct/${product.ProductId}`)
+      var data2 = productDetails.data
+      data2 = data2.product
+      const prod = data2.productdata[0]
       const productDetail = {}
-      productDetail.qty = data.count
+      productDetail.qty = prod.quantity
       productDetail.name = prod.title
       productDetail.price = prod.price
       productDetail.retail =  productDetail.qty*productDetail.price
@@ -38,30 +41,38 @@ function AddProduct() {
       productInfo.push(productDetail)
     })
     console.log(productInfo)
-    setproducts(productInfo)
+    this.setState({
+      products : productInfo,
+    })
+
     }
+
   }
   
  
+
+
+
  
-  useEffect(() => {
-    getCart()
-  }, [])
-
-
+ render(){
+   const setActiveStep = (step) => {
+    this.setState({
+      activeStep: step
+    })
+  }
   const renderComp = () => {
-    switch (activeStep) {
+ 
+    switch (this.state.activeStep) {
       case 0:
-        return <Products products={products}  handleNext={() => setActiveStep(activeStep + 1)} />;
+        return <Products products={this.state.products}  handleNext={() => setActiveStep(this.state.activeStep + 1)} />;
       case 1:
-        return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
+        return <Shipping handleNext={() => setActiveStep(this.state.activeStep + 1)} />;
       case 2:
-        return <ReviewOrder handleNext={() => setActiveStep(activeStep - 2)} />;
+        return <ReviewOrder handleNext={() => setActiveStep(this.state.activeStep - 2)} />;
       default:
         return null;
     }
   };
-
   return (
     <React.Fragment>
       <Header />
@@ -69,7 +80,7 @@ function AddProduct() {
         <div class="container-lg py-5">
           <div class="d-flex w-100 justify-content-center">
             <div class="col-12 col-md-8 px-1">
-              <Stepper activeStep={activeStep}>
+              <Stepper activeStep={this.activeStep}>
                 {steps.map((label, index) => {
                   const stepProps = {};
                   const labelProps = {};
@@ -88,6 +99,7 @@ function AddProduct() {
       <Footer />
     </React.Fragment>
   );
+              }
 }
 
-export default AddProduct;
+
