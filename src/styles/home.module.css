@@ -10,7 +10,7 @@
   font-family: "Avenir", sans-serif;
 }
 .searchInput {
-  font-family: "ProximaNW01-Reg";
+  /* font-family: "ProximaNW01-Reg"; */
   font-size: 16px;
   margin-left: 10px;
   height: 100%;
@@ -47,7 +47,7 @@
   color: #000;
   letter-spacing: 1px;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 500;
   /* font-family: "Avenir"; */
 }
 

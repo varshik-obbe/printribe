@@ -11,22 +11,22 @@ import React from 'react';
 import SignUpTile from '../components/design-tribe-components/signUpTile';
 import WhyUs from '../components/design-tribe-components/whyUs'
 
-function designTribe(){
-    return(<>
-    <Header/>
-    <Navbar/>
-    <Hero/>
-    <div className='container'>
-    <Feature/>
-    </div>
-    {/* <HowTo/>
+function designTribe() {
+    return (<>
+        <Header />
+        <Navbar />
+        <Hero />
+        <div className='container'>
+            <Feature />
+        </div>
+        <Footer />
+        {/* <HowTo/>
     <WhyUs/>
     <MockUps/>
     <PrintfulPro/>
     </div>
     <OthersDesign/>
-    <SignUpTile/>
-    <Footer/> */}
+    <SignUpTile/> */}
     </>)
 }
 
