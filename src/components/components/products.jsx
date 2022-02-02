@@ -5,8 +5,8 @@ import axios from "axios";
 function Products(props) {
 
   const { products,handleNext } = props;
-
-
+  const product_quantity = localStorage.getItem("product_quantity");
+  const product_color = localStorage.getItem("product_color");
   return (
     <React.Fragment>
       <div
@@ -55,13 +55,13 @@ function Products(props) {
                       style={{
                         height: "12px",
                         width: "12px",
-                        background: "#FFF",
+                        background: product_color.toLowerCase(),
                         marginRight: "5px",
                         border: "1px solid #666",
                         borderRadius: "2px",
                       }}
                     />
-                    <div
+                    {/* <div
                       style={{
                         height: "12px",
                         width: "12px",
@@ -80,7 +80,7 @@ function Products(props) {
                         border: "1px solid #666",
                         borderRadius: "2px",
                       }}
-                    />
+                    /> */}
                   </div>
                   <div class="mt-3" />
                   <button class="p-0 border-0 bg-transparent text-primary">
@@ -193,7 +193,7 @@ function Products(props) {
               />
               <input
                 type="text"
-                value="1"
+                value={product_quantity}
                 style={{
                   height: "40px",
                   width: "50px",

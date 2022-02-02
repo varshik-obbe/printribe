@@ -79,7 +79,10 @@ const Products = () => {
         formCustomizer.elements["color"].value = color;
         formCustomizer.elements["colorId"].value = colorId;
         formCustomizer.elements["title"].value = productName;
-        formCustomizer.submit();
+        localStorage.setItem("product_color",color);
+        localStorage.setItem("product_quantity",quantity);
+        console.log('product',product);
+        // formCustomizer.submit();
       } else {
         window.location.href = "/signin";
       }
