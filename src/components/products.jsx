@@ -82,7 +82,7 @@ const Products = () => {
         localStorage.setItem("product_color",color);
         localStorage.setItem("product_quantity",quantity);
         console.log('product',product);
-        // formCustomizer.submit();
+        formCustomizer.submit();
       } else {
         window.location.href = "/signin";
       }
@@ -172,8 +172,8 @@ const Products = () => {
                 </div>
 
                 <div className="mainProdImgContainer">
-                  {/* <img src={process.env.REACT_APP_IMAGE_BASE_URL +'/'+ product.img} alt={product.title}/> */}
-                  <img src={"https://static.wixstatic.com/media/f1c4b5_f1f33ab2c3584186b83a0276b11f19c1~mv2.png/v1/fill/w_418,h_565,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_3.webp"} className="mainImgs h-100" alt={product.title} />
+                  <img src={process.env.REACT_APP_IMAGE_BASE_URL +'/'+ product.img} alt={product.title}/>
+                  {/* <img src={"https://static.wixstatic.com/media/f1c4b5_f1f33ab2c3584186b83a0276b11f19c1~mv2.png/v1/fill/w_418,h_565,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_3.webp"} className="mainImgs h-100" alt={product.title} /> */}
                   {/* {console.log(process.env.REACT_APP_IMAGE_BASE_URL + product.img)} */}
                 </div>
               </div>

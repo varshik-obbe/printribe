@@ -1,12 +1,17 @@
-import React, { useEffect,useState } from "react";
-import classes from "../../styles/add-product.module.css";
+import React, { useEffect, useState } from "react";
+
 import axios from "axios";
+import classes from "../../styles/add-product.module.css";
 
-function Products(props) {
 
-  const { products,handleNext } = props;
-  const product_quantity = localStorage.getItem("product_quantity");
-  const product_color = localStorage.getItem("product_color");
+function Products({products,handleNext}) {
+
+  // const { products,handleNext } = props;
+console.log('pros comp');
+console.log(products);
+
+const product_quantity = localStorage.getItem("product_quantity");
+const product_color = localStorage.getItem("product_color");
   return (
     <React.Fragment>
       <div
@@ -44,7 +49,10 @@ function Products(props) {
 
                 <div class="col-8 col-sm-9">
                   <b class=" text-break">
-                   Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL)
+                   {/* Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL) */}
+                   {products && products[0].name}
+                   {/* {+new Date()} */}
+
                   </b>
                   <hr class="my-2" />
                   <span>Thread colors</span>

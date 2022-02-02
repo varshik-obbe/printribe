@@ -39,7 +39,7 @@ function Header() {
                     <>
                       <Nav.Link href="/my-account">
                         <i className="fas fa-user-circle" style={{fontSize:"19px"}}></i>
-                      <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>My Account</span>
+                      <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>My Account</span>
                       </Nav.Link>
                       <Nav.Link
                         href="/"
@@ -49,26 +49,26 @@ function Header() {
                         }}
                       >
                         <i className="fas fa-sign-out-alt" style={{fontSize:"19px"}}></i>
-                        <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>Logout</span>
+                        <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>Logout</span>
                       </Nav.Link>
                       <Nav.Link href="/cart">
                        <i className="fas fa-shopping-cart" style={{fontSize:"19px"}}></i> 
-                      <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>My Cart</span>
+                      <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>My Cart</span>
                       </Nav.Link>
                     </>
                   ) : (
                     <>
                       <Nav.Link href="/signup">
                       <i class='fas fa-user-plus' style={{fontSize:24}}></i>
-                      <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>Sign up</span>
+                      <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>Sign up</span>
                       </Nav.Link>
                       <Nav.Link href="/signin">
                       <i class='fas fa-user-alt' style={{fontSize:24}}></i>
-                      <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>Sign in</span>
+                      <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>Sign in</span>
                       </Nav.Link>
                       <Nav.Link href="#">
                       <i class="fa fa-shopping-cart" style={{fontSize:24}}></i>
-                      <span style={{fontSize:20,fontWeight:500,color:'black',marginLeft:'10px'}}>My Cart</span>
+                      <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>My Cart</span>
                       </Nav.Link>
                     </>
                   )}
