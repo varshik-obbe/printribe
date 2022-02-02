@@ -54,17 +54,15 @@ const AddProduct = () => {
       //    console.log(products)
       console.log(+new Date());
       // this.setState({
-    },[JSON.stringify(products)])
+    },[])
 
 
   const renderComp = () => {
 
         switch (activeStep) {
-          case 0:{
-              console.log("prods found");
-              console.log(products);
+          case 0:
             return <Products products={products} handleNext={() => setActiveStep(activeStep + 1)} />;
-        }
+        
           case 1:
             return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
           case 2:
@@ -77,7 +75,7 @@ const AddProduct = () => {
   return ( 
    <React.Fragment>
       <Header />
-      { products.length > 0 && <div style={{ background: "#F8F8F8" }}>
+      <div style={{ background: "#F8F8F8" }}>
         <div class="container-lg py-5">
           <div class="d-flex w-100 justify-content-center">
             <div class="col-12 col-md-8 px-1">
@@ -96,7 +94,7 @@ const AddProduct = () => {
           </div>
           <div class="mt-5">{renderComp()}</div>
         </div>
-      </div>}
+      </div>
       <Footer />
     </React.Fragment>
    );

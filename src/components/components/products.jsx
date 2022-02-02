@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
 
-
 function Products({products,handleNext}) {
 
   // const { products,handleNext } = props;
@@ -49,8 +48,8 @@ const product_color = localStorage.getItem("product_color");
 
                 <div class="col-8 col-sm-9">
                   <b class=" text-break">
-                   {/* Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL) */}
-                   {products && products[0].name}
+                   Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL)
+                   {/* {products && products[0].name} */}
                    {/* {+new Date()} */}
 
                   </b>
