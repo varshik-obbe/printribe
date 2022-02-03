@@ -15,11 +15,20 @@ const Products = () => {
   const [quantity, setQuantity] = useState("1")
   const [product, setproduct] = useState({})
   const [color, setColor] = useState("")
+  const [colorCode, setColorCode] = useState("")
   const [size, setSize] = useState("")
   const [productName, setProductName] = useState("")
   const [colorId, setColorId] = useState('0');
   const [isLogged, setIsLogged] = useState(false);
   const [isCustomizeable, setIsCustomizeable] = useState(false);
+
+  const [customizeProduct, setCustomizeProduct] = useState([])
+
+  if(localStorage.getItem("customizeProduct")){
+    setCustomizeProduct(JSON.parse(localStorage.getItem("customizeProduct")))    
+  }else{
+    localStorage.setItem("customizeProduct" , [])
+  }  
 
 
   const getProduct = () => {
@@ -79,8 +88,23 @@ const Products = () => {
         formCustomizer.elements["color"].value = color;
         formCustomizer.elements["colorId"].value = colorId;
         formCustomizer.elements["title"].value = productName;
-        localStorage.setItem("product_color",color);
-        localStorage.setItem("product_quantity",quantity);
+        // localStorage.setItem("product_color",color);
+        // localStorage.setItem("product_quantity",quantity);
+
+        //customized product details object
+        customizeProduct.push({
+          product_id : product.id,
+          size,
+          quantity,
+          color : {
+            color_code : colorCode,
+            color_name : color
+          }
+        }) 
+
+        //storing all the customized product details in local storage
+        localStorage.setItem("customizeProduct", JSON.stringify(customizeProduct))
+
         console.log('product',product);
         formCustomizer.submit();
       } else {
@@ -135,7 +159,7 @@ const Products = () => {
 
   useEffect(() => {
     getProduct()
-  }, [])
+  },[])
 
   return (
     <>
@@ -199,6 +223,7 @@ const Products = () => {
                         handleColorsclick(e);
                         setColor(item.colorName);
                         setColorId(index + 1);
+                        setColorCode(item.colorCode)
                       }}
                     >
                       {

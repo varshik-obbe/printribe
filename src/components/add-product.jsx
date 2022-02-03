@@ -27,6 +27,12 @@ const AddProduct = () => {
       axios.get(`/zakekeCustomize/getCartInfo/${visitorId}`)
         .then(({ data }) => {
           console.log('data',data);
+          
+          // var zekekeImage = tempPreviewImageUrl 
+          var zekekeData = data.designInfo.products_info
+
+          localStorage.setItem("zekekeData",zekekeData)
+
           data.designInfo.products_info.forEach((product) => {
             
             axios.get(`/products/getproduct/${product.ProductId}`)
@@ -36,12 +42,18 @@ const AddProduct = () => {
                 // data2 = data2.product
                 let prod = data.product.productdata[0]
                 console.log('product',prod)
+
+                var zekekeImage;
+                
+                zekekeData.forEach((curr) => {if(curr.ProductId === product.ProductId) zekekeImage=curr.tempPreviewImageUrl})
+
                 let productDetail ={ 
-                qty : prod.quantity,
                 name : prod.title,
                 price : prod.price,
-                retail : prod.quantity * prod.price,
-                image : prod.img
+                image : `https://api.theprintribe.com/${prod.img}`,
+                prodId : prod.id,
+                zekekeImage
+
               }
                 productInfo.push(productDetail)                
               })
