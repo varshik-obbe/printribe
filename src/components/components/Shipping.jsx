@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+
 import axios from "axios";
+
 const fieldsArray = [
   { name: "fullName", title: "Full Name", diff: false },
   {
@@ -45,6 +47,7 @@ function Shipping(props) {
     console.log(formData);
     axios.post(`/customerShipping/addShipping`, formData).then(({ data }) => {
       console.log(data);
+      localStorage.setItem("customerShipping_id", data.saveddata._id)
       handleNext();
     });
   };
@@ -79,8 +82,7 @@ function Shipping(props) {
       if (postalCode.toString().length === 6) {
         axios
           .get(
-            `/customerShipping/getShipRocketCharges/${postalCode}/${
-              total_quantity * 0.3
+            `/customerShipping/getShipRocketCharges/${postalCode}/${total_quantity * 0.3
             }`
           )
           .then(({ data }) => {
@@ -203,9 +205,9 @@ function Shipping(props) {
                                   shippingCompanies.find((curr) => {
                                     if (company === "clear")
                                       setRetailShippingPprice("");
-                                    else if (curr.courier_name === company){
+                                    else if (curr.courier_name === company) {
                                       setRetailShippingPprice(curr.rate);
-                                      localStorage.setItem("shipping_charges",curr.rate)
+                                      localStorage.setItem("shipping_charges", curr.rate)
                                     }
                                   });
                                 }}

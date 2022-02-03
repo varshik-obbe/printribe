@@ -29,12 +29,12 @@ const AddProduct = () => {
           console.log('data',data);
           
           // var zekekeImage = tempPreviewImageUrl 
-          var zekekeData = data.designInfo.products_info
+          var zekekeData = [];
+          // zekekeData = data.designInfo.products_info;
 
-          localStorage.setItem("zekekeData",zekekeData)
 
           data.designInfo.products_info.forEach((product) => {
-            
+            zekekeData.push(product)
             axios.get(`/products/getproduct/${product.ProductId}`)
               .then(({ data }) => {
   
@@ -58,6 +58,8 @@ const AddProduct = () => {
                 productInfo.push(productDetail)                
               })
           })
+          localStorage.setItem("zakekeData",JSON.stringify(zekekeData))
+
           setProducts(productInfo)
                 console.log(products);
           // })

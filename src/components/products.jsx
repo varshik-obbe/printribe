@@ -24,12 +24,6 @@ const Products = () => {
 
   const [customizeProduct, setCustomizeProduct] = useState([])
 
-  if(localStorage.getItem("customizeProduct")){
-    setCustomizeProduct(JSON.parse(localStorage.getItem("customizeProduct")))    
-  }else{
-    localStorage.setItem("customizeProduct" , [])
-  }  
-
 
   const getProduct = () => {
     if (checkLogin()) {
@@ -49,7 +43,7 @@ const Products = () => {
 
     axios.get(`https://api.theprintribe.com/api/zakekeVariant/isZakekeProduct/${prodid}`)
       .then(({ data }) => {
-        if (data.success != undefined & data.success != null & data.success) {
+        if (data.success !== undefined && data.success !== null && data.success) {
           setIsCustomizeable(true);
           console.log(data.success)
         }
@@ -57,7 +51,7 @@ const Products = () => {
   }
 
   const checkColorAndSize = () => {
-    if (color != "" & color != null & color != undefined & size != "" & size != null & size != undefined) {
+    if (color !== "" && color !== null && color !== undefined && size !== "" && size !== null && size !== undefined) {
       return true;
     } else {
       return false;
@@ -67,7 +61,7 @@ const Products = () => {
   const checkLogin = () => {
     const token = localStorage.getItem('token');
     const customerId = localStorage.getItem('customerId');
-    if (token != "" & token != null & token != undefined & customerId != "" & customerId != null & customerId != undefined) {
+    if (token !== "" & token !== null & token !== undefined & customerId !== "" & customerId !== null & customerId !== undefined) {
       return true;
     } else {
       return false;
@@ -75,6 +69,13 @@ const Products = () => {
   }
 
   const customize = (evt) => {
+
+    if (localStorage.getItem("customizeProduct")) {
+      setCustomizeProduct(JSON.parse(localStorage.getItem("customizeProduct")))
+    } else {
+      localStorage.setItem("customizeProduct", [])
+    }
+
     if (checkColorAndSize()) {
       if (checkLogin()) {
         evt.preventDefault();
@@ -93,19 +94,19 @@ const Products = () => {
 
         //customized product details object
         customizeProduct.push({
-          product_id : product.id,
+          product_id: product.id,
           size,
           quantity,
-          color : {
-            color_code : colorCode,
-            color_name : color
+          color: {
+            color_code: colorCode,
+            color_name: color
           }
-        }) 
+        })
 
         //storing all the customized product details in local storage
         localStorage.setItem("customizeProduct", JSON.stringify(customizeProduct))
 
-        console.log('product',product);
+        console.log('product', product);
         formCustomizer.submit();
       } else {
         window.location.href = "/signin";
@@ -159,7 +160,7 @@ const Products = () => {
 
   useEffect(() => {
     getProduct()
-  },[])
+  }, [])
 
   return (
     <>
@@ -167,11 +168,11 @@ const Products = () => {
         <div className="row mx-0">
           <div className="col-12">
             <div className={"mx-4 my-2 py-4 breadCrumbs"}>
-            <a href="/products">Product catalog</a> / <a href="/products">Men's Clothing</a> / {productName}
-          </div>
+              <a href="/products">Product catalog</a> / <a href="/products">Men's Clothing</a> / {productName}
+            </div>
           </div>
 
-          
+
         </div>
         <div className="row mx-0">
           <div className={"col-lg-6 col-md-12 imgSection"}>
@@ -196,7 +197,7 @@ const Products = () => {
                 </div>
 
                 <div className="mainProdImgContainer">
-                  <img src={process.env.REACT_APP_IMAGE_BASE_URL +'/'+ product.img} alt={product.title}/>
+                  <img src={process.env.REACT_APP_IMAGE_BASE_URL + '/' + product.img} alt={product.title} />
                   {/* <img src={"https://static.wixstatic.com/media/f1c4b5_f1f33ab2c3584186b83a0276b11f19c1~mv2.png/v1/fill/w_418,h_565,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_3.webp"} className="mainImgs h-100" alt={product.title} /> */}
                   {/* {console.log(process.env.REACT_APP_IMAGE_BASE_URL + product.img)} */}
                 </div>

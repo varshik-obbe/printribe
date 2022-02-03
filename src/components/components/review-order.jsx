@@ -1,7 +1,7 @@
-import React from "react";
-import classes from "../../styles/add-product.module.css";
 import PaymentComp from "./payment-comp";
+import React from "react";
 import axios from "axios";
+import classes from "../../styles/add-product.module.css";
 
 function ReviewOrder(props) {
   const { handleNext } = props;
@@ -10,82 +10,85 @@ function ReviewOrder(props) {
   const [fulfillment, setFulfillment] = React.useState(false);
   const [filDig, setFilDig] = React.useState(false);
 
-  const handlePay = () =>{
+  const handlePay = () => {
 
     var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"))
-    var customerShippingId = Math.floor(Math.random() * 1000000);
+    var customerShippingId = localStorage.getItem("customerShipping_id");
     var total_quantity = localStorage.getItem("total_quantity")
     var subTotal = localStorage.getItem("subTotal")
     var shipping_charges = localStorage.getItem("shipping_charges")
     var customerId = localStorage.getItem("customerId")
-    var visitor_id = localStorage.getItem("visitor_id")
-    var zekekeData = localStorage.getItem("zekekeData")
+    var visitor_id = localStorage.getItem("visitorId")
+    var zekekeData = JSON.parse(localStorage.getItem("zekekeData"))
 
     var productData = []
     var productInfo = []
 
-    customizeProduct.forEach((prod) =>{
+    customizeProduct.forEach((prod) => {
       axios.get(`/products/getproduct/${prod.product_id}`)
-      .then(({data}) => {
+        .then(({ data }) => {
 
-        productData.push(data.product.productdata[0])
-        
+          productData.push(data.product.productdata[0])
 
 
-      })
-      .catch((err) => console.log(err))
+
+        })
+        .catch((err) => console.log(err))
     })
-
-    productData.forEach((curr)=>{
-      customizeProduct.forEach((ele) =>{
-        zekekeData.forEach((value) =>{
-          if(curr.id === ele.product_id && curr.id === value.ProductId){
+    
+console.log("prod",productData);
+console.log("cust",customizeProduct);
+console.log("zakeke",zekekeData);
+    productData.forEach((curr) => {
+      customizeProduct.forEach((ele) => {
+        zekekeData.forEach((value) => {
+          if (curr.id === ele.product_id && curr.id === value.ProductId) {
 
             var dataObject = {
-                "product_id": curr.id,
-                "title": curr.title,
-                "description": curr.description,
-                "price": curr.price,
-                "productsize": ele.size,
-                "productcolor": ele.color.color_name,
-                "product_img": `https://api.theprintribe.com/${curr.img}`,
-                "category_id": curr.category_id,
-                "quantity": ele.quantity,
-                "zakeke_price": "0",
-                "designID": value.designId
+              "product_id": curr.id,
+              "title": curr.title,
+              "description": curr.description,
+              "price": curr.price,
+              "productsize": ele.size,
+              "productcolor": ele.color.color_name,
+              "product_img": `https://api.theprintribe.com/${curr.img}`,
+              "category_id": curr.category_id,
+              "quantity": ele.quantity,
+              "zakeke_price": "0",
+              "designID": value.designId
             }
 
-            productInfo.push(dataObject)            
+            productInfo.push(dataObject)
           }
         })
       })
     })
 
-    
+
 
     const payData = {
       "orderData": {
-              "customerShipping_id": customerShippingId,
-              "product_info": productInfo,      
-              "total_quantity": total_quantity,
-              "total_price": subTotal,
-              "shipping_charges": shipping_charges,
-              "payment_type": "cash on delivery",
-              "payment_ref_id": "23451AAX",
-              "customer_email": "mktg@obbe.in",
-              "visitor_id": visitor_id,
-              "courier_id": "6",
-              "customer_id": customerId
+        "customerShipping_id": customerShippingId,
+        "product_info": productInfo,
+        "total_quantity": total_quantity,
+        "total_price": subTotal,
+        "shipping_charges": shipping_charges,
+        "payment_type": "cash on delivery",
+        "payment_ref_id": "23451AAX",
+        "customer_email": "mktg@obbe.in",
+        "visitor_id": visitor_id,
+        "courier_id": "6",
+        "customer_id": customerId
       }
-  }
+    }
 
-     axios.post('/orders/addOrder',payData)
-    .then(({data}) => {
-      console.log(data)
-      window.location.href = "https://printribe-partner.web.app/"
+    axios.post('/orders/addOrder', payData)
+      .then(({ data }) => {
+        console.log(data)
+        window.location.href = "https://printribe-partner.web.app/"
 
-    })
-    .catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
   }
 
   return (
@@ -583,7 +586,7 @@ function ReviewOrder(props) {
               </div>
             </div>
             <div class="col-12 d-flex justify-content-center mt-5 mb-3">
-              <button class="btn btn-lg btn-danger w-100" onClick={() => {handleNext(); handlePay();}}>
+              <button class="btn btn-lg btn-danger w-100" onClick={() => { handleNext(); handlePay(); }}>
                 Pay Securely Now
               </button>
             </div>
