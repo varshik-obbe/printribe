@@ -2,6 +2,8 @@ import PaymentComp from "./payment-comp";
 import React,{useEffect,useState} from "react";
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
+import Loader from '../Loader/Loader'
+import {useNavigate} from 'react-router-dom'
 
 function ReviewOrder({products,handleNext}) {
   // const { handleNext } = props;
@@ -10,100 +12,113 @@ function ReviewOrder({products,handleNext}) {
   const [fulfillment, setFulfillment] = React.useState(false);
   const [filDig, setFilDig] = React.useState(false);
 
-  const handlePay = () => {
-
-    var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"))
-    var customerShippingId = localStorage.getItem("customerShipping_id");
-    var total_quantity = localStorage.getItem("total_quantity")
-    var subTotal = localStorage.getItem("subTotal")
-    var shipping_charges = localStorage.getItem("shipping_charges")
-    var customerId = localStorage.getItem("customerId")
-    var visitor_id = localStorage.getItem("visitorId")
-    var zekekeData = JSON.parse(localStorage.getItem("zekekeData"))
-
-    var productData = []
-    var productInfo = []
-
-    customizeProduct.forEach((prod) => {
-      axios.get(`/products/getproduct/${prod.product_id}`)
-        .then(({ data }) => {
-
-          productData.push(data.product.productdata[0])
+  var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
+  var customerShippingId = localStorage.getItem("customerShipping_id");
+  var total_quantity = localStorage.getItem("total_quantity");
+  var subTotal = localStorage.getItem("subTotal");
+  var shipping_charges = localStorage.getItem("shipping_charges");
+  var customerId = localStorage.getItem("customerId");
+  var visitor_id = localStorage.getItem("visitorId");
+  var zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
+  var courierId = localStorage.getItem("courier_id")
+  var customerEmail = localStorage.getItem("customer_email")
+  var zekekeTotal =   localStorage.getItem("zekekeTotal");
+  const navigate = useNavigate()
 
 
+  const productData = [];
+  const productInfo = [];
 
-        })
-        .catch((err) => console.log(err))
-    })
+  const apiCall = () => {
+    const payData = {
+      orderData: {
+        customerShipping_id: customerShippingId,
+        product_info: productInfo,
+        total_quantity: total_quantity,
+        total_price: subTotal,
+        shipping_charges: shipping_charges,
+        payment_type: "cash on delivery",
+        payment_ref_id: "23451AAX",
+        customer_email: customerEmail,
+        visitor_id: visitor_id,
+        courier_id: courierId,
+        customer_id: customerId,
+      },
+    };
 
-    console.log("prod", productData);
-    console.log("cust", customizeProduct);
-    console.log("zakeke", zekekeData);
-    let prodData = productData.map(item=>{
-      return item
-    })
-    prodData.forEach((curr) => {
-      console.log('currid',curr.id);
-      customizeProduct.forEach((ele) => {
-      console.log('eleid',ele.id);
+    axios
+      .post("/orders/addOrder", payData)
+      .then(({ data }) => {
+        console.log(data);
+        window.location.href = "https://printribe-partner.web.app/";
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const setData = () => {
+    console.log("hppro", productData);
+    console.log("hp", productInfo);
+    productData.map((curr) => {
+      console.log("currid", customizeProduct);
+      customizeProduct.map((ele) => {
+        console.log("eleid", ele.product_id);
 
         zekekeData.forEach((zakekeVal) => {
-      console.log('zakekeValid',zakekeVal.id);
+          console.log("zakekeValid", zakekeVal.id);
 
-          console.log(curr,ele,zakekeVal);
-          if (curr.id === ele.product_id && ele.id === zakekeVal.ProductId) {
-
+          console.log(curr, ele, zakekeVal);
+          if (
+            curr.id === ele.product_id &&
+            ele.product_id === zakekeVal.ProductId
+          ) {
             var dataObject = {
-              "product_id": curr.id,
-              "title": curr.title,
-              "description": curr.description,
-              "price": curr.price,
-              "productsize": ele.size,
-              "productcolor": ele.color.color_name,
-              "product_img": `https://api.theprintribe.com/${curr.img}`,
-              "category_id": curr.category_id,
-              "quantity": ele.quantity,
-              "zakeke_price": "0",
-              "designID": zakekeVal.designId
+              product_id: curr.id,
+              title: curr.title,
+              description: curr.description,
+              price: curr.price,
+              productsize: ele.size,
+              productcolor: ele.color.color_name,
+              product_img: `https://api.theprintribe.com/${curr.img}`,
+              category_id: curr.category_id,
+              quantity: ele.quantity,
+              zakeke_price: zakekeVal.totalPrice,
+              designID: zakekeVal.designId,
+            };
+            console.log("dtahp", dataObject);
+            productInfo.push(dataObject);
+            if (productInfo.length > 0) {
+              apiCall();
             }
-            console.log(dataObject);
-            productInfo.push(dataObject)
+          }
+        });
+      });
+    });
+  };
+
+  const handlePay = () => {
+    customizeProduct.forEach((prod) => {
+      axios
+        .get(`/products/getproduct/${prod.product_id}`)
+        .then(({ data }) => {
+          data.product.productdata.map((ele) => {
+            productData.push(ele);
+          });
+          if (productData.length > 0) {
+            setData();
           }
         })
-      })
-    })
-    console.log(productInfo);
-
-
-    const payData = {
-      "orderData": {
-        "customerShipping_id": customerShippingId,
-        "product_info": productInfo,
-        "total_quantity": total_quantity,
-        "total_price": subTotal,
-        "shipping_charges": shipping_charges,
-        "payment_type": "cash on delivery",
-        "payment_ref_id": "23451AAX",
-        "customer_email": "mktg@obbe.in",
-        "visitor_id": visitor_id,
-        "courier_id": "6",
-        "customer_id": customerId
-      }
-    }
-
-    axios.post('/orders/addOrder', payData)
-      .then(({ data }) => {
-        console.log(data)
-        window.location.href = "https://printribe-partner.web.app/"
-
-      })
-      .catch(err => console.log(err))
-  }
+        .catch((err) => console.log(err));
+    });
+  };
 
   var visitorId = JSON.parse(localStorage.getItem("visitorId"))
   const [ShippingTo,setShippingTo] = useState("")
+  const [renderPage, setRenderPage] = useState(false);
+  const [allProducts,setAllProducts] = useState([])
+
 
   useEffect(() =>{
+    if(ShippingTo === ""){
     axios.get(`/customerShipping/getShippingById/${visitorId}`)
     .then(({ data }) =>{
       console.log(data.shipping_data)
@@ -118,12 +133,35 @@ function ReviewOrder({products,handleNext}) {
       })
 
     }).catch((err) => console.log(err))
-  },[])
+  }
 
-  const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
+    setTimeout(() => {
+      setRenderPage(true);
+    },2000);
+
+    setAllProducts(products)
+
+  },[renderPage])
+
+  const handleDeleteCartItem = (index) =>{
+    console.log(index);
+
+    allProducts.splice(index,1)
+    setAllProducts(allProducts)
+
+    if(allProducts.length === 0){
+      navigate('/products')
+    }      
+
+    setRenderPage(false)
+
+    console.log(allProducts);
+  }
 
   return (
-    <React.Fragment>
+    <>
+       {renderPage ? (
+       <React.Fragment>
       <div
         class="w-100"
         style={{
@@ -148,8 +186,8 @@ function ReviewOrder({products,handleNext}) {
           </button>
         </div>
         <div class="">
-              {products &&
-                products.map((curr) => (
+              {allProducts.length !== 0 &&
+                allProducts.map((curr,index) => (
                   <div class="row">
                     <div class="col-12 col-md-6 col-lg-4 px-0">
                       <span class="fs-6">PRODUCTS</span>
@@ -357,7 +395,7 @@ function ReviewOrder({products,handleNext}) {
                           marginTop: "32px",
                         }}
                       />
-                      <button class="btn">Delete</button>
+                      <button class="btn" onClick={() => handleDeleteCartItem(index)}>Delete</button>
                     </div>
                     <div class="col-12 px-0">
                       <hr
@@ -566,12 +604,12 @@ function ReviewOrder({products,handleNext}) {
                           ? "accordion-collapse collapse show"
                           : "accordion-collapse collapse hide"
                       }
-                      style={{ padding: "20px" }}
+                      style={{ padding: "20px",color:'#000'}}
                     >
-                      <b class="fs-6">Fulfilled in USA</b>
+                      <b class="fs-6">Fulfilled in India</b>
                       <div class="d-flex justify-content-between mt-2 ms-3">
                         <span>Products and fulfillment</span>
-                        <b>$25</b>
+                        <b></b>
                       </div>
                     </div>
                   </div>
@@ -600,7 +638,7 @@ function ReviewOrder({products,handleNext}) {
                     >
                       <div class="d-flex justify-content-between">
                         <span>1 file</span>
-                        <b>$6.50</b>
+                        <b>{`₹${zekekeTotal}`}</b>
                       </div>
                     </div>
                   </div>
@@ -608,16 +646,22 @@ function ReviewOrder({products,handleNext}) {
               </div>
               <div class="col-12 mt-3 d-flex justify-content-between">
                 <b>Shipping</b>
-                <b>$13.99</b>
+                <b>{`₹${shipping_charges}`}</b>
               </div>
               <hr class="my-3" style={{ height: "1px", width: "100%" }} />
               <div class="col-12 d-flex justify-content-between">
                 <b class="fs-4">Total</b>
-                <b class="fs-4">$45.49</b>
+                <b class="fs-4">{`₹${Number(subTotal)+Number(shipping_charges)}`}</b>
               </div>
             </div>
             <div class="col-12 d-flex justify-content-center mt-5 mb-3">
-              <button class="btn btn-lg btn-danger w-100" onClick={() => { handleNext(); handlePay(); }}>
+              <button
+                class="btn btn-lg btn-danger w-100"
+                onClick={() => {
+                  // handleNext();
+                  handlePay();
+                }}
+              >
                 Pay Securely Now
               </button>
             </div>
@@ -625,6 +669,13 @@ function ReviewOrder({products,handleNext}) {
         </div>
       </div>
     </React.Fragment>
+       ):
+       <div style={{height:'70vh',width:'100%',position:'relative',}}>
+        <Loader style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)'}}/>
+      </div>
+       }
+    </>
+    
   );
 }
 

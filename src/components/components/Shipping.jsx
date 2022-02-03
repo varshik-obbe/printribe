@@ -208,6 +208,7 @@ function Shipping(props) {
                                     else if (curr.courier_name === company) {
                                       setRetailShippingPprice(curr.rate);
                                       localStorage.setItem("shipping_charges", curr.rate)
+                                      localStorage.setItem("courier_id", curr.courier_company_id)
                                     }
                                   });
                                 }}

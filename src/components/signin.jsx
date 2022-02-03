@@ -61,6 +61,8 @@ function Signin() {
         );
         setState((prev) => ({ ...prev, error: false }));
 
+        localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
+
         navigate(-1);
 
       })

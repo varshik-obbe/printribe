@@ -41,13 +41,13 @@
 .accordion-button:focus {
   box-shadow: none;
 
-  color: wheat;
+  color: #000;
   border: none !important;
 }
 .accordion-button:not(.collapsed) {
   box-shadow: none !important;
 
-  color: wheat;
+  color: #000;
   border: none !important;
 }
 
