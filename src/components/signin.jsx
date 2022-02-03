@@ -60,7 +60,9 @@ function Signin() {
           res.data.customer.id ? res.data.customer.id : ""
         );
         setState((prev) => ({ ...prev, error: false }));
-        navigate("/");
+
+        navigate(-1);
+
       })
       .catch((err) => {
         console.log(err);

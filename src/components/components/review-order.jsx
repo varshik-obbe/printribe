@@ -1,10 +1,10 @@
 import PaymentComp from "./payment-comp";
-import React from "react";
+import React,{useEffect,useState} from "react";
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
 
-function ReviewOrder(props) {
-  const { handleNext } = props;
+function ReviewOrder({products,handleNext}) {
+  // const { handleNext } = props;
   const [mess, setMess] = React.useState(false);
   const [giftCard, setGiftCard] = React.useState(false);
   const [fulfillment, setFulfillment] = React.useState(false);
@@ -100,6 +100,28 @@ function ReviewOrder(props) {
       .catch(err => console.log(err))
   }
 
+  var visitorId = JSON.parse(localStorage.getItem("visitorId"))
+  const [ShippingTo,setShippingTo] = useState("")
+
+  useEffect(() =>{
+    axios.get(`/customerShipping/getShippingById/${visitorId}`)
+    .then(({ data }) =>{
+      console.log(data.shipping_data)
+
+      setShippingTo({
+        Name : data.shipping_data.fullname,
+        Address_Line_1 :data.shipping_data.address1 ,
+        Address_Line_2 :data.shipping_data.address2 ,
+        City : data.shipping_data.city,
+        Postal_Code : data.shipping_data.zip_code,
+        Country : data.shipping_data.country
+      })
+
+    }).catch((err) => console.log(err))
+  },[])
+
+  const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
+
   return (
     <React.Fragment>
       <div
@@ -125,231 +147,231 @@ function ReviewOrder(props) {
             Edit
           </button>
         </div>
-        <div class="row">
-          <div class="col-12 col-md-6 col-lg-5 pe-0">
-            <span class="fs-6">PRODUCTS</span>
-            <hr
-              class="w-100 mt-2 mb-4"
-              style={{ height: "2px", background: "#999" }}
-            />
-            <div class="row" style={{ paddingRight: "25px" }}>
-              <div class="col-4 col-sm-3 pe-0">
-                <img
-                  src={
-                    "https://files.cdn.printful.com/products/411/11249_1581496513.jpg"
-                  }
-                  alt=""
-                  style={{
-                    width: "100%",
-                    objectFit: "contain",
-                  }}
-                />
-              </div>
-              <div class="col-8 col-sm-9">
-                <b class=" text-break">
-                  Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL)
-                </b>
-                <hr class="my-2" />
-                <span>Thread colors</span>
-                <br />
-                <span class="mt-2">Left chest:</span>
-                <div class="d-flex mt-1">
-                  <div
-                    style={{
-                      height: "12px",
-                      width: "12px",
-                      background: "#FFF",
-                      marginRight: "5px",
-                      border: "1px solid #666",
-                      borderRadius: "2px",
-                    }}
-                  />
-                  <div
-                    style={{
-                      height: "12px",
-                      width: "12px",
-                      background: "red",
-                      marginRight: "5px",
-                      border: "1px solid #666",
-                      borderRadius: "2px",
-                    }}
-                  />
-                  <div
-                    style={{
-                      height: "12px",
-                      width: "12px",
-                      background: "blue",
-                      marginRight: "5px",
-                      border: "1px solid #666",
-                      borderRadius: "2px",
-                    }}
-                  />
-                </div>
-              </div>
+        <div class="">
+              {products &&
+                products.map((curr) => (
+                  <div class="row">
+                    <div class="col-12 col-md-6 col-lg-4 px-0">
+                      <span class="fs-6">PRODUCTS</span>
+                      <hr
+                        class="w-100 mt-2 mb-4"
+                        style={{ height: "2px", background: "#999" }}
+                      />
+                      <div class="row" style={{ paddingRight: "25px" }}>
+                        <div class="col-4 col-sm-3 pe-0">
+                          <img
+                            src={curr.image}
+                            alt=""
+                            style={{
+                              width: "100%",
+                              objectFit: "contain",
+                            }}
+                          />
+                        </div>
+
+                        <div class="col-8 col-sm-9">
+                          <b class=" text-break">
+                            {curr.name}
+                            {/* Unisex Fleece Pullover | Cotton Heritage M2480 (White / XL) */}
+                            {/* {products && products[0].name} */}
+                            {/* {+new Date()} */}
+                          </b>
+                          <hr class="my-2" />
+                          <span>Thread colors</span>
+                          <br />
+                          <div class="d-flex mt-1">
+                            {customizeProduct && customizeProduct.map(
+                              (ele) =>
+                                ele.product_id === curr.prodId && (
+                                  <div
+                                    style={{
+                                      height: "12px",
+                                      width: "12px",
+                                      background: ele.color.color_code,
+                                      marginRight: "5px",
+                                      border: "1px solid #666",
+                                      borderRadius: "2px",
+                                    }}
+                                  />
+                                )
+                            )}
+
+                            {/* <div
+                      style={{
+                        height: "12px",
+                        width: "12px",
+                        background: "red",
+                        marginRight: "5px",
+                        border: "1px solid #666",
+                        borderRadius: "2px",
+                      }}
+                    />
+                    <div
+                      style={{
+                        height: "12px",
+                        width: "12px",
+                        background: "blue",
+                        marginRight: "5px",
+                        border: "1px solid #666",
+                        borderRadius: "2px",
+                      }}
+                    /> */}
+                          </div>
+                          <div class="mt-3" />
+                          <button class="p-0 border-0 bg-transparent text-primary">
+                            Edit
+                          </button>
+                          <button class="p-0 ms-3 border-0 bg-transparent text-primary">
+                            Copy
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class={[
+                        "col-12 col-md-6 col-lg-3 px-0",
+                        classes.productGrid2,
+                      ].join(" ")}
+                    >
+                      <span class="fs-6">PRINT FILE</span>
+                      <hr
+                        class="w-100 mt-2 mb-4"
+                        style={{ height: "2px", background: "#999" }}
+                      />
+                      <div class="row">
+                        <div class="col-6 col-lg-5">
+                          <div
+                            style={{
+                              height: "140px",
+                              border: "1px solid #d0d0d0",
+                              borderRadius: "5px 5px 0 0",
+                            }}
+                          >
+                            <img
+                              src={curr.zekekeImage}
+                              alt=""
+                              style={{
+                                objectFit: "contain",
+                                height: "100%",
+                                width: "100%",
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className={[
+                        "col-4 col-sm-3 col-lg-1 px-0 d-flex align-items-center flex-column",
+                        classes.productGrid3,
+                      ].join(" ")}
+                    >
+                      <span class="fs-6">QTY</span>
+                      <hr
+                        class="w-100 mt-2 mb-4"
+                        style={{ height: "2px", background: "#999" }}
+                      />
+                      {customizeProduct.map(
+                        (ele) =>
+                          ele.product_id === curr.prodId && (
+                            <input
+                              type="text"
+                              value={ele.quantity}
+                              style={{
+                                height: "40px",
+                                width: "50px",
+                                border: "1px solid #999",
+                                textAlign: "center",
+                                borderRadius: "5px",
+                              }}
+                            />
+                          )
+                      )}
+                    </div>
+                    <div
+                      class={[
+                        "col-4 col-sm-3 col-lg-1 px-0 d-flex align-items-center flex-column",
+                        classes.productGrid4,
+                      ].join(" ")}
+                    >
+                      <span class="fs-6">PRICE</span>
+                      <hr
+                        class="w-100 mt-2 mb-4"
+                        style={{ height: "2px", background: "#999" }}
+                      />
+                      <b class="fs-5">{`₹${curr.price}`}</b>
+                    </div>
+                    <div
+                      class={[
+                        "col-4 col-sm-4 col-lg-2 px-0 d-flex align-items-center flex-column",
+                        classes.productGrid5,
+                      ].join(" ")}
+                    >
+                      <span class="fs-6">RETAIL</span>
+                      <hr
+                        class="w-100 mt-2 mb-4"
+                        style={{ height: "2px", background: "#999" }}
+                      />
+                      <div class="d-flex">
+                        <div
+                          style={{
+                            height: "40px",
+                            width: "30px",
+                            borderTop: "1px solid #999",
+                            borderLeft: "1px solid #999",
+                            borderBottom: "1px solid #999",
+                            borderRadius: "5px 0 0 5px",
+                          }}
+                          class="d-flex justify-content-center align-items-center"
+                        >
+                          ₹
+                        </div>
+                        {customizeProduct.map(
+                          (ele) =>
+                            ele.product_id === curr.prodId && (
+                              <input
+                                value={Number(ele.quantity) * curr.price}
+                                style={{
+                                  height: "40px",
+                                  width: "80px",
+                                  border: "1px solid #999",
+                                  textAlign: "center",
+                                  borderRadius: "0 5px 5px 0",
+                                }}
+                              />
+                            )
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      class={[
+                        "col-12 col-sm-2 col-lg-1 px-0 d-flex align-items-center flex-column",
+                        classes.productGrid6,
+                      ].join(" ")}
+                    >
+                      <hr
+                        class="w-100 mb-4"
+                        style={{
+                          height: "2px",
+                          background: "#999",
+                          marginTop: "32px",
+                        }}
+                      />
+                      <button class="btn">Delete</button>
+                    </div>
+                    <div class="col-12 px-0">
+                      <hr
+                        class="my-4"
+                        style={{
+                          height: "2px",
+                          width: "100%",
+                          background: "#999",
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
             </div>
-          </div>
-          <div
-            class={["col-12 col-md-6 col-lg-3 px-0", classes.productGrid2].join(
-              " "
-            )}
-          >
-            <span class="fs-6">PRINT FILE</span>
-            <hr
-              class="w-100 mt-2 mb-4"
-              style={{ height: "2px", background: "#999" }}
-            />
-            <div class="row">
-              <div class="col-6 col-lg-5">
-                <div
-                  style={{
-                    height: "140px",
-                    border: "1px solid #d0d0d0",
-                    borderRadius: "5px 5px 0 0",
-                  }}
-                >
-                  <img
-                    src={
-                      "https://files.cdn.printful.com/files/1c5/1c563115f7a227a13e0cc8c818fa65eb_thumb.png"
-                    }
-                    alt=""
-                    style={{
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
-                  />
-                </div>
-                <div
-                  style={{
-                    height: "30px",
-                    borderBottom: "1px solid #d0d0d0",
-                    borderLeft: "1px solid #d0d0d0",
-                    borderRight: "1px solid #d0d0d0",
-                    textAlign: "center",
-                    width: "100%",
-                    borderRadius: "0 0 5px 5px",
-                  }}
-                >
-                  <span
-                    style={{
-                      fontSize: "14px",
-                    }}
-                  >
-                    Left Chest
-                  </span>
-                </div>
-              </div>
-              <div class="col-6 col-lg-5">
-                <div
-                  style={{
-                    height: "140px",
-                    border: "1px solid #d0d0d0",
-                    borderRadius: "5px 5px 0 0",
-                  }}
-                >
-                  <img
-                    src={
-                      "https://files.cdn.printful.com/files/b7f/b7fa6044b42067afb47a2cd2dd78c155_thumb.png"
-                    }
-                    alt=""
-                    style={{
-                      objectFit: "contain",
-                      height: "100%",
-                      width: "100%",
-                    }}
-                  />
-                </div>
-                <div
-                  style={{
-                    height: "30px",
-                    borderBottom: "1px solid #d0d0d0",
-                    borderLeft: "1px solid #d0d0d0",
-                    borderRight: "1px solid #d0d0d0",
-                    textAlign: "center",
-                    width: "100%",
-                    borderRadius: "0 0 5px 5px",
-                  }}
-                >
-                  <span style={{ fontSize: "14px" }}>Mockup</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className={[
-              "col-4 col-sm-3 col-lg-1 px-0 d-flex align-items-center flex-column",
-              classes.productGrid3,
-            ].join(" ")}
-          >
-            <span class="fs-6">QTY</span>
-            <hr
-              class="w-100 mt-2 mb-4"
-              style={{ height: "2px", background: "#999" }}
-            />
-            <input
-              type="text"
-              value="1"
-              style={{
-                height: "40px",
-                width: "50px",
-                border: "1px solid #999",
-                textAlign: "center",
-                borderRadius: "5px",
-              }}
-            />
-          </div>
-          <div
-            class={[
-              "col-4 col-sm-3 col-lg-1 px-0 d-flex align-items-center flex-column",
-              classes.productGrid4,
-            ].join(" ")}
-          >
-            <span class="fs-6">PRICE</span>
-            <hr
-              class="w-100 mt-2 mb-4"
-              style={{ height: "2px", background: "#999" }}
-            />
-            <b class="fs-5">$25</b>
-          </div>
-          <div
-            class={[
-              "col-4 col-sm-6 col-lg-2 px-0 d-flex align-items-center flex-column",
-              classes.productGrid5,
-            ].join(" ")}
-          >
-            <span class="fs-6">RETAIL</span>
-            <hr
-              class="w-100 mt-2 mb-4"
-              style={{ height: "2px", background: "#999" }}
-            />
-            <div class="d-flex">
-              <div
-                style={{
-                  height: "40px",
-                  width: "30px",
-                  borderTop: "1px solid #999",
-                  borderLeft: "1px solid #999",
-                  borderBottom: "1px solid #999",
-                  borderRadius: "5px 0 0 5px",
-                }}
-                class="d-flex justify-content-center align-items-center"
-              >
-                $
-              </div>
-              <input
-                type="text"
-                value="1"
-                style={{
-                  height: "40px",
-                  width: "80px",
-                  border: "1px solid #999",
-                  textAlign: "center",
-                  borderRadius: "0 5px 5px 0",
-                }}
-              />
-            </div>
-          </div>
-        </div>
       </div>
       <div
         class="w-100 mt-4"
@@ -416,7 +438,7 @@ function ReviewOrder(props) {
         <div class="row mt-4">
           <div class="col-12 col-md-4 d-flex flex-column">
             <b class="fs-6">Shipping From</b>
-            <span class="mt-2">United States</span>
+            <span class="mt-2">India</span>
           </div>
           <div
             className={[
@@ -436,12 +458,12 @@ function ReviewOrder(props) {
                 Edit
               </button>
             </div>
-            <span class="">Name</span>
-            <span class="">Address Line 1</span>
-            <span class="">Address Line 2</span>
-            <span class="">City</span>
-            <span class="">Postal Code</span>
-            <span class="">Country</span>
+            <span class="">{ShippingTo && ShippingTo.Name}</span>
+            <span class="">{ShippingTo && ShippingTo.Address_Line_1}</span>
+            <span class="">{ShippingTo && ShippingTo.Address_Line_2}</span>
+            <span class="">{ShippingTo && ShippingTo.City}</span>
+            <span class="">{ShippingTo && ShippingTo.Postal_Code}</span>
+            <span class="">{ShippingTo && ShippingTo.Country}</span>
           </div>
           <div
             class={[

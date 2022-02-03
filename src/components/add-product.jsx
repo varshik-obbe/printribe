@@ -79,7 +79,7 @@ const AddProduct = () => {
           case 1:
             return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
           case 2:
-            return <ReviewOrder handleNext={() => setActiveStep(activeStep - 2)} />;
+            return <ReviewOrder products={products} handleNext={() => setActiveStep(activeStep - 2)} />;
           default:
             return null;
         }

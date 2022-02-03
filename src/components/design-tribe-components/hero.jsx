@@ -5,18 +5,21 @@ import {useNavigate} from "react-router-dom"
 
 function Hero(){
     const navigate = useNavigate()
-    const goToDesign=()=>{   
+
+    const goToDesign = () => {   
     const token = localStorage.getItem('token');
     // console.log(token)
     const customerId = localStorage.getItem('customerId');
-    if(token!="" & token!=null & token!=undefined & customerId!="" & customerId!=null & customerId!=undefined ){
+    
+    if(token!="" && token!=null && token!=undefined && customerId!="" && customerId!=null && customerId!=undefined ){
        navigate("/products");
     }else{
        navigate("/signin");
       }
     }
 
-    return(<div className={styles.heroContainer}>
+    return(
+    <div className={styles.heroContainer}>
         <div style={{position:'absolute',left:0,padding:'5% 0%'}} className={styles.heroImgContainer}> 
         <img src="https://static.cdn.printful.com/static/v838//images/layout/design-maker/design-maker-features-pattern.png" alt="" width="90%"/>
         </div>
@@ -26,8 +29,10 @@ function Hero(){
         <button className={styles.herobtn} onClick={goToDesign}>Start Designing &nbsp; 
         &gt;
         </button>
+        
         </div>
-    </div>)
+    </div>
+    )
 }
 
 export default Hero;

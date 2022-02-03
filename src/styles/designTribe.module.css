@@ -12,6 +12,7 @@
 }
 .heroTextContainer {
   padding: 10% 0%;
+  position: relative;
 }
 .heroBody {
   font-size: 25px;
@@ -27,6 +28,8 @@
   border: 1px solid #e40f0b;
   font-weight: 700;
   font-family: ProximaNova, sans-serif;
+  position: relative;
+  z-index: 999;
 }
 .heroImgContainer {
   position: "absolute";

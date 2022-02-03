@@ -41,7 +41,7 @@ function PyamentComp() {
               Wallet
             </span>
           </li>
-          <li
+          {/* <li
             class="nav-item"
             onClick={() => setActivePayment("other")}
             style={{ cursor: "pointer" }}
@@ -51,7 +51,7 @@ function PyamentComp() {
             >
               Other Methods
             </span>
-          </li>
+          </li> */}
         </ul>
         <div class="mt-3">
           {activePayment === "other" ? (

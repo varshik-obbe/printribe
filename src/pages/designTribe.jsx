@@ -16,9 +16,9 @@ function designTribe() {
         <Header />
         <Navbar />
         <Hero />
-        <div className='container'>
+        {/* <div className='container'>
             <Feature />
-        </div>
+        </div> */}
         <Footer />
         {/* <HowTo/>
     <WhyUs/>
