@@ -35,14 +35,23 @@ function ReviewOrder(props) {
         })
         .catch((err) => console.log(err))
     })
-    
-console.log("prod",productData);
-console.log("cust",customizeProduct);
-console.log("zakeke",zekekeData);
-    productData.forEach((curr) => {
+
+    console.log("prod", productData);
+    console.log("cust", customizeProduct);
+    console.log("zakeke", zekekeData);
+    let prodData = productData.map(item=>{
+      return item
+    })
+    prodData.forEach((curr) => {
+      console.log('currid',curr.id);
       customizeProduct.forEach((ele) => {
-        zekekeData.forEach((value) => {
-          if (curr.id === ele.product_id && curr.id === value.ProductId) {
+      console.log('eleid',ele.id);
+
+        zekekeData.forEach((zakekeVal) => {
+      console.log('zakekeValid',zakekeVal.id);
+
+          console.log(curr,ele,zakekeVal);
+          if (curr.id === ele.product_id && ele.id === zakekeVal.ProductId) {
 
             var dataObject = {
               "product_id": curr.id,
@@ -55,15 +64,15 @@ console.log("zakeke",zekekeData);
               "category_id": curr.category_id,
               "quantity": ele.quantity,
               "zakeke_price": "0",
-              "designID": value.designId
+              "designID": zakekeVal.designId
             }
-
+            console.log(dataObject);
             productInfo.push(dataObject)
           }
         })
       })
     })
-
+    console.log(productInfo);
 
 
     const payData = {

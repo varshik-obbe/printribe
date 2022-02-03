@@ -30,11 +30,11 @@ const AddProduct = () => {
           
           // var zekekeImage = tempPreviewImageUrl 
           var zekekeData = [];
-          // zekekeData = data.designInfo.products_info;
+          zekekeData = data.designInfo.products_info;
+          localStorage.setItem("zekekeData",JSON.stringify(zekekeData))
 
 
           data.designInfo.products_info.forEach((product) => {
-            zekekeData.push(product)
             axios.get(`/products/getproduct/${product.ProductId}`)
               .then(({ data }) => {
   
@@ -58,7 +58,6 @@ const AddProduct = () => {
                 productInfo.push(productDetail)                
               })
           })
-          localStorage.setItem("zakekeData",JSON.stringify(zekekeData))
 
           setProducts(productInfo)
                 console.log(products);
