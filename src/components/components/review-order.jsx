@@ -1,8 +1,9 @@
+import React,{useEffect, useState} from "react";
+
+import Loader from '../Loader/Loader'
 import PaymentComp from "./payment-comp";
-import React,{useEffect,useState} from "react";
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
-import Loader from '../Loader/Loader'
 import {useNavigate} from 'react-router-dom'
 
 function ReviewOrder({products,handleNext}) {
@@ -150,6 +151,16 @@ function ReviewOrder({products,handleNext}) {
     setAllProducts(allProducts)
 
     if(allProducts.length === 0){
+      localStorage.removeItem("visitorId")
+      localStorage.removeItem("customizeProduct")
+      localStorage.removeItem("zekekeData")
+      localStorage.removeItem("subTotal")
+      localStorage.removeItem("total_quantity")
+      localStorage.removeItem("zekekeTotal")
+      localStorage.removeItem("shipping_charges")
+      localStorage.removeItem("courier_id")
+      localStorage.removeItem("customerShipping_id")
+
       navigate('/products')
     }      
 
@@ -259,9 +270,9 @@ function ReviewOrder({products,handleNext}) {
                           <button class="p-0 border-0 bg-transparent text-primary">
                             Edit
                           </button>
-                          <button class="p-0 ms-3 border-0 bg-transparent text-primary">
+                          {/* <button class="p-0 ms-3 border-0 bg-transparent text-primary">
                             Copy
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Loader from '../../components/Loader/Loader'
 
+import Loader from '../../components/Loader/Loader'
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
 import {useNavigate} from 'react-router-dom'
@@ -11,16 +11,17 @@ function Products({ products, handleNext }) {
   console.log("pros comp");
   console.log(products);
 
-  const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
-  const zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
-
   const [quantity, setQuantity] = useState();
   const [color, setColor] = useState();
   const [allProducts,setAllProducts] = useState([])
+  const [renderPage, setRenderPage] = useState(false);
 
   var subTotal = 0;
   var total_quantity = 0;
   
+  const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
+  const zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
+
   customizeProduct.forEach((curr) => {
     products.forEach((ele) => {
       if (ele.prodId === curr.product_id) {
@@ -44,7 +45,6 @@ function Products({ products, handleNext }) {
   localStorage.setItem("total_quantity", total_quantity);
   localStorage.setItem("zekekeTotal", zekekeTotal);
 
-  const [renderPage, setRenderPage] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
@@ -60,6 +60,10 @@ function Products({ products, handleNext }) {
 
     allProducts.splice(index,1)
     setAllProducts(allProducts)  
+    if(allProducts.length === 0){
+      localStorage.removeItem("visitorId")
+      navigate('/products')
+    }      
 
     setRenderPage(false)
 
@@ -153,9 +157,9 @@ function Products({ products, handleNext }) {
                           <button class="p-0 border-0 bg-transparent text-primary">
                             Edit
                           </button>
-                          <button class="p-0 ms-3 border-0 bg-transparent text-primary">
+                          {/* <button class="p-0 ms-3 border-0 bg-transparent text-primary">
                             Copy
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     </div>

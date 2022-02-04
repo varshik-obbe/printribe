@@ -9,7 +9,6 @@ import Navbar from '../components/navbar'
 import React from 'react'
 import SubSubCatalog from '../components/subsubcategories'
 
-
 function SubCatWomen() {
     return (
         <>
@@ -18,10 +17,10 @@ function SubCatWomen() {
             <div className="row mx-0">
             <Navbar />
             <Custom />
-                 <div className="col-md-3 col-lg-3 d-flex align-items-end flex-column">
+                 <div className="col-sm-4 col-lg-3 d-flex align-items-end flex-column d-none d-sm-flex">
                     <Catagories/>
                 </div>
-                <div className="col-md-9 col-lg-8">
+                <div className="col-sm-8 col-lg-8">
                     <SubSubCatalog />
                 </div>
                 <Join />

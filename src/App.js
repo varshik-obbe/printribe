@@ -1,4 +1,5 @@
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+
 import Account from "./components/account";
 import Cart from "./components/add-product";
 import CatalogsubProducts from "./pages/catalogProducts";
@@ -13,9 +14,12 @@ import ReturnRefund from './pages/returnrefund';
 import Signin from "./components/signin";
 import Signup from "./components/signup";
 import SubCatMen from "./pages/SubCatMen";
-import SubCatWomen from "./pages/SubCatWomen";
 import SubSubCat from "./pages/SubSubCat";
 import TermsPage from './pages/termspage';
+
+// import SubCatWomen from "./pages/SubCatWomen";
+
+
 
 function App() {
   return (

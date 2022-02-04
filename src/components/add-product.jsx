@@ -12,7 +12,7 @@ const steps = ["Products", "Shipping", "Review Order"];
 const AddProduct = () => {
 
   const [activeStep, setActiveStep] = useState(0);
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
 
   // const activeStep=0;
   // let products=[]
@@ -24,12 +24,12 @@ const AddProduct = () => {
     console.log(visitorId);
     if (visitorId) {
       let productInfo = []
+      var zekekeData = [];
       axios.get(`/zakekeCustomize/getCartInfo/${visitorId}`)
         .then(({ data }) => {
           console.log('data',data);
           
           // var zekekeImage = tempPreviewImageUrl 
-          var zekekeData = [];
           zekekeData = data.designInfo.products_info;
           localStorage.setItem("zekekeData",JSON.stringify(zekekeData))
 
@@ -64,8 +64,8 @@ const AddProduct = () => {
           // })
         })
       }
-      //    console.log(products)
-      console.log(+new Date());
+        //  console.log(products)
+      // console.log(+new Date());
       // this.setState({
     },[])
 
@@ -105,7 +105,7 @@ const AddProduct = () => {
               </Stepper>
             </div>
           </div>
-          <div class="mt-5">{renderComp()}</div>
+          <div class="mt-5">{products && renderComp()}</div>
         </div>
       </div>
       <Footer />
