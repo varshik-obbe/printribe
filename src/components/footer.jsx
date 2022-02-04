@@ -106,7 +106,7 @@ function Footer() {
                   <a href="/privacy-policy" class="text-white text-decoration-none">Integrations</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/return-refund" class="text-white text-decoration-none">Merchant Panel</a>
+                  <a href="https://printribe-partner.web.app" class="text-white text-decoration-none">Merchant Panel</a>
                 </li>
 
 
