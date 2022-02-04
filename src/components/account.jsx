@@ -4,13 +4,13 @@ import Layout from "../components/layout";
 import classes from "../styles/account.module.css";
 import { AiFillCamera } from "react-icons/all";
 import account from "../assets/account.png";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 import api from "../api/api";
 
 function Account() {
-    const navigate = useNavigate()
-  const [btnVisible, setBtnVisible] = React.useState(false);
+  const navigate = useNavigate();
+  const [showImage, setShowImage] = React.useState(false);
 
   const [state, setState] = React.useState();
 
@@ -55,6 +55,12 @@ function Account() {
     setState((prev) => ({ ...prev, [name]: e.target.value }));
   };
 
+  const handleImageUpload = (e) => {
+    console.log(e.target.files[0]);
+    setShowImage(URL.createObjectURL(e.target.files[0]));
+    console.log(URL.createObjectURL(e.target.files[0]))
+  };
+
   console.log(state);
 
   if (state) {
@@ -64,35 +70,52 @@ function Account() {
           <div className="container-lg" style={{ padding: "0 20px" }}>
             <div class={[classes.topProfileDiv, "row"].join(" ")}>
               <div class="col-12">
-                <button
-                  
-                  style={{ border: "0"}}
-                >
+                <button style={{ border: "0" }}>
                   <div
-                    style={{ backgroundColor: "#000",padding:'0.375rem 0.75rem' }}
+                    style={{
+                      backgroundColor: "#000",
+                      padding: "0.375rem 0.75rem",
+                    }}
                     class="d-flex align-items-center rounded"
                   >
-                    <AiFillCamera
-                      style={{
-                        fontSize: "25px",
-                        marginRight: "10px",
-                        color: "#fff",
-                      }}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      id="upload_image"
+                      onChange={(e) => handleImageUpload(e)}
                     />
-                    <span style={{ color: "#fff"}}>Change Photo</span>
+                    <label
+                      htmlFor="upload_image"
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <AiFillCamera
+                        style={{
+                          fontSize: "25px",
+                          marginRight: "10px",
+                          color: "#fff",
+                        }}
+                      />
+                      <span style={{ color: "#fff" }}>Change Photo</span>
+                    </label>
                   </div>
                 </button>
               </div>
               <div class="col-12 col-md-6 mt-5 d-flex align-items-end">
                 <img
                   alt=""
-                  src={account}
+                  src={showImage ? showImage : account}
                   style={{
                     height: "100px",
                     width: "100px",
                     objectFit: "contain",
                     borderRadius: "50%",
-                    border: '1px solid rgba(0,0,0,0.5)',                    
+                    border: "1px solid rgba(0,0,0,0.5)",
+                    background:'transparent'
                   }}
                 />
                 <h4 class="ms-4" style={{ color: "#000" }}>
