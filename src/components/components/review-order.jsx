@@ -116,6 +116,8 @@ function ReviewOrder({products,handleNext}) {
   const [ShippingTo,setShippingTo] = useState("")
   const [renderPage, setRenderPage] = useState(false);
   const [allProducts,setAllProducts] = useState([])
+  const [quantity, setQuantity] = useState(1);
+
 
 
   useEffect(() =>{
@@ -169,6 +171,30 @@ function ReviewOrder({products,handleNext}) {
     console.log(allProducts);
   }
 
+  const handleChangeQty = (task, index) => {
+    if (task === "increase") {
+      setQuantity(Number(quantity) + 1);
+
+      customizeProduct[index].quantity = (Number(quantity) + 1).toString();
+
+      localStorage.setItem(
+        "customizeProduct",
+        JSON.stringify(customizeProduct)
+      );
+    } else {
+      if (quantity == 1) return;
+
+      setQuantity(Number(quantity) - 1);
+
+      customizeProduct[index].quantity = (Number(quantity) - 1).toString();
+
+      localStorage.setItem(
+        "customizeProduct",
+        JSON.stringify(customizeProduct)
+      );
+    }
+  };
+
   return (
     <>
        {renderPage ? (
@@ -197,8 +223,8 @@ function ReviewOrder({products,handleNext}) {
           </button>
         </div>
         <div class="">
-              {allProducts.length !== 0 &&
-                allProducts.map((curr,index) => (
+        {allProducts && allProducts.length !== 0 && (
+                allProducts.map((curr, index) => (
                   <div class="row">
                     <div class="col-12 col-md-6 col-lg-4 px-0">
                       <span class="fs-6">PRODUCTS</span>
@@ -229,7 +255,7 @@ function ReviewOrder({products,handleNext}) {
                           <span>Thread colors</span>
                           <br />
                           <div class="d-flex mt-1">
-                            {customizeProduct && customizeProduct.map(
+                            {customizeProduct.map(
                               (ele) =>
                                 ele.product_id === curr.prodId && (
                                   <div
@@ -270,10 +296,11 @@ function ReviewOrder({products,handleNext}) {
                           <button class="p-0 border-0 bg-transparent text-primary">
                             Edit
                           </button>
-                          {/* <button class="p-0 ms-3 border-0 bg-transparent text-primary">
+                        </div>
+
+                        {/* <button class="p-0 ms-3 border-0 bg-transparent text-primary">
                             Copy
                           </button> */}
-                        </div>
                       </div>
                     </div>
                     <div
@@ -316,26 +343,50 @@ function ReviewOrder({products,handleNext}) {
                       ].join(" ")}
                     >
                       <span class="fs-6">QTY</span>
+
                       <hr
                         class="w-100 mt-2 mb-4"
                         style={{ height: "2px", background: "#999" }}
                       />
-                      {customizeProduct.map(
-                        (ele) =>
-                          ele.product_id === curr.prodId && (
-                            <input
-                              type="text"
-                              value={ele.quantity}
-                              style={{
-                                height: "40px",
-                                width: "50px",
-                                border: "1px solid #999",
-                                textAlign: "center",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          )
-                      )}
+                      {customizeProduct.map((ele, index) => {
+                        if (ele.product_id === curr.prodId) {
+                          quantity === 1 && setQuantity(ele.quantity);
+                          return (
+                            <div
+                              style={{ display: "flex" }}
+                              className={classes.cart_qty_container}
+                            >
+                              <button
+                                onClick={() =>
+                                  handleChangeQty("decrease", index)
+                                }
+                              >
+                                -
+                              </button>
+                              <input
+                                type="text"
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                                style={{
+                                  height: "40px",
+                                  width: "50px",
+                                  border: "1px solid #999",
+                                  textAlign: "center",
+                                  borderRadius: "5px",
+                                  margin: "0 5px",
+                                }}
+                              />
+                              <button
+                                onClick={() =>
+                                  handleChangeQty("increase", index)
+                                }
+                              >
+                                +
+                              </button>
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
                     <div
                       class={[
@@ -406,7 +457,12 @@ function ReviewOrder({products,handleNext}) {
                           marginTop: "32px",
                         }}
                       />
-                      <button class="btn" onClick={() => handleDeleteCartItem(index)}>Delete</button>
+                      <button
+                        class="btn"
+                        onClick={() => handleDeleteCartItem(index)}
+                      >
+                        Delete
+                      </button>
                     </div>
                     <div class="col-12 px-0">
                       <hr
@@ -419,7 +475,8 @@ function ReviewOrder({products,handleNext}) {
                       />
                     </div>
                   </div>
-                ))}
+                ))
+              )}
             </div>
       </div>
       <div

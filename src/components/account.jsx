@@ -57,7 +57,9 @@ function Account() {
 
   const handleImageUpload = (e) => {
     console.log(e.target.files[0]);
+
     setShowImage(URL.createObjectURL(e.target.files[0]));
+    
     console.log(URL.createObjectURL(e.target.files[0]))
   };
 
