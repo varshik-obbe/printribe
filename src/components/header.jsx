@@ -1,11 +1,13 @@
 import { Nav, Navbar } from "react-bootstrap";
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 
 import logo from "../assets/Printribe-logo.png";
 import styles from '../styles/home.module.css';
 
 function Header() {
   const [messageVisible,setMessageVisible] = useState(true);
+  const [searchItem , setSearchItem] = useState("")
+
   return (
     <div>
     {messageVisible?(<div style={{backgroundColor:"#ffd680",position:'relative', padding:"7px 0 12px 0"}}>
@@ -26,7 +28,12 @@ function Header() {
           <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-6 order-2 order-md-1">
             <div className={styles.searchBox}>
             <i className={"fas fa-search "+styles.searchIcon} ></i>
-            <input className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black', width:"80%"}}></input>
+            <input value={searchItem} onChange={(e) => setSearchItem(e.target.value)} className={styles.searchInput} placeholder="Search..." style={{border:'0px solid black', width:"80%"}}/>
+              {
+                searchItem.length > 0
+                &&
+                <span style={{marginLeft:'30px',cursor:'pointer'}} onClick={() => setSearchItem("")}><i class="fas fa-times"></i></span>
+              }
             </div>
             
           </div>
