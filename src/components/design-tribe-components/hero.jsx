@@ -2,7 +2,6 @@ import React from 'react'
 import styles from '../../styles/designTribe.module.css'
 import {useNavigate} from "react-router-dom"
 
-
 function Hero(){
     const navigate = useNavigate()
 
@@ -10,12 +9,13 @@ function Hero(){
     const token = localStorage.getItem('token');
     // console.log(token)
     const customerId = localStorage.getItem('customerId');
+    navigate("/products");
     
-    if(token!="" && token!=null && token!=undefined && customerId!="" && customerId!=null && customerId!=undefined ){
-       navigate("/products");
-    }else{
-       navigate("/signin");
-      }
+    // if(token!="" && token!=null && token!=undefined && customerId!="" && customerId!=null && customerId!=undefined ){
+    //    navigate("/products");
+    // }else{
+    //    navigate("/signin");
+    //   }
     }
 
     return(
