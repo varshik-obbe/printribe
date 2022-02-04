@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from "react";
-
-import Loader from '../../components/Loader/Loader'
+import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 function Products({ products, handleNext }) {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // const { products,handleNext } = props;
   console.log("pros comp");
   console.log(products);
 
-  const [quantity, setQuantity] = useState();
+  const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
+  const zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
+
+  const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState();
-  const [allProducts,setAllProducts] = useState([])
+  const [allProducts, setAllProducts] = useState([]);
   const [renderPage, setRenderPage] = useState(false);
 
   var subTotal = 0;
   var total_quantity = 0;
-  
-  const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
-  const zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
 
   customizeProduct.forEach((curr) => {
     products.forEach((ele) => {
@@ -30,47 +30,73 @@ function Products({ products, handleNext }) {
       total_quantity += Number(curr.quantity);
     });
   });
-  
-  var zekekeTotal = 0
 
-  zekekeData.forEach((curr)=>{
-    products.forEach((ele) => {
-      if (ele.prodId === curr.ProductId) {
-        zekekeTotal += Number(curr.totalPrice)
-      }
+  var zekekeTotal = 0;
+
+  zekekeData &&
+    zekekeData.forEach((curr) => {
+      products.forEach((ele) => {
+        if (ele.prodId === curr.ProductId) {
+          zekekeTotal += Number(curr.totalPrice);
+        }
+      });
     });
-  })
+
+  // subTotal && localStorage.setItem("subTotal", subTotal);
+  // total_quantity && localStorage.setItem("total_quantity", total_quantity);
+  // zekekeTotal && localStorage.setItem("zekekeTotal", zekekeTotal);
 
   localStorage.setItem("subTotal", subTotal);
   localStorage.setItem("total_quantity", total_quantity);
   localStorage.setItem("zekekeTotal", zekekeTotal);
 
-
   useEffect(() => {
-    setTimeout(() => {
+      setTimeout(() => {
       setRenderPage(true);
-    },2000);
+    }, 2000)
 
-    setAllProducts(products)
- 
+      setAllProducts(products);
+
+    // console.log(products.length);
+
   }, [renderPage]);
 
-  const handleDeleteCartItem = (index) =>{
+  const handleDeleteCartItem = (index) => {
     console.log(index);
 
-    allProducts.splice(index,1)
-    setAllProducts(allProducts)  
-    if(allProducts.length === 0){
-      localStorage.removeItem("visitorId")
-      navigate('/products')
-    }      
+    allProducts.splice(index, 1);
+    setAllProducts(allProducts);
 
-    setRenderPage(false)
+    setRenderPage(false);
 
     console.log(allProducts);
-  }
+  };
 
-  return (
+  const handleChangeQty = (task, index) => {
+    if (task === "increase") {
+      setQuantity(Number(quantity) + 1);
+
+      customizeProduct[index].quantity = (Number(quantity) + 1).toString();
+
+      localStorage.setItem(
+        "customizeProduct",
+        JSON.stringify(customizeProduct)
+      );
+    } else {
+      if (quantity == 1) return;
+
+      setQuantity(Number(quantity) - 1);
+
+      customizeProduct[index].quantity = (Number(quantity) - 1).toString();
+
+      localStorage.setItem(
+        "customizeProduct",
+        JSON.stringify(customizeProduct)
+      );
+    }
+  };
+
+   return (
     <>
       {renderPage ? (
         <React.Fragment>
@@ -84,8 +110,8 @@ function Products({ products, handleNext }) {
             }}
           >
             <div class="">
-              {allProducts.length !== 0 &&
-                allProducts.map((curr,index) => (
+              {allProducts && allProducts.length !== 0 && (
+                allProducts.map((curr, index) => (
                   <div class="row">
                     <div class="col-12 col-md-6 col-lg-4 px-0">
                       <span class="fs-6">PRODUCTS</span>
@@ -157,10 +183,11 @@ function Products({ products, handleNext }) {
                           <button class="p-0 border-0 bg-transparent text-primary">
                             Edit
                           </button>
-                          {/* <button class="p-0 ms-3 border-0 bg-transparent text-primary">
+                        </div>
+
+                        {/* <button class="p-0 ms-3 border-0 bg-transparent text-primary">
                             Copy
                           </button> */}
-                        </div>
                       </div>
                     </div>
                     <div
@@ -203,26 +230,50 @@ function Products({ products, handleNext }) {
                       ].join(" ")}
                     >
                       <span class="fs-6">QTY</span>
+
                       <hr
                         class="w-100 mt-2 mb-4"
                         style={{ height: "2px", background: "#999" }}
                       />
-                      {customizeProduct.map(
-                        (ele) =>
-                          ele.product_id === curr.prodId && (
-                            <input
-                              type="text"
-                              value={ele.quantity}
-                              style={{
-                                height: "40px",
-                                width: "50px",
-                                border: "1px solid #999",
-                                textAlign: "center",
-                                borderRadius: "5px",
-                              }}
-                            />
-                          )
-                      )}
+                      {customizeProduct.map((ele, index) => {
+                        if (ele.product_id === curr.prodId) {
+                          quantity === 1 && setQuantity(ele.quantity);
+                          return (
+                            <div
+                              style={{ display: "flex" }}
+                              className={classes.cart_qty_container}
+                            >
+                              <button
+                                onClick={() =>
+                                  handleChangeQty("decrease", index)
+                                }
+                              >
+                                -
+                              </button>
+                              <input
+                                type="text"
+                                value={quantity}
+                                onChange={(e) => setQuantity(e.target.value)}
+                                style={{
+                                  height: "40px",
+                                  width: "50px",
+                                  border: "1px solid #999",
+                                  textAlign: "center",
+                                  borderRadius: "5px",
+                                  margin: "0 5px",
+                                }}
+                              />
+                              <button
+                                onClick={() =>
+                                  handleChangeQty("increase", index)
+                                }
+                              >
+                                +
+                              </button>
+                            </div>
+                          );
+                        }
+                      })}
                     </div>
                     <div
                       class={[
@@ -293,7 +344,12 @@ function Products({ products, handleNext }) {
                           marginTop: "32px",
                         }}
                       />
-                      <button class="btn" onClick={() => handleDeleteCartItem(index)}>Delete</button>
+                      <button
+                        class="btn"
+                        onClick={() => handleDeleteCartItem(index)}
+                      >
+                        Delete
+                      </button>
                     </div>
                     <div class="col-12 px-0">
                       <hr
@@ -306,8 +362,8 @@ function Products({ products, handleNext }) {
                       />
                     </div>
                   </div>
-                ))}
-
+                ))
+              )}
               <div
                 class="col-12 px-0 d-flex justify-content-center align-content-center"
                 style={{ height: "50px" }}
@@ -321,7 +377,7 @@ function Products({ products, handleNext }) {
                     fontWeight: "bold",
                     border: "none",
                   }}
-                  onClick={() => navigate('/products')}
+                  onClick={() => navigate("/products")}
                 >
                   Add Product
                 </button>
@@ -340,29 +396,37 @@ function Products({ products, handleNext }) {
           >
             <div class="d-flex justify-content-center align-items-center">
               <div style={{ width: "350px" }}>
-                <div class="row">
+                {/* <div class="row">
                   <div class="col-8">
-                    <span class="fs-5">{total_quantity > 1 ? `Subtotal (${total_quantity} items)` :`Subtotal (${total_quantity} item)`}</span>
+                    <span class="fs-5">
+                      {total_quantity > 1
+                        ? `Subtotal (${total_quantity} items)`
+                        : `Subtotal (${total_quantity} item)`}
+                    </span>
                   </div>
                   <div class="col-4 d-flex justify-content-end">
                     <b class="fs-5">{`₹${subTotal}`}</b>
                   </div>
-                </div>
+                </div> */}
                 <div class="row mt-1">
                   <div class="col-9">
-                    <span class="fs-5">{total_quantity > 1 ? `File digitization (${total_quantity} items)` :`File digitization (${total_quantity} item)`}</span>
+                    {/* <span class="fs-5">
+                      {total_quantity > 1
+                        ? `File digitization (${total_quantity} items)`
+                        : `File digitization (${total_quantity} item)`}
+                    </span> */}
                   </div>
-                  <div class="col-3 d-flex justify-content-end">
+                  {/* <div class="col-3 d-flex justify-content-end">
                     <b class="fs-5">{`₹${zekekeData && zekekeTotal}`}</b>
-                  </div>
+                  </div> */}
                 </div>
                 <div class="row mt-1">
-                  <div class="col-8">
+                  {/* <div class="col-8">
                     <span class="fs-5">Total</span>
-                  </div>
-                  <div class="col-4 d-flex justify-content-end">
-                    <b class="fs-5">{`₹${subTotal+zekekeTotal}`}</b>
-                  </div>
+                  </div> */}
+                  {/* <div class="col-4 d-flex justify-content-end">
+                    <b class="fs-5">{`₹${subTotal + zekekeTotal}`}</b>
+                  </div> */}
                 </div>
                 <div class="col-12 d-flex justify-content-center mt-5 mb-3">
                   <button
@@ -383,12 +447,18 @@ function Products({ products, handleNext }) {
             </div>
           </div>
         </React.Fragment>
-      )
-      :
-      <div style={{height:'70vh',width:'100%',position:'relative',}}>
-        <Loader style={{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)'}}/>
-      </div>
-      }
+      ) : (
+        <div style={{ height: "70vh", width: "100%", position: "relative" }}>
+          <Loader
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%,-50%)",
+            }}
+          />
+        </div>
+      )}
     </>
   );
 }

@@ -84,7 +84,7 @@ function Footer() {
                   <a href="/terms-conditions" class="text-white text-decoration-none ">Help Center</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/privacy-policy" class="text-white text-decoration-none">Mockup generator</a>
+                  <a href="/design-tribe" class="text-white text-decoration-none">Mockup generator</a>
                 </li>
                 <li className="mt-3">
                   <a href="/return-refund" class="text-white text-decoration-none">Community</a>

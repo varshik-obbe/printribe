@@ -9,9 +9,14 @@ import ClothingRock from "../assets/Clothing Rack.png";
 import PrintribeLogo from "../assets/Printribe-logo.png";
 // ---- import Styles ---- //
 import classes from "../styles/signinsignup.module.css";
+import {useLocation} from 'react-router-dom'
 
 function Signin() {
   let navigate = useNavigate();
+  var location = useLocation();
+
+  var redirect_url = location.search ? location.search.split('=')[1] : ""
+  console.log(redirect_url)
 
   const [state, setState] = React.useState({
     email: "",
@@ -63,7 +68,8 @@ function Signin() {
 
         localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
 
-        navigate(-1);
+        if(redirect_url === "from_signup") navigate('/')
+        else navigate(-1);
 
       })
       .catch((err) => {

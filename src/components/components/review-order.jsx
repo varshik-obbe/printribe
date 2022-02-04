@@ -648,7 +648,7 @@ function ReviewOrder({products,handleNext}) {
                       style={{ padding: "20px" }}
                     >
                       <div class="d-flex justify-content-between">
-                        <span>1 file</span>
+                        <span>{total_quantity > 1 ? `Subtotal (${total_quantity} items)` :`Subtotal (${total_quantity} item)`}</span>
                         <b>{`₹${zekekeTotal}`}</b>
                       </div>
                     </div>

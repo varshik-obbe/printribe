@@ -44,8 +44,7 @@ function Header() {
                       <Nav.Link
                         href="/"
                         onClick={() => {
-                          localStorage.removeItem("token");
-                          localStorage.removeItem("customerId");
+                          localStorage.clear();
                         }}
                       >
                         <i className="fas fa-sign-out-alt" style={{fontSize:"19px"}}></i>
@@ -66,7 +65,7 @@ function Header() {
                       <i class='fas fa-user-alt' style={{fontSize:24}}></i>
                       <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>Sign in</span>
                       </Nav.Link>
-                      <Nav.Link href="#">
+                      <Nav.Link href="/cart">
                       <i class="fa fa-shopping-cart" style={{fontSize:24}}></i>
                       <span style={{fontSize:20,fontWeight:300,color:'black',marginLeft:'10px'}}>My Cart</span>
                       </Nav.Link>

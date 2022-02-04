@@ -4,6 +4,7 @@
 
 .topProfileDiv {
   padding: 20px 40px;
+  background-color: #FFF1C9 !important;
 }
 
 @media screen and (max-width: 1080px) {

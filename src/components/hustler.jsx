@@ -1,8 +1,18 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import hustler from '../assets/hustler.PNG'
 import styles from '../styles/home.module.css'
 
 function Hustler() {
+    const navigate = useNavigate()
+
+    var customerId = localStorage.getItem("customerId")
+
+    const handleHustle = () =>{
+        if(customerId) navigate('products')
+        else navigate('/signup')
+    }
+
     return (
         <>
             <div className="container mt-5 mb-5" style={{ padding: "0 8%" }}>
@@ -39,7 +49,7 @@ function Hustler() {
                                     </div>
 
                                 </div>
-                                <button className="btn btn-danger mt-4 mx-4  mb-3 px-4" style={{backgroundColor:"#EE3C2F",fontFamily:"Avenir,sans-serif",fontSize:"16px",letterSpacing:"1.6px",fontWeight:"700"}}>Start Selling</button>
+                                <button onClick={handleHustle} className="btn btn-danger mt-4 mx-4  mb-3 px-4" style={{backgroundColor:"#EE3C2F",fontFamily:"Avenir,sans-serif",fontSize:"16px",letterSpacing:"1.6px",fontWeight:"700"}}>Start Selling</button>
                                 <p className="text-light mx-4">No sign up fee. No minimums.</p>
                             </div>
 

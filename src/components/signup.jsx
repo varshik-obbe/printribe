@@ -69,9 +69,11 @@ function Signup() {
 				}
 			}).then(res => {
 				console.log(res.data.customerRecord._id)
-				localStorage.setItem('customerId', res.data.customerRecord._id)
+				// localStorage.setItem('customerId', res.data.customerRecord._id)
 				setState((prev) => ({...prev, error: false}))
-				navigate("/my-account");
+
+				navigate("/signin?redirect=from_signup");
+
 			}).catch(err => {
 				setState((prev) => ({...prev, error: 'Error in SignUp'}))
 			})	

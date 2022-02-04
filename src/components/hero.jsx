@@ -1,8 +1,10 @@
 import React from 'react'
 import img from '../assets/hero.PNG'
 import styles from '../styles/home.module.css';
+import {useNavigate} from 'react-router-dom'
 
 function Hero() {
+    const navigate = useNavigate()
    
     return (
         <>
@@ -17,7 +19,7 @@ function Hero() {
                         </p>
                         <div className="d-flex mb-3">
                             <div className="pe-3">
-                                <button className={"btn" + " " + styles.startSellingBtn + "  px-4 py-2 avenier"}>Start selling</button>
+                                <button onClick={() => navigate('/signin')} className={"btn" + " " + styles.startSellingBtn + "  px-4 py-2 avenier"}>Start selling</button>
                             </div>
                             <div className="ps-3">
                                 <a href="/products"><button className={"btn" + " " + styles.orderNowBtn + "  px-4 py-2"}>Order now</button></a>

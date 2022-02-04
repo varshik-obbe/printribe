@@ -7,12 +7,17 @@ import Products from "./components/products";
 import ReviewOrder from "./components/review-order";
 import Shipping from "./components/Shipping";
 import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+
+
 
 const steps = ["Products", "Shipping", "Review Order"];
 const AddProduct = () => {
 
   const [activeStep, setActiveStep] = useState(0);
   const [products, setProducts] = useState(null);
+  const navigate = useNavigate()
 
   // const activeStep=0;
   // let products=[]
@@ -23,8 +28,8 @@ const AddProduct = () => {
     const visitorId = localStorage.getItem("visitorId");
     console.log(visitorId);
     if (visitorId) {
-      let productInfo = []
-      var zekekeData = [];
+      var productInfo = []
+      var zekekeData = []
       axios.get(`/zakekeCustomize/getCartInfo/${visitorId}`)
         .then(({ data }) => {
           console.log('data',data);
@@ -47,6 +52,8 @@ const AddProduct = () => {
                 
                 zekekeData.forEach((curr) => {if(curr.ProductId === product.ProductId) zekekeImage=curr.tempPreviewImageUrl})
 
+                //if api product id is already present in productInfo array then update 
+
                 let productDetail ={ 
                 name : prod.title,
                 price : prod.price,
@@ -60,7 +67,6 @@ const AddProduct = () => {
           })
 
           setProducts(productInfo)
-                console.log(products);
           // })
         })
       }
@@ -69,17 +75,34 @@ const AddProduct = () => {
       // this.setState({
     },[])
 
+    const cardEmptyPrompt = () => {
+          Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Cart Is Empty!",
+        showConfirmButton: true,
+      })
+      .then(() => {
+        navigate(-1)
+      })
+  
+    };
+
 
   const renderComp = () => {
 
         switch (activeStep) {
-          case 0:
-            return <Products products={products} handleNext={() => setActiveStep(activeStep + 1)} />;
+          case 0:{
+            if(products)
+              return (products && <Products products={products} handleNext={() => setActiveStep(activeStep + 1)} />)
+
+            return cardEmptyPrompt()
+          }
         
           case 1:
             return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
           case 2:
-            return <ReviewOrder products={products} handleNext={() => setActiveStep(activeStep - 2)} />;
+            return ( products && <ReviewOrder products={products} handleNext={() => setActiveStep(activeStep - 2)} />)
           default:
             return null;
         }
@@ -203,7 +226,7 @@ export default AddProduct;
 //               </Stepper>
 //             </div>
 //           </div>
-//           <div class="mt-5">{renderComp()}</div>
+//           <div class="mt-5">{products && renderComp()}</div>
 //         </div>
 //       </div>
 //       <Footer />

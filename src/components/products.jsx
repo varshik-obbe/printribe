@@ -92,6 +92,18 @@ const Products = () => {
         // localStorage.setItem("product_color",color);
         // localStorage.setItem("product_quantity",quantity);
 
+        var flag = false;
+
+        //if product is already present in LS , we will update the quantity
+        customizeProduct.map((curr,index) => {
+          if(curr.product_id === product.id && curr.size === size && curr.color.color_code === colorCode){
+            var currQty = Number(curr.quantity)
+            currQty += Number(quantity);
+            flag = true;
+          }
+        })
+
+        if(!flag){
         //customized product details object
         customizeProduct.push({
           product_id: product.id,
@@ -102,6 +114,7 @@ const Products = () => {
             color_name: color
           }
         })
+      }
 
         //storing all the customized product details in local storage
         localStorage.setItem("customizeProduct", JSON.stringify(customizeProduct))
