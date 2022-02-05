@@ -32,7 +32,7 @@ function Header() {
               {
                 searchItem.length > 0
                 &&
-                <span style={{marginLeft:'30px',cursor:'pointer'}} onClick={() => setSearchItem("")}><i class="fas fa-times"></i></span>
+                <span style={{marginLeft:'30px',cursor:'pointer'}} onClick={() => setSearchItem("")}><i class="fas fa-times text-muted" style={{fontSize:'12px'}}></i></span>
               }
             </div>
             

@@ -3,11 +3,13 @@ import img1 from "../assets/tshirtblack.PNG";
 import img2 from "../assets/tshirtblue.PNG";
 import img3 from "../assets/tshirtwhite.PNG";
 import styles from "../styles/home.module.css";
+import { useNavigate } from "react-router-dom";
 
 function Customize() {
   const [displayItems, setDisplayItems] = useState(8);
 
   const productItems = [img1, img2, img3];
+  const navigate = useNavigate();
 
   return (
     <>
@@ -53,7 +55,7 @@ function Customize() {
               </div>
             </div>
           ))}
-          
+
           {/* <Script src="https://portal.zakeke.com/scripts/config.js"></Script> */}
           {/* <Script src="https://portal.zakeke.com/scripts/integration/api/customizer.js"></Script> */}
           {/* <Script src="./design-tribe-components/script.js"></Script> */}
@@ -92,6 +94,23 @@ function Customize() {
               Show Less
             </button>
           )}
+        </div>
+        <div
+          style={{ width: "100%", display: "flex", justifyContent: "center" }}
+        >
+          <button
+            onClick={() => navigate("/products")}
+            className="btn btn-danger mt-4 mb-3 px-3 py-2"
+            style={{
+              fontFamily: "Avenir,sans-serif",
+              fontSize: "16px",
+              letterSpacing: "1.6px",
+              fontWeight: "700",
+              backgroundColor: "rgb(238, 60, 47)",
+            }}
+          >
+            All Products
+          </button>
         </div>
       </div>
     </>

@@ -23,8 +23,7 @@ export default class customizer extends React.Component {
       additionaldata: {
         mainProductid: "",
         customerUniqueId: "",
-        visitorId:"", 
-        
+        visitorId: "",
       },
       canSaveDesign: false,
       culture: "en-US",
@@ -61,27 +60,32 @@ export default class customizer extends React.Component {
         const colorName = queryParams.get("color");
         const colorId = queryParams.get("colorId");
         const title = queryParams.get("title");
+        const designId = queryParams.get("designId");
         console.log(productid, quantity, masterProductId, colorName);
         config.quantity = quantity;
-        if(!visitorId){
-          config.additionaldata.visitorId =  Math.floor(Math.random() * 1000000);
-           localStorage.setItem("visitorId",config.additionaldata.visitorId );
-
-        }else{
+        if (!visitorId) {
+          config.additionaldata.visitorId = Math.floor(Math.random() * 1000000);
+          localStorage.setItem("visitorId", config.additionaldata.visitorId);
+        } else {
           config.additionaldata.visitorId = visitorId;
         }
+
+        if (designId) {
+          config.designid = designId;
+        } else {
+          config.designid = "";
+        }
+
         config.selectedattributes.VariantName = colorName;
         config.selectedattributes.color = colorId;
         config.additionaldata.customerUniqueId = customerId;
         config.additionaldata.mainProductid = masterProductId;
         var productJson = { id: masterProductId, name: title };
         var customizer = new window.zakekeDesigner(config, productJson);
-
       })
       .catch((resp) => {
         console.error(resp);
       });
-    
   }
 
   render() {

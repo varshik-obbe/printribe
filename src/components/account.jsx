@@ -114,7 +114,7 @@ function Account() {
                   style={{
                     height: "100px",
                     width: "100px",
-                    objectFit: "contain",
+                    objectFit: "cover",
                     borderRadius: "50%",
                     border: "1px solid rgba(0,0,0,0.5)",
                     background:'transparent'

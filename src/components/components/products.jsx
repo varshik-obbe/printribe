@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Loader from "../../components/Loader/Loader";
 import axios from "axios";
 import classes from "../../styles/add-product.module.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function Products({ products, handleNext }) {
@@ -23,23 +23,25 @@ function Products({ products, handleNext }) {
   var total_quantity = 0;
 
   customizeProduct.forEach((curr) => {
-    products.forEach((ele) => {
-      if (ele.prodId === curr.product_id) {
-        subTotal += Number(curr.quantity) * Number(ele.price);
-      }
-      total_quantity += Number(curr.quantity);
-    });
+    products &&
+      products.forEach((ele) => {
+        if (ele.prodId === curr.product_id) {
+          subTotal += Number(curr.quantity) * Number(ele.price);
+        }
+        total_quantity += Number(curr.quantity);
+      });
   });
 
   var zekekeTotal = 0;
 
   zekekeData &&
     zekekeData.forEach((curr) => {
-      products.forEach((ele) => {
-        if (ele.prodId === curr.ProductId) {
-          zekekeTotal += Number(curr.totalPrice);
-        }
-      });
+      products &&
+        products.forEach((ele) => {
+          if (ele.prodId === curr.ProductId) {
+            zekekeTotal += Number(curr.totalPrice);
+          }
+        });
     });
 
   // subTotal && localStorage.setItem("subTotal", subTotal);
@@ -50,15 +52,26 @@ function Products({ products, handleNext }) {
   localStorage.setItem("total_quantity", total_quantity);
   localStorage.setItem("zekekeTotal", zekekeTotal);
 
-  useEffect(() => {
-      setTimeout(() => {
-      setRenderPage(true);
-    }, 2000)
+  //cart empty prompt
+  if (!products) {
+    Swal.fire({
+      position: "center",
+      icon: "info",
+      title: "Cart Is Empty!",
+      showConfirmButton: true,
+    }).then(() => {
+      navigate(-1);
+    });
+  }
 
-      setAllProducts(products);
+  useEffect(() => {
+    setTimeout(() => {
+      setRenderPage(true);
+    }, 2000);
+
+    if (products) setAllProducts(products);
 
     // console.log(products.length);
-
   }, [renderPage]);
 
   const handleDeleteCartItem = (index) => {
@@ -66,6 +79,17 @@ function Products({ products, handleNext }) {
 
     allProducts.splice(index, 1);
     setAllProducts(allProducts);
+
+    if (allProducts.length === 0) {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Cart Is Empty!",
+        showConfirmButton: true,
+      }).then(() => {
+        navigate(-1);
+      });
+    }
 
     setRenderPage(false);
 
@@ -96,7 +120,29 @@ function Products({ products, handleNext }) {
     }
   };
 
-   return (
+
+  const handleEdit = (editProduct) => {
+    zekekeData.forEach((ele) => {
+      customizeProduct.forEach((curr) => {
+        if (
+          editProduct.prodId === curr.product_id &&
+          editProduct.prodId === ele.ProductId
+        )
+          navigate(
+            `/customizer?productid=${
+              curr.color.color_name + curr.product_id
+            }&masterProductId=${curr.product_id}&quantity=${
+              curr.quantity
+            }&designId=${ele.designId}&colorId=${curr.color.colorId}&color=${
+              curr.color.color_name
+            }&title=${curr.title}`
+          );
+        
+      });
+    });
+  };
+
+  return (
     <>
       {renderPage ? (
         <React.Fragment>
@@ -110,7 +156,8 @@ function Products({ products, handleNext }) {
             }}
           >
             <div class="">
-              {allProducts && allProducts.length !== 0 && (
+              {allProducts &&
+                allProducts.length !== 0 &&
                 allProducts.map((curr, index) => (
                   <div class="row">
                     <div class="col-12 col-md-6 col-lg-4 px-0">
@@ -180,7 +227,10 @@ function Products({ products, handleNext }) {
                     /> */}
                           </div>
                           <div class="mt-3" />
-                          <button class="p-0 border-0 bg-transparent text-primary">
+                          <button
+                            class="p-0 border-0 bg-transparent text-primary"
+                            onClick={() => handleEdit(curr)}
+                          >
                             Edit
                           </button>
                         </div>
@@ -362,8 +412,7 @@ function Products({ products, handleNext }) {
                       />
                     </div>
                   </div>
-                ))
-              )}
+                ))}
               <div
                 class="col-12 px-0 d-flex justify-content-center align-content-center"
                 style={{ height: "50px" }}

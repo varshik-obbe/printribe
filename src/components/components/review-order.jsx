@@ -195,6 +195,28 @@ function ReviewOrder({products,handleNext}) {
     }
   };
 
+  const handleEdit = (editProduct) => {
+    zekekeData.forEach((ele) => {
+      customizeProduct.forEach((curr) => {
+        if (
+          editProduct.prodId === curr.product_id &&
+          editProduct.prodId === ele.ProductId
+        )
+          navigate(
+            `/customizer?productid=${
+              curr.color.color_name + curr.product_id
+            }&masterProductId=${curr.product_id}&quantity=${
+              curr.quantity
+            }&designId=${ele.designId}&colorId=${curr.color.colorId}&color=${
+              curr.color.color_name
+            }&title=${curr.title}`
+          );
+        
+      });
+    });
+  };
+
+
   return (
     <>
        {renderPage ? (
@@ -293,7 +315,7 @@ function ReviewOrder({products,handleNext}) {
                     /> */}
                           </div>
                           <div class="mt-3" />
-                          <button class="p-0 border-0 bg-transparent text-primary">
+                          <button class="p-0 border-0 bg-transparent text-primary" onClick={() => handleEdit(curr)}>
                             Edit
                           </button>
                         </div>

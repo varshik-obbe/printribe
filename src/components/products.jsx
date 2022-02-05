@@ -111,8 +111,10 @@ const Products = () => {
           quantity,
           color: {
             color_code: colorCode,
-            color_name: color
-          }
+            color_name: color,
+            colorId
+          },
+          title:productName
         })
       }
 
@@ -172,7 +174,7 @@ const Products = () => {
   }
 
   useEffect(() => {
-    getProduct()
+    getProduct()    
   }, [])
 
   return (

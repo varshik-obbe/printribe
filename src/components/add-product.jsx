@@ -10,106 +10,113 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
-
-
 const steps = ["Products", "Shipping", "Review Order"];
 const AddProduct = () => {
-
   const [activeStep, setActiveStep] = useState(0);
   const [products, setProducts] = useState(null);
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   // const activeStep=0;
   // let products=[]
-// useRef(products)
+  // useRef(products)
   useEffect(() => {
-    console.log('useEffect called');
+    console.log("useEffect called");
     // getCartData()
     const visitorId = localStorage.getItem("visitorId");
     console.log(visitorId);
-    if (visitorId) {
-      var productInfo = []
-      var zekekeData = []
-      axios.get(`/zakekeCustomize/getCartInfo/${visitorId}`)
-        .then(({ data }) => {
-          console.log('data',data);
-          
-          // var zekekeImage = tempPreviewImageUrl 
-          zekekeData = data.designInfo.products_info;
-          localStorage.setItem("zekekeData",JSON.stringify(zekekeData))
 
+    if (visitorId) {
+      var productInfo = [];
+    var zekekeData = [];
+      axios
+        .get(`/zakekeCustomize/getCartInfo/${visitorId}`)
+        .then(({ data }) => {
+          console.log("data", data);
+
+          // var zekekeImage = tempPreviewImageUrl
+          zekekeData = data.designInfo.products_info;
+          localStorage.setItem("zekekeData", JSON.stringify(zekekeData));
 
           data.designInfo.products_info.forEach((product) => {
-            axios.get(`/products/getproduct/${product.ProductId}`)
+            axios
+              .get(`/products/getproduct/${product.ProductId}`)
               .then(({ data }) => {
-  
                 // var data2 = data;
                 // data2 = data2.product
-                let prod = data.product.productdata[0]
-                console.log('product',prod)
-
-                var zekekeImage;
+                var prod = data.product.productdata[0];
+                console.log("product", prod);
                 
-                zekekeData.forEach((curr) => {if(curr.ProductId === product.ProductId) zekekeImage=curr.tempPreviewImageUrl})
+                  var zekekeImage;
 
-                //if api product id is already present in productInfo array then update 
+                  zekekeData.forEach((curr) => {
+                    if (curr.ProductId === product.ProductId)
+                      zekekeImage = curr.tempPreviewImageUrl;
+                  });
 
-                let productDetail ={ 
-                name : prod.title,
-                price : prod.price,
-                image : `https://api.theprintribe.com/${prod.img}`,
-                prodId : prod.id,
-                zekekeImage
+                  //if api product id is already present in productInfo array then update
 
-              }
-                productInfo.push(productDetail)                
-              })
-          })
+                  let productDetail = {
+                    name: prod.title,
+                    price: prod.price,
+                    image: `https://api.theprintribe.com/${prod.img}`,
+                    prodId: prod.id,
+                    zekekeImage,
+                  };
+                  productInfo.push(productDetail);
+                
+              });
+          });
 
-          setProducts(productInfo)
+          setProducts(productInfo);
           // })
-        })
-      }
-        //  console.log(products)
-      // console.log(+new Date());
-      // this.setState({
-    },[])
-
-    const cardEmptyPrompt = () => {
-          Swal.fire({
-        position: "center",
-        icon: "info",
-        title: "Cart Is Empty!",
-        showConfirmButton: true,
-      })
-      .then(() => {
-        navigate(-1)
-      })
-  
-    };
-
+        });
+    }else{
+       
+        Swal.fire({
+          position: "center",
+          icon: "info",
+          title: "Cart Is Empty!",
+          showConfirmButton: true,
+        }).then(() => {
+          navigate(-1);
+        });
+  }
+    //  console.log(products)
+    // console.log(+new Date());
+    // this.setState({
+  }, []);
 
   const renderComp = () => {
+    switch (activeStep) {
+      case 0:
+        return (
+          products && (
+            <Products
+              products={products}
+              handleNext={() => setActiveStep(activeStep + 1)}
+            />
+          )
+        );
 
-        switch (activeStep) {
-          case 0:{
-            if(products)
-              return (products && <Products products={products} handleNext={() => setActiveStep(activeStep + 1)} />)
+      case 1:
+        return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
+      case 2:
+        return (
+          products && (
+            <ReviewOrder
+              products={products}
+              handleNext={() => setActiveStep(activeStep - 2)}
+            />
+          )
+        );
+      default:
+        return null;
+    }
+  };
 
-            return cardEmptyPrompt()
-          }
-        
-          case 1:
-            return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
-          case 2:
-            return ( products && <ReviewOrder products={products} handleNext={() => setActiveStep(activeStep - 2)} />)
-          default:
-            return null;
-        }
-      };
-  
-  return ( 
-   <React.Fragment>
+  return (
+    <React.Fragment>
       <Header />
       <div style={{ background: "#F8F8F8" }}>
         <div class="container-lg py-5">
@@ -133,12 +140,10 @@ const AddProduct = () => {
       </div>
       <Footer />
     </React.Fragment>
-   );
-}
- 
+  );
+};
+
 export default AddProduct;
-
-
 
 // function AddProduct() {
 //   // state = {
@@ -157,14 +162,14 @@ export default AddProduct;
 //     const visitorId = localStorage.getItem("visitorId");
 //     console.log(visitorId);
 //     if (visitorId) {
-  
+
 //       axios.get(`/zakekeCustomize/getCartInfo/${visitorId}`)
 //         .then(({ data }) => {
 //           var productInfo = []
 //           data.designInfo.products_info.map((product) => {
 //             axios.get(`/products/getproduct/${product.ProductId}`)
 //               .then(({ data }) => {
-  
+
 //                 // var data2 = data;
 //                 // data2 = data2.product
 //                 const prod = data.product.productdata[0]
@@ -234,6 +239,5 @@ export default AddProduct;
 //   );
 //   // }
 // }
-
 
 // export default AddProduct
