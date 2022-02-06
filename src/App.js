@@ -16,6 +16,7 @@ import Signup from "./components/signup";
 import SubCatMen from "./pages/SubCatMen";
 import SubSubCat from "./pages/SubSubCat";
 import TermsPage from './pages/termspage';
+import ForgotPassword from "./components/forgotPassword";
 
 // import SubCatWomen from "./pages/SubCatWomen";
 
@@ -48,6 +49,7 @@ function App() {
           <Route exact path="/return-refund" element={<ReturnRefund />} />
           <Route exact path="/signin" element={<Signin />} />
           <Route exact path="/signup" element={<Signup />} />
+          <Route exact path="/forgotpassword" element={<ForgotPassword />} />
           <Route exact path="/my-account" element={<Account />} />
           <Route exact path="/customizer" element={<Customizer />} />
         </Routes>

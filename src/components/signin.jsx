@@ -80,7 +80,8 @@ function Signin() {
 
   const handleForgotPassword = () => {
     // ForgotPassword
-    alert("Forgot Password");
+    // alert("Forgot Password");
+    navigate('/forgotpassword')
   };
 
   const handleGoogleSignIn = () => {
