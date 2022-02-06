@@ -77,7 +77,7 @@ function ForgotPassword() {
                 //   }
                   style={{ background: "#EE3C2F", color: "#FFF" }}
                 >
-                  Proceed
+                  Send Link
                 </button>
               </div>
             </div>
