@@ -89,6 +89,14 @@ function Signin() {
     alert("Google SignIn");
   };
 
+  function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+    console.log('Name: ' + profile.getName());
+    console.log('Image URL: ' + profile.getImageUrl());
+    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+  }
+
   return (
     // ---- Main Container ---- //
     <div className="container-fluid">
@@ -107,7 +115,7 @@ function Signin() {
               <h2 class="fw-bold">Sign up to Printribe</h2>
               {/* ----- Google Sign Up Button ----- */}
               <div>
-                <button
+                {/* <button
                   type="button"
                   class="btn btn-outline-secondary w-100"
                   style={{ color: "#000", marginTop: "10px" }}
@@ -118,7 +126,8 @@ function Signin() {
                     <FcGoogle style={{ fontSize: "25px" }} /> Sign up with
                     Google
                   </span>
-                </button>
+                </button> */}
+                <div class="g-signin2" data-onsuccess="onSignIn"></div>
               </div>
               {/* ----- Sign Up with Email Button ----- */}
               <div>
