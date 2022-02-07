@@ -63,7 +63,7 @@ function Signin() {
         );
         localStorage.setItem(
           "customerId",
-          res.data.customer.id ? res.data.customer.id : ""
+          res.data.customer.id ? res.data.customer.id : "",
         );
         setState((prev) => ({ ...prev, error: false }));
 
@@ -92,6 +92,10 @@ function Signin() {
 
   const onLoginSuccess = (res) => {
     console.log('Login Success:', res.profileObj);
+
+    localStorage.setItem('googleEmail',res && res.profileObj.email);
+    localStorage.setItem('googleId',res && res.profileObj.googleId);
+
   };
 
 const onLoginFailure = (res) => {
