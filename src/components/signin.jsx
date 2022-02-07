@@ -10,6 +10,7 @@ import PrintribeLogo from "../assets/Printribe-logo.png";
 // ---- import Styles ---- //
 import classes from "../styles/signinsignup.module.css";
 import {useLocation} from 'react-router-dom'
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 function Signin() {
   let navigate = useNavigate();
@@ -89,15 +90,17 @@ function Signin() {
     alert("Google SignIn");
   };
 
-  function onSignIn(googleUser) {
-    var profile = googleUser.getBasicProfile();
-    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    console.log('Name: ' + profile.getName());
-    console.log('Image URL: ' + profile.getImageUrl());
-    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-  }
+  const onLoginSuccess = (res) => {
+    console.log('Login Success:', res.profileObj);
+  };
 
-  return (
+const onLoginFailure = (res) => {
+    console.log('Login Failed:', res);
+};
+
+const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleusercontent.com"
+
+    return (
     // ---- Main Container ---- //
     <div className="container-fluid">
       <div className="row">
@@ -127,7 +130,17 @@ function Signin() {
                     Google
                   </span>
                 </button> */}
-                <div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+                {/* <div class="g-signin2" data-onsuccess="onSignIn"></div> */}
+
+                <GoogleLogin
+                    clientId={clientId}
+                    buttonText="Sign In"
+                    onSuccess={onLoginSuccess}
+                    onFailure={onLoginFailure}
+                    cookiePolicy={'single_host_origin'}
+                    isSignedIn={true}
+                />
               </div>
               {/* ----- Sign Up with Email Button ----- */}
               <div>
