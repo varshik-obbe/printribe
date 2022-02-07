@@ -95,6 +95,9 @@ function Signin() {
 
     localStorage.setItem('googleEmail',res && res.profileObj.email);
     localStorage.setItem('googleId',res && res.profileObj.googleId);
+    
+    if(redirect_url === "from_signup") navigate('/')
+    else navigate(-1);
 
   };
 
@@ -138,17 +141,27 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
                 {/* <div class="g-signin2" data-onsuccess="onSignIn"></div> */}
 
                 <GoogleLogin
-                    clientId={clientId}
-                    buttonText="Sign In"
-                    onSuccess={onLoginSuccess}
-                    onFailure={onLoginFailure}
-                    cookiePolicy={'single_host_origin'}
-                    isSignedIn={true}
+                  clientId={clientId}
+                  buttonText="Sign in with Google"
+                  onSuccess={onLoginSuccess}
+                  onFailure={onLoginFailure}
+                  cookiePolicy={"single_host_origin"}
+                  render={(renderProps) => (
+                    <button
+                      type="button"
+                      className="btn w-100"
+                      style={{ color: "#000", marginTop: "10px",border:'1px solid gray'}}
+                      onClick={renderProps.onClick} // Sign Up with Google Click Event //
+                    >
+                      <FcGoogle style={{ fontSize: "25px" }} /> Sign in with
+                      Google
+                    </button>
+                  )}
                 />
               </div>
               {/* ----- Sign Up with Email Button ----- */}
               <div>
-                <Link to="/signup">
+                <Link to="/signup?redirect=from_signin">
                   <button
                     type="button"
                     class="btn btn-primary w-100 fw-bold"
