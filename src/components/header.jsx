@@ -62,7 +62,7 @@ function Header() {
               }
             })
           }
-            * Message to be edited from admin panel{" "}
+            {/* * Message to be edited from admin panel{" "} */}
           </div>
           <div
             className=""
