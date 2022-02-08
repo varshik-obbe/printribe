@@ -5,15 +5,15 @@ import logo from "../assets/Printribe-logo.png";
 import styles from "../styles/home.module.css";
 import axios from "axios";
 
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
 function Header() {
-  const [messageVisible, setMessageVisible] = useState(true);
+  const [messageVisible, setMessageVisible] = useState(false);
   const [searchItem, setSearchItem] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [adminSettings,setAdminSettings] = useState([])
+  const [adminSettings, setAdminSettings] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (searchItem.length > 0) {
@@ -31,15 +31,21 @@ function Header() {
     }
   }, [searchItem]);
 
-  useEffect(() =>{
-    axios.get('https://api.theprintribe.com/api/adminSettings/getAllSettings')
-    .then(({data}) =>{
-      console.log(data)
-      setAdminSettings(data.settingsData.settingsData)
+  useEffect(() => {
+    axios
+      .get("https://api.theprintribe.com/api/adminSettings/getAllSettings")
+      .then(({ data }) => {
+        console.log(data);
+        setAdminSettings(data.settingsData.settingsData);
 
-    })
-    .catch((err) => console.log(err))
-  },[])
+        data.settingsData.settingsData.map((curr) => {
+          if (curr.settings_name === "alert" && curr.active == "true") {
+            setMessageVisible(true);
+          }
+        });
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div>
@@ -55,13 +61,12 @@ function Header() {
             className="text-center"
             style={{ maxWidth: "60%", margin: "auto", fontSize: "14px" }}
           >
-          {
-            adminSettings && adminSettings.map((curr)=>{
-              if(curr.settings_name === "alert"){
-                return <span>*{curr.settings_value}</span>
-              }
-            })
-          }
+            {adminSettings &&
+              adminSettings.map((curr) => {
+                if (curr.settings_name === "alert" && curr.active == "true") {
+                  return <span>*{curr.settings_value}</span>;
+                }
+              })}
             {/* * Message to be edited from admin panel{" "} */}
           </div>
           <div
@@ -92,33 +97,34 @@ function Header() {
           <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-6 order-2 order-md-1">
             <div className={styles.searchBox}>
               <i className={"fas fa-search " + styles.searchIcon}></i>
-              <input
-                list="searched_items"
-                value={searchItem}
-                onChange={(e) => setSearchItem(e.target.value)}
-                className={styles.searchInput}
-                placeholder="Search..."
-                style={{ border: "0px solid black", width: "80%" }}
-              />
-              {searchItem.length > 0 && (
-                <span
-                  style={{ marginLeft: "30px", cursor: "pointer" }}
-                  onClick={() => setSearchItem("")}
-                >
-                  <i
-                    class="fas fa-times text-muted"
-                    style={{ fontSize: "12px" }}
-                  ></i>
-                </span>
-              )}
-
-              {searchResults && (
-                <datalist id="searched_items" style={{ border: "0px solid black", width: "80%",backgroundColor:'#fff' }}>
-                  {searchResults.map((curr, index) => (
-                    <option value={curr.title} key={index}>{curr.title}</option>
-                  ))}
-                </datalist>
-              )}
+                <input
+                  value={searchItem}
+                  onChange={(e) => setSearchItem(e.target.value)}
+                  className={styles.searchInput}
+                  placeholder="Search..."
+                  style={{ border: "0px solid black", width: "80%" }}
+                />
+                {searchItem.length > 0 && (
+                  <span
+                    style={{ marginLeft: "30px", cursor: "pointer" }}
+                    onClick={() => setSearchItem("")}
+                  >
+                    <i
+                      class="fas fa-times text-muted"
+                      style={{ fontSize: "12px" }}
+                    ></i>
+                  </span>
+                )}
+                
+                {searchResults && (
+                  <div className={styles.searchItemsList}>
+                    {searchResults.map((curr, index) => (
+                      <li value={curr.title} key={index} onClick={() => navigate(`/product/${curr._id}`)}>
+                        {curr.title}
+                      </li>
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
           <div className="col-2 col-sm-3 col-md-3 col-lg-4 order-1 order-md-2">

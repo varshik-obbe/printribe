@@ -5,6 +5,7 @@
   height: 45px;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .avenir {
   font-family: "Avenir", sans-serif;
@@ -30,6 +31,29 @@
   color: rgb(82, 82, 82);
   -webkit-text-stroke: 1px white;
   font-size: 16px;
+}
+
+.searchItemsList{
+  position:absolute;
+  background-color:#fff;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  top:43.5px;
+  left: 0;
+  width: 100%;
+  border:1px solid grey;
+}
+
+.searchItemsList li{
+  list-style: none;
+  text-align: left;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.searchItemsList li:nth-child(2n){
+  border-top: 1px solid grey;
+  border-bottom: 1px solid grey;
 }
 
 .navBars {

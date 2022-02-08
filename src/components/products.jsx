@@ -1,5 +1,4 @@
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
 
 import React, { useEffect, useRef, useState } from "react";
 import { default as img1, default as img3 } from "../assets/tshirtblack.PNG";
@@ -37,22 +36,22 @@ const Products = () => {
     } else {
       setIsLogged(false);
     }
+    console.log(prodid);
     axios
       .get(`/products/getproduct/${prodid}`)
       .then(({ data }) => {
+        console.log(data);
         console.log(data.product.productdata[0]);
         setproduct(data.product.productdata[0]);
         setProductName(data.product.productdata[0].title);
         setProductImageArray(data.product.productdata[0].extra_imgs);
       })
-      .catch(({ err }) => {
+      .catch((err) => {
         console.log(err);
       });
 
     axios
-      .get(
-        `https://api.theprintribe.com/api/zakekeVariant/isZakekeProduct/${prodid}`
-      )
+      .get(`/zakekeVariant/isZakekeProduct/${prodid}`)
       .then(({ data }) => {
         if (
           data.success !== undefined &&
@@ -264,7 +263,7 @@ const Products = () => {
             <div className="row h-100">
               <div className="prodContainer">
                 <div className="ti me-2">
-                  <Slick {...settings}>
+                  <Slick {...settings} className="carouselContainer">
                     {productImageArray &&
                       productImageArray.map((curr, index) => (
                         <div
@@ -330,17 +329,20 @@ const Products = () => {
                 </div>
 
                 <div className="mainProdImgContainer">
-                  <img
-                    draggable="false"
-                    src={
-                      displayImage
-                        ? displayImage
-                        : process.env.REACT_APP_IMAGE_BASE_URL +
-                          "/" +
-                          product.img
-                    }
-                    alt={product.title}
-                  />
+                  {product && (
+                    <img
+                      draggable="false"
+                      src={
+                        displayImage
+                          ? displayImage
+                          : process.env.REACT_APP_IMAGE_BASE_URL +
+                            "/" +
+                            product.img
+                      }
+                      alt={product && product.title}
+                    />
+                  )}
+
                   {/* <img draggable="false" src={"https://static.wixstatic.com/media/f1c4b5_f1f33ab2c3584186b83a0276b11f19c1~mv2.png/v1/fill/w_418,h_565,al_c,q_85,usm_0.66_1.00_0.01/Product%20Catalog_Mens%20clothing_3.webp"} className="mainImgs h-100" alt={product.title} /> */}
                   {/* {console.log(process.env.REACT_APP_IMAGE_BASE_URL + product.img)} */}
                 </div>
@@ -351,16 +353,16 @@ const Products = () => {
           <div className="col-lg-6 col-md-12 ">
             <div className="desciptionSection">
               <p className="h4 fw-bold mb-3 descriptionTitle">
-                {product.title}
+                {product && product.title}
               </p>
-              <p className="mt-3 fw-bold">{product.description}</p>
+              <p className="mt-3 fw-bold">{product && product.description}</p>
               {/* <p className="btn btn-md btn-light fw-bold  mb-3 border-dark">
                 Printing (DTG)
               </p> */}
               <p className="mt-3 fw-bold choosingStyle">Choose color</p>
 
               <div className="d-flex mb-3">
-                {product.productcolors !== undefined
+                {product && product.productcolors !== undefined
                   ? product.productcolors.map((item, index) => {
                       return (
                         <div
@@ -401,7 +403,7 @@ const Products = () => {
               </div>
               <div className="d-flex mt-4 mb-4">
                 <div className="d-flex mb-3">
-                  {product.productsizes !== undefined ? (
+                  {product && product.productsizes !== undefined ? (
                     product.productsizes.map((item) => (
                       <div
                         id={item}
@@ -453,7 +455,7 @@ const Products = () => {
                 </button>
               </div>
               <p className="fw-bold h3 mt-5 mb-4 productPrice">
-                ₹{product.price}
+                ₹{product && product.price}
               </p>
               {isLogged ? (
                 isCustomizeable ? (

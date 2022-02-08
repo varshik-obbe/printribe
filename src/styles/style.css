@@ -1,19 +1,17 @@
-
-.breadCrumbs{
-  padding-left:14%;
+.breadCrumbs {
+  padding-left: 14%;
 }
-.breadCrumbs a{
-  text-decoration:none;
-  color:#1d67cd;
-  font-size:15px;
+.breadCrumbs a {
+  text-decoration: none;
+  color: #1d67cd;
+  font-size: 15px;
 }
 .ti {
   width: 128px;
   padding-top: 10px;
   display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    
+  flex-direction: column;
+  justify-content: space-evenly;
   /* float: left; */
 }
 
@@ -23,6 +21,10 @@
 
 .ti > div:hover {
   border: 3px solid black;
+}
+
+.carouselContainer:hover {
+  border: none !important;
 }
 
 .fi {
@@ -68,137 +70,140 @@
   cursor: pointer;
 }
 
-.product_imgs{
-  border:0.1px solid rgba(232, 230, 230, 1);
-  background-color:rgba(249, 249, 249, 1);
+.product_imgs {
+  border: 0.1px solid rgba(232, 230, 230, 1);
+  background-color: rgba(249, 249, 249, 1);
   border-radius: 5px;
-  width:105px;
-  height:110px;
+  width: 105px;
+  height: 110px;
   font-size: 10px;
   font-family: Arial, Helvetica, sans-serif;
-  margin:0% 10%;
-  margin-bottom:20%;
+  margin: 0% 10%;
+  margin-bottom: 20%;
 }
 
-.product_imgs img{
-  height:100%;
+.product_imgs img {
+  height: 100%;
   max-width: 100%;
   object-fit: cover;
   object-position: 50% 50%;
 }
 
-.prodContainer{
+.prodContainer {
   display: flex;
-  justify-content:center;
+  justify-content: center;
   align-items: center;
 }
 
-.slick-track{
+.slick-track {
   height: 0px !important;
 }
 
-@media (min-width:1440px){
-.prodContainer{
-justify-content:flex-end;
-}
-.mainProdImgContainer{
-  max-height:630px;
-  width:65%;
-
-}
-.product_imgs{
-  width:105px;
-  height:128px;
-}
+.mainProdImgContainer > img{
+  height: 600px;
 }
 
-.mainProdImgContainer{
-  height:100%;
-  width:60%;
-  max-height:580px;
-  text-align:center;
-}
-.mainProdImgContainer img{
-  object-fit:contain;
-  height:100%;
-  max-width:100%;
-}
-
-.imgSection{
-  padding-left:4%;
-}
-.desciptionSection{
-  padding-left:13%;
+@media (min-width: 1440px) {
+  .prodContainer {
+    justify-content: flex-end;
+  }
+  .mainProdImgContainer {
+    max-height: 630px;
+    width: 65%;
+  }
+  .product_imgs {
+    width: 105px;
+    height: 128px;
+  }
 }
 
-.descriptionTitle{
-  font-family: roboto-bold,roboto,sans-serif;
+.mainProdImgContainer {
+  height: 100%;
+  width: 60%;
+  max-height: 580px;
+  text-align: center;
+}
+.mainProdImgContainer img {
+  object-fit: contain;
+  height: 100%;
+  max-width: 100%;
+}
+
+.imgSection {
+  padding-left: 4%;
+}
+.desciptionSection {
+  padding-left: 13%;
+}
+
+.descriptionTitle {
+  font-family: roboto-bold, roboto, sans-serif;
   font-size: 25px;
 }
 
-.descriptionBtn{
-  background-color: #EE3C2F;
+.descriptionBtn {
+  background-color: #ee3c2f;
   border-radius: 5px;
   cursor: pointer;
   letter-spacing: 1px;
   font-weight: 700;
-    font-size: 16px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    min-width: 1.8em;
-    max-width: 100%;
-    text-align: center;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 1.8em;
+  max-width: 100%;
+  text-align: center;
 }
-.choosingStyle{
-  font-family:sans-serif;
+.choosingStyle {
+  font-family: sans-serif;
   font-size: 17px;
   word-wrap: break-word;
   text-align: start;
-  padding-top:3%;
+  padding-top: 3%;
 }
-.choosingSize{
-  font-family:"Avenir";
-  color:#1D67CD;
+.choosingSize {
+  font-family: "Avenir";
+  color: #1d67cd;
   font-size: 16px;
   word-wrap: break-word;
   text-align: start;
-  padding-top:3%;
+  padding-top: 3%;
 }
-.productPrice{
-  font-family: roboto-bold,roboto,sans-serif;
+.productPrice {
+  font-family: roboto-bold, roboto, sans-serif;
   font-size: 25px;
   word-wrap: break-word;
   text-align: start;
 }
-.greyArea{
+.greyArea {
   height: 400px;
   background-color: #fcfcfc;
 }
-.mainImgs{
-  border:0.1px solid rgba(232, 230, 230, 1);
-  background-color:rgba(249, 249, 249, 1);
+.mainImgs {
+  border: 0.1px solid rgba(232, 230, 230, 1);
+  background-color: rgba(249, 249, 249, 1);
   width: 100%;
 }
 
-.recentlyText{
-  font-size:17px;
-  font-family: "Avenir",sans-serif;
+.recentlyText {
+  font-size: 17px;
+  font-family: "Avenir", sans-serif;
   line-height: normal;
   pointer-events: auto;
   color: #000000;
   word-wrap: break-word;
   text-align: start;
-  margin-bottom:8px;
+  margin-bottom: 8px;
 }
-.recentlyCost{
+.recentlyCost {
   font-size: 14px;
   font-weight: 700;
   line-height: 15px;
-  font-family: "Avenir",sans-serif;
+  font-family: "Avenir", sans-serif;
 }
-.recentlySizes{
-  font-size:14px;
-  font-family: "Avenir",sans-serif;
-  margin:0%;
+.recentlySizes {
+  font-size: 14px;
+  font-family: "Avenir", sans-serif;
+  margin: 0%;
 }
