@@ -58,7 +58,7 @@ function Header() {
           {
             adminSettings && adminSettings.map((curr)=>{
               if(curr.settings_name === "alert"){
-                return <span>*{ curr.title}</span>
+                return <span>*{curr.settings_value}</span>
               }
             })
           }
