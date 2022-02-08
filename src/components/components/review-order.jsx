@@ -658,7 +658,7 @@ function ReviewOrder({products,handleNext}) {
         )}
       </div>
       <React.Fragment>
-        <PaymentComp />
+        {/* <PaymentComp /> */}
       </React.Fragment>
       <div
         class="w-100 mt-4"

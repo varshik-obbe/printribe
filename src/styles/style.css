@@ -93,6 +93,10 @@
   align-items: center;
 }
 
+.slick-track{
+  height: 0px !important;
+}
+
 @media (min-width:1440px){
 .prodContainer{
 justify-content:flex-end;

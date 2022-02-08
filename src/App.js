@@ -17,6 +17,7 @@ import SubCatMen from "./pages/SubCatMen";
 import SubSubCat from "./pages/SubSubCat";
 import TermsPage from './pages/termspage';
 import ForgotPassword from "./components/forgotPassword";
+import UpdatePassword from "./components/updatePassword.jsx";
 
 // import SubCatWomen from "./pages/SubCatWomen";
 
@@ -52,6 +53,7 @@ function App() {
           <Route exact path="/forgotpassword" element={<ForgotPassword />} />
           <Route exact path="/my-account" element={<Account />} />
           <Route exact path="/customizer" element={<Customizer />} />
+          <Route exact path="/forgotPass/:tokenId" element={<UpdatePassword />} />
         </Routes>
       </Router>
     </>

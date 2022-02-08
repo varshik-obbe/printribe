@@ -54,6 +54,7 @@ function Products({ products, handleNext }) {
 
   //cart empty prompt
   if (!products) {
+
     Swal.fire({
       position: "center",
       icon: "info",
@@ -87,6 +88,7 @@ function Products({ products, handleNext }) {
         title: "Cart Is Empty!",
         showConfirmButton: true,
       }).then(() => {
+        localStorage.removeItem("visitorId");
         navigate(-1);
       });
     }

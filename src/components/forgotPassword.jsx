@@ -20,7 +20,6 @@ function ForgotPassword() {
 
   const [state, setState] = React.useState({
     email: "",
-    password: "",
     error: false,
   });
 
@@ -28,6 +27,15 @@ function ForgotPassword() {
     // handle Input Email //
     setState((prev) => ({ ...prev, email: event.target.value }));
   };
+
+  const handleForgotPassword = () =>{
+    axios.get(`https://api.theprintribe.com/api/customers/forgotpass/${state.email}`)
+    .then(({data}) => {
+      console.log(data);
+    })
+    .catch(err => console.error(err));
+  }
+
 
   return (
     // ---- Main Container ---- //
@@ -76,6 +84,7 @@ function ForgotPassword() {
                 //     state.email === "" || state.password === "" ? true : false
                 //   }
                   style={{ background: "#EE3C2F", color: "#FFF" }}
+                  onClick={handleForgotPassword}
                 >
                   Send Link
                 </button>
