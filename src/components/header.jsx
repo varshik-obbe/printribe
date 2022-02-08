@@ -35,7 +35,7 @@ function Header() {
     axios.get('https://api.theprintribe.com/api/adminSettings/getAllSettings')
     .then(({data}) =>{
       console.log(data)
-      setAdminSettings(data.settingsData)
+      setAdminSettings(data.settingsData.settingsData)
 
     })
     .catch((err) => console.log(err))
