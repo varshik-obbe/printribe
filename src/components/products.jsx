@@ -111,7 +111,7 @@ const Products = () => {
         // var formProductPage = document.getElementById("{ idFormProduct }");
         formCustomizer.elements["productid"].value = color + product.id;
         console.log(formCustomizer.elements["productid"].value);
-        formCustomizer.elements["quantity"].value = quantity;
+        formCustomizer.elements["quantity"].value = productQuantity;
         formCustomizer.elements["masterProductId"].value = product.id;
         formCustomizer.elements["color"].value = color;
         formCustomizer.elements["colorId"].value = colorId;
@@ -133,6 +133,7 @@ const Products = () => {
             flag = true;
           }
         });
+
 
         if (!flag) {
           //customized product details object

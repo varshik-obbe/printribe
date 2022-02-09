@@ -119,7 +119,7 @@ function Signup() {
     <div className="container-fluid">
       <div className="row">
         <div className="col-12 px-5 pt-5 pb-4">
-          <img src={PrintribeLogo} alt="" style={{ height: "40px" }} />
+          <img src={PrintribeLogo} alt="" style={{ height: "40px",cursor: "pointer" }} onClick={() => navigate('/')} />
         </div>
       </div>
       <div className="container">

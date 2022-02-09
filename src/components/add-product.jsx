@@ -63,15 +63,17 @@ const AddProduct = () => {
                     prodId: prod.id,
                     zekekeImage,
                   };
-                  productInfo.push(productDetail);
+
+                  productInfo.push(productDetail);  
+                            
                 
               });
           });
 
-          setProducts(productInfo);
-          // })
+          setProducts(productInfo); 
         });
-    }else{
+      }
+    else{
        
         Swal.fire({
           position: "center",
@@ -89,7 +91,7 @@ const AddProduct = () => {
 
   const renderComp = () => {
     switch (activeStep) {
-      case 0:
+      case 0:{
         return (
           products && (
             <Products
@@ -97,7 +99,8 @@ const AddProduct = () => {
               handleNext={() => setActiveStep(activeStep + 1)}
             />
           )
-        );
+        )}
+
 
       case 1:
         return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;

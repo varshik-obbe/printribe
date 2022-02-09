@@ -111,8 +111,8 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
     // ---- Main Container ---- //
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12 px-5 pt-5 pb-4">
-          <img src={PrintribeLogo} alt="" style={{ height: "40px" }} />
+        <div className="col-12 px-5 pt-5 pb-4" >
+          <img src={PrintribeLogo} alt="" style={{ height: "40px",cursor: "pointer" }} onClick={() => navigate('/')} />
         </div>
       </div>
       <div className="container">
