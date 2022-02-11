@@ -9,6 +9,8 @@ import Shipping from "./components/Shipping";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Delayed from "./Delayed";
+import Loader from "./Loader/Loader";
 
 const steps = ["Products", "Shipping", "Review Order"];
 const AddProduct = () => {
@@ -28,7 +30,7 @@ const AddProduct = () => {
 
     if (visitorId) {
       var productInfo = [];
-    var zekekeData = [];
+      var zekekeData = [];
       axios
         .get(`/zakekeCustomize/getCartInfo/${visitorId}`)
         .then(({ data }) => {
@@ -46,44 +48,65 @@ const AddProduct = () => {
                 // data2 = data2.product
                 var prod = data.product.productdata[0];
                 console.log("product", prod);
-                
-                  var zekekeImage;
 
-                  zekekeData.forEach((curr) => {
-                    if (curr.ProductId === product.ProductId)
-                      zekekeImage = curr.tempPreviewImageUrl;
-                  });
+                var zekekeImage;
 
-                  //if api product id is already present in productInfo array then update
+                zekekeData.forEach((curr) => {
+                  if (curr.ProductId === product.ProductId)
+                    zekekeImage = curr.tempPreviewImageUrl;
+                });
 
-                  let productDetail = {
-                    name: prod.title,
-                    price: prod.price,
-                    image: `https://api.theprintribe.com/${prod.img}`,
-                    prodId: prod.id,
-                    zekekeImage,
-                  };
+                //if api product id is already present in productInfo array then update
 
-                  productInfo.push(productDetail);  
-                            
-                
+                let productDetail = {
+                  name: prod.title,
+                  price: prod.price,
+                  image: `https://api.theprintribe.com/${prod.img}`,
+                  prodId: prod.id,
+                  zekekeImage,
+                };
+
+                productInfo.push(productDetail);
+
+                //storing cart products in local storage
+                var cartItems = [];
+
+                if (localStorage.getItem("cartItems") === null) {
+                  cartItems.push(productDetail);
+                } else {
+                  cartItems = JSON.parse(localStorage.getItem("cartItems"));
+
+                  var itemPresent = cartItems.find(
+                    (curr) => curr.prodId === prod.id
+                  );
+
+                  if (itemPresent) {
+                    cartItems = cartItems.map((curr) =>
+                      curr.prodId === prod.id ? productDetail : curr
+                    );
+                  } else {
+                    cartItems.push(productDetail);
+                  }
+                }
+
+                console.log(cartItems);
+
+                localStorage.setItem("cartItems", JSON.stringify(cartItems));
               });
           });
 
-          setProducts(productInfo); 
+          setProducts(productInfo);
         });
-      }
-    else{
-       
-        Swal.fire({
-          position: "center",
-          icon: "info",
-          title: "Cart Is Empty!",
-          showConfirmButton: true,
-        }).then(() => {
-          navigate(-1);
-        });
-  }
+    } else {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Cart Is Empty!",
+        showConfirmButton: true,
+      }).then(() => {
+        navigate(-1);
+      });
+    }
     //  console.log(products)
     // console.log(+new Date());
     // this.setState({
@@ -91,16 +114,17 @@ const AddProduct = () => {
 
   const renderComp = () => {
     switch (activeStep) {
-      case 0:{
+      case 0: {
         return (
           products && (
-            <Products
-              products={products}
-              handleNext={() => setActiveStep(activeStep + 1)}
-            />
+            <Delayed delay={2000} loader={<Loader />}>
+              <Products
+                handleNext={() => setActiveStep(activeStep + 1)}
+              />
+            </Delayed>
           )
-        )}
-
+        );
+      }
 
       case 1:
         return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;

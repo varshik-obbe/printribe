@@ -5,26 +5,25 @@ import classes from "../../styles/add-product.module.css";
 import { useNavigate, Navigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-function Products({ products, handleNext }) {
+function Products({ handleNext }) {
   const navigate = useNavigate();
-  // const { products,handleNext } = props;
   console.log("pros comp");
-  console.log(products);
 
   const customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
   const zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
 
   const [quantity, setQuantity] = useState(1);
-  const [color, setColor] = useState();
-  const [allProducts, setAllProducts] = useState([]);
-  const [renderPage, setRenderPage] = useState(false);
+  const [cartItems,setCartItems] = useState()
+  const [cartEmpty , setCartEmpty] = useState(false)
+
 
   var subTotal = 0;
   var total_quantity = 0;
 
+  customizeProduct &&
   customizeProduct.forEach((curr) => {
-    products &&
-      products.forEach((ele) => {
+    cartItems &&
+      cartItems.forEach((ele) => {
         if (ele.prodId === curr.product_id) {
           subTotal += Number(curr.quantity) * Number(ele.price);
         }
@@ -36,24 +35,29 @@ function Products({ products, handleNext }) {
 
   zekekeData &&
     zekekeData.forEach((curr) => {
-      products &&
-        products.forEach((ele) => {
+      cartItems &&
+        cartItems.forEach((ele) => {
           if (ele.prodId === curr.ProductId) {
             zekekeTotal += Number(curr.totalPrice);
           }
         });
     });
 
-  // subTotal && localStorage.setItem("subTotal", subTotal);
-  // total_quantity && localStorage.setItem("total_quantity", total_quantity);
-  // zekekeTotal && localStorage.setItem("zekekeTotal", zekekeTotal);
-
   localStorage.setItem("subTotal", subTotal);
   localStorage.setItem("total_quantity", total_quantity);
   localStorage.setItem("zekekeTotal", zekekeTotal);
 
+  useEffect(() =>{
+    if(localStorage.getItem('cartItems') === null){
+      setCartEmpty(true)
+    }else{
+      setCartItems(JSON.parse(localStorage.getItem('cartItems')))
+    }
+    
+  },[cartItems])
+
   //cart empty prompt
-  if (!products) {
+  if ((!cartItems || cartItems.length === 0) && cartEmpty) {
 
     Swal.fire({
       position: "center",
@@ -63,40 +67,32 @@ function Products({ products, handleNext }) {
     }).then(() => {
       navigate(-1);
     });
+
   }
-
-  useEffect(() => {
-    setTimeout(() => {
-      setRenderPage(true);
-    }, 2000);
-
-    if (products) setAllProducts(products);
-
-    // console.log(products.length);
-  }, [renderPage]);
 
   const handleDeleteCartItem = (index) => {
     console.log(index);
 
-    allProducts.splice(index, 1);
-    setAllProducts(allProducts);
+    cartItems.splice(index, 1);
 
-    if (allProducts.length === 0) {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+    if (cartItems.length === 0) {
+      
       Swal.fire({
         position: "center",
         icon: "info",
         title: "Cart Is Empty!",
         showConfirmButton: true,
       }).then(() => {
+        localStorage.removeItem("cartItems");
         localStorage.removeItem("visitorId");
         navigate(-1);
       });
     }
-
-    setRenderPage(false);
-
-    console.log(allProducts);
+    console.log(cartItems);
   };
+
 
   const handleChangeQty = (task, index) => {
     if (task === "increase") {
@@ -146,7 +142,6 @@ function Products({ products, handleNext }) {
 
   return (
     <>
-      {renderPage ? (
         <React.Fragment>
           <div
             class="w-100"
@@ -158,9 +153,9 @@ function Products({ products, handleNext }) {
             }}
           >
             <div class="">
-              {allProducts &&
-                allProducts.length !== 0 &&
-                allProducts.map((curr, index) => (
+              {cartItems &&
+                cartItems.length !== 0 &&
+                cartItems.map((curr, index) => (
                   <div class="row">
                     <div class="col-12 col-md-6 col-lg-4 px-0">
                       <span class="fs-6">PRODUCTS</span>
@@ -498,18 +493,6 @@ function Products({ products, handleNext }) {
             </div>
           </div>
         </React.Fragment>
-      ) : (
-        <div style={{ height: "70vh", width: "100%", position: "relative" }}>
-          <Loader
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: "translate(-50%,-50%)",
-            }}
-          />
-        </div>
-      )}
     </>
   );
 }
