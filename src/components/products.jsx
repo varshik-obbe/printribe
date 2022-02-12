@@ -15,7 +15,6 @@ import Slick from "react-slick";
 
 const Products = () => {
   const { prodid } = useParams();
-  const [quantity, setQuantity] = useState("1");
   const [product, setproduct] = useState({});
   const [color, setColor] = useState("");
   const [colorCode, setColorCode] = useState("");
@@ -27,7 +26,7 @@ const Products = () => {
   const [productQuantity, setProductQuantity] = useState(1);
   const [productImageArray, setProductImageArray] = useState();
 
-  const [customizeProduct, setCustomizeProduct] = useState([]);
+  // const [customizeProduct, setCustomizeProduct] = useState([]);
   const [displayImage, setDisplayImage] = useState("");
 
   const getProduct = () => {
@@ -98,15 +97,19 @@ const Products = () => {
   };
 
   const customize = (evt) => {
+    evt.preventDefault();
+
+    var customizeProduct = []
+
+    console.log(localStorage.getItem("customizeProduct"))
+
     if (localStorage.getItem("customizeProduct")) {
-      setCustomizeProduct(JSON.parse(localStorage.getItem("customizeProduct")));
-    } else {
-      localStorage.setItem("customizeProduct", []);
+      customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"))
     }
 
     if (checkColorAndSize()) {
       if (checkLogin()) {
-        evt.preventDefault();
+       
         var formCustomizer = document.getElementById("frmCustomizer");
         // var formProductPage = document.getElementById("{ idFormProduct }");
         formCustomizer.elements["productid"].value = color + product.id;
@@ -119,36 +122,60 @@ const Products = () => {
         // localStorage.setItem("product_color",color);
         // localStorage.setItem("product_quantity",quantity);
 
-        var flag = false;
-
+        // var flag = false;
         //if product is already present in LS , we will update the quantity
-        customizeProduct.map((curr, index) => {
-          if (
-            curr.product_id === product.id &&
-            curr.size === size &&
-            curr.color.color_code === colorCode
-          ) {
-            var currQty = Number(curr.quantity);
-            currQty += Number(quantity);
-            flag = true;
-          }
+        // customizeProduct.map((curr, index) => {
+        //   if (
+        //     curr.product_id === product.id &&
+        //     curr.size === size &&
+        //     curr.color.color_code === colorCode
+        //   ) {
+        //     var currQty = 0;
+        //     console.log(curr)
+        //     console.log(curr["quantity"])
+
+        //     currQty = parseInt(curr.quantity);
+        //     console.log("currQty",currQty)
+
+        //     console.log("productQuantity",productQuantity)
+
+        //     currQty += parseInt(productQuantity);
+        //     console.log("currQty",currQty)
+
+        //     curr.quantity = currQty
+
+        //     flag = true;
+        //   }
+        // });
+
+        // if (flag === false) {
+        //   //customized product details object
+        //   customizeProduct.push({
+        //     product_id: product.id,
+        //     size,
+        //     quantity: productQuantity,
+        //     color: {
+        //       color_code: colorCode,
+        //       color_name: color,
+        //       colorId,
+        //     },
+        //     title: productName,
+        //   });
+        // }
+
+        console.log("before", customizeProduct);
+
+        customizeProduct.push({
+          product_id: product.id,
+          size,
+          quantity: productQuantity,
+          color: {
+            color_code: colorCode,
+            color_name: color,
+            colorId,
+          },
+          title: productName,
         });
-
-
-        if (!flag) {
-          //customized product details object
-          customizeProduct.push({
-            product_id: product.id,
-            size,
-            quantity: productQuantity,
-            color: {
-              color_code: colorCode,
-              color_name: color,
-              colorId,
-            },
-            title: productName,
-          });
-        }
 
         //storing all the customized product details in local storage
         localStorage.setItem(
@@ -156,8 +183,10 @@ const Products = () => {
           JSON.stringify(customizeProduct)
         );
 
-        console.log("product", product);
-        formCustomizer.submit();
+        console.log("after", customizeProduct);
+       
+          formCustomizer.submit();
+        
       } else {
         window.location.href = "/signin";
       }
@@ -211,20 +240,20 @@ const Products = () => {
 
   const handleChangeQty = (task) => {
     if (task === "increase") {
-      setProductQuantity(Number(productQuantity) + 1);
+      setProductQuantity(parseInt(productQuantity) + 1);
 
-      // customizeProduct[index].quantity = (Number(quantity) + 1).toString();
+      // customizeProduct[index].quantity = (parseInt(quantity) + 1).toString();
 
       // localStorage.setItem(
       //   "customizeProduct",
       //   JSON.stringify(customizeProduct)
       // );
-    } else {
+    } else if (task === "decrease") {
       if (productQuantity == 1) return;
 
-      setProductQuantity(Number(productQuantity) - 1);
+      setProductQuantity(parseInt(productQuantity) - 1);
 
-      // customizeProduct[index].quantity = (Number(quantity) - 1).toString();
+      // customizeProduct[index].quantity = (parseInt(quantity) - 1).toString();
 
       // localStorage.setItem(
       //   "customizeProduct",
@@ -445,8 +474,9 @@ const Products = () => {
                   id=""
                   cols="50"
                   rows="1"
+                  type="tel"
                   value={productQuantity}
-                  onChange={(event) => setQuantity(event.target.value)}
+                  onChange={(e) => setProductQuantity(e.target.value)}
                 />
                 <button
                   onClick={() => handleChangeQty("increase")}
@@ -463,6 +493,7 @@ const Products = () => {
                   <button
                     className="fw-bold h3 text-light btn px-5 py-2 descriptionBtn"
                     id="btnCustomize"
+                    // onClick={(e) => {customize(e); customize(e);}}
                     onClick={(e) => customize(e)}
                   >
                     Start designing
@@ -490,7 +521,7 @@ const Products = () => {
       </div>
       <p className="greyArea"></p>
       <div>
-        <form id="frmCustomizer" action="/customizer">
+        <form id="frmCustomizer" action='/customizer'>
           <input type="hidden" name="quantity" value={1} />
           <input type="hidden" name="productid" value={"object123"} />
           <input type="hidden" name="masterProductId" value={"object123"} />

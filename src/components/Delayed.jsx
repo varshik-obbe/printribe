@@ -9,9 +9,9 @@ const Delayed = ({ children, delay, loader }) => {
       setIsShown(true);
     }, delay);
 
-    return () => {clearTimeout(timer);}
+    return () => {clearTimeout(timer); setIsShown(false)}
 
-  }, [delay]);
+  }, []);
 
   return isShown ? children : loader;
 }

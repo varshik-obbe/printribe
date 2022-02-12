@@ -68,6 +68,10 @@ const AddProduct = () => {
 
                 productInfo.push(productDetail);
 
+                //updating quantities of same products
+                // var customizeProduct = 
+                
+
                 //storing cart products in local storage
                 var cartItems = [];
 
