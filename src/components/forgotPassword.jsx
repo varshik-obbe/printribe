@@ -2,14 +2,13 @@ import axios from "axios";
 import React from "react";
 // ---- import Google Icon from ReactIcons ---- //
 import { FcGoogle } from "react-icons/all";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate,useLocation } from "react-router-dom";
 import Api from "../api/api";
 import ClothingRock from "../assets/Clothing Rack.png";
 // ---- import PNG from Assets ---- //
 import PrintribeLogo from "../assets/Printribe-logo.png";
 // ---- import Styles ---- //
 import classes from "../styles/signinsignup.module.css";
-import {useLocation} from 'react-router-dom'
 
 function ForgotPassword() {
   let navigate = useNavigate();
@@ -42,7 +41,7 @@ function ForgotPassword() {
     <div className="container-fluid">
       <div className="row">
         <div className="col-12 px-5 pt-5 pb-4">
-          <img src={PrintribeLogo} alt="" style={{ height: "40px" }} />
+          <img src={PrintribeLogo} alt="" style={{ height: "40px",cursor: "pointer"}} onClick={() => navigate('/')} />
         </div>
       </div>
       <div className="container">

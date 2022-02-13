@@ -78,8 +78,9 @@ function Signup() {
           // localStorage.setItem('customerId', res.data.customerRecord._id)
           setState((prev) => ({ ...prev, error: false }));
 
-          if (redirect_url === "from_signin") navigate("/");
-          else navigate(-1);
+          // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+          // else navigate(-1)
+          navigate('/signin?redirect=from_signup');
         })
         .catch((err) => {
           setState((prev) => ({ ...prev, error: "Error in SignUp" }));
@@ -100,11 +101,30 @@ function Signup() {
   const onLoginSuccess = (res) => {
     console.log("Login Success:", res.profileObj);
 
-    localStorage.setItem("googleEmail", res && res.profileObj.email);
-    localStorage.setItem("googleId", res && res.profileObj.googleId);
+    var googleUser = res.profileObj
 
-    if (redirect_url === "from_signin") navigate("/");
-    else navigate(-1);
+    axios
+        .post(Api.customers.SIGNUP, {
+          customerRegisterdata: {
+            email: googleUser.email,
+            username: googleUser.name,
+            password: googleUser.googleId,
+            role: "customer",
+          },
+        })
+        .then((res) => {
+          console.log(res.data.customerRecord._id);
+          // localStorage.setItem('customerId', res.data.customerRecord._id)
+          setState((prev) => ({ ...prev, error: false }));
+
+          // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+          // else navigate('/signin');
+          navigate('/signin?redirect=from_signup');
+    
+        })
+        .catch((err) => {
+          setState((prev) => ({ ...prev, error: "Error in SignUp" }));
+        });
   };
 
   const onLoginFailure = (res) => {

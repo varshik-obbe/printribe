@@ -69,7 +69,7 @@ function Signin() {
 
         localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
 
-        if(redirect_url === "from_signup") navigate('/')
+        if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
         else navigate(-1);
 
       })
@@ -93,13 +93,39 @@ function Signin() {
   const onLoginSuccess = (res) => {
     console.log('Login Success:', res.profileObj);
 
-    localStorage.setItem('googleEmail',res && res.profileObj.email);
-    localStorage.setItem('googleId',res && res.profileObj.googleId);
-    
-    if(redirect_url === "from_signup") navigate('/')
-    else navigate(-1);
+    var googleUser = res.profileObj
 
-  };
+    axios
+      .post(Api.customers.LOGIN, {
+        credentials: {
+          password: googleUser.googleId,
+          email: googleUser.email,
+          role: "customer",
+        },
+      })
+      .then((res) => {
+        console.log("login success", res);
+        localStorage.setItem(
+          "token",
+          res.data.customer.token ? res.data.customer.token : ""
+        );
+        localStorage.setItem(
+          "customerId",
+          res.data.customer.id ? res.data.customer.id : "",
+        );
+        setState((prev) => ({ ...prev, error: false }));
+
+        localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
+
+        if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+        else navigate(-1);
+
+      })
+      .catch((err) => {
+        console.log(err);
+        setState((prev) => ({ ...prev, error: true }));
+      });
+    };
 
 const onLoginFailure = (res) => {
     console.log('Login Failed:', res);
