@@ -12,7 +12,7 @@ const fieldsArray = [
   { name: "address1", title: "Address line 1", diff: "address1" },
   { name: "company", title: "Company (optional)", diff: "company" },
   { name: "address2", title: "Address line 2 (optional)", diff: "address2" },
-  { name: "mobile", title: "Phone (optional)", diff: "mobile" },
+  { name: "mobile", title: "Phone", diff: "mobile" },
   { name: "country", title: "Country", diff: "country" },
   {
     name: "retailShippingPprice",

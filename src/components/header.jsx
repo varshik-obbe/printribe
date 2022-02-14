@@ -64,7 +64,7 @@ function Header() {
             {adminSettings &&
               adminSettings.map((curr) => {
                 if (curr.settings_name === "alert" && curr.active == "true") {
-                  return <span>*{curr.settings_value}</span>;
+                  return <span>{curr.settings_value}</span>;
                 }
               })}
             {/* * Message to be edited from admin panel{" "} */}
