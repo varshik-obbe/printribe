@@ -33,9 +33,37 @@ function ReviewOrder({ handleNext }) {
   const [cartEmpty, setCartEmpty] = useState(!customizeProduct || customizeProduct.length === 0 ? true: false);
 
   const productData = [];
-  const productInfo = [];
+  var productInfo = [];
 
   const apiCall = () => {
+
+    var temp = []; 
+
+  for (var i = 0; i < productInfo.length; i++) {
+    if (temp.length == 0) {
+      temp.push(productInfo[i]);
+    } else {
+      var added = false;
+
+      for (var j = 0; j < temp.length; j++) {
+        if (
+          temp[j].product_id === productInfo[i].product_id &&
+          temp[j].productsize === productInfo[i].productsize &&
+          temp[j].productcolor === productInfo[i].productcolor
+        ) {
+          added = true;
+        }
+      }
+
+      if (!added) {
+        temp.push(productInfo[i]);
+      }
+    }
+  }
+   //setting customizeProduct with unique elements present in temp by id,size ,color & cumulated quanitities of similar products
+   productInfo = temp;
+
+
     const payData = {
       orderData: {
         customerShipping_id: customerShippingId,
@@ -115,7 +143,7 @@ function ReviewOrder({ handleNext }) {
           data.product.productdata.map((ele) => {
             productData.push(ele);
           });
-          if (productData.length > 0) {
+          if (productData.length === customizeProduct.length) {
             setData();
           }
         })

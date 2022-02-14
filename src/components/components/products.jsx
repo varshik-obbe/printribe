@@ -97,8 +97,8 @@ function Products({ handleNext }) {
           if (ele.prodId === curr.product_id) {
             subTotal += Number(curr.quantity) * Number(ele.price);
           }
-          total_quantity += Number(curr.quantity);
         });
+        total_quantity += Number(curr.quantity);
     });
 
   var zekekeTotal = 0;
