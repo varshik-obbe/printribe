@@ -65,12 +65,12 @@ function ReviewOrder({ handleNext }) {
     console.log("hppro", productData);
     console.log("hp", productInfo);
 
-    productData.map((curr) => {
+    productData.forEach((curr) => {
       // console.log("currid", customizeProduct);
 
       console.log(curr)
 
-      customizeProduct.map((ele) => {
+      customizeProduct.forEach((ele) => {
         console.log("ele", ele);
 
         zekekeData.forEach((zakekeVal) => {
@@ -96,9 +96,10 @@ function ReviewOrder({ handleNext }) {
             };
             productInfo.push(dataObject);
 
-            if (productInfo.length > 0) {
-              apiCall();
-            }
+            // if (productInfo.length > 0) {
+            //   apiCall();
+            // }
+
           }
         });
       });
@@ -120,6 +121,11 @@ function ReviewOrder({ handleNext }) {
         })
         .catch((err) => console.log(err));
     });
+
+    if (productInfo.length > 0) {
+      apiCall();
+    }
+
   };
 
   var visitorId = JSON.parse(localStorage.getItem("visitorId"));

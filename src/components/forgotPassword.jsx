@@ -9,6 +9,8 @@ import ClothingRock from "../assets/Clothing Rack.png";
 import PrintribeLogo from "../assets/Printribe-logo.png";
 // ---- import Styles ---- //
 import classes from "../styles/signinsignup.module.css";
+import Swal from "sweetalert2";
+
 
 function ForgotPassword() {
   let navigate = useNavigate();
@@ -31,6 +33,15 @@ function ForgotPassword() {
     axios.get(`https://api.theprintribe.com/api/customers/forgotpass/${state.email}`)
     .then(({data}) => {
       console.log(data);
+
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Link Sent!",
+        text:"Please Check Your Email",
+        showConfirmButton: true,
+      })
+
     })
     .catch(err => console.error(err));
   }
