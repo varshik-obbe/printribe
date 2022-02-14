@@ -37,6 +37,7 @@ function ReviewOrder({ handleNext }) {
 
   const apiCall = () => {
 
+    //to remove duplicate items in productInfo array
     var temp = []; 
 
   for (var i = 0; i < productInfo.length; i++) {
@@ -62,7 +63,6 @@ function ReviewOrder({ handleNext }) {
   }
    //setting customizeProduct with unique elements present in temp by id,size ,color & cumulated quanitities of similar products
    productInfo = temp;
-
 
     const payData = {
       orderData: {
@@ -124,9 +124,9 @@ function ReviewOrder({ handleNext }) {
             };
             productInfo.push(dataObject);
 
-            // if (productInfo.length > 0) {
-            //   apiCall();
-            // }
+            if (productInfo.length > 0) {
+              apiCall();
+            }
 
           }
         });
@@ -142,6 +142,7 @@ function ReviewOrder({ handleNext }) {
         .then(({ data }) => {
           data.product.productdata.map((ele) => {
             productData.push(ele);
+            
           });
           if (productData.length === customizeProduct.length) {
             setData();
@@ -149,10 +150,6 @@ function ReviewOrder({ handleNext }) {
         })
         .catch((err) => console.log(err));
     });
-
-    if (productInfo.length > 0) {
-      apiCall();
-    }
 
   };
 
