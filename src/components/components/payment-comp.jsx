@@ -54,7 +54,62 @@ function PyamentComp() {
           </li> */}
         </ul>
         <div class="mt-3">
-          {activePayment === "other" ? (
+
+        <React.Fragment>
+              <div>
+                <div class="col-12 mt-4">
+                  <div
+                    style={{
+                      backgroundColor: "#E5F5E4",
+                      padding: "22px",
+                      borderRadius: "5px",
+                    }}
+                    class="row"
+                  >
+                    <div class="col-12 col-md-10">
+                      <span>
+                        Each currency on Printribe has its own Wallet, so please
+                        add funds to your USD Wallet to pay for this order. You
+                        can do this by going to the Billing section. This order
+                        will be saved as a draft.
+                      </span>
+                    </div>
+                    <div
+                      class={["col-12 col-md-2", classes.btnAddMoney].join(" ")}
+                    >
+                      <div>
+                        <button
+                          class="btn btn-danger"
+                          style={{ height: "auto", width: "100%" }}
+                        >
+                          Add Money
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 mt-3">
+                  <div
+                    style={{
+                      padding: "20px",
+                      border: "1px solid #e0e0e0",
+                      borderRadius: "5px",
+                    }}
+                    class="d-flex align-items-center"
+                  >
+                    <span>IND Wallet</span>
+                    <dvi class="d-flex flex-column ms-5">
+                      <span>Balance:</span>
+                      <b class="fs-5">₹0</b>
+                    </dvi>
+                  </div>
+                </div>
+              </div>
+            </React.Fragment>
+
+
+
+          {/* {activePayment === "other" ? (
             <React.Fragment>
               <div class="row">
                 <div class="col-12">
@@ -110,7 +165,6 @@ function PyamentComp() {
                             return (
                               <>
                                 <div class="col-12 col-sm-6 mt-2">
-                                  {/* <div class="mt-2"> */}
                                   <label
                                     for="basic-url"
                                     class="form-label mb-1"
@@ -120,7 +174,6 @@ function PyamentComp() {
                                   <div class="input-group mb-2">
                                     <input type="email" class="form-control" />
                                   </div>
-                                  {/* </div> */}
                                 </div>
                               </>
                             );
@@ -339,7 +392,7 @@ function PyamentComp() {
                 </div>
               </div>
             </React.Fragment>
-          )}
+          )} */}
         </div>
       </div>
     </div>

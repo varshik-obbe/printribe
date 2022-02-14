@@ -119,7 +119,7 @@ function Header() {
                 {searchResults && (
                   <div className={styles.searchItemsList}>
                     {searchResults.map((curr, index) => (
-                      <li value={curr.title} key={index} onClick={() => navigate(`/product/${curr._id}`)}>
+                      <li value={curr.title} key={index}>
                         {curr.title}
                       </li>
                     ))}

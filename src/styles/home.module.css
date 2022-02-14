@@ -1,6 +1,6 @@
 .searchBox {
   padding: 10px;
-  border: 1px solid #666666;
+  border: 1px solid rgba(0,0,0,0.6);
   max-width: 360px;
   height: 45px;
   display: flex;
@@ -36,12 +36,12 @@
 .searchItemsList{
   position:absolute;
   background-color:#fff;
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
   top:43.5px;
-  left: 0;
-  width: 100%;
-  border:1px solid grey;
+  left: -1px;
+  width: 360px;
+  border-left: 1px solid rgba(0,0,0,0.6);
+  border-bottom:1px solid rgba(0,0,0,0.6);  
+  border-right: 1px solid rgba(0,0,0,0.6);
 }
 
 .searchItemsList li{

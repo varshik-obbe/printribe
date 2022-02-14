@@ -135,10 +135,11 @@ const AddProduct = () => {
       case 2:
         return (
           products && (
+            <Delayed delay={2000} loader={<Loader />}>
             <ReviewOrder
-              products={products}
               handleNext={() => setActiveStep(activeStep - 2)}
             />
+            </Delayed>
           )
         );
       default:

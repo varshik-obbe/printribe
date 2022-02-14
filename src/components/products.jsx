@@ -262,6 +262,12 @@ const Products = () => {
     }
   };
 
+  const checkQty = (e) =>{
+    if(e.target.value < 1 || e.target.value === ""){
+      setProductQuantity(1)
+    }
+  }
+
   var settings = {
     dots: false,
     infinite: true,
@@ -470,6 +476,7 @@ const Products = () => {
                     width: "50px",
                     height: "30px",
                   }}
+                  onBlur={(e) => checkQty(e)}
                   name=""
                   id=""
                   cols="50"
