@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import Layout from "../components/layout";
 import classes from "../styles/account.module.css";
 import { AiFillCamera } from "react-icons/all";
 import account from "../assets/account.png";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 
 import api from "../api/api";
 
 function Account() {
   const navigate = useNavigate();
-  const [showImage, setShowImage] = React.useState(false);
+  const [showImage, setShowImage] = React.useState("");
+  const [imgBase64, setImgBase64] = useState("");
 
   const [state, setState] = React.useState();
 
@@ -22,6 +25,10 @@ function Account() {
       .then((res) => {
         console.log(res);
         setState(res.data.customerRecordData);
+        setShowImage(
+          process.env.REACT_APP_IMAGE_BASE_URL +
+            res.data.customerRecordData.customer_img
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -42,13 +49,41 @@ function Account() {
       })
       .then((res) => {
         console.log(res);
-        getByCustomerIdApiCall();
-        alert("Your Account Information Update Successfully");
+        //commented the below func call to load profile image when updateCustomerApiCall gets invoked
+        // getByCustomerIdApiCall();
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Account Updated!",
+          showConfirmButton: true,
+        })
       })
       .catch((err) => {
         console.log(err);
-        alert("Error in Update your Account Information");
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Error!",
+          text:"Error in Update your Account Information",
+          showConfirmButton: true,
+        })
       });
+
+    //update user profile image api
+    console.log(imgBase64)
+    axios
+      .put(
+        `https://api.theprintribe.com/api/customers/updatecustomer?id=${customerId}`,
+        {
+          data: {
+            customer_img: imgBase64,
+          },
+        }
+      )
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e, name) => {
@@ -56,14 +91,18 @@ function Account() {
   };
 
   const handleImageUpload = (e) => {
-    console.log(e.target.files[0]);
+    console.log(e.target.files[0]);    
 
-    setShowImage(URL.createObjectURL(e.target.files[0]));
-    
-    console.log(URL.createObjectURL(e.target.files[0]))
+    if (e.target.files && e.target.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function (e) {
+        setImgBase64(reader.result.replace("data:", "").replace(/^.+,/, ""));
+        setShowImage(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
-
-  console.log(state);
 
   if (state) {
     return (
@@ -117,7 +156,7 @@ function Account() {
                     objectFit: "cover",
                     borderRadius: "50%",
                     border: "1px solid rgba(0,0,0,0.5)",
-                    background:'transparent'
+                    background: "transparent",
                   }}
                 />
                 <h4 class="ms-4" style={{ color: "#000" }}>

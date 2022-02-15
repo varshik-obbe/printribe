@@ -80,7 +80,7 @@ function Signup() {
 
           // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
           // else navigate(-1)
-          navigate('/signin?redirect=from_signup');
+          navigate("/signin?redirect=from_signup");
         })
         .catch((err) => {
           setState((prev) => ({ ...prev, error: "Error in SignUp" }));
@@ -101,30 +101,40 @@ function Signup() {
   const onLoginSuccess = (res) => {
     console.log("Login Success:", res.profileObj);
 
-    var googleUser = res.profileObj
+    var googleUser = res.profileObj;
 
     axios
-        .post(Api.customers.SIGNUP, {
-          customerRegisterdata: {
-            email: googleUser.email,
-            username: googleUser.name,
-            password: googleUser.googleId,
-            role: "customer",
-          },
-        })
-        .then((res) => {
-          console.log(res.data.customerRecord._id);
-          // localStorage.setItem('customerId', res.data.customerRecord._id)
-          setState((prev) => ({ ...prev, error: false }));
+      .post("https://api.theprintribe.com/api/customers/customerGoogleSign", {
+        saveData: {
+          email: googleUser.email,
+          password: googleUser.googleId,
+          role: "customer",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem(
+          "token",
+          res.data.savedData.token ? res.data.savedData.token : ""
+        );
+        localStorage.setItem(
+          "customerId",
+          res.data.savedData._id ? res.data.savedData._id : ""
+        );
 
-          // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
-          // else navigate('/signin');
-          navigate('/signin?redirect=from_signup');
-    
-        })
-        .catch((err) => {
-          setState((prev) => ({ ...prev, error: "Error in SignUp" }));
-        });
+        localStorage.setItem(
+          "customer_email",
+          res.data.savedData.email ? res.data.savedData.email : ""
+        );
+        setState((prev) => ({ ...prev, error: false }));
+
+        if (redirect_url === "from_signup" || redirect_url === "from_update")
+          navigate("/");
+        else navigate(-1);
+      })
+      .catch((err) => {
+        setState((prev) => ({ ...prev, error: "Error in SignUp" }));
+      });
   };
 
   const onLoginFailure = (res) => {
@@ -139,7 +149,12 @@ function Signup() {
     <div className="container-fluid">
       <div className="row">
         <div className="col-12 px-5 pt-5 pb-4">
-          <img src={PrintribeLogo} alt="" style={{ height: "40px",cursor: "pointer" }} onClick={() => navigate('/')} />
+          <img
+            src={PrintribeLogo}
+            alt=""
+            style={{ height: "40px", cursor: "pointer" }}
+            onClick={() => navigate("/")}
+          />
         </div>
       </div>
       <div className="container">
@@ -162,10 +177,14 @@ function Signup() {
                     <button
                       type="button"
                       className="btn w-100"
-                      style={{ color: "#000", marginTop: "10px",border:'1px solid gray'}}
+                      style={{
+                        color: "#000",
+                        marginTop: "10px",
+                        border: "1px solid gray",
+                      }}
                       onClick={renderProps.onClick} // Sign Up with Google Click Event //
                     >
-                      <FcGoogle style={{ fontSize: "25px" }} /> Sign in with
+                      <FcGoogle style={{ fontSize: "25px" }} /> Sign up with
                       Google
                     </button>
                   )}
