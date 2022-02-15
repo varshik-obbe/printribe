@@ -10,7 +10,7 @@ const fieldsArray = [
     diff: "state",
   },
   { name: "address1", title: "Address line 1", diff: "address1" },
-  { name: "company", title: "Company (optional)", diff: "company" },
+  { name: "company", title: "Company", diff: "company" },
   { name: "address2", title: "Address line 2 (optional)", diff: "address2" },
   { name: "mobile", title: "Phone", diff: "mobile" },
   { name: "country", title: "Country", diff: "country" },
@@ -24,32 +24,148 @@ const fieldsArray = [
 ];
 
 function Shipping(props) {
+  const [savedShipAddress, setSavedShipAddress] = useState(false);
+  const savedShippingData =
+    localStorage.getItem("shipping_data") !== null
+      ? JSON.parse(localStorage.getItem("shipping_data"))
+      : null;
+
+  useEffect(() => {
+    if (savedShipAddress) {
+      setFullName(savedShippingData.fullname);
+      setState(savedShippingData.state);
+      setAddress1(savedShippingData.address1);
+      setCompany(savedShippingData.company);
+      setAddress2(savedShippingData.address2);
+      setMobile(savedShippingData.phone);
+      setCountry(savedShippingData.country);
+      setRetailShippingPprice(savedShippingData.shipping_charges);
+      setPostalCode(savedShippingData.zip_code);
+      setCity(savedShippingData.city);
+      setShippingerrorName("");
+      setShippingerrorAddress1("");
+      setShippingerrorCity("");
+      setShippingerrorCountry("");
+      setShippingerrorState("");
+      setShippingerrorPostalCode("");
+      setShippingerrorCompany("");
+      setShippingerrorMobile("");
+    } else {
+      setFullName("");
+      setState("");
+      setAddress1("");
+      setCompany("");
+      setAddress2("");
+      setMobile(0);
+      setCountry("");
+      setRetailShippingPprice("");
+      setPostalCode(0);
+      setCity("");
+      setShippingDetails("");
+    }
+  }, [savedShipAddress]);
+
+  //to check whether a string contains a number or not
+  const checkIfStringContainsNumber = (_string) => {
+    return /\d/.test(_string);
+  };
+
   const formSubmit = () => {
     const visitorId = localStorage.getItem("visitorId");
     const customerId = localStorage.getItem("customerId");
 
-    const formData = {
-      shipping_data: {
-        customer_id: customerId,
-        visitor_id: visitorId,
-        fullname: fullName,
-        state: state,
-        address1: address1,
-        company: company,
-        address2: address2,
-        phone: mobile,
-        country: country,
-        shipping_charges: Number(retailShippingPprice),
-        zip_code: postalCode,
-        city: city,
-      },
-    };
-    console.log(formData);
-    axios.post(`/customerShipping/addShipping`, formData).then(({ data }) => {
-      console.log(data);
-      localStorage.setItem("customerShipping_id", data.saveddata._id)
-      handleNext();
-    });
+    if (
+      fullName === "" ||
+      fullName.length < 2 ||
+      address1 === "" ||
+      address1.length < 4 ||
+      mobile.toString().length < 10 ||
+      city === "" ||
+      company === "" ||
+      state === "" ||
+      postalCode === "" ||
+      country === ""
+    ) {
+      if (fullName === "" || fullName.length < 2) {
+        setShippingerrorName("Full name should be at of least 2 characters");
+      }
+
+      if (address1 === "" || address1.length < 4) {
+        setShippingerrorAddress1("Address is not long enough");
+      }
+
+      if (city === "") {
+        setShippingerrorCity("City field is required");
+      }
+
+      if (country === "") {
+        setShippingerrorCountry("Country field is required");
+      }
+
+      if (state === "") {
+        setShippingerrorState("State field is required");
+      }
+
+      if (postalCode === 0) {
+        setShippingerrorPostalCode("Postal Code field is required");
+      }
+
+      if (company === "") {
+        setShippingerrorCompany("Company field is required");
+      }
+
+      if (mobile.toString().length < 8) {
+        setShippingerrorMobile("Phone number invalid");
+      }
+    }
+
+    if (
+      fullName !== "" &&
+      state !== "" &&
+      address1 !== "" &&
+      mobile.toString().length > 7 &&
+      retailShippingPprice !== "" &&
+      postalCode !== 0 &&
+      city !== "" &&
+      company !== "" &&
+      country !== ""
+    ) {
+      const formData = {
+        shipping_data: {
+          customer_id: customerId,
+          visitor_id: visitorId,
+          fullname: fullName,
+          state: state,
+          address1: address1,
+          company: company,
+          address2: address2,
+          phone: mobile,
+          country: country,
+          shipping_charges: Number(retailShippingPprice),
+          zip_code: postalCode,
+          city: city,
+        },
+      };
+
+      //saving shipping details in localStorage
+      localStorage.setItem(
+        "shipping_data",
+        JSON.stringify(formData.shipping_data)
+      );
+
+      console.log(formData);
+
+      if (savedShipAddress) handleNext();
+      else {
+        axios
+          .post(`/customerShipping/addShipping`, formData)
+          .then(({ data }) => {
+            console.log(data);
+            localStorage.setItem("customerShipping_id", data.saveddata._id);
+            handleNext();
+          });
+      }
+    }
   };
 
   const { handleNext } = props;
@@ -67,7 +183,16 @@ function Shipping(props) {
   //state to store shipping shipping
   const [shippingDetails, setShippingDetails] = useState("");
   const [shippingCompanies, setShippingCompanies] = useState();
+
   const [shippingError, setShippingerror] = useState("");
+  const [shippingErrorName, setShippingerrorName] = useState("");
+  const [shippingErrorAddress1, setShippingerrorAddress1] = useState("");
+  const [shippingErrorMobile, setShippingerrorMobile] = useState("");
+  const [shippingErrorCity, setShippingerrorCity] = useState("");
+  const [shippingErrorCompany, setShippingerrorCompany] = useState("");
+  const [shippingErrorState, setShippingerrorState] = useState("");
+  const [shippingErrorPostalCode, setShippingerrorPostalCode] = useState("");
+  const [shippingErrorCountry, setShippingerrorCountry] = useState("");
 
   //product quantity from LS
   const total_quantity = localStorage.getItem("total_quantity");
@@ -76,13 +201,14 @@ function Shipping(props) {
     console.log(postalCode.toString().length);
 
     if (postalCode.toString().length > 1) {
-      console.log(postalCode.toString().length);
+      // console.log(postalCode.toString().length);
       setShippingerror("Invalid Postal Code");
 
       if (postalCode.toString().length === 6) {
         axios
           .get(
-            `/customerShipping/getShipRocketCharges/${postalCode}/${total_quantity * 0.3
+            `/customerShipping/getShipRocketCharges/${postalCode}/${
+              total_quantity * 0.3
             }`
           )
           .then(({ data }) => {
@@ -125,6 +251,25 @@ function Shipping(props) {
         }}
       >
         <b class="fs-4">Shipping Address</b>
+        {savedShippingData && (
+          <span
+            style={{
+              width: "200px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+            }}
+          >
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="checkboxNoLabel"
+              onChange={() => setSavedShipAddress(!savedShipAddress)}
+            />
+            <span style={{ marginTop: "3px" }}>Use Your Saved Address</span>
+          </span>
+        )}
+
         <div class="row mt-4">
           {fieldsArray.map((ele, index) => {
             switch (ele.diff) {
@@ -140,10 +285,20 @@ function Shipping(props) {
                         <input
                           type="text"
                           class="form-control"
-                          onChange={(e) => setFullName(e.target.value)}
+                          onChange={(e) => {
+                            setFullName(e.target.value);
+                            setShippingerrorName("");
+                          }}
+                          value={fullName}
+                          required
                         />
                       </div>
-                      {/* </div> */}
+                      {shippingErrorName ===
+                        "Full name should be at of least 2 characters" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorName}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -159,10 +314,20 @@ function Shipping(props) {
                         <input
                           type="text"
                           class="form-control"
-                          onChange={(e) => setAddress1(e.target.value)}
+                          onChange={(e) => {
+                            setAddress1(e.target.value);
+                            setShippingerrorAddress1("");
+                          }}
+                          value={address1}
+                          required
                         />
                       </div>
-                      {/* </div> */}
+                      {shippingErrorAddress1 ===
+                        "Address is not long enough" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorAddress1}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -179,9 +344,9 @@ function Shipping(props) {
                           type="text"
                           class="form-control"
                           onChange={(e) => setAddress2(e.target.value)}
+                          value={address2}
                         />
                       </div>
-                      {/* </div> */}
                     </div>
                   </>
                 );
@@ -200,22 +365,33 @@ function Shipping(props) {
                               <select
                                 class="form-select"
                                 aria-label="Default select example"
-                                onChange={(e) => setCompany(e.target.value)}
+                                onChange={(e) => {
+                                  setCompany(e.target.value);
+                                  setShippingerrorCompany("");
+                                }}
                                 onClick={() => {
                                   shippingCompanies.find((curr) => {
                                     if (company === "clear")
                                       setRetailShippingPprice("");
                                     else if (curr.courier_name === company) {
                                       setRetailShippingPprice(curr.rate);
-                                      localStorage.setItem("shipping_charges", curr.rate)
-                                      localStorage.setItem("courier_id", curr.courier_company_id)
+                                      localStorage.setItem(
+                                        "shipping_charges",
+                                        curr.rate
+                                      );
+                                      localStorage.setItem(
+                                        "courier_id",
+                                        curr.courier_company_id
+                                      );
                                     }
                                   });
                                 }}
+                                required
                               >
                                 <option value="clear">
                                   Select Company...{" "}
                                 </option>
+
                                 {shippingCompanies &&
                                   shippingCompanies.map((curr, index) => (
                                     <option
@@ -237,7 +413,11 @@ function Shipping(props) {
                           />
                         )}
                       </div>
-                      {/* </div> */}
+                      {shippingErrorCompany === "Company field is required" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorCompany}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -253,10 +433,19 @@ function Shipping(props) {
                         <input
                           type="text"
                           class="form-control"
-                          onChange={(e) => setCity(e.target.value)}
+                          onChange={(e) => {
+                            setCity(e.target.value);
+                            setShippingerrorCity("");
+                          }}
+                          value={city}
+                          required
                         />
                       </div>
-                      {/* </div> */}
+                      {shippingErrorCity === "City field is required" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorCity}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -272,13 +461,23 @@ function Shipping(props) {
                         <input
                           type="text"
                           class="form-control"
-                          onChange={(e) => setPostalCode(e.target.value)}
+                          onChange={(e) => {
+                            setPostalCode(e.target.value);
+                            setShippingerrorPostalCode("");
+                          }}
+                          value={postalCode > 0 ? postalCode : ""}
+                          required
                         />
                       </div>
-                      {shippingError !== "" && (
+                      {shippingError !== "" && !savedShipAddress && (
                         <span class="text-danger d-block">{shippingError}</span>
                       )}
-                      {/* </div> */}
+                      {shippingErrorPostalCode ===
+                        "Postal Code field is required" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorPostalCode}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -292,7 +491,12 @@ function Shipping(props) {
                       <select
                         class="form-select"
                         aria-label="Default select example"
-                        onChange={(e) => setState(e.target.value)}
+                        onChange={(e) => {
+                          setState(e.target.value);
+                          setShippingerrorState("");
+                        }}
+                        value={state}
+                        required
                       >
                         <option selected>Open this select menu</option>
                         <option value="Karnataka">Karnataka</option>
@@ -300,6 +504,11 @@ function Shipping(props) {
                         <option value="Rajasthan">Rajasthan</option>
                       </select>
                     </div>
+                    {shippingErrorState === "State field is required" && (
+                      <span class="text-danger d-block">
+                        {shippingErrorState}
+                      </span>
+                    )}
                   </div>
                 );
               case "mobile":
@@ -314,6 +523,7 @@ function Shipping(props) {
                           class="btn btn-outline-secondary dropdown-toggle form-control w-25"
                           type="button"
                           style={{ border: "1px solid #CED4DA" }}
+                          required
                         >
                           +91
                         </button>
@@ -327,9 +537,18 @@ function Shipping(props) {
                         <input
                           type="text"
                           class="form-control w-75"
-                          onChange={(e) => setMobile(e.target.value)}
+                          onChange={(e) => {
+                            setMobile(e.target.value);
+                            setShippingerrorMobile("");
+                          }}
+                          value={mobile > 0 ? mobile : ""}
                         />
                       </div>
+                      {shippingErrorMobile === "Phone number invalid" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorMobile}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -343,7 +562,12 @@ function Shipping(props) {
                       <select
                         class="form-select"
                         aria-label="Default select example"
-                        onChange={(e) => setCountry(e.target.value)}
+                        onChange={(e) => {
+                          setCountry(e.target.value);
+                          setShippingerrorCountry("");
+                        }}
+                        value={country}
+                        required
                       >
                         <option selected>Open this select menu</option>
                         <option value="India">India</option>
@@ -351,6 +575,11 @@ function Shipping(props) {
                         <option value="UK">UK</option>
                       </select>
                     </div>
+                    {shippingErrorCountry === "Country field is required" && (
+                      <span class="text-danger d-block">
+                        {shippingErrorCountry}
+                      </span>
+                    )}
                   </div>
                 );
               case "retailShippingPprice":
@@ -372,6 +601,7 @@ function Shipping(props) {
                             onChange={(e) =>
                               setRetailShippingPprice(e.target.value)
                             }
+                            value={retailShippingPprice}
                           />
                         ) : (
                           <input
