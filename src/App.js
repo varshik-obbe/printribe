@@ -18,6 +18,7 @@ import SubSubCat from "./pages/SubSubCat";
 import TermsPage from './pages/termspage';
 import ForgotPassword from "./components/forgotPassword";
 import UpdatePassword from "./components/updatePassword.jsx";
+import WixDashboard from "./components/wixDashboard";
 
 // import SubCatWomen from "./pages/SubCatWomen";
 
@@ -54,6 +55,7 @@ function App() {
           <Route exact path="/my-account" element={<Account />} />
           <Route exact path="/customizer" element={<Customizer />} />
           <Route exact path="/forgotPass/:tokenId" element={<UpdatePassword />} />
+          <Route exact path='/integrations/wix' element={<WixDashboard />} />
         </Routes>
       </Router>
     </>
