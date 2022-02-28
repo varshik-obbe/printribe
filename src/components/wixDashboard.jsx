@@ -21,8 +21,7 @@ const WixDashboard = () => {
 
   return (
     <>
-    {/* <iframe> */}
-      <Header />
+     
       <h6 className="ms-5 mt-4">INVENTORY PRODUCTS</h6>
       <hr
           class="my-2 mx-auto"
@@ -61,8 +60,7 @@ const WixDashboard = () => {
      
       <InventoryProducts />
       <InventoryProducts />
-      <Footer />
-      {/* </iframe> */}
+  
     </>
   );
 };

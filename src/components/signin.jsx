@@ -17,7 +17,6 @@ function Signin() {
   var location = useLocation();
 
   var redirect_url = location.search ? location.search.split('=')[1] : ""
-  console.log(redirect_url)
 
   const [state, setState] = React.useState({
     email: "",
@@ -70,6 +69,7 @@ function Signin() {
         localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
 
         if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+        else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
         else navigate(-1);
 
       })
@@ -118,6 +118,7 @@ function Signin() {
         localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
 
         if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+        else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
         else navigate(-1);
 
       })
@@ -187,7 +188,7 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
               </div>
               {/* ----- Sign Up with Email Button ----- */}
               <div>
-                <Link to="/signup?redirect=from_signin">
+                <Link to={redirect_url === "from_wix_integrations" ? "/signup?redirect=from_wix_integrations" :"/signup?redirect=from_signin"}>
                   <button
                     type="button"
                     class="btn btn-primary w-100 fw-bold"

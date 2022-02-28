@@ -80,7 +80,10 @@ function Signup() {
 
           // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
           // else navigate(-1)
-          navigate("/signin?redirect=from_signup");
+
+          if(redirect_url === "from_wix_integrations") navigate("/signin?redirect=from_wix_integrations")
+          else navigate("/signin?redirect=from_signup");
+          
         })
         .catch((err) => {
           setState((prev) => ({ ...prev, error: "Error in SignUp" }));
@@ -128,9 +131,10 @@ function Signup() {
         );
         setState((prev) => ({ ...prev, error: false }));
 
-        if (redirect_url === "from_signup" || redirect_url === "from_update")
-          navigate("/");
+        if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+        else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
         else navigate(-1);
+
       })
       .catch((err) => {
         setState((prev) => ({ ...prev, error: "Error in SignUp" }));
@@ -192,7 +196,7 @@ function Signup() {
               </div>
               {/* ----- Sign Up with Email Button ----- */}
               <div>
-                <Link to="/signin?redirect=from_signup">
+                <Link to={redirect_url === "from_wix_integrations" ? "/signin?redirect=from_wix_integrations" :"/signin?redirect=from_signup"}>
                   <button
                     type="button"
                     class="btn btn-primary w-100 fw-bold"
