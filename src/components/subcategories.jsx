@@ -38,7 +38,7 @@ const SubCatalog = () => {
                 className="col-lg-4 col-md-6 col-sm-12 p-2"
                 key={category.id}
               >
-                <div className={`card ${styles.catalogcontainer}`}>
+                <div className={`${styles.catalogcontainer} `}>
                   <Link
                     to={
                       category.subsubCategories.length > 0
@@ -48,15 +48,14 @@ const SubCatalog = () => {
                     className={styles.catalogText}
                   >
                     <img
-                      class="card-img-top"
+                      class={`${styles.cardImg}`}
                       src={process.env.REACT_APP_IMAGE_BASE_URL + category.img}
                       alt={category.name}
                     />
                     <div
-                      class="card_body h-25 p-2"
                       className={styles.card_body}
                     >
-                      <p class="card-text fw-bold">{category.name}</p>
+                      <p class="fw-bold">{category.name}</p>
                     </div>
                   </Link>
                 </div>
