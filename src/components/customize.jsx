@@ -60,41 +60,7 @@ function Customize() {
           {/* <Script src="https://portal.zakeke.com/scripts/integration/api/customizer.js"></Script> */}
           {/* <Script src="./design-tribe-components/script.js"></Script> */}
         </div>
-        <div
-          style={{ width: "100%", display: "flex", justifyContent: "center" }}
-        >
-          {displayItems === 8 ? (
-            <button
-              onClick={() => setDisplayItems(15)}
-              className="btn btn-danger mt-4 mb-3 px-4"
-              style={{
-                backgroundColor: "#EE3C2F",
-                fontFamily: "Avenir,sans-serif",
-                fontSize: "16px",
-                letterSpacing: "1.6px",
-                fontWeight: "700",
-                width: "150px",
-              }}
-            >
-              Show More
-            </button>
-          ) : (
-            <button
-              onClick={() => setDisplayItems(8)}
-              className="btn btn-danger mt-4 mb-3 px-4"
-              style={{
-                backgroundColor: "#EE3C2F",
-                fontFamily: "Avenir,sans-serif",
-                fontSize: "16px",
-                letterSpacing: "1.6px",
-                fontWeight: "700",
-                width: "150px",
-              }}
-            >
-              Show Less
-            </button>
-          )}
-        </div>
+        
         <div
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >

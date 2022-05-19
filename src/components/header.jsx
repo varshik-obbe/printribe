@@ -197,7 +197,7 @@ function Header() {
                       <Nav.Link href="/signup">
                         <i
                           class="fas fa-user-plus"
-                          style={{ fontSize: 24 }}
+                          style={{ fontSize: 20 }}
                         ></i>
                         <span
                           style={{
@@ -211,7 +211,7 @@ function Header() {
                         </span>
                       </Nav.Link>
                       <Nav.Link href="/signin">
-                        <i class="fas fa-user-alt" style={{ fontSize: 24 }}></i>
+                        <i class="fas fa-user-alt" style={{ fontSize: 20 }}></i>
                         <span
                           style={{
                             fontSize: 20,
