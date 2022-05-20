@@ -1,17 +1,11 @@
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
-import React, { useEffect, useRef, useState } from "react";
-import { default as img1, default as img3 } from "../assets/tshirtblack.PNG";
-
-import Swal from "sweetalert2";
 import axios from "axios";
-import img2 from "../assets/tshirtblue.PNG";
-import style from "../styles/style.css";
+import { default as React, default as React, useEffect, useState } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useParams } from "react-router-dom";
-
 // import "slick-carousel/slick/slick.css";
 // import "slick-carousel/slick/slick-theme.css";
 import Slick from "react-slick";
+import Swal from "sweetalert2";
 
 const Products = () => {
   const { prodid } = useParams();
@@ -99,17 +93,16 @@ const Products = () => {
   const customize = (evt) => {
     evt.preventDefault();
 
-    var customizeProduct = []
+    var customizeProduct = [];
 
-    console.log(localStorage.getItem("customizeProduct"))
+    console.log(localStorage.getItem("customizeProduct"));
 
     if (localStorage.getItem("customizeProduct")) {
-      customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"))
+      customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
     }
 
     if (checkColorAndSize()) {
       if (checkLogin()) {
-       
         var formCustomizer = document.getElementById("frmCustomizer");
         // var formProductPage = document.getElementById("{ idFormProduct }");
         formCustomizer.elements["productid"].value = color + product.id;
@@ -184,9 +177,8 @@ const Products = () => {
         );
 
         console.log("after", customizeProduct);
-       
-          formCustomizer.submit();
-        
+
+        formCustomizer.submit();
       } else {
         window.location.href = "/signin";
       }
@@ -262,11 +254,11 @@ const Products = () => {
     }
   };
 
-  const checkQty = (e) =>{
-    if(e.target.value < 1 || e.target.value === ""){
-      setProductQuantity(1)
+  const checkQty = (e) => {
+    if (e.target.value < 1 || e.target.value === "") {
+      setProductQuantity(1);
     }
-  }
+  };
 
   var settings = {
     dots: false,
@@ -528,7 +520,7 @@ const Products = () => {
       </div>
       <p className="greyArea"></p>
       <div>
-        <form id="frmCustomizer" action='/customizer'>
+        <form id="frmCustomizer" action="/customizer">
           <input type="hidden" name="quantity" value={1} />
           <input type="hidden" name="productid" value={"object123"} />
           <input type="hidden" name="masterProductId" value={"object123"} />
