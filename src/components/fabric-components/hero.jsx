@@ -47,11 +47,11 @@ function Hero() {
 
   // get fabric and product info
   const getProduct = async () => {
-    // if (checkLogin()) {
-    //   setIsLogged(true);
-    // } else {
-    //   setIsLogged(false);
-    // }
+    if (checkLogin()) {
+      setIsLogged(true);
+    } else {
+      setIsLogged(false);
+    }
     console.log("product id is:" + prodid);
     await axios
       .get(`/products/getproduct/${prodid}`)
@@ -100,22 +100,20 @@ function Hero() {
 
   //check if a user is logged in
   const checkLogin = () => {
-    // const token = localStorage.getItem("token");
-    // const customerId = localStorage.getItem("customerId");
-    // if (
-    //   (token !== "") &
-    //   (token !== null) &
-    //   (token !== undefined) &
-    //   (customerId !== "") &
-    //   (customerId !== null) &
-    //   (customerId !== undefined)
-    // ) {
-    //   return true;
-    // } else {
-    //   return false;
-    // }
-
-    return true;
+    const token = localStorage.getItem("token");
+    const customerId = localStorage.getItem("customerId");
+    if (
+      (token !== "") &
+      (token !== null) &
+      (token !== undefined) &
+      (customerId !== "") &
+      (customerId !== null) &
+      (customerId !== undefined)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   };
 
   //check if the user has selected a color
@@ -231,23 +229,26 @@ function Hero() {
         "fabric data dimensions:" + fabricInfo.variant[0].frontImgDimensions
       );
 
-      axios
-        .get(
-          `/fabricDesigns/getFabricDesign/${prodid}/${fabricInfo.variant[0].colorName}/${sides}`
-        )
-        .then((dataFabr) => {
-          if (dataFabr) {
-            setDesignHistory(dataFabr.data.fabricData);
+      const customerId = localStorage.getItem("customerId");
+      if (customerId) {
+        axios
+          .get(
+            `/fabricDesigns/getFabricDesign/${prodid}/${fabricInfo.variant[0].colorName}/${sides}/${customerId}`
+          )
+          .then((dataFabr) => {
+            if (Object.keys(dataFabr.data).length > 0) {
+              setDesignHistory(dataFabr.data.fabricData);
 
-            editor?.canvas.loadFromJSON(
-              JSON.parse(dataFabr.data.fabricData.data)
-            );
-            editor?.canvas.renderAll();
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+              editor?.canvas.loadFromJSON(
+                JSON.parse(dataFabr.data.fabricData.data)
+              );
+              editor?.canvas.renderAll();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
 
       //defining the Rectangle constraint for users designs
       var Rect = new fabric.Rect({
@@ -312,23 +313,32 @@ function Hero() {
     return;
   };
 
+  //when clicked on save design
   const handleSave = (e) => {
-    var jsonData = JSON.stringify(editor?.canvas.toJSON());
-    axios
-      .post(`/fabricDesigns/addDesign`, {
-        data: {
-          productId: prodid,
-          color: color,
-          side: sides,
-          data: jsonData,
-        },
-      })
-      .then(({ data }) => {
-        console.log("data saved successfully");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (checkLogin()) {
+      let url = "";
+      const customerId = localStorage.getItem("customerId");
+      var jsonData = JSON.stringify(editor?.canvas.toJSON());
+      axios
+        .post(`/fabricDesigns/addDesign`, {
+          data: {
+            productId: prodid,
+            customerId: customerId,
+            color: color,
+            side: sides,
+            data: jsonData,
+            url: url,
+          },
+        })
+        .then(({ data }) => {
+          console.log("data saved successfully");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      window.location.href = "/signin";
+    }
   };
 
   //executes when a color is selected
@@ -391,27 +401,109 @@ function Hero() {
 
     if (checkColorAndSize()) {
       if (checkLogin()) {
+        const customerId = localStorage.getItem("customerId");
         console.log("before", customizeProduct);
 
-        customizeProduct.push({
-          product_id: product.id,
-          size,
-          quantity: productQuantity,
-          color: {
-            color_code: colorCode,
-            color_name: color,
-            colorId,
-          },
-          title: productName,
-        });
+        var node = imageref.current;
 
-        //storing all the customized product details in local storage
-        localStorage.setItem(
-          "customizeProduct",
-          JSON.stringify(customizeProduct)
-        );
+        axios
+          .get(
+            `/fabricDesigns/getFabricDesign/${prodid}/${fabricInfo.variant[0].colorName}/${sides}/${customerId}`
+          )
+          .then((dataFabr) => {
+            const visitorId = localStorage.getItem("visitorId");
+            if (!visitorId) {
+              let visitorIdCalc = Math.floor(Math.random() * 1000000);
+              localStorage.setItem("visitorId", visitorIdCalc);
+            }
+            if (Object.keys(dataFabr.data).length > 0) {
+              domtoimage
+                .toJpeg(node, { quality: 0.95 })
+                .then(function (dataUrl) {
+                  // var link = document.createElement("a");
+                  // link.download = "my-image-name.jpeg";
+                  // link.href = dataUrl;
+                  // link.click();
 
-        console.log("after", customizeProduct);
+                  customizeProduct.push({
+                    product_id: product.id,
+                    size,
+                    quantity: productQuantity,
+                    color: {
+                      color_code: colorCode,
+                      color_name: color,
+                      colorId,
+                    },
+                    link: dataUrl,
+                    title: productName,
+                    designId: dataFabr.data.fabricData._id,
+                  });
+
+                  //storing all the customized product details in local storage
+                  localStorage.setItem(
+                    "customizeProduct",
+                    JSON.stringify(customizeProduct)
+                  );
+
+                  console.log("after", customizeProduct);
+
+                  window.location.href = "/cart";
+                });
+            } else {
+              domtoimage
+                .toJpeg(node, { quality: 0.95 })
+                .then(function (dataUrl) {
+                  // var link = document.createElement("a");
+                  // link.download = "my-image-name.jpeg";
+                  // link.href = dataUrl;
+                  // link.click();
+                  var jsonData = JSON.stringify(editor?.canvas.toJSON());
+                  axios
+                    .post(`/fabricDesigns/addDesign`, {
+                      data: {
+                        productId: prodid,
+                        customerId: customerId,
+                        color: color,
+                        side: sides,
+                        data: jsonData,
+                        url: dataUrl,
+                      },
+                    })
+                    .then(({ data }) => {
+                      console.log("data saved successfully");
+
+                      customizeProduct.push({
+                        product_id: product.id,
+                        size,
+                        quantity: productQuantity,
+                        color: {
+                          color_code: colorCode,
+                          color_name: color,
+                          colorId,
+                        },
+                        link: dataUrl,
+                        title: productName,
+                        designId: data.data.data._id,
+                      });
+
+                      //storing all the customized product details in local storage
+                      localStorage.setItem(
+                        "customizeProduct",
+                        JSON.stringify(customizeProduct)
+                      );
+
+                      console.log("after", customizeProduct);
+                      window.location.href = "/cart";
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       } else {
         window.location.href = "/signin";
       }
