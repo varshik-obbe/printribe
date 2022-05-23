@@ -41,6 +41,7 @@ function Hero() {
   const [classActive, setClassActive] = useState("active");
   const [sides, setSides] = useState("one");
   const [designHistory, setDesignHistory] = useState({});
+  const [colorPick, setColorPick] = useState("");
 
   const { editor, onReady } = useFabricJSEditor();
 
@@ -133,6 +134,19 @@ function Hero() {
     }
   };
 
+  useEffect(() => {
+    const objE = editor?.canvas.getObjects();
+    objE?.forEach((o) => {
+      console.log("entering use effect");
+      if (o.type === "i-text") {
+        o.set("fill", colorPick.toString(2));
+        editor?.canvas.bringToFront(o);
+      } else if (o.type === "image") {
+        editor?.canvas.sendToBack(o);
+      }
+    });
+  }, [colorPick]);
+
   //default function which runs when the dom is loaded the first time
   useEffect(() => {
     setImage(testImg);
@@ -174,7 +188,7 @@ function Hero() {
       let colorSaved = color.toRGBA();
       if (colorSaved) {
         console.log('Event: "show"', color, instance);
-        colorChange(colorSaved);
+        setColorPick(colorSaved);
       }
     });
 
@@ -209,18 +223,6 @@ function Hero() {
     //   setIsSubmitted(true);
     // });
   }, []);
-
-  const colorChange = (colorSaved) => {
-    const objE = editor?.canvas.getObjects();
-    objE?.forEach((o) => {
-      if (o.type === "i-text") {
-        o.set("fill", colorSaved.toString(2));
-        editor?.canvas.bringToFront(o);
-      } else if (o.type === "image") {
-        editor?.canvas.sendToBack(o);
-      }
-    });
-  };
 
   //function which runs when the fabricInfo is changed and used to add the constraints inside canvas
   useEffect(() => {
