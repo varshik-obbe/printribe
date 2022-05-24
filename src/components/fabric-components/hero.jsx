@@ -437,6 +437,7 @@ function Hero() {
                     link: dataUrl,
                     title: productName,
                     designId: dataFabr.data.fabricData._id,
+                    price:product.price
                   });
 
                   //storing all the customized product details in local storage

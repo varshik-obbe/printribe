@@ -177,16 +177,16 @@ function ReviewOrder({ handleNext }) {
   }, [ShippingTo]);
 
   useEffect(() => {
-    if (localStorage.getItem("cartItems") === null) {
+    if (localStorage.getItem("customizeProduct") === null) {
       setCartEmpty(true);
     } else {
-      setCartItems(JSON.parse(localStorage.getItem("cartItems")));
+      setCartItems(JSON.parse(localStorage.getItem("customizeProduct")));
     }
   }, []);
 
   //cart empty prompt
   useEffect(() => {
-    if ((!cartItems || cartItems.length === 0 ||!customizeProduct || customizeProduct.length === 0) && cartEmpty) {
+    if ((!customizeProduct || customizeProduct.length === 0 ||!customizeProduct || customizeProduct.length === 0) && cartEmpty) {
       Swal.fire({
         position: "center",
         icon: "info",
@@ -296,7 +296,7 @@ function ReviewOrder({ handleNext }) {
                 <CartItems
                   cartProduct={curr}
                   customizeProduct={customizeProduct}
-                  cartItems={cartItems}
+                  cartItems={customizeProduct}
                   handleDeleteCartItem={handleDeleteCartItem}
                   handleEdit={handleEdit}
                 />

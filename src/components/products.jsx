@@ -1,5 +1,5 @@
 import axios from "axios";
-import { default as React, default as React, useEffect, useState } from "react";
+import { default as React, default as useEffect, useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { useParams } from "react-router-dom";
 // import "slick-carousel/slick/slick.css";

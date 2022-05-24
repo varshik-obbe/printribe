@@ -88,9 +88,7 @@ function Products({ handleNext }) {
   customizeProduct = temp;
 }
 
- 
-
-  customizeProduct &&
+customizeProduct &&
     customizeProduct.forEach((curr) => {
       cartItems &&
         cartItems.forEach((ele) => {
@@ -101,33 +99,33 @@ function Products({ handleNext }) {
         total_quantity += Number(curr.quantity);
     });
 
-  var zekekeTotal = 0;
+  // var zekekeTotal = 0;
 
-  zekekeData &&
-    zekekeData.forEach((curr) => {
-      cartItems &&
-        cartItems.forEach((ele) => {
-          if (ele.prodId === curr.ProductId) {
-            zekekeTotal += Number(curr.totalPrice);
-          }
-        });
-    });
+  // zekekeData &&
+  //   zekekeData.forEach((curr) => {
+  //     cartItems &&
+  //       cartItems.forEach((ele) => {
+  //         if (ele.prodId === curr.ProductId) {
+  //           zekekeTotal += Number(curr.totalPrice);
+  //         }
+  //       });
+  //   });
 
   localStorage.setItem("subTotal", subTotal);
   localStorage.setItem("total_quantity", total_quantity);
-  localStorage.setItem("zekekeTotal", zekekeTotal);
+  // localStorage.setItem("zekekeTotal", zekekeTotal);
 
   useEffect(() => {
-    if (localStorage.getItem("cartItems") === null) {
+    if (localStorage.getItem("customizeProduct") === null) {
       setCartEmpty(true);
     } else {
-      setCartItems(JSON.parse(localStorage.getItem("cartItems")));
+      setCartItems(JSON.parse(localStorage.getItem("customizeProduct")));
     }
   }, []);
 
   //cart empty prompt
   useEffect(() => {
-    if ((!cartItems || cartItems.length === 0 ||!customizeProduct || customizeProduct.length === 0) && cartEmpty) {
+    if ((!customizeProduct || customizeProduct.length === 0 ||!customizeProduct || customizeProduct.length === 0) && cartEmpty) {
       Swal.fire({
         position: "center",
         icon: "info",
@@ -138,7 +136,7 @@ function Products({ handleNext }) {
         navigate('/products');
       });
     }
-  }, [cartEmpty,customizeProduct,cartItems]);
+  }, [customizeProduct,cartItems]);
 
   const handleDeleteCartItem = (prod_id, prod_size, prod_colorCode) => {
     console.log("delete cart item", prod_id, prod_size, prod_colorCode);
@@ -217,7 +215,7 @@ function Products({ handleNext }) {
                 <CartItems
                   cartProduct={curr}
                   customizeProduct={customizeProduct}
-                  cartItems={cartItems}
+                  cartItems={customizeProduct}
                   handleDeleteCartItem={handleDeleteCartItem}
                   handleEdit={handleEdit}
                 />

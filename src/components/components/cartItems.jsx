@@ -42,11 +42,11 @@ const CartItems = ({
     });
   }, [quantity]);
 
-  const checkQty = (e) =>{
-    if(e.target.value < 1 || e.target.value === ""){
-        setQuantity(1)
+  const checkQty = (e) => {
+    if (e.target.value < 1 || e.target.value === "") {
+      setQuantity(1);
     }
-  }
+  };
 
   return (
     <div class="row">
@@ -58,44 +58,35 @@ const CartItems = ({
         />
         <div class="row" style={{ paddingRight: "25px" }}>
           <div class="col-4 col-sm-3 pe-0">
-            {cartItems &&
-              cartItems.map(
-                (ele) =>
-                  cartProduct.product_id === ele.prodId && (
-                    <img
-                      src={ele.image}
-                      alt=""
-                      style={{
-                        width: "100%",
-                        objectFit: "contain",
-                      }}
-                    />
-                  )
-              )}
+            <img
+              src={cartProduct.link}
+              alt=""
+              style={{
+                width: "100%",
+                objectFit: "contain",
+              }}
+            />
           </div>
 
           <div class="col-8 col-sm-9">
-            <b class=" text-break">{cartProduct.name}</b>
+            <b class=" text-break">{cartProduct.title}</b>
             <hr class="my-2" />
             <span>Thread colors</span>
             <br />
             <div class="d-flex mt-1">
               {cartItems &&
-                cartItems.map(
-                  (ele) =>
-                    cartProduct.product_id === ele.prodId && (
-                      <div
-                        style={{
-                          height: "12px",
-                          width: "12px",
-                          background: cartProduct.color.color_code,
-                          marginRight: "5px",
-                          border: "1px solid #666",
-                          borderRadius: "2px",
-                        }}
-                      />
-                    )
-                )}
+                cartItems.map((ele) => (
+                  <div
+                    style={{
+                      height: "12px",
+                      width: "12px",
+                      background: cartProduct.color.color_name,
+                      marginRight: "5px",
+                      border: "1px solid #666",
+                      borderRadius: "2px",
+                    }}
+                  />
+                ))}
             </div>
             <div class="mt-3" />
             <button
@@ -126,21 +117,15 @@ const CartItems = ({
                 borderRadius: "5px 5px 0 0",
               }}
             >
-              {cartItems &&
-                cartItems.map(
-                  (ele) =>
-                    cartProduct.product_id === ele.prodId && (
-                      <img
-                        src={ele.zekekeImage}
-                        alt=""
-                        style={{
-                          objectFit: "contain",
-                          height: "100%",
-                          width: "100%",
-                        }}
-                      />
-                    )
-                )}
+              <img
+                src={cartProduct.link}
+                alt=""
+                style={{
+                  objectFit: "fit",
+                  height: "100%",
+                  width: "100%",
+                }}
+              />
             </div>
           </div>
         </div>
@@ -157,34 +142,24 @@ const CartItems = ({
           class="w-100 mt-2 mb-4"
           style={{ height: "2px", background: "#999" }}
         />
-        {cartItems &&
-          cartItems.map((ele, index) => {
-            if (cartProduct.product_id === ele.prodId) {
-              return (
-                <div
-                  style={{ display: "flex" }}
-                  className={classes.cart_qty_container}
-                >
-                  <button onClick={() => handleChangeQty("decrease")}>-</button>
-                  <input
-                    type="text"
-                    value={quantity}
-                    onChange={(e) => setQuantity(e.target.value)}
-                    onBlur={(e) => checkQty(e)}
-                    style={{
-                      height: "40px",
-                      width: "50px",
-                      border: "1px solid #999",
-                      textAlign: "center",
-                      borderRadius: "5px",
-                      margin: "0 5px",
-                    }}
-                  />
-                  <button onClick={() => handleChangeQty("increase")}>+</button>
-                </div>
-              );
-            }
-          })}
+        <div style={{ display: "flex" }} className={classes.cart_qty_container}>
+          <button onClick={() => handleChangeQty("decrease")}>-</button>
+          <input
+            type="text"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+            onBlur={(e) => checkQty(e)}
+            style={{
+              height: "40px",
+              width: "50px",
+              border: "1px solid #999",
+              textAlign: "center",
+              borderRadius: "5px",
+              margin: "0 5px",
+            }}
+          />
+          <button onClick={() => handleChangeQty("increase")}>+</button>
+        </div>
       </div>
       <div
         class={[
@@ -197,13 +172,8 @@ const CartItems = ({
           class="w-100 mt-2 mb-4"
           style={{ height: "2px", background: "#999" }}
         />
-        {cartItems &&
-          cartItems.map(
-            (ele) =>
-              ele.prodId === cartProduct.product_id && (
-                <b class="fs-5">{`₹${ele.price}`}</b>
-              )
-          )}
+
+        <b class="fs-5">{`₹${cartProduct.price}`}</b>
       </div>
       <div
         class={[
@@ -217,37 +187,29 @@ const CartItems = ({
           style={{ height: "2px", background: "#999" }}
         />
         <div class="d-flex">
-          {cartItems &&
-            cartItems.map(
-              (ele) =>
-                cartProduct.product_id === ele.prodId && (
-                  <>
-                    <div
-                      style={{
-                        height: "40px",
-                        width: "30px",
-                        borderTop: "1px solid #999",
-                        borderLeft: "1px solid #999",
-                        borderBottom: "1px solid #999",
-                        borderRadius: "5px 0 0 5px",
-                      }}
-                      class="d-flex justify-content-center align-items-center"
-                    >
-                      ₹
-                    </div>
-                    <input
-                      value={quantity * ele.price}
-                      style={{
-                        height: "40px",
-                        width: "80px",
-                        border: "1px solid #999",
-                        textAlign: "center",
-                        borderRadius: "0 5px 5px 0",
-                      }}
-                    />
-                  </>
-                )
-            )}
+          <div
+            style={{
+              height: "40px",
+              width: "30px",
+              borderTop: "1px solid #999",
+              borderLeft: "1px solid #999",
+              borderBottom: "1px solid #999",
+              borderRadius: "5px 0 0 5px",
+            }}
+            class="d-flex justify-content-center align-items-center"
+          >
+            ₹
+          </div>
+          <input
+            value={quantity * cartProduct.price}
+            style={{
+              height: "40px",
+              width: "80px",
+              border: "1px solid #999",
+              textAlign: "center",
+              borderRadius: "0 5px 5px 0",
+            }}
+          />
         </div>
       </div>
       <div
