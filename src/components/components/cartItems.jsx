@@ -11,16 +11,21 @@ const CartItems = ({
   cartItems,
   handleDeleteCartItem,
   handleEdit,
+  getRetailPrice,
 }) => {
   const [quantity, setQuantity] = useState(cartProduct.quantity);
 
   const navigate = useNavigate();
 
+  var subTotal = localStorage.getItem("subTotal");
+
   const handleChangeQty = (task) => {
     if (task === "increase") {
       setQuantity(Number(quantity) + 1);
     } else {
-      if (quantity === 1) return;
+      if (quantity === 1) {
+        return;
+      }
 
       setQuantity(Number(quantity) - 1);
     }
@@ -59,8 +64,8 @@ const CartItems = ({
         <div class="row" style={{ paddingRight: "25px" }}>
           <div class="col-4 col-sm-3 pe-0">
             <img
-              src={cartProduct.link}
-              alt=""
+              src={cartProduct.productImg}
+              alt="product img"
               style={{
                 width: "100%",
                 objectFit: "contain",

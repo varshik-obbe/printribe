@@ -437,7 +437,8 @@ function Hero() {
                     link: dataUrl,
                     title: productName,
                     designId: dataFabr.data.fabricData._id,
-                    price:product.price
+                    price:product.price,
+                    productImg:`https://api.theprintribe.com/${product.img}` 
                   });
 
                   //storing all the customized product details in local storage

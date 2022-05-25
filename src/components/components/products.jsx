@@ -14,15 +14,16 @@ function Products({ handleNext }) {
   const zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
 
   const [cartItems, setCartItems] = useState();
-  const [cartEmpty, setCartEmpty] = useState(!customizeProduct || customizeProduct.length === 0 ? true: false);
+  const [cartEmpty, setCartEmpty] = useState(
+    !customizeProduct || customizeProduct.length === 0 ? true : false
+  );
 
   const [value, setValue] = useState();
 
-    const refresh = ()=>{
-        // re-renders the component
-        setValue({});
-    }
-
+  const refresh = () => {
+    // re-renders the component
+    setValue({});
+  };
 
   var subTotal = 0;
   var total_quantity = 0;
@@ -61,34 +62,34 @@ function Products({ handleNext }) {
   //storing unique customizeProduct items in temp array & increasing quanitities of that product which is again added by user
   var temp = [];
 
-  if(customizeProduct){  
-  for (var i = 0; i < customizeProduct.length; i++) {
-    if (temp.length == 0) {
-      temp.push(customizeProduct[i]);
-    } else {
-      var added = false;
+  if (customizeProduct) {
+    for (var i = 0; i < customizeProduct.length; i++) {
+      if (temp.length == 0) {
+        temp.push(customizeProduct[i]);
+      } else {
+        var added = false;
 
-      for (var j = 0; j < temp.length; j++) {
-        if (
-          temp[j].product_id === customizeProduct[i].product_id &&
-          temp[j].size === customizeProduct[i].size &&
-          temp[j].color.color_code === customizeProduct[i].color.color_code
-        ) {
-          temp[j].quantity += customizeProduct[i].quantity;
-          added = true;
+        for (var j = 0; j < temp.length; j++) {
+          if (
+            temp[j].product_id === customizeProduct[i].product_id &&
+            temp[j].size === customizeProduct[i].size &&
+            temp[j].color.color_code === customizeProduct[i].color.color_code
+          ) {
+            temp[j].quantity += customizeProduct[i].quantity;
+            added = true;
+          }
+        }
+
+        if (!added) {
+          temp.push(customizeProduct[i]);
         }
       }
-
-      if (!added) {
-        temp.push(customizeProduct[i]);
-      }
     }
+    //setting customizeProduct with unique elements present in temp by id,size ,color & cumulated quanitities of similar products
+    customizeProduct = temp;
   }
-   //setting customizeProduct with unique elements present in temp by id,size ,color & cumulated quanitities of similar products
-  customizeProduct = temp;
-}
 
-customizeProduct &&
+  customizeProduct &&
     customizeProduct.forEach((curr) => {
       cartItems &&
         cartItems.forEach((ele) => {
@@ -96,7 +97,7 @@ customizeProduct &&
             subTotal += Number(curr.quantity) * Number(ele.price);
           }
         });
-        total_quantity += Number(curr.quantity);
+      total_quantity += Number(curr.quantity);
     });
 
   // var zekekeTotal = 0;
@@ -125,54 +126,61 @@ customizeProduct &&
 
   //cart empty prompt
   useEffect(() => {
-    if ((!customizeProduct || customizeProduct.length === 0 ||!customizeProduct || customizeProduct.length === 0) && cartEmpty) {
+    if (
+      (!customizeProduct ||
+        customizeProduct.length === 0 ||
+        !customizeProduct ||
+        customizeProduct.length === 0) &&
+      cartEmpty
+    ) {
       Swal.fire({
         position: "center",
         icon: "info",
         title: "Cart Is Empty!",
         showConfirmButton: true,
       }).then(() => {
-        setCartEmpty(true)
-        navigate('/products');
+        setCartEmpty(true);
+        navigate("/products");
       });
     }
-  }, [customizeProduct,cartItems]);
+  }, [customizeProduct, cartItems]);
 
   const handleDeleteCartItem = (prod_id, prod_size, prod_colorCode) => {
     console.log("delete cart item", prod_id, prod_size, prod_colorCode);
 
-    let temp1 = []
+    let temp1 = [];
 
     // temp = customizeProduct.filter(
     //   (curr) => (curr.product_id !== prod_id && curr.size !== prod_size && curr.color.color_code !== prod_colorCode)
     // );
 
-    customizeProduct.forEach((curr) =>{
-      if(curr.product_id === prod_id && curr.size === prod_size && curr.color.color_code === prod_colorCode){
-        console.log("deleted item",curr)
+    customizeProduct.forEach((curr) => {
+      if (
+        curr.product_id === prod_id &&
+        curr.size === prod_size &&
+        curr.color.color_code === prod_colorCode
+      ) {
+        console.log("deleted item", curr);
         // temp.push(curr);
-      }else{
+      } else {
         temp1.push(curr);
       }
-      
-    })
+    });
 
-    customizeProduct = temp1
+    customizeProduct = temp1;
 
     localStorage.setItem("customizeProduct", JSON.stringify(customizeProduct));
     // refresh()
 
-
-    if (customizeProduct.length === 0) {      
-        localStorage.removeItem("customizeProduct");
-        localStorage.removeItem("cartItems")
-        localStorage.removeItem("visitorId");
+    if (customizeProduct.length === 0) {
+      localStorage.removeItem("customizeProduct");
+      localStorage.removeItem("cartItems");
+      localStorage.removeItem("visitorId");
     }
 
     console.log(customizeProduct);
 
-    window.location.reload() 
-
+    window.location.reload();
   };
 
   const handleEdit = (editProduct) => {
@@ -195,6 +203,7 @@ customizeProduct &&
     });
   };
 
+
   return (
     <>
       <React.Fragment>
@@ -210,16 +219,18 @@ customizeProduct &&
           <div class="">
             {customizeProduct &&
               customizeProduct.length !== 0 &&
-              customizeProduct.map((curr, index) => (
-                !cartEmpty && 
-                <CartItems
-                  cartProduct={curr}
-                  customizeProduct={customizeProduct}
-                  cartItems={customizeProduct}
-                  handleDeleteCartItem={handleDeleteCartItem}
-                  handleEdit={handleEdit}
-                />
-              ))}
+              customizeProduct.map(
+                (curr, index) =>
+                  !cartEmpty && (
+                    <CartItems
+                      cartProduct={curr}
+                      customizeProduct={customizeProduct}
+                      cartItems={customizeProduct}
+                      handleDeleteCartItem={handleDeleteCartItem}
+                      handleEdit={handleEdit}
+                    />
+                  )
+              )}
             <div
               class="col-12 px-0 d-flex justify-content-center align-content-center"
               style={{ height: "50px" }}
