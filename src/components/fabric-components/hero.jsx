@@ -199,7 +199,6 @@ function Hero() {
     editor?.canvas.setWidth(470);
     editor?.canvas.setHeight(612);
     setIsSubmitted(true);
-
     // fabric.Image.fromURL(image, function (img) {
     //   // const objs = editor?.canvas.getObjects();
     //   // objs?.forEach((o) => {
@@ -275,42 +274,73 @@ function Hero() {
     }
   }, [fabricInfo]);
 
+  //get height and width of image
+  const getUploadedFileDimensions = (file) =>
+    new Promise((resolve, reject) => {
+      try {
+        let img = new Image();
+
+        img.onload = () => {
+          const width = img.naturalWidth,
+            height = img.naturalHeight;
+
+          window.URL.revokeObjectURL(img.src);
+
+          return resolve({ width, height });
+        };
+
+        img.src = window.URL.createObjectURL(file);
+      } catch (exception) {
+        return reject(exception);
+      }
+    });
+
   //function which executes when an image is uploaded
-  const changeHandler = (event) => {
+  const changeHandler = async (event) => {
     if (!event.target.files || event.target.files.length === 0) {
       setSelectedFile(undefined);
       return;
     }
     setSelectedFile(event.target.files[0]);
-    const objectUrl = URL.createObjectURL(event.target.files[0]);
-    fabric.Image.fromURL(objectUrl, function (img) {
-      // const objs = editor?.canvas.getObjects();
-      // objs?.forEach((o) => {
-      //   if (o.type === "image") {
-      //     editor?.canvas.remove(o);
-      //   }
-      // });
-      let topRect = 0;
-      let leftRect = 0;
-      const obj = editor?.canvas.getObjects();
-      obj?.forEach((o) => {
-        if (o.type === "rect") {
-          topRect = o.top;
-          leftRect = o.left;
-        }
+
+    let imageUploaded = await getUploadedFileDimensions(event.target.files[0]);
+
+    console.log("width is ", imageUploaded.width);
+
+    if (imageUploaded.width < 1000 && imageUploaded.height < 1000) {
+      alert("please upload a higher resolution image");
+      return;
+    } else {
+      const objectUrl = URL.createObjectURL(event.target.files[0]);
+      fabric.Image.fromURL(objectUrl, function (img) {
+        // const objs = editor?.canvas.getObjects();
+        // objs?.forEach((o) => {
+        //   if (o.type === "image") {
+        //     editor?.canvas.remove(o);
+        //   }
+        // });
+        let topRect = 0;
+        let leftRect = 0;
+        const obj = editor?.canvas.getObjects();
+        obj?.forEach((o) => {
+          if (o.type === "rect") {
+            topRect = o.top;
+            leftRect = o.left;
+          }
+        });
+        img.top = topRect;
+        img.left = leftRect;
+        editor?.canvas.add(img);
+        obj?.forEach((o) => {
+          if (o.type === "image") {
+            o.scaleToHeight(612);
+            o.scaleToWidth(470);
+          }
+        });
       });
-      img.top = topRect;
-      img.left = leftRect;
-      editor?.canvas.add(img);
-      obj?.forEach((o) => {
-        if (o.type === "image") {
-          o.scaleToHeight(612);
-          o.scaleToWidth(470);
-        }
-      });
-    });
-    setImage(objectUrl);
-    return;
+      setImage(objectUrl);
+      return;
+    }
   };
 
   //when clicked on save design
@@ -437,8 +467,8 @@ function Hero() {
                     link: dataUrl,
                     title: productName,
                     designId: dataFabr.data.fabricData._id,
-                    price:product.price,
-                    productImg:`https://api.theprintribe.com/${product.img}` 
+                    price: product.price,
+                    productImg: `https://api.theprintribe.com/${product.img}`,
                   });
 
                   //storing all the customized product details in local storage
@@ -486,6 +516,8 @@ function Hero() {
                         link: dataUrl,
                         title: productName,
                         designId: data.data.data._id,
+                        price: product.price,
+                        productImg: `https://api.theprintribe.com/${product.img}`,
                       });
 
                       //storing all the customized product details in local storage
