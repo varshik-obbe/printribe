@@ -101,14 +101,8 @@ function ReviewOrder({ handleNext }) {
       customizeProduct.forEach((ele) => {
         console.log("ele", ele);
 
-        zekekeData.forEach((zakekeVal) => {
-          console.log("zakekeVal", zakekeVal);
-
-          // console.log(curr, ele, zakekeVal);
           if (
-            curr.id === ele.product_id &&
-            ele.product_id === zakekeVal.ProductId
-          ) {
+            curr.id === ele.product_id ) {
             var dataObject = {
               product_id: curr.id,
               title: curr.title,
@@ -119,8 +113,8 @@ function ReviewOrder({ handleNext }) {
               product_img: `https://api.theprintribe.com/${curr.img}`,
               category_id: curr.category_id,
               quantity: ele.quantity,
-              zakeke_price: zakekeVal.totalPrice,
-              designID: zakekeVal.designId,
+              designID: ele.designId,
+              zakeke_price:""
             };
             productInfo.push(dataObject);
 
@@ -128,7 +122,6 @@ function ReviewOrder({ handleNext }) {
               apiCall();
             }
           }
-        });
       });
     });
   };
