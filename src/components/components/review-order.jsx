@@ -7,6 +7,7 @@ import classes from "../../styles/add-product.module.css";
 import { useNavigate } from "react-router-dom";
 import CartItems from "./cartItems";
 import Swal from "sweetalert2";
+import useRazorpay from "react-razorpay";
 
 function ReviewOrder({ handleNext }) {
   const [mess, setMess] = React.useState(false);
@@ -15,6 +16,9 @@ function ReviewOrder({ handleNext }) {
   const [filDig, setFilDig] = React.useState(false);
   const [subTotal, setSubTotal] = useState(0);
   const [total_quantity, setTotal_Quantity] = useState(0);
+  const [walletAmount, setWalletAmount] = useState(0);
+  const [razorPayInitData, setRazorPayInitData] = useState();
+  const [totalBillingAmount, setTotalBillingAmouont] = useState(0);
 
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
   var customerShippingId = localStorage.getItem("customerShipping_id");
@@ -26,6 +30,7 @@ function ReviewOrder({ handleNext }) {
   var courierId = localStorage.getItem("courier_id");
   var customerEmail = localStorage.getItem("customer_email");
   var zekekeTotal = localStorage.getItem("zekekeTotal");
+  var paymentRef = "";
   const navigate = useNavigate();
 
   const [cartItems, setCartItems] = useState();
@@ -36,7 +41,9 @@ function ReviewOrder({ handleNext }) {
   const productData = [];
   var productInfo = [];
 
-  const apiCall = () => {
+  const Razorpay = useRazorpay();
+
+  const apiCall = (walletAmount, totalBillingAmount) => {
     //to remove duplicate items in productInfo array
     var temp = [];
 
@@ -83,45 +90,42 @@ function ReviewOrder({ handleNext }) {
     axios
       .post("/orders/addOrder", payData)
       .then(({ data }) => {
-        console.log(data);
-        window.location.href = "https://printribe-partner.web.app/";
+        Swal.fire("Order Accepted", "Transaction complete!", "success").then(
+          () => {
+            setWalletAmount(walletAmount - totalBillingAmount);
+            window.location.href = "https://printribe-partner.web.app/";
+          }
+        );
       })
-      .catch((err) => console.log(err));
+
+      .catch((err) => {
+        Swal.fire("Error!", "Please Try Again", "error");
+      });
   };
 
   const setData = () => {
-    console.log("hppro", productData);
-    console.log("hp", productInfo);
-
     productData.forEach((curr) => {
-      // console.log("currid", customizeProduct);
-
-      console.log(curr);
-
       customizeProduct.forEach((ele) => {
-        console.log("ele", ele);
+        if (curr.id === ele.product_id) {
+          var dataObject = {
+            product_id: curr.id,
+            title: curr.title,
+            description: curr.description,
+            price: curr.price,
+            productsize: ele.size,
+            productcolor: ele.color.color_name,
+            product_img: `https://api.theprintribe.com/${curr.img}`,
+            category_id: curr.category_id,
+            quantity: ele.quantity,
+            designID: ele.designId,
+            zakeke_price: "0",
+          };
+          productInfo.push(dataObject);
 
-          if (
-            curr.id === ele.product_id ) {
-            var dataObject = {
-              product_id: curr.id,
-              title: curr.title,
-              description: curr.description,
-              price: curr.price,
-              productsize: ele.size,
-              productcolor: ele.color.color_name,
-              product_img: `https://api.theprintribe.com/${curr.img}`,
-              category_id: curr.category_id,
-              quantity: ele.quantity,
-              designID: ele.designId,
-              zakeke_price:""
-            };
-            productInfo.push(dataObject);
-
-            if (productInfo.length > 0) {
-              apiCall();
-            }
-          }
+          // if (productInfo.length > 0) {
+          //   apiCall();
+          // }
+        }
       });
     });
   };
@@ -140,36 +144,20 @@ function ReviewOrder({ handleNext }) {
         })
         .catch((err) => console.log(err));
     });
+
+    payAmount();
   };
 
   var visitorId = JSON.parse(localStorage.getItem("visitorId"));
-  const [ShippingTo, setShippingTo] = useState("");
+  const [ShippingTo, setShippingTo] = useState();
 
-  useEffect(() => {
-    if (ShippingTo === "") {
-      axios
-        .get(`/customerShipping/getShippingById/${visitorId}`)
-        .then(({ data }) => {
-          console.log(data.shipping_data);
-
-          setShippingTo({
-            Name: data.shipping_data.fullname,
-            Address_Line_1: data.shipping_data.address1,
-            Address_Line_2: data.shipping_data.address2,
-            City: data.shipping_data.city,
-            Postal_Code: data.shipping_data.zip_code,
-            Country: data.shipping_data.country,
-          });
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [ShippingTo]);
-
+  //setting cartempty state to true if cart is empty , else setting cart items & shipping data
   useEffect(() => {
     if (localStorage.getItem("customizeProduct") === null) {
       setCartEmpty(true);
     } else {
       setCartItems(JSON.parse(localStorage.getItem("customizeProduct")));
+      setShippingTo(JSON.parse(localStorage.getItem("shipping_data")));
     }
   }, []);
 
@@ -194,9 +182,17 @@ function ReviewOrder({ handleNext }) {
     }
   }, [cartEmpty, customizeProduct, cartItems]);
 
-  const handleDeleteCartItem = (prod_id, prod_size, prod_colorCode) => {
-    console.log("delete cart item", prod_id, prod_size, prod_colorCode);
+  //adding wallet amount
+  useEffect(() => {
+    axios
+      .get(`/customerWallet/getWalletbyid/${customerId}`)
+      .then(({ data }) => {
+        setWalletAmount(parseFloat(data.wallet.amount).toFixed(2));
+      })
+      .catch((err) => console.log(err));
+  }, [walletAmount, setWalletAmount]);
 
+  const handleDeleteCartItem = (prod_id, prod_size, prod_colorCode) => {
     let temp1 = [];
     customizeProduct.forEach((curr) => {
       if (
@@ -204,7 +200,6 @@ function ReviewOrder({ handleNext }) {
         curr.size === prod_size &&
         curr.color.color_code === prod_colorCode
       ) {
-        console.log("deleted item", curr);
         // temp.push(curr);
       } else {
         temp1.push(curr);
@@ -231,8 +226,6 @@ function ReviewOrder({ handleNext }) {
       navigate("/products");
     }
 
-    console.log(customizeProduct);
-
     window.location.reload();
   };
 
@@ -256,7 +249,7 @@ function ReviewOrder({ handleNext }) {
     });
   };
 
-  //calculating subtotal & total_quantity for the cart
+  //calculating subtotal ,total_quantity & total billing amount for the cart
   useEffect(() => {
     var tempsubTotal = 0;
     var temptotal_quantity = 0;
@@ -269,9 +262,165 @@ function ReviewOrder({ handleNext }) {
     // setCartValue(tempsubTotal)
     setSubTotal(tempsubTotal);
     setTotal_Quantity(temptotal_quantity);
+    setTotalBillingAmouont(
+      tempsubTotal + Number(localStorage.getItem("shipping_charges"))
+    );
     localStorage.setItem("subTotal", tempsubTotal);
     localStorage.setItem("total_quantity", temptotal_quantity);
   }, []);
+
+  const deductAmount = (walletAmount, totalBillingAmount) => {
+    axios
+      .post(`/customerWallet/debitWallet`, {
+        customer_data: {
+          customer_id: customerId,
+          amount: totalBillingAmount,
+        },
+      })
+      .then(({ data }) => {
+        apiCall(
+          parseFloat(walletAmount).toFixed(2),
+          parseFloat(totalBillingAmount).toFixed(2)
+        );
+      });
+  };
+
+  const addAmount = (amountToBeAdded, purpose = "") => {
+    let amount = parseFloat(amountToBeAdded).toFixed(2) * 100;
+
+    let razorPayData = {
+      insdata: {
+        customer_id: customerId,
+        currency: "INR",
+        amount: amount,
+      },
+    };
+
+    axios
+      .post(`/customerWallet/razorPayInstantiate`, razorPayData)
+      .then(({ data }) => {
+        setRazorPayInitData(data.savedhistoryData);
+        razorPayCheckout(
+          amountToBeAdded,
+          data.savedhistoryData.payment_order_id,
+          purpose
+        );
+      })
+      .catch((resp) => {
+        console.log(resp);
+        Swal.fire({
+          title: "Error!",
+          text: "Some error occurred while adding amount. Please try again.",
+          icon: "error",
+          confirmButtonText: "Close",
+        });
+      });
+  };
+
+  const razorPayCheckout = (amountToBeAdded, payment_order_id, purpose) => {
+    let amount = parseFloat(amountToBeAdded).toFixed(2) * 100;
+
+    var options = {
+      key: "rzp_test_aAHglk8OS8HPRk", // Enter the Key ID generated from the Dashboard
+      amount: amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+      currency: "INR",
+      name: customerEmail,
+      // image: "https://example.com/your_logo",
+      order_id: payment_order_id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        paymentRef = response.razorpay_payment_id;
+
+        let addWalletData = {
+          walletData: {
+            customer_id: customerId,
+            currency: "INR",
+            amount: parseFloat(amountToBeAdded).toFixed(2),
+            razorpay_order_id: response.razorpay_order_id,
+            razorpay_payment_id: response.razorpay_payment_id,
+            razorpay_signature: response.razorpay_signature,
+          },
+        };
+        axios
+          .post("/customerWallet/addWalletAmount", addWalletData)
+          .then(({ data }) => {
+            // localStorage.setItem("walletAmount")
+
+            //only while paying
+            if (purpose !== "addToWallet") {
+              deductAmount(walletAmount, totalBillingAmount);
+            } else {
+              setWalletAmount(
+                parseFloat(walletAmount).toFixed(2) +
+                  parseFloat(amountToBeAdded).toFixed(2)
+              );
+            }
+          })
+          .catch((resp) => {
+            Swal.fire({
+              title: "Error!",
+              text: "Error adding amount to wallet. Please contact support for help",
+              icon: "error",
+              confirmButtonText: "Close",
+            }).then(() => {});
+          });
+      },
+      theme: {
+        color: "#3399cc",
+      },
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.on("payment.failed", function (response) {
+      Swal.fire({
+        title: "Error!",
+        text: response.error.description,
+        icon: "error",
+        confirmButtonText: "Close",
+      });
+    });
+    rzp1.open();
+  };
+
+  const payAmount = () => {
+    axios
+      .get(`/customerWallet/getWalletbyid/${customerId}`)
+      .then(({ data }) => {
+        if (
+          parseFloat(data.wallet.amount).toFixed(2) >=
+          parseFloat(totalBillingAmount).toFixed(2)
+        ) {
+          Swal.fire({
+            title: "Pay from wallet",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Pay",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              deductAmount(data.wallet.amount, totalBillingAmount);
+            }
+          });
+        } else {
+          let remainingAmount =
+            parseFloat(totalBillingAmount).toFixed(2) -
+            parseFloat(data.wallet.amount).toFixed(2);
+
+          Swal.fire({
+            title: "Add remaining amount to wallet and pay?",
+            text: "Wallet amount insufficient",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Add amount and pay",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              addAmount(parseFloat(remainingAmount).toFixed(2));
+            }
+          });
+        }
+      });
+  };
 
   return (
     <>
@@ -423,12 +572,12 @@ function ReviewOrder({ handleNext }) {
                   Edit
                 </button>
               </div>
-              <span class="">{ShippingTo && ShippingTo.Name}</span>
-              <span class="">{ShippingTo && ShippingTo.Address_Line_1}</span>
-              <span class="">{ShippingTo && ShippingTo.Address_Line_2}</span>
-              <span class="">{ShippingTo && ShippingTo.City}</span>
-              <span class="">{ShippingTo && ShippingTo.Postal_Code}</span>
-              <span class="">{ShippingTo && ShippingTo.Country}</span>
+              <span class="">{ShippingTo && ShippingTo.fullname}</span>
+              <span class="">{ShippingTo && ShippingTo.address1}</span>
+              <span class="">{ShippingTo && ShippingTo.address2}</span>
+              <span class="">{ShippingTo && ShippingTo.city}</span>
+              <span class="">{ShippingTo && ShippingTo.zip_code}</span>
+              <span class="">{ShippingTo && ShippingTo.country}</span>
             </div>
             <div
               class={[
@@ -495,7 +644,7 @@ function ReviewOrder({ handleNext }) {
           )}
         </div>
         <React.Fragment>
-          <PaymentComp />
+          <PaymentComp addAmount={addAmount} walletAmount={walletAmount} />
         </React.Fragment>
         <div
           class="w-100 mt-4"
@@ -582,9 +731,7 @@ function ReviewOrder({ handleNext }) {
                 <hr class="my-3" style={{ height: "1px", width: "100%" }} />
                 <div class="col-12 d-flex justify-content-between">
                   <b class="fs-4">Total</b>
-                  <b class="fs-4">{`₹${
-                    Number(subTotal) + Number(shipping_charges)
-                  }`}</b>
+                  <b class="fs-4">{`₹${totalBillingAmount}`}</b>
                 </div>
               </div>
               <div class="col-12 d-flex justify-content-center mt-5 mb-3">

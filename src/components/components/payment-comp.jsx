@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsPaypal, GoCreditCard, MdOutlinePrivacyTip } from "react-icons/all";
 import classes from "../../styles/add-product.module.css";
+import { Modal } from "react-bootstrap";
+import Swal from "sweetalert2";
+
 
 const fieldsArray = [
   { name: "fullName", title: "Full Name", diff: false },
@@ -13,9 +16,52 @@ const fieldsArray = [
   { name: "postalCode", title: "Postal/Zip code", diff: false },
 ];
 
-function PyamentComp() {
-  const [activePayment, setActivePayment] = React.useState("other");
-  const [billing, setBilling] = React.useState("same");
+const MyVerticallyCenteredModal = (props) => {
+
+  const handleAddAmount = () =>{
+    if(props.amountToBeAdded === ""){
+      Swal.fire({
+        title: "Error!",
+        text: "Amount Should Be More Than ₹0",
+        icon: "error",
+        confirmButtonText: "Close",
+      })
+    }else{
+      props.addAmount(parseFloat(props.amountToBeAdded).toFixed(2),"addToWallet")
+    }
+  }
+
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">Add Amount </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text">₹</div>
+        </div>
+        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Enter Amount..." value={props.amountToBeAdded} onChange={(e) => props.setAmountToBeAdded(e.target.value)}/>
+      </div>
+      </Modal.Body>
+      <Modal.Footer>
+        <button className='btn btn-danger mx-auto' onClick={() => {handleAddAmount();props.onHide();}}>Add</button>
+      </Modal.Footer>
+    </Modal>
+  );
+};
+
+function PyamentComp({ addAmount,walletAmount }) {
+  const [activePayment, setActivePayment] = useState("other");
+  const [billing, setBilling] = useState("same");
+  const [amountToBeAdded, setAmountToBeAdded] = useState("");
+  const [modalShow, setModalShow] = useState(false);
+
   return (
     <div
       class="w-100 mt-4"
@@ -54,60 +100,66 @@ function PyamentComp() {
           </li> */}
         </ul>
         <div class="mt-3">
-
-        <React.Fragment>
-              <div>
-                <div class="col-12 mt-4">
-                  <div
-                    style={{
-                      backgroundColor: "#E5F5E4",
-                      padding: "22px",
-                      borderRadius: "5px",
-                    }}
-                    class="row"
-                  >
-                    <div class="col-12 col-md-10">
-                      <span>
-                        Each currency on Printribe has its own Wallet, so please
-                        add funds to your USD Wallet to pay for this order. You
-                        can do this by going to the Billing section. This order
-                        will be saved as a draft.
-                      </span>
-                    </div>
-                    <div
-                      class={["col-12 col-md-2", classes.btnAddMoney].join(" ")}
-                    >
-                      <div>
-                        <button
-                          class="btn btn-danger"
-                          style={{ height: "auto", width: "100%" }}
-                        >
-                          Add Money
-                        </button>
-                      </div>
-                    </div>
+          <React.Fragment>
+            <div>
+              <div class="col-12 mt-4">
+                <div
+                  style={{
+                    backgroundColor: "#E5F5E4",
+                    padding: "22px",
+                    borderRadius: "5px",
+                  }}
+                  class="row"
+                >
+                  <div class="col-12 col-md-10">
+                    <span>
+                      Each currency on Printribe has its own Wallet, so please
+                      add funds to your USD Wallet to pay for this order. You
+                      can do this by going to the Billing section. This order
+                      will be saved as a draft.
+                    </span>
                   </div>
-                </div>
-                <div class="col-12 mt-3">
                   <div
-                    style={{
-                      padding: "20px",
-                      border: "1px solid #e0e0e0",
-                      borderRadius: "5px",
-                    }}
-                    class="d-flex align-items-center"
+                    class={["col-12 col-md-2", classes.btnAddMoney].join(" ")}
                   >
-                    <span>IND Wallet</span>
-                    <dvi class="d-flex flex-column ms-5">
-                      <span>Balance:</span>
-                      <b class="fs-5">₹0</b>
-                    </dvi>
+                    <div>
+                      <button
+                        class="btn btn-danger"
+                        style={{ height: "auto", width: "100%" }}
+                        onClick={() => setModalShow(true)}
+                      >
+                        Add Money
+                      </button>
+
+                      <MyVerticallyCenteredModal
+                        show={modalShow}
+                        onHide={() => setModalShow(false)}
+                        addAmount={addAmount}
+                        amountToBeAdded={amountToBeAdded}
+                        setAmountToBeAdded={setAmountToBeAdded}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </React.Fragment>
-
-
+              <div class="col-12 mt-3">
+                <div
+                  style={{
+                    padding: "20px",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: "5px",
+                  }}
+                  class="d-flex align-items-center"
+                >
+                  <span>IND Wallet</span>
+                  <dvi class="d-flex flex-column ms-5">
+                    <span>Balance:</span>
+                    <b class="fs-5">₹{walletAmount}</b>
+                  </dvi>
+                </div>
+              </div>
+            </div>
+          </React.Fragment>
 
           {/* {activePayment === "other" ? (
             <React.Fragment>
