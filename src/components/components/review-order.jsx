@@ -75,8 +75,8 @@ function ReviewOrder({ handleNext }) {
       orderData: {
         customerShipping_id: customerShippingId,
         product_info: productInfo,
-        total_quantity: total_quantity,
-        total_price: subTotal,
+        total_quantity: String(total_quantity),
+        total_price: String(subTotal),
         shipping_charges: shipping_charges,
         payment_type: "cash on delivery",
         payment_ref_id: "23451AAX",
@@ -116,7 +116,7 @@ function ReviewOrder({ handleNext }) {
             productcolor: ele.color.color_name,
             product_img: `https://api.theprintribe.com/${curr.img}`,
             category_id: curr.category_id,
-            quantity: ele.quantity,
+            quantity: String(ele.quantity),
             designID: ele.designId,
             zakeke_price: "0",
           };
