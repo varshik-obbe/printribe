@@ -12,6 +12,7 @@ import img5 from "../../assets/fabricjs/imgs/quick-view/quick-view-02-2.jpg";
 import img6 from "../../assets/fabricjs/imgs/quick-view/quick-view-02-3.jpg";
 import canvasStyles from "../../styles/canvas.module.css";
 import defaults from "../../styles/defaults.module.css";
+import styles from "../../styles/home.module.css";
 import "../../styles/scss/components/_theme.scss";
 import "../../styles/scss/layout/_product.scss";
 
@@ -42,6 +43,8 @@ function Hero() {
   const [sides, setSides] = useState("one");
   const [designHistory, setDesignHistory] = useState({});
   const [colorPick, setColorPick] = useState("");
+  const [priceSet, setPriceSet] = useState(0);
+  const [addText, setAddText] = useState(false);
 
   const { editor, onReady } = useFabricJSEditor();
 
@@ -60,6 +63,7 @@ function Hero() {
         console.log(data.product.productdata[0]);
         setproduct(data.product.productdata[0]);
         setProductName(data.product.productdata[0].title);
+        setPriceSet(data.product.productdata[0].price);
       })
       .catch((err) => {
         console.log(err);
@@ -152,43 +156,45 @@ function Hero() {
     getProduct();
 
     // Simple example, see optional options for more configuration.
-    const pickr = Pickr.create({
-      el: ".color-picker",
-      theme: "nano", // or 'monolith', or 'nano'
+    if (addText) {
+      const pickr = Pickr.create({
+        el: ".color-picker",
+        theme: "nano", // or 'monolith', or 'nano'
 
-      swatches: null,
+        swatches: null,
 
-      components: {
-        // Main components
-        preview: true,
-        opacity: true,
-        hue: true,
+        components: {
+          // Main components
+          preview: true,
+          opacity: true,
+          hue: true,
 
-        // Input / output Options
-        interaction: {
-          hex: true,
-          rgba: true,
-          hsla: true,
-          hsva: true,
-          cmyk: true,
-          input: true,
-          clear: true,
-          save: true,
+          // Input / output Options
+          interaction: {
+            hex: true,
+            rgba: true,
+            hsla: true,
+            hsva: true,
+            cmyk: true,
+            input: true,
+            clear: true,
+            save: true,
+          },
         },
-      },
-    });
+      });
 
-    pickr.on("init", (instance) => {
-      pickr.setColor("#000000");
-    });
+      pickr.on("init", (instance) => {
+        pickr.setColor("#000000");
+      });
 
-    pickr.on("save", (color, instance) => {
-      let colorSaved = color.toRGBA();
-      if (colorSaved) {
-        console.log('Event: "show"', color, instance);
-        setColorPick(colorSaved);
-      }
-    });
+      pickr.on("save", (color, instance) => {
+        let colorSaved = color.toRGBA();
+        if (colorSaved) {
+          console.log('Event: "show"', color, instance);
+          setColorPick(colorSaved);
+        }
+      });
+    }
 
     const canvasWidth = editor?.canvas.getWidth();
     const canvasHeight = editor?.canvas.getHeight();
@@ -271,6 +277,31 @@ function Hero() {
         editor.canvas.clipPath = clipPath;
       }
       editor?.canvas.add(Rect);
+
+      //images or fonts scaling inside rectangle
+      editor?.canvas.on("object:scaling", (e) => {
+        editor?.canvas.getActiveObjects().forEach((o) => {
+          if (o.type == "image") {
+            let totPrice = 0;
+            let scalePrice = 0;
+            console.log("frontcanvas info: ", fabricInfo);
+            fabricInfo.variant[0].frontCanvasPricing.forEach((val, index) => {
+              if (val !== null) {
+                if (
+                  o.getScaledWidth() >= val.width &&
+                  o.getScaledHeight() >= val.height
+                ) {
+                  scalePrice = val.price;
+                }
+              }
+            });
+            totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
+            setPriceSet(totPrice);
+          }
+          console.log("scaled height ", o.getScaledHeight());
+          console.log("scaled width ", o.getScaledWidth());
+        });
+      });
     }
   }, [fabricInfo]);
 
@@ -307,7 +338,7 @@ function Hero() {
 
     console.log("width is ", imageUploaded.width);
 
-    if (imageUploaded.width < 1000 && imageUploaded.height < 1000) {
+    if (imageUploaded.width < 100 && imageUploaded.height < 100) {
       alert("please upload a higher resolution image");
       return;
     } else {
@@ -321,11 +352,15 @@ function Hero() {
         // });
         let topRect = 0;
         let leftRect = 0;
+        let objHeight = 0;
+        let objWidth = 0;
         const obj = editor?.canvas.getObjects();
         obj?.forEach((o) => {
           if (o.type === "rect") {
             topRect = o.top;
             leftRect = o.left;
+            objHeight = o.width;
+            objHeight = o.height;
           }
         });
         img.top = topRect;
@@ -333,10 +368,19 @@ function Hero() {
         editor?.canvas.add(img);
         obj?.forEach((o) => {
           if (o.type === "image") {
-            o.scaleToHeight(612);
-            o.scaleToWidth(470);
+            o.scaleToHeight(objHeight);
+            o.scaleToWidth(objWidth);
           }
         });
+        if (fabricInfo.variant[0].frontCanvasPricing[0].width !== null) {
+          let lastPrice = 0;
+          let totPrice = 0;
+          fabricInfo.variant[0].frontCanvasPricing.forEach((val, ind) => {
+            lastPrice = val.price;
+          });
+          totPrice = parseInt(product.price, 10) + parseInt(lastPrice, 10);
+          setPriceSet(totPrice);
+        }
       });
       setImage(objectUrl);
       return;
@@ -395,6 +439,7 @@ function Hero() {
 
   //executes when add text is clicked
   const handleAddText = (event) => {
+    setAddText(true);
     const obj = editor?.canvas.getObjects();
     let topRect = 0;
     let leftRect = 0;
@@ -548,6 +593,7 @@ function Hero() {
 
   //removes the active object
   const handleRemoveText = (event) => {
+    setAddText(false);
     editor?.canvas.remove(editor?.canvas.getActiveObject());
 
     // const obj = editor?.canvas.getObjects();
@@ -866,6 +912,45 @@ function Hero() {
 
   return (
     <>
+      <div
+        className="modal fade"
+        id="exampleModalCenter"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true"
+      >
+        <div className="modal-dialog modal-dialog-centered" role="document">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h5 className="modal-title" id="exampleModalLongTitle">
+                Modal title
+              </h5>
+              <button
+                type="button"
+                className="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div className="modal-body">...</div>
+            <div className="modal-footer">
+              <button
+                type="button"
+                className="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">
+                Save changes
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="row mx-0">
         <div className="col-12">
           <div className={"mx-4 my-2 py-4 breadCrumbs"}>
@@ -1132,74 +1217,113 @@ function Hero() {
                   </div>
                 </div>
                 <div className="row">
-                  <input
-                    type="file"
-                    id="fileUp"
-                    name="fileUp"
-                    onChange={changeHandler}
-                  />
+                  <div className="col-md-3">
+                    <span className={"btn btn-primary " + styles.fileUploadBtn}>
+                      Browse{" "}
+                      <input
+                        type="file"
+                        id="fileUp"
+                        name="fileUp"
+                        onChange={changeHandler}
+                      />
+                    </span>
+                  </div>
                 </div>
                 <br />
                 <br />
                 <div className="row">
-                  <div className="col-md-6">
-                    <select
-                      id="selFont"
-                      name="selFont"
-                      className="form-select form-select-sm selectpicker col-md-3"
-                      title="fonts"
-                      onChange={fontChange}
-                      value={fontValue}
-                    >
-                      <option value="select">Select a Font</option>
-                      <option value="Comic Sans">Comic Sans</option>
-                      <option value="Times New Roman">Times New Roman</option>
-                      <option value="Georgia">Georgia</option>
-                    </select>
-                  </div>
-                  <div className="col-md-6">
-                    <select
-                      id="selFontSize"
-                      name="selFontSize"
-                      className="form-select form-select-sm selectpicker col-md-3"
-                      title="font size"
-                      onChange={fontsizeChange}
-                      value={fontSize}
-                    >
-                      <option value="20">20</option>
-                      <option value="30">30</option>
-                      <option onMouseOver={fontChangeHover} value="40">
-                        40
-                      </option>
-                    </select>
-                  </div>
-                  <div className="col-md-12">
-                    <i
-                      className="fa fa-align-left shadow rounded"
-                      style={{ cursor: "pointer" }}
-                      aria-hidden="true"
-                      onClick={alignLeft}
-                    ></i>
-                    <i
-                      className="fa fa-align-center"
-                      style={{ marginLeft: 10, cursor: "pointer" }}
-                      aria-hidden="true"
-                      onClick={alignCenter}
-                    ></i>
-                    <i
-                      className="fa fa-align-right"
-                      style={{ marginLeft: 10, cursor: "pointer" }}
-                      aria-hidden="true"
-                      onClick={alignRight}
-                    ></i>
+                  <div className="d-flex mb-3">
+                    <div className="pe-3">
+                      <button
+                        onClick={handleAddText}
+                        className={
+                          "btn" +
+                          " " +
+                          styles.startSellingBtn +
+                          "  px-4 py-2 avenier"
+                        }
+                      >
+                        Add Text
+                      </button>
+                    </div>
+                    <div className="ps-3">
+                      <a href="#">
+                        <button
+                          onClick={handleRemoveText}
+                          className={
+                            "btn" + " " + styles.orderNowBtn + "  px-4 py-2"
+                          }
+                        >
+                          Remove
+                        </button>
+                      </a>
+                    </div>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="color-picker"></div>
+                {addText ? (
+                  <div
+                    className="row"
+                    style={{ "background-color": "LightGray" }}
+                  >
+                    <div className="col-md-6 mt-2">
+                      <select
+                        id="selFont"
+                        name="selFont"
+                        className="form-select form-select-sm selectpicker col-md-3"
+                        title="fonts"
+                        onChange={fontChange}
+                        value={fontValue}
+                      >
+                        <option value="select">Select a Font</option>
+                        <option value="Comic Sans">Comic Sans</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Georgia">Georgia</option>
+                      </select>
+                    </div>
+                    <div className="col-md-6 mt-2">
+                      <select
+                        id="selFontSize"
+                        name="selFontSize"
+                        className="form-select form-select-sm selectpicker col-md-3"
+                        title="font size"
+                        onChange={fontsizeChange}
+                        value={fontSize}
+                      >
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option onMouseOver={fontChangeHover} value="40">
+                          40
+                        </option>
+                      </select>
+                    </div>
+                    <div className="col-md-12">
+                      <i
+                        className="fa fa-align-left shadow rounded"
+                        style={{ cursor: "pointer" }}
+                        aria-hidden="true"
+                        onClick={alignLeft}
+                      ></i>
+                      <i
+                        className="fa fa-align-center"
+                        style={{ marginLeft: 10, cursor: "pointer" }}
+                        aria-hidden="true"
+                        onClick={alignCenter}
+                      ></i>
+                      <i
+                        className="fa fa-align-right"
+                        style={{ marginLeft: 10, cursor: "pointer" }}
+                        aria-hidden="true"
+                        onClick={alignRight}
+                      ></i>
+                    </div>
+                    <div className="col-md-12">
+                      <div className="color-picker"></div>
+                    </div>
                   </div>
-                </div>
-                <div className="row">
+                ) : (
+                  <></>
+                )}
+                {/* <div className="row">
                   <div className="col-md-12">
                     <input
                       type="button"
@@ -1207,7 +1331,6 @@ function Hero() {
                       value="Add"
                       id="sbmText"
                       name="sbmText"
-                      onClick={handleAddText}
                     />
                     <input
                       type="button"
@@ -1218,8 +1341,8 @@ function Hero() {
                       onClick={handleRemoveText}
                     />
                   </div>
-                </div>
-                <br />
+                </div> */}
+                {/* <br />
                 <br />
                 <div className="row">
                   <div className="col-md-12">
@@ -1242,7 +1365,7 @@ function Hero() {
                       onClick={handleSecondDown}
                     />
                   </div>
-                </div>
+                </div> */}
                 <br />
                 <br />
                 <div className="d-flex mt-3 mb-3 fw-bold">
@@ -1283,7 +1406,7 @@ function Hero() {
                   </button>
                 </div>
                 <p className="fw-bold h3 mt-5 mb-4 productPrice">
-                  ₹{product && product.price}
+                  ₹{priceSet !== 0 && priceSet}
                 </p>
 
                 <div className="d-flex mt-4 mb-4">
