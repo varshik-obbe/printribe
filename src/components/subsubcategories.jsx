@@ -38,7 +38,7 @@ const SubCatalog = () => {
                   >
                     <div className={`${styles.catalogcontainer}`}>
                       <Link
-                        to={`/fabricDesign/${category.id}`}
+                        to={`/products/${category.id}`}
                         className={styles.catalogText}
                       >
                         <img
