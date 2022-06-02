@@ -290,9 +290,10 @@ function Hero() {
           if (o.type == "image") {
             let totPrice = 0;
             let scalePrice = 0;
-            console.log("frontcanvas info: ", fabricInfo);
+            let widthInches = 0;
+            let heightInches = 0;
             fabricInfo.variant[0].frontCanvasPricing.forEach((val, index) => {
-              if (val !== null) {
+              if (val.width && val.width !== null) {
                 if (
                   o.getScaledWidth() >= val.width &&
                   o.getScaledHeight() >= val.height
@@ -301,9 +302,13 @@ function Hero() {
                     parseInt(val.widthInches, 10) *
                     parseInt(val.heightInches, 10) *
                     parseInt(val.garment_price);
+                  widthInches = val.widthInches;
+                  heightInches = val.heightInches;
                 }
               }
             });
+            setWidthInches(widthInches);
+            setHeightInches(heightInches);
             totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
             setPriceSet(totPrice);
           }
@@ -384,15 +389,23 @@ function Hero() {
         if (fabricInfo.variant[0].frontCanvasPricing[0].width !== null) {
           let lastPrice = 0;
           let totPrice = 0;
+          let lastWidthInches = 0;
+          let lastHeightInches = 0;
           fabricInfo.variant[0].frontCanvasPricing.forEach((val, ind) => {
-            lastPrice =
-              parseInt(val.widthInches, 10) *
-              parseInt(val.heightInches, 10) *
-              parseInt(val.garment_price);
+            if (val.width && val.width !== null) {
+              lastPrice =
+                parseInt(val.widthInches, 10) *
+                parseInt(val.heightInches, 10) *
+                parseInt(val.garment_price);
+              lastWidthInches = val.widthInches;
+              lastHeightInches = val.heightInches;
+            }
           });
           totPrice = parseInt(product.price, 10) + parseInt(lastPrice, 10);
           setPriceSet(totPrice);
           setBasePrice(lastPrice);
+          setWidthInches(lastWidthInches);
+          setHeightInches(lastHeightInches);
         }
       });
       setImage(objectUrl);
