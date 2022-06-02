@@ -45,6 +45,9 @@ function Hero() {
   const [colorPick, setColorPick] = useState("");
   const [priceSet, setPriceSet] = useState(0);
   const [addText, setAddText] = useState(false);
+  const [widthInches, setWidthInches] = useState();
+  const [heightInches, setHeightInches] = useState();
+  const [basePrice, setBasePrice] = useState();
 
   const { editor, onReady } = useFabricJSEditor();
 
@@ -64,6 +67,7 @@ function Hero() {
         setproduct(data.product.productdata[0]);
         setProductName(data.product.productdata[0].title);
         setPriceSet(data.product.productdata[0].price);
+        setBasePrice(data.product.productdata[0].design_base_price);
       })
       .catch((err) => {
         console.log(err);
@@ -277,6 +281,8 @@ function Hero() {
         editor.canvas.clipPath = clipPath;
       }
       editor?.canvas.add(Rect);
+      setWidthInches(fabricInfo.variant[0].frontCanvasPricing[0].widthInches);
+      setHeightInches(fabricInfo.variant[0].frontCanvasPricing[0].heightInches);
 
       //images or fonts scaling inside rectangle
       editor?.canvas.on("object:scaling", (e) => {
@@ -291,15 +297,18 @@ function Hero() {
                   o.getScaledWidth() >= val.width &&
                   o.getScaledHeight() >= val.height
                 ) {
-                  scalePrice = val.price;
+                  scalePrice =
+                    parseInt(val.widthInches, 10) *
+                    parseInt(val.heightInches, 10) *
+                    parseInt(val.garment_price);
                 }
               }
             });
             totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
             setPriceSet(totPrice);
           }
-          console.log("scaled height ", o.getScaledHeight());
-          console.log("scaled width ", o.getScaledWidth());
+          // console.log("scaled height ", o.getScaledHeight());
+          // console.log("scaled width ", o.getScaledWidth());
         });
       });
     }
@@ -376,10 +385,14 @@ function Hero() {
           let lastPrice = 0;
           let totPrice = 0;
           fabricInfo.variant[0].frontCanvasPricing.forEach((val, ind) => {
-            lastPrice = val.price;
+            lastPrice =
+              parseInt(val.widthInches, 10) *
+              parseInt(val.heightInches, 10) *
+              parseInt(val.garment_price);
           });
           totPrice = parseInt(product.price, 10) + parseInt(lastPrice, 10);
           setPriceSet(totPrice);
+          setBasePrice(lastPrice);
         }
       });
       setImage(objectUrl);
@@ -546,9 +559,7 @@ function Hero() {
                         url: dataUrl,
                       },
                     })
-                    .then(({ data }) => {
-                      console.log("data saved successfully");
-
+                    .then((datasavedFabr) => {
                       customizeProduct.push({
                         product_id: product.id,
                         size,
@@ -560,7 +571,7 @@ function Hero() {
                         },
                         link: dataUrl,
                         title: productName,
-                        designId: data.data.data._id,
+                        designId: datasavedFabr.data.data._id,
                         price: product.price,
                         productImg: `https://api.theprintribe.com/${product.img}`,
                       });
@@ -1100,6 +1111,20 @@ function Hero() {
                   </div>
                 </div>
               </div>
+              {basePrice ? (
+                <div className="product__modal-content-2">
+                  <div className="row">
+                    <div className="col-md-6">Width(inches)</div>
+                    <div className="col-md-3">{widthInches}</div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6">Height(inches)</div>
+                    <div className="col-md-3">{heightInches}</div>
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
             </div>
             <div className="col-xl-6 col-lg-6">
               <div className="product__modal-content-2">
