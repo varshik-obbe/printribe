@@ -159,47 +159,6 @@ function Hero() {
 
     getProduct();
 
-    // Simple example, see optional options for more configuration.
-    if (addText) {
-      const pickr = Pickr.create({
-        el: ".color-picker",
-        theme: "nano", // or 'monolith', or 'nano'
-
-        swatches: null,
-
-        components: {
-          // Main components
-          preview: true,
-          opacity: true,
-          hue: true,
-
-          // Input / output Options
-          interaction: {
-            hex: true,
-            rgba: true,
-            hsla: true,
-            hsva: true,
-            cmyk: true,
-            input: true,
-            clear: true,
-            save: true,
-          },
-        },
-      });
-
-      pickr.on("init", (instance) => {
-        pickr.setColor("#000000");
-      });
-
-      pickr.on("save", (color, instance) => {
-        let colorSaved = color.toRGBA();
-        if (colorSaved) {
-          console.log('Event: "show"', color, instance);
-          setColorPick(colorSaved);
-        }
-      });
-    }
-
     const canvasWidth = editor?.canvas.getWidth();
     const canvasHeight = editor?.canvas.getHeight();
     if (editor?.canvas) {
@@ -294,6 +253,14 @@ function Hero() {
             let heightInches = 0;
             fabricInfo.variant[0].frontCanvasPricing.forEach((val, index) => {
               if (val.width && val.width !== null) {
+                if (index == 0) {
+                  widthInches = val.widthInches;
+                  heightInches = val.heightInches;
+                  scalePrice =
+                    parseInt(val.widthInches, 10) *
+                    parseInt(val.heightInches, 10) *
+                    parseInt(val.garment_price);
+                }
                 if (
                   o.getScaledWidth() >= val.width &&
                   o.getScaledHeight() >= val.height
@@ -466,6 +433,46 @@ function Hero() {
   //executes when add text is clicked
   const handleAddText = (event) => {
     setAddText(true);
+
+    // Simple example, see optional options for more configuration.
+    const pickr = Pickr.create({
+      el: ".color-picker",
+      theme: "nano", // or 'monolith', or 'nano'
+
+      swatches: null,
+
+      components: {
+        // Main components
+        preview: true,
+        opacity: true,
+        hue: true,
+
+        // Input / output Options
+        interaction: {
+          hex: true,
+          rgba: true,
+          hsla: true,
+          hsva: true,
+          cmyk: true,
+          input: true,
+          clear: true,
+          save: true,
+        },
+      },
+    });
+
+    pickr.on("init", (instance) => {
+      pickr.setColor("#000000");
+    });
+
+    pickr.on("save", (color, instance) => {
+      let colorSaved = color.toRGBA();
+      if (colorSaved) {
+        console.log('Event: "show"', color, instance);
+        setColorPick(colorSaved);
+      }
+    });
+
     const obj = editor?.canvas.getObjects();
     let topRect = 0;
     let leftRect = 0;
