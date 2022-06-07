@@ -13,7 +13,7 @@ const FAQ = () => {
 
       <div className={styles.faq_container}>
         <div className={styles.faq_container_hero}>
-          <h1 className={styles.faq_hero_head}>Printful Help Center</h1>
+          <h1 className={styles.faq_hero_head}>Printribe Help Center</h1>
           <h5 className={styles.faq_hero_subhead}>
             Find answers to all of your questions
           </h5>
@@ -86,7 +86,7 @@ const FAQ = () => {
             </h1>
             <p className={styles.faq_second_row_card_para}>
               Find answers to all your questions about terms and policies
-              related to Printful products and services{" "}
+              related to Printribe products and services{" "}
             </p>
             <div className={styles.faq_second_row_card_section}>4 sections</div>
           </div>
@@ -120,7 +120,7 @@ const FAQ = () => {
             </h1>
             <p className={styles.faq_second_row_card_para}>
               {" "}
-              Find answers to all your questions about Printful shipping,
+              Find answers to all your questions about Printribe shipping,
               packaging, and fulfillment
             </p>
             <div className={styles.faq_second_row_card_section}>3 sections</div>
@@ -153,7 +153,7 @@ const FAQ = () => {
             <h1 className={styles.faq_second_row_card_head}>Printing</h1>
             <p className={styles.faq_second_row_card_para}>
               Find answers to all your questions about the printing techniques
-              and materials used at Printful{" "}
+              and materials used at Printribe{" "}
             </p>
             <div className={styles.faq_second_row_card_section}>2 sections</div>
           </div>
@@ -168,7 +168,7 @@ const FAQ = () => {
             <h1 className={styles.faq_second_row_card_head}>Taxes & Billing</h1>
             <p className={styles.faq_second_row_card_para}>
               Find answers to all your questions about taxes and fees related to
-              Printful products and services{" "}
+              Printribe products and services{" "}
             </p>
             <div className={styles.faq_second_row_card_section}>5 sections</div>
           </div>
@@ -182,7 +182,7 @@ const FAQ = () => {
           <div>
             <h1 className={styles.faq_second_row_card_head}>Integrations</h1>
             <p className={styles.faq_second_row_card_para}>
-              Find answers to all your questions about Printful plugins and
+              Find answers to all your questions about Printribe plugins and
               integrations with popular ecommerce platforms
             </p>
             <div className={styles.faq_second_row_card_section}>
@@ -237,14 +237,14 @@ const FAQ = () => {
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/c22b702052d1b330d4e7f679c3ff26697789b44f.svg"
-            alt="Printful subscription plans"
+            alt="Printribe subscription plans"
           />{" "}
           <div>
             <h1 className={styles.faq_second_row_card_head}>
-              Printful subscription plans
+              Printribe subscription plans
             </h1>
             <p className={styles.faq_second_row_card_para}>
-              Find answers to all of your questions about Printful subscription
+              Find answers to all of your questions about Printribe subscription
               plans and its exclusive tools{" "}
             </p>
             <div className={styles.faq_second_row_card_section}>3 sections</div>
@@ -262,7 +262,7 @@ const FAQ = () => {
             </h1>
             <p className={styles.faq_second_row_card_para}>
               Find answers to all your questions about sustainability and
-              responsibility related practices at Printful
+              responsibility related practices at Printribe
             </p>
             <div className={styles.faq_second_row_card_section}>3 sections</div>
           </div>
