@@ -19,6 +19,8 @@ import ReturnRefund from "./pages/returnrefund";
 import SubCatMen from "./pages/SubCatMen";
 import SubSubCat from "./pages/SubSubCat";
 import TermsPage from "./pages/termspage";
+import FAQ from "./pages/FAQ.jsx";
+
 
 // import SubCatWomen from "./pages/SubCatWomen";
 
@@ -71,6 +73,7 @@ function App() {
             path="/fabricDesign/:prodid"
             element={<FabricDesign />}
           />
+          <Route exact path="/FAQ" element={<FAQ />} />
         </Routes>
       </Router>
     </>
