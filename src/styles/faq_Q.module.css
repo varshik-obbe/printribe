@@ -1,0 +1,149 @@
+.faq_Q_container {
+  padding: 0 5% 0 5%;
+}
+
+.faq_Q_breadcrumb {
+  display: flex;
+  margin: 50px 0;
+}
+
+.faq_Q_breadcrumb li:nth-child(2n) {
+  margin: 0 15px;
+}
+
+.faq_Q_breadcrumb li:first-child {
+  color: #1164a9;
+}
+
+.faq_Q_breadcrumb li:last-child {
+  text-transform: capitalize;
+}
+
+.faq_Q_breadcrumb li:first-child:hover,
+.faq_Q_list div span:hover {
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
+.faq_Q_list {
+  padding-bottom: 200px;
+}
+
+.faq_Q_list h1 {
+  text-transform: capitalize;
+  padding-bottom: 4%;
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 4%;
+  font-size: 36px;
+  line-height: 46px;
+}
+
+.faq_Q_list div {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.faq_Q_lists {
+  color: #1164a9;
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+  white-space: nowrap;
+  margin-bottom: 20px;
+}
+
+.faq_Q_lists:hover{
+    cursor: pointer;
+    text-decoration:underline;
+}
+
+.faq_Q_list_btn {
+  float: left;
+  margin: 50px 0;
+}
+
+.faq_Q_list_btn button {
+  width: 100px;
+  padding: 5%;
+  color: #222 !important;
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #e5e5e5 !important;
+}
+
+.faq_Q_list_btn button:hover {
+  border: none;
+  box-shadow: 0px 1px 8px -2px #000000;
+  cursor: pointer;
+}
+
+@media (max-width: 1024px) {
+  .faq_Q_container {
+    padding: 0 2% 0 1%;
+  }
+
+  .faq_Q_list div p {
+    font-size: 16px;
+    white-space: initial;
+  }
+}
+
+@media (max-width: 768px) {
+  .faq_Q_container {
+    padding: 0 2% 0 1%;
+  }
+
+  .faq_Q_list div {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .faq_Q_list div p {
+    font-size: 16px;
+  }
+
+  .faq_Q_list_btn {
+    display: flex !important;
+    flex-direction: row;
+    width: 30%;
+  }
+
+  .faq_Q_list_btn button {
+    width: 50%;
+    padding: 5%;
+    color: #222 !important;
+    font-weight: normal;
+    letter-spacing: 0;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #e5e5e5 !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .faq_Q_container {
+    padding: 0 0 0 5%;
+  }
+
+  .faq_Q_list div p {
+    font-size: 14px;
+    width: 100vw;
+  }
+
+  .faq_Q_list_btn {
+    width: 70%;
+  }
+
+  .faq_Q_list_btn button {
+    width: 50%;
+    padding: 5%;
+    color: #222 !important;
+    font-weight: normal;
+    letter-spacing: 0;
+    font-size: 16px;
+    line-height: 24px;
+    border: 1px solid #e5e5e5 !important;
+  }
+}

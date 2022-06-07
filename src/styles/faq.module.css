@@ -193,7 +193,7 @@
 }
 
 .faq_second_row_card_integration_links span:hover {
-  box-shadow: inset 0 -1px 0 0 #1164a9;
+  text-decoration:underline;
   cursor: pointer;
 }
 

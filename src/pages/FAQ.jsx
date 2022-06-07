@@ -4,8 +4,13 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
 import { AiOutlineSearch } from "react-icons/ai";
+import {useNavigate,useParams} from 'react-router-dom'
+
 
 const FAQ = () => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <Header />
@@ -30,6 +35,7 @@ const FAQ = () => {
           className={`
             ${styles.first_row_card} 
             col-xl-4 col-lg-4 col-md-4 col-md-12 col-12`}
+            onClick={() => navigate(`/FAQ/products/questions`)}
         >
           <img
             class={styles.first_card_row_img}
@@ -37,7 +43,7 @@ const FAQ = () => {
             alt="Products"
           />
           <h4 className={styles.first_row_card_title}>Products</h4>
-          <button className={styles.first_row_card_btn}>
+          <button className={styles.first_row_card_btn} onClick={() => navigate(`/FAQ/products/questions`)}>
             See all 33 articles
           </button>
         </div>
@@ -45,6 +51,7 @@ const FAQ = () => {
           className={`
             ${styles.first_row_card} 
             col-xl-4 col-lg-4 col-md-4 col-md-12 col-12`}
+            onClick={() => navigate(`/FAQ/getting_started/questions`)}
         >
           <img
             class={styles.first_card_row_img}
@@ -52,7 +59,7 @@ const FAQ = () => {
             alt="Getting started"
           />
           <h4 className={styles.first_row_card_title}>Getting Started</h4>
-          <button className={styles.first_row_card_btn}>
+          <button className={styles.first_row_card_btn} onClick={() => navigate(`/FAQ/getting_started/questions`)}>
             See all articles
           </button>
         </div>
@@ -60,6 +67,7 @@ const FAQ = () => {
           className={`
             ${styles.first_row_card} 
             col-xl-4 col-lg-4 col-md-4 col-md-12 col-12`}
+            onClick={() => navigate(`/FAQ/video_tips/questions`)}
         >
           <img
             class={styles.first_card_row_img}
@@ -67,14 +75,14 @@ const FAQ = () => {
             alt="Video tips"
           />
           <h4 className={styles.first_row_card_title}>Video tips</h4>
-          <button className={styles.first_row_card_btn}>
+          <button className={styles.first_row_card_btn} onClick={() => navigate(`/FAQ/video_tips/questions`)}>
             See all 15 articles
           </button>
         </div>
       </div>
 
       <div className={styles.faq_second_cards_row}>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/terms_policies_returns/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/b1c40314ebc74e6fd692b4f70b10d4c5bb921d52.svg"
@@ -91,7 +99,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>4 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/warehousing_fulfillment/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/5971f75e35e9f08edc3b2a2b0dde24a3eb5c3b75.svg"
@@ -108,7 +116,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>6 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/shipping_packaging_fulfillment/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/e340e3f8bd5f49bb4f6b70127fc16c17f72f71d0.svg"
@@ -126,7 +134,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>3 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/design_mockups/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/cd8321014bea6071163d80e07c91ce17e2170f5c.svg"
@@ -143,7 +151,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>2 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/printing/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/1f578082007a4f86a3d6365f018eb0830317b4b0.svg"
@@ -158,7 +166,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>2 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/taxes_billing/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/95243f44ac6abd7fe07b2be50938d8695cae0cf7.svg"
@@ -173,7 +181,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>5 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/integrations/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/062949ac53bb6fa8072b4793092d510f0705f369.svg"
@@ -233,7 +241,7 @@ const FAQ = () => {
             </div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/subscribe_plans/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/c22b702052d1b330d4e7f679c3ff26697789b44f.svg"
@@ -250,7 +258,7 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>3 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/sustainability_responsibility/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/7d1a53050dc0fbf9bc53f13b25a176789e5314ba.svg"
