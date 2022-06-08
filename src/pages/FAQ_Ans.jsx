@@ -444,11 +444,11 @@ const FAQ_Ans = () => {
       <h3>
         If your customer receives an order that is damaged, misprinted, or
         damaged, you can file a claim within 7 days after delivery, but you will
-        be responsible for the loss. Please email us at
-        <span className={styles1.faq_Ans_breadcrumb}>
-          support@theprintribe.com
-        </span>
-        with photographs of the product that clearly indicate the fault and the
+        be responsible for the loss. Please email us at &nbsp;
+        <span className={styles1.faq_Ans_links}>
+           support@theprintribe.com  
+        </span> {" "}
+          with photographs of the product that clearly indicate the fault and the
         original packaging. <br /> Your consumer will receive a new product that
         we will reprint and ship to them. If a customer wants to exchange or
         return a product because they got the wrong size or there are no
@@ -460,8 +460,8 @@ const FAQ_Ans = () => {
         Printribe offers complete white labeled drop shipping services. The
         products does not have any branding{" "}
         <em>(unless you opt for Custom Branding Services)</em> neither does the
-        packaging have Printribe’s name on . The shipping label will consist of
-        your brand name and Printribe's address by default.{" "}
+        packaging have Printribe’s name on.The shipping label will consist of
+        your brand name and Printribe's address by default.
         <em>
           (Printribe’s address cannot be removed as the courier company does not
           have an option to add custom address)
@@ -472,12 +472,12 @@ const FAQ_Ans = () => {
         software. We will fetch the orders daily. Other platforms can make a
         daily order sheet in MS Excel and export it to your Printribe Dashboard.
         It is simple to use. <br /> You can refer to this{" "}
-        <span className={styles1.faq_Ans_breadcrumb}>link </span> for detailed
+        <span className={styles1.faq_Ans_links}>link </span> for detailed
         information. Once the order is pushed to our system, Printribe will
         fulfil the order. <br /> <br /> Click{" "}
-        <span className={styles1.faq_Ans_breadcrumb}>Here</span> for Shopify
+        <span className={styles1.faq_Ans_links}>Here</span> for Shopify
         Integration <br />
-        Click <span className={styles1.faq_Ans_breadcrumb}>Here</span> for Wix
+        Click <span className={styles1.faq_Ans_links}>Here</span> for Wix
         Integration
       </h3>,
       <h3>
@@ -521,7 +521,7 @@ const FAQ_Ans = () => {
         delivery attempts. <br />
         If the order is not shipped from our warehouse and the status is
         printed, you can write to us at{" "}
-        <span className={styles1.faq_Ans_breadcrumb}>
+        <span className={styles1.faq_Ans_links}>
           support@theprintribe.com
         </span>{" "}
         with the order ID and the correct address. If the status is LIVE or To
@@ -586,7 +586,7 @@ const FAQ_Ans = () => {
         Monthly Invoices will be sent to your registered Mail Id with Printribe.
         After receiving, Check whether your GST Number is updated in the
         invoice, if not contact{" "}
-        <span className={styles1.faq_Ans_breadcrumb}>
+        <span className={styles1.faq_Ans_links}>
           support@theprintribe.com
         </span>{" "}
         immediately to update your GST number. You can claim input credit only
@@ -601,13 +601,16 @@ const FAQ_Ans = () => {
         We understand that you've not been able to make profits using our
         services and a lot more reasons, but we’re extremely sorry as we will
         not be able to refund the entire amount back to your bank account as it
-        is already given to you as credits.<br/> However, if you still feel to shut
-        down your account with us, you can write to us at
-        <span className={styles1.faq_Ans_breadcrumb}>support@theprintribe.com</span>  with your registered email ID. We will refund
-        your credit amount to your bank account after deducting the payment
-        gateway charges. <br/>We would also be delighted to read your experience
-        using Printribe and what made you close your account with us to improve
-        our services.
+        is already given to you as credits.
+        <br /> However, if you still feel to shut down your account with us, you
+        can write to us at{" "}
+        <span className={styles1.faq_Ans_links}>
+          support@theprintribe.com
+        </span>{" "}
+        with your registered email ID. We will refund your credit amount to your
+        bank account after deducting the payment gateway charges. <br />
+        We would also be delighted to read your experience using Printribe and
+        what made you close your account with us to improve our services.
       </h3>,
       <h3>
         In any case, at any time, if you wish to change or update your password
@@ -687,7 +690,7 @@ const FAQ_Ans = () => {
                 ))}
             </div>
             <h2
-              className={styles1.faq_Ans_breadcrumb}
+              className={styles1.faq_Ans_links}
               onClick={() => navigate(`/FAQ/${params.id}/questions`)}
             >
               See more
@@ -698,30 +701,6 @@ const FAQ_Ans = () => {
               {content[indexOfContent[params.id]].listOfQs[params.text_id]}
             </h1>
             <div>
-              {/* <h3>Follow these steps to delete products from your store:</h3>
-              <ol>
-                <li>
-                  1.In your Printribe{" "}
-                  <span className={styles1.faq_Ans_breadcrumb}>Dashboard</span>{" "}
-                  , go to Stores and select the store where you have the product
-                  you wish to remove.
-                </li>
-                <li>
-                  2.Click on the three dots on the right side of the product.
-                </li>
-                <li>
-                  3.In the dropdown, select <em>Delete</em> .
-                </li>
-              </ol>
-              <h4>
-                All done! If you want to add a new product to your store, follow{" "}
-                <span className={styles1.faq_Ans_breadcrumb}>this guide</span>{" "}
-                or go directly to the{" "}
-                <span className={styles1.faq_Ans_breadcrumb}>
-                  Product Catalog
-                </span>{" "}
-                and start designing your new products.
-              </h4> */}
               {answersToQs[indexOfContent[params.id]][params.text_id]}
               <div
                 className={styles1.faq_Ans_content_right_box}
@@ -750,7 +729,7 @@ const FAQ_Ans = () => {
                 {relatedQs.length > 0 &&
                   relatedQs.map((curr, ind) => (
                     <p
-                      className={styles1.faq_Ans_breadcrumb}
+                      className={styles1.faq_Ans_links}
                       onClick={() =>
                         navigate(`/FAQ/${params.id}/${10 + ind}/answer`)
                       }

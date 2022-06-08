@@ -192,6 +192,15 @@
   line-height: 24px;
 }
 
+.faq_Ans_links {
+  color: #1164a9;
+}
+
+.faq_Ans_links:hover {
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
 
     .faq_Ans_content_left {
