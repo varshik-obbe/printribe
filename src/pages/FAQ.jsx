@@ -116,22 +116,22 @@ const FAQ = () => {
             <div className={styles.faq_second_row_card_section}>6 sections</div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/shipping_packaging_fulfillment/questions`)}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/order_shipping_packaging/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/e340e3f8bd5f49bb4f6b70127fc16c17f72f71d0.svg"
-            alt="Shipping / Packaging / Fulfillment"
+            alt="Order / Shipping / Packaging"
           />{" "}
           <div>
             <h1 className={styles.faq_second_row_card_head}>
-              Shipping / Packaging / Fulfillment
+              Order / Shipping / Packaging
             </h1>
             <p className={styles.faq_second_row_card_para}>
               {" "}
-              Find answers to all your questions about Printribe shipping,
-              packaging, and fulfillment
+              Find answers to all your questions about Printribe order,
+              shipping, and packaging
             </p>
-            <div className={styles.faq_second_row_card_section}>3 sections</div>
+            <div className={styles.faq_second_row_card_section}>14 sections</div>
           </div>
         </div>
         <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/design_mockups/questions`)}>
@@ -178,7 +178,7 @@ const FAQ = () => {
               Find answers to all your questions about taxes and fees related to
               Printribe products and services{" "}
             </p>
-            <div className={styles.faq_second_row_card_section}>5 sections</div>
+            <div className={styles.faq_second_row_card_section}>1 section</div>
           </div>
         </div>
         <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/integrations/questions`)}>
@@ -241,7 +241,7 @@ const FAQ = () => {
             </div>
           </div>
         </div>
-        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/subscribe_plans/questions`)}>
+        <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/account/questions`)}>
           <img
             className={styles.faq_second_row_img}
             src="//theme.zdassets.com/theme_assets/2383316/c22b702052d1b330d4e7f679c3ff26697789b44f.svg"
@@ -249,13 +249,12 @@ const FAQ = () => {
           />{" "}
           <div>
             <h1 className={styles.faq_second_row_card_head}>
-              Printribe subscription plans
+              Account
             </h1>
             <p className={styles.faq_second_row_card_para}>
-              Find answers to all of your questions about Printribe subscription
-              plans and its exclusive tools{" "}
+              Find answers to all of your questions about Printribe accounts{" "}
             </p>
-            <div className={styles.faq_second_row_card_section}>3 sections</div>
+            <div className={styles.faq_second_row_card_section}>2 sections</div>
           </div>
         </div>
         <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/sustainability_responsibility/questions`)}>
