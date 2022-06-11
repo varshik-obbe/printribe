@@ -1,0 +1,233 @@
+.faq_Ans_breadcrumb {
+  color: #1164a9;
+  text-transform: capitalize;
+}
+
+.faq_Ans_breadcrumb:hover {
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
+.faq_Ans_content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.faq_Ans_content_left {
+  width: 50%;
+}
+
+.faq_Ans_content_left h1 {
+  font-weight: bold;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+  padding-bottom: 4%;
+  margin-bottom: 4%;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.faq_Ans_content_left > div > li {
+  font-weight: none;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 16px;
+  margin-left: 5px;
+}
+
+.faq_Ans_content_left > div > li:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.active_Ans {
+  font-weight: 900;
+  text-decoration: solid;
+  color: #000 !important;
+  border-left: 3px solid #ed4642;
+  padding-left: 3%;
+  transform: translateX(-8px);
+}
+
+.active_Ans:hover {
+  opacity: 0.6;
+}
+
+.faq_Ans_content_left h2 {
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.faq_Ans_content_right {
+  margin-left: 3%;
+  width: 80%;
+}
+
+.faq_Ans_content_right h1 {
+  font-size: 36px;
+  line-height: 46px;
+}
+
+.faq_Ans_content_right div {
+  margin-top: 30px;
+}
+
+.faq_Ans_content_right div h3 {
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 30px;
+}
+
+.faq_Ans_content_right div ol {
+  margin: 20px 0;
+}
+
+.faq_Ans_content_right div ol li {
+  color: #000;
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+
+.faq_Ans_content_right div h4 {
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.faq_Ans_content_right_box {
+  background-color: #f8f8f8;
+  padding: 4% 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #E5E5E5 !important;
+}
+
+.faq_Ans_content_right_box h1 {
+  font-weight: bold;
+  letter-spacing: 0;
+  font-size: 18px;
+  line-height: 26px;
+}
+
+.faq_Ans_content_right_box div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.faq_Ans_content_right_box div button {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  line-height: 38px;
+  min-width: 88px;
+  padding-left: 24px;
+  padding-right: 24px;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 0;
+  border: solid 1px transparent;
+  border-radius: 5px;
+  outline: 0;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+  box-sizing: border-box;
+  margin:-20px 0 16px 0;
+}
+
+.faq_Ans_content_right_box div button:hover{
+    border: 1px solid #2a2a2a;
+    box-shadow: 0px 1px 8px -2px #000000;
+    cursor: pointer;
+}
+
+.faq_Ans_content_right_box div button:first-child {
+  background-color: #e40f0a;
+  color: #fff;
+  margin-right: 10px !important;
+}
+
+.faq_Ans_content_right_box div button:last-child {
+  background: #e5e5e5;
+  color: #222;
+}
+
+.faq_Ans_content_right_box h3{
+    color: #777 !important;
+    font-weight: normal;
+    letter-spacing: 0;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.faq_Ans_content_right_related {
+  margin-bottom: 24px;
+  margin-top: 32px;
+}
+
+.faq_Ans_content_right_related h1 {
+  font-weight: bold;
+  letter-spacing: 0;
+  font-size: 24px;
+  line-height: 34px;
+  margin-bottom: 24px;
+}
+
+.faq_Ans_content_right_related p {
+  margin-bottom: 16px;
+  font-weight: normal;
+  letter-spacing: 0;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.faq_Ans_links {
+  color: #1164a9;
+}
+
+.faq_Ans_links:hover {
+  cursor: pointer !important;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+
+    .faq_Ans_content_left {
+        display:none;
+      }
+
+      .faq_Ans_content_right{
+          width: 100%;
+          margin-left: none;
+          margin: 0 auto;
+      }
+     
+
+      .faq_Ans_content_right_box{
+        width: 90%;
+        margin: 0 auto;
+      }
+  }
+
+  @media (max-width: 320px) {
+      .faq_Ans_content_right{
+          margin-left: 5px;
+          margin-right: -100px;
+      }
+
+      .faq_Ans_content_right_box{
+        width: 95%;
+        margin: 0 auto;
+      }
+  }
