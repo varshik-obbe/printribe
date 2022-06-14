@@ -601,6 +601,12 @@ function Hero() {
           scaleX: scaleX,
           scaleY: scaleY,
         });
+        img.setControlsVisibility({
+          ml: false,
+          mt: false,
+          mr: false,
+          mb: false,
+        });
         editor?.canvas.add(img);
         let newHeight = 0;
         let newWidth = 0;
@@ -608,6 +614,8 @@ function Hero() {
           if (o.type === "image") {
             newHeight = o.getScaledHeight();
             newWidth = o.getScaledWidth();
+            // o.lockScalingX = true;
+            // o.lockScalingY = true;
           }
         });
         if (fabricInfo.variant[0].frontCanvasPricing[0].width !== null) {
@@ -818,7 +826,7 @@ function Hero() {
                 });
             } else {
               domtoimage
-                .toJpeg(node, { quality: 0.95 })
+                .toJpeg(node, { quality: 0.95, bgcolor: "white" })
                 .then(function (dataUrl) {
                   // var link = document.createElement("a");
                   // link.download = "my-image-name.jpeg";
