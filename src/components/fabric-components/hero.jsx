@@ -294,12 +294,19 @@ function Hero() {
         top: fabricInfo.variant[0].frontImgDimensions.top,
         left: fabricInfo.variant[0].frontImgDimensions.left,
         selectable: false,
+        hasControls: false,
+        hasRotatingPoint: false,
+        evented: false,
         strokeDashArray: [5, 2],
         stroke: "grey",
         fill: "transparent",
       });
       //if a design is moved out of the constraint it gets clipped
       var clipPath = new fabric.Rect({
+        selectable: false,
+        hasControls: false,
+        hasRotatingPoint: false,
+        evented: false,
         width: fabricInfo.variant[0].frontImgDimensions.width,
         height: fabricInfo.variant[0].frontImgDimensions.height,
         top: fabricInfo.variant[0].frontImgDimensions.top,
@@ -535,148 +542,152 @@ function Hero() {
       return;
     } else {
       const objectUrl = URL.createObjectURL(event.target.files[0]);
-      fabric.Image.fromURL(objectUrl, function (img) {
-        // const objs = editor?.canvas.getObjects();
-        // objs?.forEach((o) => {
-        //   if (o.type === "image") {
-        //     editor?.canvas.remove(o);
-        //   }
-        // });
-        let topRect = 0;
-        let leftRect = 0;
-        let objHeight = 0;
-        let objWidth = 0;
-        const obj = editor?.canvas.getObjects();
-        obj?.forEach((o) => {
-          if (o.type === "rect") {
-            topRect = o.top;
-            leftRect = o.left;
-            objWidth = o.width;
-            objHeight = o.height;
-          }
-        });
-        img.top = topRect;
-        img.left = leftRect;
-        // let ih = img.height;
-        // let iw = img.width;
-        // let width_ratio =
-        //   parseInt(fabricInfo.variant[0].frontImgDimensions.width) /
-        //   parseInt(iw);
-        // let height_ratio =
-        //   parseInt(fabricInfo.variant[0].frontImgDimensions.height) /
-        //   parseInt(ih);
-        // let fw = 0;
-        // let fh = 0;
-        // if (width_ratio > height_ratio) {
-        //   fw = parseInt(iw) * width_ratio;
-        //   fh = (parseInt(ih) * parseInt(fw)) / parseInt(iw);
-        // } else {
-        //   fh = parseInt(ih) * height_ratio;
-        //   fw = (parseInt(iw) * parseInt(fh)) / parseInt(ih);
-        // }
-        // img.set({
-        //   width: fw,
-        //   height: fh,
-        // });
-        let scaleX;
-        if (sides == "one") {
-          scaleX =
-            parseInt(fabricInfo.variant[0].frontImgDimensions.width) /
-            parseInt(img.width);
-        } else if (sides == "two") {
-          scaleX =
-            parseInt(fabricInfo.variant[0].backImgDimensions.width) /
-            parseInt(img.width);
-        } else if (sides == "three") {
-          scaleX =
-            parseInt(fabricInfo.variant[0].leftImgDimensions.width) /
-            parseInt(img.width);
-        } else if (sides == "four") {
-          scaleX =
-            parseInt(fabricInfo.variant[0].rightImgDimensions.width) /
-            parseInt(img.width);
-        }
-        let scaleY = 200 / parseInt(img.height);
-        img.set({
-          scaleX: scaleX,
-          scaleY: scaleY,
-        });
-        img.setControlsVisibility({
-          ml: false,
-          mt: false,
-          mr: false,
-          mb: false,
-        });
-        editor?.canvas.add(img);
-        let newHeight = 0;
-        let newWidth = 0;
-        editor?.canvas.getObjects().forEach((o) => {
-          if (o.type === "image") {
-            newHeight = o.getScaledHeight();
-            newWidth = o.getScaledWidth();
-            // o.lockScalingX = true;
-            // o.lockScalingY = true;
-          }
-        });
-        if (fabricInfo.variant[0].frontCanvasPricing[0].width !== null) {
-          let lastPrice = 0;
-          let totPrice = 0;
-          let lastWidthInches = 0;
-          let lastHeightInches = 0;
+      fabric.Image.fromURL(
+        objectUrl,
+        function (img) {
+          // const objs = editor?.canvas.getObjects();
+          // objs?.forEach((o) => {
+          //   if (o.type === "image") {
+          //     editor?.canvas.remove(o);
+          //   }
+          // });
+          let topRect = 0;
+          let leftRect = 0;
+          let objHeight = 0;
+          let objWidth = 0;
+          const obj = editor?.canvas.getObjects();
+          obj?.forEach((o) => {
+            if (o.type === "rect") {
+              topRect = o.top;
+              leftRect = o.left;
+              objWidth = o.width;
+              objHeight = o.height;
+            }
+          });
+          img.top = topRect;
+          img.left = leftRect;
+          // let ih = img.height;
+          // let iw = img.width;
+          // let width_ratio =
+          //   parseInt(fabricInfo.variant[0].frontImgDimensions.width) /
+          //   parseInt(iw);
+          // let height_ratio =
+          //   parseInt(fabricInfo.variant[0].frontImgDimensions.height) /
+          //   parseInt(ih);
+          // let fw = 0;
+          // let fh = 0;
+          // if (width_ratio > height_ratio) {
+          //   fw = parseInt(iw) * width_ratio;
+          //   fh = (parseInt(ih) * parseInt(fw)) / parseInt(iw);
+          // } else {
+          //   fh = parseInt(ih) * height_ratio;
+          //   fw = (parseInt(iw) * parseInt(fh)) / parseInt(ih);
+          // }
+          // img.set({
+          //   width: fw,
+          //   height: fh,
+          // });
+          let scaleX;
           if (sides == "one") {
-            fabricInfo.variant[0].frontCanvasPricing.forEach((val, ind) => {
-              if (val.width && val.width !== null) {
-                lastPrice =
-                  parseInt(val.widthInches, 10) *
-                  parseInt(val.heightInches, 10) *
-                  parseInt(val.garment_price);
-                lastWidthInches = val.widthInches;
-                lastHeightInches = val.heightInches;
-              }
-            });
+            scaleX =
+              parseInt(fabricInfo.variant[0].frontImgDimensions.width) /
+              parseInt(img.width);
           } else if (sides == "two") {
-            fabricInfo.variant[0].backCanvasPricing.forEach((val, ind) => {
-              if (val.width && val.width !== null) {
-                lastPrice =
-                  parseInt(val.widthInches, 10) *
-                  parseInt(val.heightInches, 10) *
-                  parseInt(val.garment_price);
-                lastWidthInches = val.widthInches;
-                lastHeightInches = val.heightInches;
-              }
-            });
+            scaleX =
+              parseInt(fabricInfo.variant[0].backImgDimensions.width) /
+              parseInt(img.width);
           } else if (sides == "three") {
-            fabricInfo.variant[0].leftCanvasPricing.forEach((val, ind) => {
-              if (val.width && val.width !== null) {
-                lastPrice =
-                  parseInt(val.widthInches, 10) *
-                  parseInt(val.heightInches, 10) *
-                  parseInt(val.garment_price);
-                lastWidthInches = val.widthInches;
-                lastHeightInches = val.heightInches;
-              }
-            });
+            scaleX =
+              parseInt(fabricInfo.variant[0].leftImgDimensions.width) /
+              parseInt(img.width);
           } else if (sides == "four") {
-            fabricInfo.variant[0].rightCanvasPricing.forEach((val, ind) => {
-              if (val.width && val.width !== null) {
-                lastPrice =
-                  parseInt(val.widthInches, 10) *
-                  parseInt(val.heightInches, 10) *
-                  parseInt(val.garment_price);
-                lastWidthInches = val.widthInches;
-                lastHeightInches = val.heightInches;
-              }
-            });
+            scaleX =
+              parseInt(fabricInfo.variant[0].rightImgDimensions.width) /
+              parseInt(img.width);
           }
-          totPrice = parseInt(product.price, 10) + parseInt(lastPrice, 10);
-          setPriceSet(totPrice);
-          setBasePrice(lastPrice);
-          let heightInches = parseFloat(newHeight) / 10;
-          let widthInches = parseFloat(newWidth) / 10;
-          setWidthInches(widthInches);
-          setHeightInches(heightInches);
-        }
-      });
+          let scaleY = 200 / parseInt(img.height);
+          img.set({
+            scaleX: scaleX,
+            scaleY: scaleY,
+          });
+          img.setControlsVisibility({
+            ml: false,
+            mt: false,
+            mr: false,
+            mb: false,
+          });
+          editor?.canvas.add(img);
+          let newHeight = 0;
+          let newWidth = 0;
+          editor?.canvas.getObjects().forEach((o) => {
+            if (o.type === "image") {
+              newHeight = o.getScaledHeight();
+              newWidth = o.getScaledWidth();
+              // o.lockScalingX = true;
+              // o.lockScalingY = true;
+            }
+          });
+          if (fabricInfo.variant[0].frontCanvasPricing[0].width !== null) {
+            let lastPrice = 0;
+            let totPrice = 0;
+            let lastWidthInches = 0;
+            let lastHeightInches = 0;
+            if (sides == "one") {
+              fabricInfo.variant[0].frontCanvasPricing.forEach((val, ind) => {
+                if (val.width && val.width !== null) {
+                  lastPrice =
+                    parseFloat(val.widthInches, 10) *
+                    parseFloat(val.heightInches, 10) *
+                    parseFloat(val.garment_price);
+                  lastWidthInches = val.widthInches;
+                  lastHeightInches = val.heightInches;
+                }
+              });
+            } else if (sides == "two") {
+              fabricInfo.variant[0].backCanvasPricing.forEach((val, ind) => {
+                if (val.width && val.width !== null) {
+                  lastPrice =
+                    parseFloat(val.widthInches, 10) *
+                    parseFloat(val.heightInches, 10) *
+                    parseFloat(val.garment_price);
+                  lastWidthInches = val.widthInches;
+                  lastHeightInches = val.heightInches;
+                }
+              });
+            } else if (sides == "three") {
+              fabricInfo.variant[0].leftCanvasPricing.forEach((val, ind) => {
+                if (val.width && val.width !== null) {
+                  lastPrice =
+                    parseFloat(val.widthInches, 10) *
+                    parseFloat(val.heightInches, 10) *
+                    parseFloat(val.garment_price);
+                  lastWidthInches = val.widthInches;
+                  lastHeightInches = val.heightInches;
+                }
+              });
+            } else if (sides == "four") {
+              fabricInfo.variant[0].rightCanvasPricing.forEach((val, ind) => {
+                if (val.width && val.width !== null) {
+                  lastPrice =
+                    parseFloat(val.widthInches, 10) *
+                    parseFloat(val.heightInches, 10) *
+                    parseFloat(val.garment_price);
+                  lastWidthInches = val.widthInches;
+                  lastHeightInches = val.heightInches;
+                }
+              });
+            }
+            totPrice = parseInt(product.price, 10) + parseFloat(lastPrice, 10);
+            setPriceSet(totPrice);
+            setBasePrice(lastPrice);
+            let heightInches = parseFloat(newHeight) / 10;
+            let widthInches = parseFloat(newWidth) / 10;
+            setWidthInches(widthInches);
+            setHeightInches(heightInches);
+          }
+        },
+        { crossOrigin: "anonymous" }
+      );
       setImage(objectUrl);
       return;
     }
@@ -833,46 +844,53 @@ function Hero() {
                   // link.href = dataUrl;
                   // link.click();
                   var jsonData = JSON.stringify(editor?.canvas.toJSON());
-                  axios
-                    .post(`/fabricDesigns/addDesign`, {
-                      data: {
-                        productId: prodid,
-                        customerId: customerId,
-                        color: color,
-                        side: sides,
-                        data: jsonData,
-                        url: dataUrl,
-                      },
-                    })
-                    .then((datasavedFabr) => {
-                      customizeProduct.push({
-                        product_id: product.id,
-                        size,
-                        quantity: productQuantity,
-                        color: {
-                          color_code: colorCode,
-                          color_name: color,
-                          colorId,
-                        },
-                        link: dataUrl,
-                        title: productName,
-                        designId: datasavedFabr.data.data._id,
-                        price: product.price,
-                        productImg: `https://api.theprintribe.com/${product.img}`,
-                      });
+                  editor?.canvas.getObjects().forEach((o) => {
+                    if (o.type === "rect") {
+                      var imgdata = editor?.canvas.toDataURL({ multiplier: 1 });
+                      console.log("image data is :", imgdata);
+                      axios
+                        .post(`/fabricDesigns/addDesign`, {
+                          data: {
+                            productId: prodid,
+                            customerId: customerId,
+                            color: color,
+                            side: sides,
+                            data: jsonData,
+                            url: dataUrl,
+                            imgUrl: imgdata,
+                          },
+                        })
+                        .then((datasavedFabr) => {
+                          customizeProduct.push({
+                            product_id: product.id,
+                            size,
+                            quantity: productQuantity,
+                            color: {
+                              color_code: colorCode,
+                              color_name: color,
+                              colorId,
+                            },
+                            link: dataUrl,
+                            title: productName,
+                            designId: datasavedFabr.data.data._id,
+                            price: product.price,
+                            productImg: `https://api.theprintribe.com/${product.img}`,
+                          });
 
-                      //storing all the customized product details in local storage
-                      localStorage.setItem(
-                        "customizeProduct",
-                        JSON.stringify(customizeProduct)
-                      );
+                          //storing all the customized product details in local storage
+                          localStorage.setItem(
+                            "customizeProduct",
+                            JSON.stringify(customizeProduct)
+                          );
 
-                      console.log("after", customizeProduct);
-                      window.location.href = "/cart";
-                    })
-                    .catch((err) => {
-                      console.log(err);
-                    });
+                          console.log("after", customizeProduct);
+                          // window.location.href = "/cart";
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                        });
+                    }
+                  });
                 });
             }
           })
