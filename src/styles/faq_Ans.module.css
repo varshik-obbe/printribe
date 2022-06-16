@@ -45,7 +45,7 @@
   font-weight: 900;
   text-decoration: solid;
   color: #000 !important;
-  border-left: 3px solid #ed4642;
+  border-left: 3px solid #EE3C2F;
   padding-left: 3%;
   transform: translateX(-8px);
 }
@@ -153,7 +153,7 @@
 }
 
 .faq_Ans_content_right_box div button:first-child {
-  background-color: #e40f0a;
+  background-color: #EE3C2F;
   color: #fff;
   margin-right: 10px !important;
 }
