@@ -884,7 +884,7 @@ function Hero() {
                           );
 
                           console.log("after", customizeProduct);
-                          // window.location.href = "/cart";
+                          window.location.href = "/cart";
                         })
                         .catch((err) => {
                           console.log(err);
