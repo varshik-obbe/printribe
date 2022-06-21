@@ -86,7 +86,8 @@ function Signup() {
           
         })
         .catch((err) => {
-          setState((prev) => ({ ...prev, error: "Error in SignUp" }));
+          // console.log(err.response.data.errors)
+          setState((prev) => ({ ...prev, error: err.response.data.errors }));
         });
     } else {
       setState((prev) => ({
