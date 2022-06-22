@@ -2,7 +2,6 @@ import React from "react";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
-import styles from "../styles/services.module.css";
 import servicesimg_1 from "../assets/servicesimg_1.png";
 import servicesimg_2 from "../assets/servicesimg_2.png";
 import servicesimg_3 from "../assets/servicesimg_3.png";
