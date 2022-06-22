@@ -43,7 +43,7 @@ function Navbar() {
               {/* </div> */}
             </div>
             <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-              <Link to="/" className={styles.navItem}>
+              <Link to="/services" className={styles.navItem}>
                 Services
               </Link>
               {/* <div className={styles.dropdowncontent}>
@@ -53,7 +53,7 @@ function Navbar() {
                             </div> */}
             </div>
             <div className="col-lg-2 col-md-2 col-sm-2 text-uppercase p-1">
-              <Link to="/" className={styles.navItem}>
+              <Link to="/howitworks" className={styles.navItem}>
                 How it works
               </Link>
               {/* <div className={styles.dropdowncontent}>
