@@ -368,7 +368,7 @@ function Hero() {
         editor?.canvas.add(parent);
         var cCoords = getCoords(parent);
         var inBounds = inside(
-          { x: e.target.left + 10, y: e.target.top + 10 },
+          { x: e.target.left + 1, y: e.target.top + 1 },
           cCoords
         );
 
@@ -407,8 +407,6 @@ function Hero() {
                     ) {
                       let widthnewInches = o.getScaledWidth() / 10;
                       let heightnewInches = o.getScaledHeight() / 10;
-                      console.log("width scaled inches is :", widthnewInches);
-                      console.log("height scaled inches is :", heightnewInches);
                       scalePrice =
                         parseInt(widthnewInches, 10) *
                         parseInt(heightnewInches, 10) *
@@ -1533,10 +1531,10 @@ function Hero() {
                                 alignItems: "center",
                               }}
                               onClick={(e) => {
+                                setColorIndex(index);
                                 handleColorsclick(e);
                                 setColor(item.colorName);
                                 setColorId(index + 1);
-                                setColorIndex(index);
                                 setColorCode(item.colorCode);
                                 changeImg(e, sides);
                               }}
