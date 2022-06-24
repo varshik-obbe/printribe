@@ -619,7 +619,7 @@ function Hero() {
                 fabricInfo.variant[colorIndex].rightImgDimensions.width
               ) / parseInt(img.width);
           }
-          let scaleY = 200 / parseInt(img.height);
+          let scaleY = 150 / parseInt(img.height);
           img.set({
             scaleX: scaleX,
             scaleY: scaleY,
