@@ -32,13 +32,13 @@ const OTPpage = () => {
         title: "User Verified!",
         icon: "success",
         confirmButtonText: "Close",
-      }).then(() => navigate("/"));
+      }).then(() => navigate("/signin"));
     } catch (error) {
       Swal.fire({
         title: "Incorrect OTP entered! Please Try Again",
         icon: "error",
         confirmButtonText: "Close",
-      }).then(() => navigate("/signup"));
+      })
     }
   };
 
