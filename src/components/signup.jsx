@@ -81,8 +81,11 @@ function Signup() {
           // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
           // else navigate(-1)
 
+          // if(redirect_url === "from_wix_integrations") navigate("/signin?redirect=from_wix_integrations")
+          // else navigate("/signin?redirect=from_signup");
+
           if(redirect_url === "from_wix_integrations") navigate("/signin?redirect=from_wix_integrations")
-          else navigate("/signin?redirect=from_signup");
+          else navigate(`/verify/${state.email}`);
           
         })
         .catch((err) => {
@@ -132,9 +135,13 @@ function Signup() {
         );
         setState((prev) => ({ ...prev, error: false }));
 
+        // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+        // else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
+        // else navigate(-1);
+
         if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
         else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
-        else navigate(-1);
+        else navigate(`/verify/${state.email}`);
 
       })
       .catch((err) => {
