@@ -85,7 +85,7 @@ const HowItWorks = () => {
             className="col-xl-8 col-lg-10 col-md-11 col-sm-11 col-12 mt-5 mb-4 text-center mx-auto"
             style={{ color: "#0d3b66", fontWeight: "600", fontSize: "24px" }}
           >
-            How Rintribe Works
+            How Printribe Works
           </h3>
           <h4
             className="col-xl-7 col-lg-9 col-md-10 col-sm-10 col-12 text-center mx-auto"
