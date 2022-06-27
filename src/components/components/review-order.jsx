@@ -75,8 +75,8 @@ function ReviewOrder({ handleNext }) {
       orderData: {
         customerShipping_id: customerShippingId,
         product_info: productInfo,
-        total_quantity: String(total_quantity),
-        total_price: String(subTotal),
+        total_quantity: String(total_quantity.toFixed(2)),
+        total_price: String(subTotal.toFixed(2)),
         shipping_charges: shipping_charges,
         payment_type: "cash on delivery",
         payment_ref_id: "23451AAX",
@@ -88,7 +88,7 @@ function ReviewOrder({ handleNext }) {
     };
 
     axios
-      .post("/orders/addOrder", payData)
+      .post("https://api.theprintribe.com/api/orders/addOrder", payData)
       .then(({ data }) => {
         Swal.fire("Order Accepted", "Transaction complete!", "success").then(
           () => {
