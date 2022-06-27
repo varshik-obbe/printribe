@@ -12,6 +12,7 @@ import how7 from "../assets/howitworks_7.png";
 import logo from "../assets/Printibe-logo1.png";
 import styles from "../styles/howitworks.module.css";
 import { Accordion, Card, useAccordionButton } from "react-bootstrap";
+import {useNavigate} from 'react-router-dom'
 
 function CustomToggle({ children, eventKey }) {
   const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -75,6 +76,9 @@ const AccordionFunc = ({ title, para }) => {
 };
 
 const HowItWorks = () => {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <Header />
@@ -463,7 +467,7 @@ const HowItWorks = () => {
           <h3 style={{ color: "#fff" }}>
             Signup Now and grow your brand with us.
           </h3>
-          <button>Signup</button>
+          <button onClick={() => navigate('/signup')}>Signup</button>
         </div>
       </div>
 
