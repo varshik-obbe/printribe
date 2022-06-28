@@ -297,7 +297,6 @@ function Hero() {
         height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
         top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
         left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
-        objectCaching: false,
         selectable: false,
         hasControls: false,
         hasRotatingPoint: false,
@@ -310,7 +309,6 @@ function Hero() {
       var clipPath = new fabric.Rect({
         selectable: false,
         hasControls: false,
-        objectCaching: false,
         hasRotatingPoint: false,
         evented: false,
         width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
@@ -322,6 +320,23 @@ function Hero() {
         editor.canvas.clipPath = clipPath;
       }
       editor?.canvas.add(Rect);
+      if (aop) {
+        setMainImg(
+          process.env.REACT_APP_IMAGE_BASE_URL +
+            "/uploads/whiteBackgroundforAOP.png"
+        );
+        let urlTshirt =
+          process.env.REACT_APP_IMAGE_BASE_URL +
+          fabricInfo.variant[colorIndex].frontImgURL;
+        fabric.Image.fromURL(urlTshirt, function (img) {
+          img.scaleToHeight(612);
+          img.scaleToWidth(417);
+          img.selectable = false;
+          img.hasControls = false;
+          img.hasRotatingPoint = false;
+          editor?.canvas.add(img);
+        });
+      }
       setWidthInches(
         fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
       );
@@ -587,6 +602,20 @@ function Hero() {
           if (aop) {
             img.objectCaching = false;
             img.globalCompositeOperation = "source-atop";
+            img.opacity = 0.4;
+            let scaleX;
+            scaleX = parseInt(470) / parseInt(img.width);
+            let scaleY = 612 / parseInt(img.height);
+            img.set({
+              scaleX: scaleX,
+              scaleY: scaleY,
+            });
+            img.setControlsVisibility({
+              ml: false,
+              mt: false,
+              mr: false,
+              mb: false,
+            });
           } else {
             img.top = topRect;
             img.left = leftRect;
@@ -1397,11 +1426,14 @@ function Hero() {
                       className="product__modal-img product__thumb w-img"
                     >
                       {fabricInfo && fabricInfo.productId !== undefined ? (
-                        <img height={612} width={470} src={mainImg} alt="" />
+                        <img
+                          style={{ height: "612px", width: "470px" }}
+                          src={mainImg}
+                          alt=""
+                        />
                       ) : (
                         <img
-                          height={612}
-                          width={470}
+                          style={{ height: "612px", width: "470px" }}
                           src={
                             process.env.REACT_APP_IMAGE_BASE_URL +
                             "/" +
@@ -1543,7 +1575,7 @@ function Hero() {
                                 height: "20px",
                                 width: "20px",
                                 borderRadius: "5px",
-                                backgroundColor: item.colorName,
+                                backgroundColor: item.colorCode,
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
