@@ -913,53 +913,48 @@ function Hero() {
                   // link.href = dataUrl;
                   // link.click();
                   var jsonData = JSON.stringify(editor?.canvas.toJSON());
-                  editor?.canvas.getObjects().forEach((o) => {
-                    if (o.type === "rect") {
-                      var imgdata = editor?.canvas.toDataURL({ multiplier: 1 });
-                      console.log("image data is :", imgdata);
-                      axios
-                        .post(`/fabricDesigns/addDesign`, {
-                          data: {
-                            productId: prodid,
-                            customerId: customerId,
-                            color: color,
-                            side: sides,
-                            data: jsonData,
-                            url: dataUrl,
-                            imgUrl: imgdata,
-                          },
-                        })
-                        .then((datasavedFabr) => {
-                          customizeProduct.push({
-                            product_id: product.id,
-                            size,
-                            quantity: productQuantity,
-                            color: {
-                              color_code: colorCode,
-                              color_name: color,
-                              colorId,
-                            },
-                            link: dataUrl,
-                            title: productName,
-                            designId: datasavedFabr.data.data._id,
-                            price: product.price,
-                            productImg: `https://api.theprintribe.com/${product.img}`,
-                          });
+                  var imgdata = editor?.canvas.toDataURL({ multiplier: 1 });
+                  axios
+                    .post(`/fabricDesigns/addDesign`, {
+                      data: {
+                        productId: prodid,
+                        customerId: customerId,
+                        color: color,
+                        side: sides,
+                        data: jsonData,
+                        url: dataUrl,
+                        imgUrl: imgdata,
+                      },
+                    })
+                    .then((datasavedFabr) => {
+                      customizeProduct.push({
+                        product_id: product.id,
+                        size,
+                        quantity: productQuantity,
+                        color: {
+                          color_code: colorCode,
+                          color_name: color,
+                          colorId,
+                        },
+                        link: dataUrl,
+                        title: productName,
+                        designId: datasavedFabr.data.data._id,
+                        price: product.price,
+                        productImg: `https://api.theprintribe.com/${product.img}`,
+                      });
 
-                          //storing all the customized product details in local storage
-                          localStorage.setItem(
-                            "customizeProduct",
-                            JSON.stringify(customizeProduct)
-                          );
+                      //storing all the customized product details in local storage
+                      localStorage.setItem(
+                        "customizeProduct",
+                        JSON.stringify(customizeProduct)
+                      );
 
-                          console.log("after", customizeProduct);
-                          window.location.href = "/cart";
-                        })
-                        .catch((err) => {
-                          console.log(err);
-                        });
-                    }
-                  });
+                      console.log("after", customizeProduct);
+                      window.location.href = "/cart";
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
                 });
             }
           })
