@@ -1,0 +1,30 @@
+{
+    "orderData": {
+       "customerShipping_id": "62bc147030bfddce6533d34a",
+       "product_info": [
+         {
+           "product_id": "62b5a4c132dcc85a26fc8241",
+           "title": "full sleeves tshirt",
+           "description": "full sleeves tshirt",
+           "price": "234",
+           "productsize": "S",
+           "productcolor": "white",
+           "product_img": "https://api.theprintribe.com/uploads/1656071361143img1554189083_black.png",
+           "category_id": "62b2e0ac0e99dc7c357058b3",
+           "quantity": "1",
+           "designID": "62b5a6e232dcc85a26fc84d0",
+           "zakeke_price": "0"
+         }
+       ],
+       "total_quantity": "1.00",
+       "total_price": "234.00",
+       "shipping_charges": "80.85",
+       "payment_type": "cash on delivery",
+       "payment_ref_id": "23451AAX",
+       "customer_email": "bhaveshdamor5555@gmail.com",
+       "visitor_id": "476838",
+       "courier_id": "43",
+       "customer_id": "620ba2e24283045b55b51062"
+     }
+   }
+   

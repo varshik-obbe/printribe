@@ -75,8 +75,8 @@ function ReviewOrder({ handleNext }) {
       orderData: {
         customerShipping_id: customerShippingId,
         product_info: productInfo,
-        total_quantity: String(total_quantity.toFixed(2)),
-        total_price: String(subTotal.toFixed(2)),
+        total_quantity: total_quantity.toFixed(2),
+        total_price: subTotal.toFixed(2),
         shipping_charges: shipping_charges,
         payment_type: "cash on delivery",
         payment_ref_id: "23451AAX",
@@ -88,11 +88,13 @@ function ReviewOrder({ handleNext }) {
     };
 
     axios
-      .post("https://api.theprintribe.com/api/orders/addOrder", payData)
+      .post("https://api.theprintribe.com/api/orders/addOrder", payData, {
+        "Content-Type": "application/json",
+      })
       .then(({ data }) => {
         Swal.fire("Order Accepted", "Transaction complete!", "success").then(
           () => {
-            setWalletAmount(walletAmount - totalBillingAmount);
+            setWalletAmount(walletAmount - totalBillingAmount > 0 ? walletAmount - totalBillingAmount : 0);
             window.location.href = "https://printribe-partner.web.app/";
           }
         );
@@ -128,24 +130,6 @@ function ReviewOrder({ handleNext }) {
         }
       });
     });
-  };
-
-  const handlePay = () => {
-    customizeProduct.forEach((prod) => {
-      axios
-        .get(`/products/getproduct/${prod.product_id}`)
-        .then(({ data }) => {
-          data.product.productdata.map((ele) => {
-            productData.push(ele);
-          });
-          if (productData.length === customizeProduct.length) {
-            setData();
-          }
-        })
-        .catch((err) => console.log(err));
-    });
-
-    payAmount();
   };
 
   var visitorId = JSON.parse(localStorage.getItem("visitorId"));
@@ -269,6 +253,24 @@ function ReviewOrder({ handleNext }) {
     localStorage.setItem("total_quantity", temptotal_quantity);
   }, []);
 
+  const handlePay = () => {
+    customizeProduct.forEach((prod) => {
+      axios
+        .get(`/products/getproduct/${prod.product_id}`)
+        .then(({ data }) => {
+          data.product.productdata.map((ele) => {
+            productData.push(ele);
+          });
+          if (productData.length === customizeProduct.length) {
+            setData();
+          }
+        })
+        .catch((err) => console.log(err));
+    });
+
+    payAmount();
+  };
+
   const deductAmount = (walletAmount, totalBillingAmount) => {
     axios
       .post(`/customerWallet/debitWallet`, {
@@ -279,14 +281,14 @@ function ReviewOrder({ handleNext }) {
       })
       .then(({ data }) => {
         apiCall(
-          parseFloat(walletAmount).toFixed(2),
-          parseFloat(totalBillingAmount).toFixed(2)
+          walletAmount,
+          totalBillingAmount
         );
       });
   };
 
-  const addAmount = (amountToBeAdded, purpose = "") => {
-    let amount = parseFloat(amountToBeAdded).toFixed(2) * 100;
+  const addAmount = (amountToBeAdded, purpose) => {
+    let amount = amountToBeAdded * 100;
 
     let razorPayData = {
       insdata: {
@@ -346,7 +348,8 @@ function ReviewOrder({ handleNext }) {
             // localStorage.setItem("walletAmount")
 
             //only while paying
-            if (purpose !== "addToWallet") {
+            if (purpose === "addRemainingAmount") {
+              // console.log("hello")
               deductAmount(walletAmount, totalBillingAmount);
             } else {
               setWalletAmount(
@@ -384,9 +387,11 @@ function ReviewOrder({ handleNext }) {
     axios
       .get(`/customerWallet/getWalletbyid/${customerId}`)
       .then(({ data }) => {
+        // console.log(parseFloat(data.wallet.amount.toFixed(2)));
+        // console.log(parseFloat(totalBillingAmount.toFixed(2)));
         if (
-          parseFloat(data.wallet.amount).toFixed(2) >=
-          parseFloat(totalBillingAmount).toFixed(2)
+          parseFloat(data.wallet.amount.toFixed(2)) >=
+          parseFloat(totalBillingAmount.toFixed(2))
         ) {
           Swal.fire({
             title: "Pay from wallet",
@@ -415,7 +420,7 @@ function ReviewOrder({ handleNext }) {
             confirmButtonText: "Add amount and pay",
           }).then((result) => {
             if (result.isConfirmed) {
-              addAmount(parseFloat(remainingAmount).toFixed(2));
+              addAmount(parseFloat(remainingAmount).toFixed(2),"addRemainingAmount");
             }
           });
         }
