@@ -387,8 +387,9 @@ function ReviewOrder({ handleNext }) {
     axios
       .get(`/customerWallet/getWalletbyid/${customerId}`)
       .then(({ data }) => {
-        // console.log(parseFloat(data.wallet.amount.toFixed(2)));
-        // console.log(parseFloat(totalBillingAmount.toFixed(2)));
+        console.log(data)
+        console.log(parseFloat(data.wallet.amount.toFixed(2)));
+        console.log(parseFloat(totalBillingAmount.toFixed(2)));
         if (
           parseFloat(data.wallet.amount.toFixed(2)) >=
           parseFloat(totalBillingAmount.toFixed(2))
