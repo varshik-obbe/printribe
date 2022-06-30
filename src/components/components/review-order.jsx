@@ -94,7 +94,7 @@ function ReviewOrder({ handleNext }) {
       .then(({ data }) => {
         Swal.fire("Order Accepted", "Transaction complete!", "success").then(
           () => {
-            setWalletAmount(walletAmount - totalBillingAmount > 0 ? walletAmount - totalBillingAmount : 0);
+            setWalletAmount(walletAmount - totalBillingAmount > 0 ? (walletAmount - totalBillingAmount).toFixed(2) : 0);
             window.location.href = "https://printribe-partner.web.app/";
           }
         );
@@ -390,7 +390,7 @@ function ReviewOrder({ handleNext }) {
       
         // console.log(parseFloat(data.wallet.amount.toFixed(2)));
         // console.log(parseFloat(totalBillingAmount.toFixed(2)));
-        
+
         if (
           parseFloat(data.wallet.amount.toFixed(2)) >=
           parseFloat(totalBillingAmount.toFixed(2))
