@@ -305,19 +305,21 @@ function Hero() {
         stroke: "grey",
         fill: "transparent",
       });
-      //if a design is moved out of the constraint it gets clipped
-      var clipPath = new fabric.Rect({
-        selectable: false,
-        hasControls: false,
-        hasRotatingPoint: false,
-        evented: false,
-        width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
-        height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
-        top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
-        left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
-      });
-      if (editor?.canvas) {
-        editor.canvas.clipPath = clipPath;
+      if (!aop) {
+        //if a design is moved out of the constraint it gets clipped
+        var clipPath = new fabric.Rect({
+          selectable: false,
+          hasControls: false,
+          hasRotatingPoint: false,
+          evented: false,
+          width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
+        });
+        if (editor?.canvas) {
+          editor.canvas.clipPath = clipPath;
+        }
       }
       editor?.canvas.add(Rect);
       if (aop) {
@@ -328,13 +330,32 @@ function Hero() {
         let urlTshirt =
           process.env.REACT_APP_IMAGE_BASE_URL +
           fabricInfo.variant[colorIndex].frontImgURL;
+        var newImg = new Image();
+        newImg.src = urlTshirt;
         fabric.Image.fromURL(urlTshirt, function (img) {
           img.scaleToHeight(612);
           img.scaleToWidth(417);
           img.selectable = false;
           img.hasControls = false;
           img.hasRotatingPoint = false;
-          editor?.canvas.add(img);
+          editor?.canvas.setBackgroundImage(img);
+          editor.canvas.renderAll();
+          //if a design is moved out of the constraint it gets clipped
+          var clipPath = new fabric.Rect({
+            selectable: false,
+            hasControls: false,
+            hasRotatingPoint: false,
+            width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
+            height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
+            top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
+            left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
+          });
+          if (editor?.canvas) {
+            // let ctx = editor.canvas.getContext();
+            // ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, 470, 612);
+            // clipPath.render(ctx);
+            editor.canvas.clipPath = clipPath;
+          }
         });
       }
       setWidthInches(
@@ -419,9 +440,9 @@ function Hero() {
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                         scalePrice =
-                          parseInt(val.widthInches, 10) *
-                          parseInt(val.heightInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(val.widthInches) *
+                          parseFloat(val.heightInches) *
+                          parseFloat(val.garment_price);
                       }
                       if (
                         o.getScaledWidth() > val.width &&
@@ -430,9 +451,9 @@ function Hero() {
                         let widthnewInches = o.getScaledWidth() / 10;
                         let heightnewInches = o.getScaledHeight() / 10;
                         scalePrice =
-                          parseInt(widthnewInches, 10) *
-                          parseInt(heightnewInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(widthnewInches) *
+                          parseFloat(heightnewInches) *
+                          parseFloat(val.garment_price);
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                       }
@@ -447,9 +468,9 @@ function Hero() {
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                         scalePrice =
-                          parseInt(val.widthInches, 10) *
-                          parseInt(val.heightInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(val.widthInches) *
+                          parseFloat(val.heightInches) *
+                          parseFloat(val.garment_price);
                       }
                       if (
                         o.getScaledWidth() >= val.width &&
@@ -458,9 +479,9 @@ function Hero() {
                         let widthnewInches = o.getScaledWidth() / 10;
                         let heightnewInches = o.getScaledHeight() / 10;
                         scalePrice =
-                          parseInt(widthnewInches, 10) *
-                          parseInt(heightnewInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(widthnewInches) *
+                          parseFloat(heightnewInches) *
+                          parseFloat(val.garment_price);
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                       }
@@ -475,9 +496,9 @@ function Hero() {
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                         scalePrice =
-                          parseInt(val.widthInches, 10) *
-                          parseInt(val.heightInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(val.widthInches) *
+                          parseFloat(val.heightInches) *
+                          parseFloat(val.garment_price);
                       }
                       if (
                         o.getScaledWidth() >= val.width &&
@@ -486,9 +507,9 @@ function Hero() {
                         let widthnewInches = o.getScaledWidth() / 10;
                         let heightnewInches = o.getScaledHeight() / 10;
                         scalePrice =
-                          parseInt(widthnewInches, 10) *
-                          parseInt(heightnewInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(widthnewInches) *
+                          parseFloat(heightnewInches) *
+                          parseFloat(val.garment_price);
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                       }
@@ -503,9 +524,9 @@ function Hero() {
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                         scalePrice =
-                          parseInt(val.widthInches, 10) *
-                          parseInt(val.heightInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(val.widthInches) *
+                          parseFloat(val.heightInches) *
+                          parseFloat(val.garment_price);
                       }
                       if (
                         o.getScaledWidth() >= val.width &&
@@ -514,9 +535,9 @@ function Hero() {
                         let widthnewInches = o.getScaledWidth() / 10;
                         let heightnewInches = o.getScaledHeight() / 10;
                         scalePrice =
-                          parseInt(widthnewInches, 10) *
-                          parseInt(heightnewInches, 10) *
-                          parseInt(val.garment_price);
+                          parseFloat(widthnewInches) *
+                          parseFloat(heightnewInches) *
+                          parseFloat(val.garment_price);
                         widthInches = val.widthInches;
                         heightInches = val.heightInches;
                       }
@@ -690,6 +711,8 @@ function Hero() {
               null &&
             fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !== 0
           ) {
+            let heightInches = parseFloat(newHeight) / 10;
+            let widthInches = parseFloat(newWidth) / 10;
             let lastPrice = 0;
             let totPrice = 0;
             let lastWidthInches = 0;
@@ -699,8 +722,8 @@ function Hero() {
                 (val, ind) => {
                   if (val.width && val.width !== null) {
                     lastPrice =
-                      parseFloat(val.widthInches, 10) *
-                      parseFloat(val.heightInches, 10) *
+                      parseFloat(heightInches) *
+                      parseFloat(widthInches) *
                       parseFloat(val.garment_price);
                     lastWidthInches = val.widthInches;
                     lastHeightInches = val.heightInches;
@@ -712,8 +735,8 @@ function Hero() {
                 (val, ind) => {
                   if (val.width && val.width !== null) {
                     lastPrice =
-                      parseFloat(val.widthInches, 10) *
-                      parseFloat(val.heightInches, 10) *
+                      parseFloat(widthInches) *
+                      parseFloat(heightInches) *
                       parseFloat(val.garment_price);
                     lastWidthInches = val.widthInches;
                     lastHeightInches = val.heightInches;
@@ -725,8 +748,8 @@ function Hero() {
                 (val, ind) => {
                   if (val.width && val.width !== null) {
                     lastPrice =
-                      parseFloat(val.widthInches, 10) *
-                      parseFloat(val.heightInches, 10) *
+                      parseFloat(widthInches) *
+                      parseFloat(heightInches) *
                       parseFloat(val.garment_price);
                     lastWidthInches = val.widthInches;
                     lastHeightInches = val.heightInches;
@@ -738,8 +761,8 @@ function Hero() {
                 (val, ind) => {
                   if (val.width && val.width !== null) {
                     lastPrice =
-                      parseFloat(val.widthInches, 10) *
-                      parseFloat(val.heightInches, 10) *
+                      parseFloat(widthInches) *
+                      parseFloat(heightInches) *
                       parseFloat(val.garment_price);
                     lastWidthInches = val.widthInches;
                     lastHeightInches = val.heightInches;
@@ -747,10 +770,8 @@ function Hero() {
                 }
               );
             }
-            totPrice = parseInt(product.price, 10) + parseFloat(lastPrice, 10);
+            totPrice = parseInt(product.price, 10) + parseFloat(lastPrice);
             setPriceSet(totPrice);
-            let heightInches = parseFloat(newHeight) / 10;
-            let widthInches = parseFloat(newWidth) / 10;
             setWidthInches(widthInches);
             setHeightInches(heightInches);
           }
