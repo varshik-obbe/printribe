@@ -21,6 +21,7 @@ const fieldsArray = [
   },
   { name: "postalCode", title: "Postal/Zip code", diff: "postalCode" },
   { name: "city", title: "City", diff: "city" },
+  { name: "gst", title: "GST", diff: "gst" },
 ];
 
 function Shipping(props) {
@@ -165,6 +166,17 @@ function Shipping(props) {
             handleNext();
           });
       }
+
+      //saving gst for that customer
+      axios
+        .put(
+          `https://api.theprintribe.com/api/customers/updatecustomer?id=${customerId}`,
+          {
+            data: { gst },
+          }
+        )
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
     }
   };
 
@@ -193,6 +205,8 @@ function Shipping(props) {
   const [shippingErrorState, setShippingerrorState] = useState("");
   const [shippingErrorPostalCode, setShippingerrorPostalCode] = useState("");
   const [shippingErrorCountry, setShippingerrorCountry] = useState("");
+
+  const [gst, setGst] = useState(null);
 
   //product quantity from LS
   const total_quantity = localStorage.getItem("total_quantity");
@@ -238,6 +252,22 @@ function Shipping(props) {
   //   console.log(e.target.value)
 
   // };
+
+  useEffect(() => {
+    //getting gst value from api if present
+    let customerId = localStorage.getItem("customerId");
+    axios
+      .get(
+        `https://api.theprintribe.com/api/customers/getCustomerbyid?id=${customerId}`
+      )
+      .then((res) => {
+        // console.log(res.data.customerRecordData)
+        if (res.data.customerRecordData.gst) {
+          setGst(res.data.customerRecordData.gst);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <React.Fragment>
@@ -478,6 +508,28 @@ function Shipping(props) {
                           {shippingErrorPostalCode}
                         </span>
                       )}
+                    </div>
+                  </>
+                );
+              case "gst":
+                return (
+                  <>
+                    <div class="col-12 col-sm-6 mt-2">
+                      {/* <div class="mt-2"> */}
+                      <label for="basic-url" class="form-label mb-1">
+                        <b>{ele.title}</b>
+                      </label>
+                      <div class="input-group mb-2">
+                        <input
+                          type="test"
+                          class="form-control"
+                          onChange={(e) => {
+                            setGst(e.target.value);
+                          }}
+                          value={gst}
+                          required
+                        />
+                      </div>
                     </div>
                   </>
                 );
