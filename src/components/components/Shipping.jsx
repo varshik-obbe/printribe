@@ -85,7 +85,8 @@ function Shipping(props) {
       company === "" ||
       state === "" ||
       postalCode === "" ||
-      country === ""
+      country === "" ||
+      gst === null
     ) {
       if (fullName === "" || fullName.length < 2) {
         setShippingerrorName("Full name should be at of least 2 characters");
@@ -118,6 +119,10 @@ function Shipping(props) {
       if (mobile.toString().length < 8) {
         setShippingerrorMobile("Phone number invalid");
       }
+
+      if (gst === null) {
+        setShippingerrorGST("Gst field is required");
+      }
     }
 
     if (
@@ -129,7 +134,8 @@ function Shipping(props) {
       postalCode !== 0 &&
       city !== "" &&
       company !== "" &&
-      country !== ""
+      country !== "" &&
+      gst !== null
     ) {
       const formData = {
         shipping_data: {
@@ -205,6 +211,7 @@ function Shipping(props) {
   const [shippingErrorState, setShippingerrorState] = useState("");
   const [shippingErrorPostalCode, setShippingerrorPostalCode] = useState("");
   const [shippingErrorCountry, setShippingerrorCountry] = useState("");
+  const [shippingErrorGST, setShippingerrorGST] = useState("");
 
   const [gst, setGst] = useState(null);
 
@@ -418,9 +425,13 @@ function Shipping(props) {
                                 }}
                                 required
                               >
-                                <option value="clear">
-                                  Select Company...{" "}
-                                </option>
+                                {savedShipAddress && company !== "" ? (
+                                  <option value={company}>{company}</option>
+                                ) : (
+                                  <option value="clear">
+                                    Select Company...{" "}
+                                  </option>
+                                )}
 
                                 {shippingCompanies &&
                                   shippingCompanies.map((curr, index) => (
@@ -530,6 +541,11 @@ function Shipping(props) {
                           required
                         />
                       </div>
+                      {shippingErrorGST === "Gst field is required" && (
+                      <span class="text-danger d-block">
+                        {shippingErrorGST}
+                      </span>
+                    )}
                     </div>
                   </>
                 );
@@ -653,7 +669,6 @@ function Shipping(props) {
                             onChange={(e) =>
                               setRetailShippingPprice(e.target.value)
                             }
-                            value={retailShippingPprice}
                           />
                         ) : (
                           <input

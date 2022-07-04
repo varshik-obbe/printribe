@@ -18,12 +18,16 @@ function ReviewOrder({ handleNext }) {
   const [total_quantity, setTotal_Quantity] = useState(0);
   const [walletAmount, setWalletAmount] = useState(0);
   const [razorPayInitData, setRazorPayInitData] = useState();
-  const [totalBillingAmount, setTotalBillingAmouont] = useState(0);
+  const [totalBillingAmount, setTotalBillingAmount] = useState(0);
 
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
-  var customerShippingId = localStorage.getItem("customerShipping_id");
+  var customerShippingId = JSON.parse(
+    localStorage.getItem("shipping_data")
+  ).customer_id;
   // var total_quantity = localStorage.getItem("total_quantity");
-  var shipping_charges = localStorage.getItem("shipping_charges");
+  var shipping_charges = JSON.parse(
+    localStorage.getItem("shipping_data")
+  ).shipping_charges;
   var customerId = localStorage.getItem("customerId");
   var visitor_id = localStorage.getItem("visitorId");
   var zekekeData = JSON.parse(localStorage.getItem("zekekeData"));
@@ -37,6 +41,11 @@ function ReviewOrder({ handleNext }) {
   const [cartEmpty, setCartEmpty] = useState(
     !customizeProduct || customizeProduct.length === 0 ? true : false
   );
+
+  const [gstArr, setGSTArr] = useState([]);
+  const [sgstArr, setSGSTArr] = useState([]);
+  const [cgstArr, setCGSTArr] = useState([]);
+  const [igstArr, setIGSTArr] = useState([]);
 
   const productData = [];
   var productInfo = [];
@@ -71,19 +80,89 @@ function ReviewOrder({ handleNext }) {
     //setting customizeProduct with unique elements present in temp by id,size ,color & cumulated quanitities of similar products
     productInfo = temp;
 
+    let gst_details;
+    let shipping_data = JSON.parse(localStorage.getItem("shipping_data"));
+
+    //calculating igst ,cgst ,gst ,sgst values as per the shipping state
+    let sgstPercentage;
+    let sgstValue;
+
+    let cgstPercentage;
+    let cgstValue;
+
+    let igstPercentage;
+    let igstValue;
+
+    gstArr &&
+      gstArr.map((curr, itemIndex) => {
+        if (
+          JSON.parse(localStorage.getItem("shipping_data")).state ===
+          "Karnataka"
+        ) {
+          sgstPercentage = sgstArr[itemIndex].percentage;
+          sgstValue = (
+            (sgstArr[itemIndex].percentage * subTotal) /
+            100
+          ).toFixed(2);
+
+          cgstPercentage = cgstArr[itemIndex].percentage;
+          cgstValue = (
+            (cgstArr[itemIndex].percentage * subTotal) /
+            100
+          ).toFixed(2);
+        } else {
+          igstPercentage = igstArr[itemIndex].percentage;
+          igstValue = (
+            (igstArr[itemIndex].percentage * subTotal) /
+            100
+          ).toFixed(2);
+        }
+      });
+
+      // console.log(sgstPercentage)
+      // console.log(sgstValue)
+      // console.log(cgstPercentage)
+      // console.log(cgstValue)
+      // console.log(igstPercentage)
+      // console.log(igstValue)
+
+    if (shipping_data.state === "Karnataka") {
+      gst_details = [
+        {
+          gst_percent: String(sgstPercentage),
+          gst_amount: String(sgstValue),
+          gst_type: "sgst",
+        },
+        {
+          gst_percent: String(cgstPercentage),
+          gst_amount: String(cgstValue),
+          gst_type: "cgst",
+        },
+      ];
+    } else {
+      gst_details = [
+        {
+          gst_percent: String(igstPercentage),
+          gst_amount: String(igstValue),
+          gst_type: "igst",
+        },
+      ];
+    }
+
     const payData = {
       orderData: {
         customerShipping_id: customerShippingId,
         product_info: productInfo,
-        total_quantity: total_quantity.toFixed(2),
+        total_quantity: String(total_quantity),
         total_price: subTotal.toFixed(2),
-        shipping_charges: shipping_charges,
+        shipping_charges: String(shipping_charges),
         payment_type: "cash on delivery",
         payment_ref_id: "23451AAX",
         customer_email: customerEmail,
         visitor_id: visitor_id,
         courier_id: courierId,
         customer_id: customerId,
+        gst_details,
       },
     };
 
@@ -94,7 +173,11 @@ function ReviewOrder({ handleNext }) {
       .then(({ data }) => {
         Swal.fire("Order Accepted", "Transaction complete!", "success").then(
           () => {
-            setWalletAmount(walletAmount - totalBillingAmount > 0 ? (walletAmount - totalBillingAmount).toFixed(2) : 0);
+            setWalletAmount(
+              walletAmount - totalBillingAmount > 0
+                ? (walletAmount - totalBillingAmount).toFixed(2)
+                : 0
+            );
             window.location.href = "https://printribe-partner.web.app/";
           }
         );
@@ -242,13 +325,16 @@ function ReviewOrder({ handleNext }) {
       customizeProduct.forEach((curr) => {
         tempsubTotal += Number(curr.quantity) * Number(curr.price);
         temptotal_quantity += Number(curr.quantity);
+
+        //setting gst,igst,cgst,sgst arrays
+        addProduct(curr);
       });
     // setCartValue(tempsubTotal)
     setSubTotal(tempsubTotal);
     setTotal_Quantity(temptotal_quantity);
-    setTotalBillingAmouont(
-      tempsubTotal + Number(localStorage.getItem("shipping_charges"))
-    );
+    // setTotalBillingAmount(
+    //   tempsubTotal + Number(localStorage.getItem("shipping_charges"))
+    // );
     localStorage.setItem("subTotal", tempsubTotal);
     localStorage.setItem("total_quantity", temptotal_quantity);
   }, []);
@@ -280,10 +366,7 @@ function ReviewOrder({ handleNext }) {
         },
       })
       .then(({ data }) => {
-        apiCall(
-          walletAmount,
-          totalBillingAmount
-        );
+        apiCall(walletAmount, totalBillingAmount);
       });
   };
 
@@ -387,7 +470,6 @@ function ReviewOrder({ handleNext }) {
     axios
       .get(`/customerWallet/getWalletbyid/${customerId}`)
       .then(({ data }) => {
-      
         // console.log(parseFloat(data.wallet.amount.toFixed(2)));
         // console.log(parseFloat(totalBillingAmount.toFixed(2)));
 
@@ -422,11 +504,314 @@ function ReviewOrder({ handleNext }) {
             confirmButtonText: "Add amount and pay",
           }).then((result) => {
             if (result.isConfirmed) {
-              addAmount(parseFloat(remainingAmount).toFixed(2),"addRemainingAmount");
+              addAmount(
+                parseFloat(remainingAmount).toFixed(2),
+                "addRemainingAmount"
+              );
             }
           });
         }
       });
+  };
+
+  //initializing gst , igst, cgst,sgst arrays
+  const addProduct = (cartItem) => {
+    // console.log(cartItem)
+
+    let cartItemGST;
+
+    //fetching gst value of that product
+    axios
+      .get(
+        `https://api.theprintribe.com/api/products/getproduct/${cartItem.product_id}`
+      )
+      .then((res) => {
+        // console.log(res.data.product.productdata[0].gst)
+        cartItemGST = res.data.product.productdata[0].gst;
+
+        let tempGSTArr = gstArr;
+        let tempSGSTArr = sgstArr;
+        let tempIGSTArr = igstArr;
+        let tempCGSTArr = cgstArr;
+
+        // set gst
+        if (tempGSTArr.length > 0) {
+          let flag = false;
+
+          tempGSTArr.forEach((item, i) => {
+            let gstPercentage = Number(item.gst) / 2;
+
+            if (item.gst == cartItemGST) {
+              item.products++;
+
+              let sgstVal =
+                Math.round(
+                  Number(cartItem.price) *
+                    Number(cartItem.quantity) *
+                    (gstPercentage / 100) *
+                    100
+                ) / 100;
+
+              let igstVal =
+                Math.round(
+                  Number(cartItem.price) *
+                    Number(cartItem.quantity) *
+                    (Number(item.gst) / 100) *
+                    100
+                ) / 100;
+
+              tempSGSTArr[i].value = Number(tempSGSTArr[i].value) + sgstVal;
+              tempCGSTArr[i].value = Number(tempCGSTArr[i].value) + sgstVal;
+              tempIGSTArr[i].value = Number(tempIGSTArr[i].value) + igstVal;
+
+              setSGSTArr(tempSGSTArr);
+              setCGSTArr(tempCGSTArr);
+              setIGSTArr(tempIGSTArr);
+
+              flag = true;
+            }
+          });
+
+          if (!flag) {
+            tempGSTArr.push({
+              gst: cartItemGST,
+              products: 1,
+            });
+
+            let gstPercentage = Number(cartItemGST) / 2;
+
+            let sgstVal =
+              Math.round(
+                Number(cartItem.price) *
+                  Number(cartItem.quantity) *
+                  (gstPercentage / 100) *
+                  100
+              ) / 100;
+
+            let igstVal =
+              Math.round(
+                Number(cartItem.price) *
+                  Number(cartItem.quantity) *
+                  (Number(cartItemGST) / 100) *
+                  100
+              ) / 100;
+
+            tempSGSTArr.push({
+              percentage: Number(cartItemGST) / 2,
+              value: sgstVal,
+            });
+
+            tempCGSTArr.push({
+              percentage: Number(cartItemGST) / 2,
+              value: sgstVal,
+            });
+
+            tempIGSTArr.push({
+              percentage: Number(cartItemGST),
+              value: igstVal,
+            });
+
+            setGSTArr(tempGSTArr);
+            setSGSTArr(tempSGSTArr);
+            setCGSTArr(tempCGSTArr);
+            setIGSTArr(tempIGSTArr);
+          }
+        } else {
+          tempGSTArr.push({
+            gst: cartItemGST,
+            products: 1,
+          });
+
+          let gstPercentage = Number(cartItemGST) / 2;
+
+          let sgstVal =
+            Math.round(
+              Number(cartItem.price) *
+                Number(cartItem.quantity) *
+                (gstPercentage / 100) *
+                100
+            ) / 100;
+
+          let igstVal =
+            Math.round(
+              Number(cartItem.price) *
+                Number(cartItem.quantity) *
+                (Number(cartItemGST) / 100) *
+                100
+            ) / 100;
+
+          tempSGSTArr.push({
+            percentage: Number(cartItemGST) / 2,
+            value: sgstVal,
+          });
+
+          tempCGSTArr.push({
+            percentage: Number(cartItemGST) / 2,
+            value: sgstVal,
+          });
+
+          tempIGSTArr.push({
+            percentage: Number(cartItemGST),
+            value: igstVal,
+          });
+
+          setGSTArr(tempGSTArr);
+          setSGSTArr(tempSGSTArr);
+          setCGSTArr(tempCGSTArr);
+          setIGSTArr(tempIGSTArr);
+        }
+
+        console.log("cartItemGST", cartItemGST);
+        console.log("cartItem.price", cartItem.price);
+        console.log("cartItem.quantity", cartItem.quantity);
+        console.log("tempGSTArr", tempGSTArr);
+        console.log("tempCGSTArr", tempCGSTArr);
+        console.log("tempIGSTArr", tempIGSTArr);
+        console.log("tempSGSTArr", tempSGSTArr);
+
+        getTotalValue();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const deleteProduct = (i) => {
+    // reduce total weight
+    this.totalWeight =
+      Number(this.totalWeight) -
+      Number(this.productsData[i].weight) *
+        Number(this.productsData[i].quantity);
+
+    // reduce total height
+    this.dimensions.height =
+      Number(this.dimensions.height) -
+      Number(this.productsData[i].dimensions.height) *
+        Number(this.productsData[i].quantity);
+
+    // reduce total length
+    if (
+      Number(this.productsData[i].dimensions["length"]) ===
+      Number(this.dimensions["length"])
+    ) {
+      let maxLength = 0;
+      this.productsData.forEach((prod, j) => {
+        if (Number(prod.dimensions["length"]) > maxLength && i == j) {
+          maxLength = Number(prod.dimensions["length"]);
+        }
+      });
+      this.dimensions["length"] = maxLength;
+    }
+    // reduce total width
+    if (
+      Number(this.productsData[i].dimensions["width"]) ===
+      Number(this.dimensions["width"])
+    ) {
+      let maxWidth = 0;
+      this.productsData.forEach((prod, j) => {
+        if (Number(prod.dimensions["width"]) > maxWidth && i == j) {
+          maxWidth = Number(prod.dimensions["width"]);
+        }
+      });
+      this.dimensions["width"] = maxWidth;
+    }
+
+    // reduce total quantity
+    this.totalQuantity =
+      Number(this.totalQuantity) - Number(this.productsData[i].quantity);
+
+    // reduce total price
+    subTotal =
+      Number(this.totalPrice) -
+      Number(this.productsData[i].price) *
+        Number(this.productsData[i].quantity);
+
+    // reduce gst
+    let index = this.form.gst.indexOf();
+
+    this.form.gst.forEach((item, j) => {
+      if (item.gst == this.productsData[i].gst) {
+        index = j;
+      }
+    });
+    if (--this.form.gst[index].products == 0) {
+      console.log("index", index);
+      this.$delete(this.form.gst, index);
+    }
+    console.log(this.form.gst);
+    // reduce sgst, cgst and igst
+    this.form.sgst = [];
+    this.form.cgst = [];
+    this.form.igst = [];
+    this.form.gst.forEach((item) => {
+      let gstPercentage = Number(item.gst) / 2;
+      let sgstVal =
+        Math.round(Number(this.totalPrice) * (gstPercentage / 100) * 100) / 100;
+      let igstVal =
+        Math.round(Number(this.totalPrice) * (Number(item.gst) / 100) * 100) /
+        100;
+      this.form.sgst.push({ percentage: gstPercentage, value: sgstVal });
+      this.form.cgst.push({ percentage: gstPercentage, value: sgstVal });
+      this.form.igst.push({ percentage: Number(item.gst), value: igstVal });
+    });
+
+    this.$delete(this.productsData, i);
+    this.invoiceProductsTableKey++;
+  };
+
+  const getTotalValue = () => {
+    let result = 0;
+    let totalSgst = 0;
+    let totalCgst = 0;
+    let totalIgst = 0;
+
+    let tempSGSTArr = sgstArr;
+    let tempIGSTArr = igstArr;
+
+    let shipping_data = JSON.parse(localStorage.getItem("shipping_data"));
+
+    let tempsubTotal = 0;
+
+    customizeProduct &&
+      customizeProduct.forEach((curr) => {
+        tempsubTotal += Number(curr.quantity) * Number(curr.price);
+      });
+
+    if (shipping_data.state === "Karnataka") {
+      tempSGSTArr.forEach((item) => {
+        totalSgst += Number(item.value);
+      });
+
+      totalCgst = totalSgst;
+
+      result =
+        Math.round(
+          (Number(tempsubTotal) +
+            Number(shipping_data.shipping_charges) +
+            totalCgst +
+            totalSgst) *
+            100
+        ) / 100;
+    } else {
+      tempIGSTArr.forEach((item) => {
+        totalIgst += Number(item.value);
+      });
+
+      console.log(totalIgst);
+
+      console.log(tempsubTotal);
+      console.log(shipping_data.shipping_charges);
+
+      result =
+        Math.round(
+          (Number(tempsubTotal) +
+            Number(shipping_data.shipping_charges) +
+            totalIgst) *
+            100
+        ) / 100;
+    }
+
+    console.log("result", result);
+
+    setTotalBillingAmount(result);
   };
 
   return (
@@ -735,6 +1120,36 @@ function ReviewOrder({ handleNext }) {
                   <b>Shipping</b>
                   <b>{`₹${shipping_charges}`}</b>
                 </div>
+                {gstArr &&
+                  gstArr.map((curr, itemIndex) =>
+                    JSON.parse(localStorage.getItem("shipping_data")).state ===
+                    "Karnataka" ? (
+                      <>
+                        <div class="col-12 mt-3 d-flex justify-content-between">
+                          <b>{`SGST (${sgstArr[itemIndex].percentage}%)`}</b>
+                          <b>{`₹${(
+                            (sgstArr[itemIndex].percentage * subTotal) /
+                            100
+                          ).toFixed(2)}`}</b>
+                        </div>
+                        <div class="col-12 mt-3 d-flex justify-content-between">
+                          <b>{`CGST (${cgstArr[itemIndex].percentage}%)`}</b>
+                          <b>{`₹${(
+                            (cgstArr[itemIndex].percentage * subTotal) /
+                            100
+                          ).toFixed(2)}`}</b>
+                        </div>
+                      </>
+                    ) : (
+                      <div class="col-12 mt-3 d-flex justify-content-between">
+                        <b>{`IGST (${igstArr[itemIndex].percentage}%)`}</b>
+                        <b>{`₹${(
+                          (igstArr[itemIndex].percentage * subTotal) /
+                          100
+                        ).toFixed(2)}`}</b>
+                      </div>
+                    )
+                  )}
                 <hr class="my-3" style={{ height: "1px", width: "100%" }} />
                 <div class="col-12 d-flex justify-content-between">
                   <b class="fs-4">Total</b>

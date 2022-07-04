@@ -1,29 +1,36 @@
 {
   "orderData": {
-     "customerShipping_id": "62b94185b3ba24bca42466f2",
-     "product_info": [
-       {
-         "product_id": "62b5a4c132dcc85a26fc8241",
-         "title": "full sleeves tshirt",
-         "description": "full sleeves tshirt",
-         "price": "234",
-         "productsize": "S",
-         "productcolor": "white",
-         "product_img": "https://api.theprintribe.com/uploads/1656071361143img1554189083_black.png",
-         "category_id": "62b2e0ac0e99dc7c357058b3",
-         "quantity": "1",
-         "designID": "62b5a6e232dcc85a26fc84d0",
-         "zakeke_price": "0"
-       }
-     ],
-     "total_quantity": "1.00",
-     "total_price": "234.00",
-     "shipping_charges": "80.85",
-     "payment_type": "cash on delivery",
-     "payment_ref_id": "23451AAX",
-     "customer_email": "bhaveshdamor5555@gmail.com",
-     "visitor_id": "157895",
-     "courier_id": "43",
-     "customer_id": "620ba2e24283045b55b51062"
-   }
- }
+          "customerShipping_id": "62b5962a32dcc85a26fc654c",
+          "product_info": [
+      {
+          "product_id": "61f51492f71a1b6980db77bd",
+          "title": "womens casual t-shirt",
+          "description": "casual wear for women with cotton fabric",
+          "price": "200.00",
+          "productsize": "M",
+          "productcolor": "Aqua",
+          "product_img": "https://api.theprintribe.com/uploads/1643962122798imglogocolortextbelow.jpg",
+          "category_id": "61ae3c31e497b84f9e6bf698",
+          "quantity": "1",
+          "zakeke_price": "0",
+          "designID": "000-5cXpARknDkyL6rCwObQFnQ"
+      }
+  ],
+          "total_quantity": "1",
+          "total_price": "200.00",
+          "gst_details": [
+              {
+                  "gst_percent": "2.5",
+                  "gst_amount": "100",
+                  "gst_type": "igst"
+              }
+          ],            
+          "shipping_charges": "41.00",
+          "payment_type": "cash on delivery",
+          "payment_ref_id": "23451AAX",
+          "customer_email": "mktg@obbe.in",
+          "visitor_id": "251145",
+          "courier_id": "6",
+          "customer_id": "61e7a8af6b91a9d48b531e9c"
+  }
+}
