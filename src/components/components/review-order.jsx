@@ -21,9 +21,7 @@ function ReviewOrder({ handleNext }) {
   const [totalBillingAmount, setTotalBillingAmount] = useState(0);
 
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
-  var customerShippingId = JSON.parse(
-    localStorage.getItem("shipping_data")
-  ).customer_id;
+  var customerShippingId = localStorage.getItem("customerShipping_id");
   // var total_quantity = localStorage.getItem("total_quantity");
   var shipping_charges = JSON.parse(
     localStorage.getItem("shipping_data")
@@ -119,12 +117,12 @@ function ReviewOrder({ handleNext }) {
         }
       });
 
-      // console.log(sgstPercentage)
-      // console.log(sgstValue)
-      // console.log(cgstPercentage)
-      // console.log(cgstValue)
-      // console.log(igstPercentage)
-      // console.log(igstValue)
+    // console.log(sgstPercentage)
+    // console.log(sgstValue)
+    // console.log(cgstPercentage)
+    // console.log(cgstValue)
+    // console.log(igstPercentage)
+    // console.log(igstValue)
 
     if (shipping_data.state === "Karnataka") {
       gst_details = [
@@ -154,7 +152,7 @@ function ReviewOrder({ handleNext }) {
         customerShipping_id: customerShippingId,
         product_info: productInfo,
         total_quantity: String(total_quantity),
-        total_price: subTotal.toFixed(2),
+        total_price: totalBillingAmount.toFixed(2),
         shipping_charges: String(shipping_charges),
         payment_type: "cash on delivery",
         payment_ref_id: "23451AAX",
