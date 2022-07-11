@@ -113,11 +113,11 @@ const HowItWorks = () => {
           </svg>
         </div>
         <div
-          className="row d-flex justify-content-around"
+          className="row d-flex justify-content-around align-items-end"
           style={{ marginTop: "40px" }}
         >
-          <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 d-flex justify-content-end">
-            <img src={how1} alt="howitworks" className="img-fluid" />
+          <div className="col-xl-4 col-lg-6 col-md-5 col-sm-8 col-8 d-flex justify-content-end">
+            <img src={how1} alt="howitworks" className="img-fluid w-50 mx-auto" />
           </div>
 
           <div className="col-xl-6 col-lg-6 col-md-7 col-sm-12 col-12">
@@ -208,7 +208,7 @@ const HowItWorks = () => {
           </svg>
         </div>
         <div
-          className="row d-flex justify-content-around"
+          className="row d-flex justify-content-around align-items-center"
           style={{ marginTop: "40px" }}
         >
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 d-flex justify-content-end">
@@ -217,7 +217,7 @@ const HowItWorks = () => {
 
           <div className="col-xl-6 col-lg-6 col-md-7 col-sm-12 col-12">
             <h4
-              className="mt-5 mb-3"
+              className="mt-0 mb-3"
               style={{
                 color: "#0d3b66",
                 fontWeight: "500",
@@ -245,7 +245,7 @@ const HowItWorks = () => {
 
         <div
           className="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 text-center mr-5"
-          style={{ marginTop: "60px" }}
+          style={{ marginTop: "30px" }}
         >
           <svg style={{ width: "48px", height: "48px" }} viewBox="0 0 24 24">
             <path
@@ -256,7 +256,7 @@ const HowItWorks = () => {
         </div>
         <div
           className="row d-flex justify-content-around flex-row-reverse"
-          style={{ marginTop: "40px" }}
+          style={{ marginTop: "20px" }}
         >
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 d-flex justify-content-start">
             <img src={how4} alt="howitworks" className="img-fluid" />
@@ -292,7 +292,7 @@ const HowItWorks = () => {
 
         <div
           className="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 text-center mr-5"
-          style={{ marginTop: "60px" }}
+          style={{ marginTop: "40px" }}
         >
           <svg style={{ width: "48px", height: "48px" }} viewBox="0 0 24 24">
             <path
@@ -303,7 +303,7 @@ const HowItWorks = () => {
         </div>
         <div
           className="row d-flex justify-content-around"
-          style={{ marginTop: "40px" }}
+          style={{ marginTop: "20px" }}
         >
           <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 d-flex justify-content-end">
             <img src={how5} alt="howitworks" className="img-fluid" />
@@ -340,7 +340,7 @@ const HowItWorks = () => {
 
         <div
           className="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 text-center mr-5"
-          style={{ marginTop: "60px" }}
+          style={{ marginTop: "40px" }}
         >
           <svg style={{ width: "48px", height: "48px" }} viewBox="0 0 24 24">
             <path
@@ -385,7 +385,7 @@ const HowItWorks = () => {
           </div>
         </div>
 
-        <div
+        {/* <div
           className="col-xl-10 col-lg-10 col-md-9 col-sm-12 col-12 text-center mr-5"
           style={{ marginTop: "60px" }}
         >
@@ -395,8 +395,8 @@ const HowItWorks = () => {
               d="M13,15L17,7V5H11V7H15L11,15M21,17H7V3H21M21,1H7A2,2 0 0,0 5,3V17A2,2 0 0,0 7,19H21A2,2 0 0,0 23,17V3A2,2 0 0,0 21,1M3,5H1V21A2,2 0 0,0 3,23H19V21H3V5Z"
             />
           </svg>
-        </div>
-        <div
+        </div> */}
+        {/* <div
           className="row d-flex justify-content-around mb-5"
           style={{ marginTop: "40px" }}
         >
@@ -431,7 +431,7 @@ const HowItWorks = () => {
               raised at the end of each month.
             </h5>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <hr />
