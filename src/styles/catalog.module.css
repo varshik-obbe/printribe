@@ -20,7 +20,7 @@
 
 .cardImg {
   width: 100%;
-  object-fit: fill;
+  object-fit: contain;
   aspect-ratio: 4/3; 
 }
 

@@ -203,21 +203,7 @@ function Signup() {
                 />
               </div>
               {/* ----- Sign Up with Email Button ----- */}
-              <div>
-                <Link to={redirect_url === "from_wix_integrations" ? "/signin?redirect=from_wix_integrations" :"/signin?redirect=from_signup"}>
-                  <button
-                    type="button"
-                    class="btn btn-primary w-100 fw-bold"
-                    style={{
-                      color: "#FFF",
-                      background: "#1F649F",
-                      marginTop: "10px",
-                    }}
-                  >
-                    Sign in with your email
-                  </button>
-                </Link>
-              </div>
+              
               <div class="d-flex mt-3">
                 <span>Don't Have an Account?</span>
                 <span class="mx-4">Sign up now</span>
@@ -315,6 +301,21 @@ function Signup() {
                   <FcGoogle style={{ fontSize: "25px" }} /> Sign up with Google
                 </span>
               </button>
+              <div>
+                <Link to={redirect_url === "from_wix_integrations" ? "/signin?redirect=from_wix_integrations" :"/signin?redirect=from_signup"}>
+                  <button
+                    type="button"
+                    class="btn btn-primary w-100 fw-bold"
+                    style={{
+                      color: "#FFF",
+                      background: "#1F649F",
+                      marginTop: "10px",
+                    }}
+                  >
+                    Sign in with your email
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="col-12 col-sm-12 col-md-6 col-lg-6">

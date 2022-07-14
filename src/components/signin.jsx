@@ -187,21 +187,7 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
                 />
               </div>
               {/* ----- Sign Up with Email Button ----- */}
-              <div>
-                <Link to={redirect_url === "from_wix_integrations" ? "/signup?redirect=from_wix_integrations" :"/signup?redirect=from_signin"}>
-                  <button
-                    type="button"
-                    class="btn btn-primary w-100 fw-bold"
-                    style={{
-                      color: "#FFF",
-                      background: "#1F649F",
-                      marginTop: "15px",
-                    }}
-                  >
-                    Sign up with your email
-                  </button>
-                </Link>
-              </div>
+              
               <div class="d-flex mt-3">
                 <span>Already a member?</span>
                 <span class="mx-4">Sign in now</span>
@@ -288,6 +274,21 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
                   <FcGoogle style={{ fontSize: "25px" }} /> Sign in with Google
                 </span>
               </button>
+              <div>
+                <Link to={redirect_url === "from_wix_integrations" ? "/signup?redirect=from_wix_integrations" :"/signup?redirect=from_signin"}>
+                  <button
+                    type="button"
+                    class="btn btn-primary w-100 fw-bold"
+                    style={{
+                      color: "#FFF",
+                      background: "#1F649F",
+                      marginTop: "15px",
+                    }}
+                  >
+                    Sign up with your email
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
           <div className="col-12 col-sm-12 col-md-6 col-lg-6">
