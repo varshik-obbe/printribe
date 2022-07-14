@@ -358,12 +358,34 @@ function Hero() {
           }
         });
       }
-      setWidthInches(
-        fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
-      );
-      setHeightInches(
-        fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
-      );
+      if (
+        fabricInfo.variant[colorIndex].frontImgDimensions.scaleWidth !== 0 &&
+        fabricInfo.variant[colorIndex].frontImgDimensions.scaleWidth !== ""
+      ) {
+        setWidthInches(
+          parseFloat(
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
+          ) /
+            parseFloat(
+              fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleWidth
+            )
+        );
+        setHeightInches(
+          parseFloat(
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
+          ) /
+            parseFloat(
+              fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleHeight
+            )
+        );
+      } else {
+        setWidthInches(
+          fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
+        );
+        setHeightInches(
+          fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
+        );
+      }
 
       //images moved inside the canvas
       editor?.canvas.on("object:moving", function (e) {
@@ -623,7 +645,7 @@ function Hero() {
           if (aop) {
             img.objectCaching = false;
             img.globalCompositeOperation = "source-atop";
-            img.opacity = 0.4;
+            img.opacity = 0.8;
             let scaleX;
             scaleX = parseInt(470) / parseInt(img.width);
             let scaleY = 612 / parseInt(img.height);
