@@ -363,20 +363,24 @@ function Hero() {
         fabricInfo.variant[colorIndex].frontImgDimensions.scaleWidth !== ""
       ) {
         setWidthInches(
-          parseFloat(
-            fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
-          ) /
+          (
+            parseFloat(
+              fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
+            ) /
             parseFloat(
               fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleWidth
             )
+          ).toFixed(2)
         );
         setHeightInches(
-          parseFloat(
-            fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
-          ) /
+          (
+            parseFloat(
+              fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
+            ) /
             parseFloat(
               fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleHeight
             )
+          ).toFixed(2)
         );
       } else {
         setWidthInches(
@@ -457,27 +461,61 @@ function Hero() {
               if (sides == "one") {
                 fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.width && val.width !== null) {
-                      if (index == 0) {
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
-                        scalePrice =
-                          parseFloat(val.widthInches) *
-                          parseFloat(val.heightInches) *
-                          parseFloat(val.garment_price);
+                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            (parseFloat(val.widthInches) /
+                              parseFloat(val.scaleWidth)) *
+                            (parseFloat(val.heightInches) /
+                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() > val.width &&
+                          o.getScaledHeight() > val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            (widthnewInches / parseFloat(val.scaleWidth)) *
+                            (heightnewInches / parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
+                        }
                       }
-                      if (
-                        o.getScaledWidth() > val.width &&
-                        o.getScaledHeight() > val.height
-                      ) {
-                        let widthnewInches = o.getScaledWidth() / 10;
-                        let heightnewInches = o.getScaledHeight() / 10;
-                        scalePrice =
-                          parseFloat(widthnewInches) *
-                          parseFloat(heightnewInches) *
-                          parseFloat(val.garment_price);
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
+                    } else {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() > val.width &&
+                          o.getScaledHeight() > val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            parseFloat(widthnewInches) *
+                            parseFloat(heightnewInches) *
+                            parseFloat(val.garment_price);
+                          widthInches = parseFloat(o.getScaledWidth()) / 10;
+                          heightInches = parseFloat(o.getScaledHeight()) / 10;
+                        }
                       }
                     }
                   }
@@ -485,27 +523,61 @@ function Hero() {
               } else if (sides == "two") {
                 fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.width && val.width !== null) {
-                      if (index == 0) {
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
-                        scalePrice =
-                          parseFloat(val.widthInches) *
-                          parseFloat(val.heightInches) *
-                          parseFloat(val.garment_price);
+                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            (parseFloat(val.widthInches) /
+                              parseFloat(val.scaleWidth)) *
+                            (parseFloat(val.heightInches) /
+                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() >= val.width &&
+                          o.getScaledHeight() >= val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            (widthnewInches / parseFloat(val.scaleWidth)) *
+                            (heightnewInches / parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
+                        }
                       }
-                      if (
-                        o.getScaledWidth() >= val.width &&
-                        o.getScaledHeight() >= val.height
-                      ) {
-                        let widthnewInches = o.getScaledWidth() / 10;
-                        let heightnewInches = o.getScaledHeight() / 10;
-                        scalePrice =
-                          parseFloat(widthnewInches) *
-                          parseFloat(heightnewInches) *
-                          parseFloat(val.garment_price);
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
+                    } else {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() >= val.width &&
+                          o.getScaledHeight() >= val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            parseFloat(widthnewInches) *
+                            parseFloat(heightnewInches) *
+                            parseFloat(val.garment_price);
+                          widthInches = parseFloat(o.getScaledWidth()) / 10;
+                          heightInches = parseFloat(o.getScaledHeight()) / 10;
+                        }
                       }
                     }
                   }
@@ -513,27 +585,61 @@ function Hero() {
               } else if (sides == "three") {
                 fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.width && val.width !== null) {
-                      if (index == 0) {
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
-                        scalePrice =
-                          parseFloat(val.widthInches) *
-                          parseFloat(val.heightInches) *
-                          parseFloat(val.garment_price);
+                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            (parseFloat(val.widthInches) /
+                              parseFloat(val.scaleWidth)) *
+                            (parseFloat(val.heightInches) /
+                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() >= val.width &&
+                          o.getScaledHeight() >= val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            (widthnewInches / parseFloat(val.scaleWidth)) *
+                            (heightnewInches / parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
+                        }
                       }
-                      if (
-                        o.getScaledWidth() >= val.width &&
-                        o.getScaledHeight() >= val.height
-                      ) {
-                        let widthnewInches = o.getScaledWidth() / 10;
-                        let heightnewInches = o.getScaledHeight() / 10;
-                        scalePrice =
-                          parseFloat(widthnewInches) *
-                          parseFloat(heightnewInches) *
-                          parseFloat(val.garment_price);
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
+                    } else {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() >= val.width &&
+                          o.getScaledHeight() >= val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            parseFloat(widthnewInches) *
+                            parseFloat(heightnewInches) *
+                            parseFloat(val.garment_price);
+                          widthInches = parseFloat(o.getScaledWidth()) / 10;
+                          heightInches = parseFloat(o.getScaledHeight()) / 10;
+                        }
                       }
                     }
                   }
@@ -541,36 +647,71 @@ function Hero() {
               } else if (sides == "four") {
                 fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.width && val.width !== null) {
-                      if (index == 0) {
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
-                        scalePrice =
-                          parseFloat(val.widthInches) *
-                          parseFloat(val.heightInches) *
-                          parseFloat(val.garment_price);
+                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            (parseFloat(val.widthInches) /
+                              parseFloat(val.scaleWidth)) *
+                            (parseFloat(val.heightInches) /
+                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() >= val.width &&
+                          o.getScaledHeight() >= val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            (widthnewInches / parseFloat(val.scaleWidth)) *
+                            (heightnewInches / parseFloat(val.scaleHeight)) *
+                            parseFloat(val.garment_price);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
+                        }
                       }
-                      if (
-                        o.getScaledWidth() >= val.width &&
-                        o.getScaledHeight() >= val.height
-                      ) {
-                        let widthnewInches = o.getScaledWidth() / 10;
-                        let heightnewInches = o.getScaledHeight() / 10;
-                        scalePrice =
-                          parseFloat(widthnewInches) *
-                          parseFloat(heightnewInches) *
-                          parseFloat(val.garment_price);
-                        widthInches = val.widthInches;
-                        heightInches = val.heightInches;
+                    } else {
+                      if (val.width && val.width !== null) {
+                        if (index == 0) {
+                          widthInches = parseFloat(val.widthInches);
+                          heightInches = parseFloat(val.heightInches);
+                          scalePrice =
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
+                            parseFloat(val.garment_price);
+                        }
+                        if (
+                          o.getScaledWidth() >= val.width &&
+                          o.getScaledHeight() >= val.height
+                        ) {
+                          let widthnewInches = o.getScaledWidth() / 10;
+                          let heightnewInches = o.getScaledHeight() / 10;
+                          scalePrice =
+                            parseFloat(widthnewInches) *
+                            parseFloat(heightnewInches) *
+                            parseFloat(val.garment_price);
+                          widthInches = parseFloat(o.getScaledWidth()) / 10;
+                          heightInches = parseFloat(o.getScaledHeight()) / 10;
+                        }
                       }
                     }
                   }
                 );
               }
-              let newHeight = parseFloat(o.getScaledHeight()) / 10;
-              let newWidth = parseFloat(o.getScaledWidth()) / 10;
-              setWidthInches(newWidth.toFixed(2));
-              setHeightInches(newHeight.toFixed(2));
+
+              let newHeight = heightInches;
+              let newWidth = widthInches;
+              setWidthInches(parseFloat(newWidth.toFixed(2)));
+              setHeightInches(parseFloat(newHeight.toFixed(2)));
               totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
               setPriceSet(totPrice);
             }
@@ -742,60 +883,124 @@ function Hero() {
             if (sides == "one") {
               fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.width && val.width !== null) {
-                    lastPrice =
-                      parseFloat(heightInches) *
-                      parseFloat(widthInches) *
-                      parseFloat(val.garment_price);
-                    lastWidthInches = val.widthInches;
-                    lastHeightInches = val.heightInches;
+                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(val.scaleHeight)) *
+                        (parseFloat(widthInches) / parseFloat(val.scaleWidth)) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) / parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(heightInches) / parseFloat(val.scaleHeight);
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(heightInches) *
+                        parseFloat(widthInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
                   }
                 }
               );
             } else if (sides == "two") {
               fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.width && val.width !== null) {
-                    lastPrice =
-                      parseFloat(widthInches) *
-                      parseFloat(heightInches) *
-                      parseFloat(val.garment_price);
-                    lastWidthInches = val.widthInches;
-                    lastHeightInches = val.heightInches;
+                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(val.scaleHeight)) *
+                        (parseFloat(widthInches) / parseFloat(val.scaleWidth)) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) / parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(heightInches) / parseFloat(val.scaleHeight);
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(widthInches) *
+                        parseFloat(heightInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
                   }
                 }
               );
             } else if (sides == "three") {
               fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.width && val.width !== null) {
-                    lastPrice =
-                      parseFloat(widthInches) *
-                      parseFloat(heightInches) *
-                      parseFloat(val.garment_price);
-                    lastWidthInches = val.widthInches;
-                    lastHeightInches = val.heightInches;
+                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(val.scaleHeight)) *
+                        (parseFloat(widthInches) / parseFloat(val.scaleWidth)) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) / parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(heightInches) / parseFloat(val.scaleHeight);
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(widthInches) *
+                        parseFloat(heightInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
                   }
                 }
               );
             } else if (sides == "four") {
               fabricInfo.variant[colorIndex].rightCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.width && val.width !== null) {
-                    lastPrice =
-                      parseFloat(widthInches) *
-                      parseFloat(heightInches) *
-                      parseFloat(val.garment_price);
-                    lastWidthInches = val.widthInches;
-                    lastHeightInches = val.heightInches;
+                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(val.scaleHeight)) *
+                        (parseFloat(widthInches) / parseFloat(val.scaleWidth)) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) / parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(heightInches) / parseFloat(val.scaleHeight);
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(widthInches) *
+                        parseFloat(heightInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
                   }
                 }
               );
             }
             totPrice = parseInt(product.price, 10) + parseFloat(lastPrice);
-            setPriceSet(totPrice);
-            setWidthInches(widthInches);
-            setHeightInches(heightInches);
+            setPriceSet(parseFloat(totPrice.toFixed(2)));
+            setWidthInches(parseFloat(widthInches.toFixed(2)));
+            setHeightInches(parseFloat(heightInches.toFixed(2)));
           }
         },
         { crossOrigin: "anonymous" }
