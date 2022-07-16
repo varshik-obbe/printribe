@@ -464,18 +464,26 @@ function Hero() {
                     if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
                           scalePrice =
-                            (parseFloat(val.widthInches) /
-                              parseFloat(val.scaleWidth)) *
-                            (parseFloat(val.heightInches) /
-                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
                             parseFloat(val.garment_price);
                         }
                         if (
-                          o.getScaledWidth() > val.width &&
-                          o.getScaledHeight() > val.height
+                          parseFloat(o.getScaledWidth()) /
+                            parseFloat(val.scaleWidth) >
+                            parseFloat(val.width) &&
+                          parseFloat(o.getScaledHeight()) /
+                            parseFloat(val.scaleHeight) >
+                            parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -496,8 +504,8 @@ function Hero() {
                     } else {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches = o.getScaledWidth() / 10;
+                          heightInches = o.getScaledHeight() / 10;
                           scalePrice =
                             parseFloat(val.widthInches) *
                             parseFloat(val.heightInches) *
@@ -526,18 +534,26 @@ function Hero() {
                     if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
                           scalePrice =
-                            (parseFloat(val.widthInches) /
-                              parseFloat(val.scaleWidth)) *
-                            (parseFloat(val.heightInches) /
-                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
                             parseFloat(val.garment_price);
                         }
                         if (
-                          o.getScaledWidth() >= val.width &&
-                          o.getScaledHeight() >= val.height
+                          parseFloat(o.getScaledWidth()) /
+                            parseFloat(val.scaleWidth) >
+                            parseFloat(val.width) &&
+                          parseFloat(o.getScaledHeight()) /
+                            parseFloat(val.scaleHeight) >
+                            parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -558,8 +574,8 @@ function Hero() {
                     } else {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches = o.getScaledWidth() / 10;
+                          heightInches = o.getScaledHeight() / 10;
                           scalePrice =
                             parseFloat(val.widthInches) *
                             parseFloat(val.heightInches) *
@@ -588,18 +604,26 @@ function Hero() {
                     if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
                           scalePrice =
-                            (parseFloat(val.widthInches) /
-                              parseFloat(val.scaleWidth)) *
-                            (parseFloat(val.heightInches) /
-                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
                             parseFloat(val.garment_price);
                         }
                         if (
-                          o.getScaledWidth() >= val.width &&
-                          o.getScaledHeight() >= val.height
+                          parseFloat(o.getScaledWidth()) /
+                            parseFloat(val.scaleWidth) >
+                            parseFloat(val.width) &&
+                          parseFloat(o.getScaledHeight()) /
+                            parseFloat(val.scaleHeight) >
+                            parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -620,8 +644,8 @@ function Hero() {
                     } else {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches = o.getScaledWidth() / 10;
+                          heightInches = o.getScaledHeight() / 10;
                           scalePrice =
                             parseFloat(val.widthInches) *
                             parseFloat(val.heightInches) *
@@ -650,18 +674,26 @@ function Hero() {
                     if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches =
+                            parseFloat(o.getScaledWidth()) /
+                            10 /
+                            parseFloat(val.scaleWidth);
+                          heightInches =
+                            parseFloat(o.getScaledHeight()) /
+                            10 /
+                            parseFloat(val.scaleHeight);
                           scalePrice =
-                            (parseFloat(val.widthInches) /
-                              parseFloat(val.scaleWidth)) *
-                            (parseFloat(val.heightInches) /
-                              parseFloat(val.scaleHeight)) *
+                            parseFloat(val.widthInches) *
+                            parseFloat(val.heightInches) *
                             parseFloat(val.garment_price);
                         }
                         if (
-                          o.getScaledWidth() >= val.width &&
-                          o.getScaledHeight() >= val.height
+                          parseFloat(o.getScaledWidth()) /
+                            parseFloat(val.scaleWidth) >
+                            parseFloat(val.width) &&
+                          parseFloat(o.getScaledHeight()) /
+                            parseFloat(val.scaleHeight) >
+                            parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -682,8 +714,8 @@ function Hero() {
                     } else {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
-                          widthInches = parseFloat(val.widthInches);
-                          heightInches = parseFloat(val.heightInches);
+                          widthInches = o.getScaledWidth() / 10;
+                          heightInches = o.getScaledHeight() / 10;
                           scalePrice =
                             parseFloat(val.widthInches) *
                             parseFloat(val.heightInches) *
@@ -1106,7 +1138,9 @@ function Hero() {
         console.log("before", customizeProduct);
 
         var node = imageref.current;
-
+        const designPrice =
+          parseFloat(priceSet) * productQuantity -
+          parseFloat(product.price) * productQuantity;
         axios
           .get(
             `/fabricDesigns/getFabricDesign/${prodid}/${fabricInfo.variant[colorIndex].colorName}/${sides}/${customerId}`
@@ -1138,6 +1172,7 @@ function Hero() {
                     link: dataUrl,
                     title: productName,
                     designId: dataFabr.data.fabricData._id,
+                    design_price: parseFloat(designPrice.toFixed(2)),
                     price: product.price,
                     productImg: `https://api.theprintribe.com/${product.img}`,
                   });
@@ -1161,7 +1196,20 @@ function Hero() {
                   // link.href = dataUrl;
                   // link.click();
                   var jsonData = JSON.stringify(editor?.canvas.toJSON());
-                  var imgdata = editor?.canvas.toDataURL({ multiplier: 1 });
+                  let objRect;
+                  let objs = editor?.canvas.getObjects();
+                  objs.forEach((o) => {
+                    if (o.type === "rect") {
+                      objRect = o.getBoundingRect();
+                    }
+                  });
+                  var imgdata = editor?.canvas.toDataURL({
+                    multiplier: 1,
+                    left: objRect.left,
+                    top: objRect.top,
+                    width: objRect.width,
+                    height: objRect.height,
+                  });
                   axios
                     .post(`/fabricDesigns/addDesign`, {
                       data: {
@@ -1187,6 +1235,7 @@ function Hero() {
                         link: dataUrl,
                         title: productName,
                         designId: datasavedFabr.data.data._id,
+                        design_price: parseFloat(designPrice.toFixed(2)),
                         price: product.price,
                         productImg: `https://api.theprintribe.com/${product.img}`,
                       });
