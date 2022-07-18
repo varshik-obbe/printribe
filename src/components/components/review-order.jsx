@@ -19,6 +19,7 @@ function ReviewOrder({ handleNext }) {
   const [walletAmount, setWalletAmount] = useState(0);
   const [razorPayInitData, setRazorPayInitData] = useState();
   const [totalBillingAmount, setTotalBillingAmount] = useState(0);
+  const [designPrice,setDesignPrice] = useState([])
 
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
   var customerShippingId = localStorage.getItem("customerShipping_id");
@@ -318,11 +319,13 @@ function ReviewOrder({ handleNext }) {
   useEffect(() => {
     var tempsubTotal = 0;
     var temptotal_quantity = 0;
+    let design_price = []
 
     customizeProduct &&
       customizeProduct.forEach((curr) => {
         tempsubTotal += Number(curr.quantity) * Number(curr.price);
         temptotal_quantity += Number(curr.quantity);
+        design_price.push({designPrice:Number(curr.design_price),totalDesignPrice:Number(curr.quantity)*Number(curr.design_price)})
 
         //setting gst,igst,cgst,sgst arrays
         addProduct(curr);
@@ -330,6 +333,7 @@ function ReviewOrder({ handleNext }) {
     // setCartValue(tempsubTotal)
     setSubTotal(tempsubTotal);
     setTotal_Quantity(temptotal_quantity);
+    setDesignPrice(design_price)
     // setTotalBillingAmount(
     //   tempsubTotal + Number(localStorage.getItem("shipping_charges"))
     // );
@@ -770,8 +774,10 @@ function ReviewOrder({ handleNext }) {
 
     customizeProduct &&
       customizeProduct.forEach((curr) => {
-        tempsubTotal += Number(curr.quantity) * Number(curr.price);
+        tempsubTotal += (Number(curr.quantity) * Number(curr.price)) + (Number(curr.quantity) * Number(curr.design_price));
       });
+
+      localStorage.setItem("subTotal",tempsubTotal);
 
     if (shipping_data.state === "Karnataka") {
       tempSGSTArr.forEach((item) => {
@@ -793,10 +799,10 @@ function ReviewOrder({ handleNext }) {
         totalIgst += Number(item.value);
       });
 
-      console.log(totalIgst);
+      // console.log(totalIgst);
 
-      console.log(tempsubTotal);
-      console.log(shipping_data.shipping_charges);
+      // console.log(tempsubTotal);
+      // console.log(shipping_data.shipping_charges);
 
       result =
         Math.round(
@@ -850,6 +856,7 @@ function ReviewOrder({ handleNext }) {
                       cartItems={customizeProduct}
                       handleDeleteCartItem={handleDeleteCartItem}
                       handleEdit={handleEdit}
+                      DesignPrice={designPrice}
                     />
                   )
               )}

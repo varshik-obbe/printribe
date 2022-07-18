@@ -94,7 +94,7 @@ function Products({ handleNext }) {
       cartItems &&
         cartItems.forEach((ele) => {
           if (ele.prodId === curr.product_id) {
-            subTotal += Number(curr.quantity) * Number(ele.price);
+            subTotal += (Number(curr.quantity) * Number(ele.price)) + (Number(curr.quantity) * Number(curr.design_price))
           }
         });
       total_quantity += Number(curr.quantity);

@@ -12,6 +12,7 @@ const CartItems = ({
   handleDeleteCartItem,
   handleEdit,
   getRetailPrice,
+  
 }) => {
   const [quantity, setQuantity] = useState(cartProduct.quantity);
 
@@ -104,7 +105,7 @@ const CartItems = ({
         </div>
       </div>
       <div
-        class={["col-12 col-md-6 col-lg-3 px-0", classes.productGrid2].join(
+        class={["col-12 col-md-6 col-lg-2 px-0", classes.productGrid2].join(
           " "
         )}
       >
@@ -114,10 +115,9 @@ const CartItems = ({
           style={{ height: "2px", background: "#999" }}
         />
         <div class="row">
-          <div class="col-6 col-lg-5">
+          <div class="col-6 col-lg-7">
             <div
               style={{
-                height: "140px",
                 border: "1px solid #d0d0d0",
                 borderRadius: "5px 5px 0 0",
               }}
@@ -126,8 +126,8 @@ const CartItems = ({
                 src={cartProduct.link}
                 alt=""
                 style={{
-                  objectFit: "fit",
-                  height: "100%",
+                  objectFit: "contain",
+                  height: "90%",
                   width: "100%",
                 }}
               />
@@ -182,6 +182,20 @@ const CartItems = ({
       </div>
       <div
         class={[
+          "col-4 col-sm-3 col-lg-1 px-0 d-flex align-items-center flex-column",
+          classes.productGrid4,
+        ].join(" ")}
+      >
+        <span class="fs-6" style={{whiteSpace: "nowrap"}}>DESIGN PRICE</span>
+        <hr
+          class="w-100 mt-2 mb-4"
+          style={{ height: "2px", background: "#999" }}
+        />
+
+        <b class="fs-5">{`₹${cartProduct.design_price}`}</b>
+      </div>
+      <div
+        class={[
           "col-4 col-sm-4 col-lg-2 px-0 d-flex align-items-center flex-column",
           classes.productGrid5,
         ].join(" ")}
@@ -206,7 +220,7 @@ const CartItems = ({
             ₹
           </div>
           <input
-            value={quantity * cartProduct.price}
+            value={(quantity * cartProduct.price)+(quantity * cartProduct.design_price)}
             style={{
               height: "40px",
               width: "80px",
