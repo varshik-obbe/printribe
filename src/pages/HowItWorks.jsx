@@ -464,7 +464,7 @@ const HowItWorks = () => {
           className="img-fluid col-xl-3 col-lg-4 col-md-5 col-sm-5 col-5"
         />
         <div>
-          <h3 style={{ color: "#fff" }}>
+          <h3 style={{ color: "#888888" }}>
             Signup Now and grow your brand with us.
           </h3>
           <button onClick={() => navigate('/signup')}>Signup</button>

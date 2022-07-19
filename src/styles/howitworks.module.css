@@ -3,7 +3,7 @@
 }
 
 .signup {
-  background-color: #ee3c2f;
+  background-color:rgb(255 241 201);
   display: flex;
   justify-content: space-between;
   padding: 80px 20px;
@@ -22,7 +22,8 @@
 }
 
 .signup div button {
-  border: 1px solid #fff;
+  background-color:#ee3c2f;
+  border: none;
   width: 20%;
   color: #fff !important;
   font-size: 16px;
@@ -31,9 +32,9 @@
 }
 
 .signup div button:hover {
+  background-color:#b12f26;
   cursor: pointer;
-  background-color: #fff;
-  color: #ee3c2f !important;
+  color: #fff !important;
 }
 
 @media (max-width: 1150px) {
