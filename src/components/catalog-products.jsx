@@ -23,6 +23,7 @@ const Catalogproducts = () => {
                 console.log(subproduct.products);
               }
             }
+
             subproduct.subsubCategories.map((subsubproduct) => {
               if (subsubproduct.id === productid) {
                 if (subsubproduct.products) {
@@ -49,34 +50,36 @@ const Catalogproducts = () => {
         <div className="row mt-3 mb-3 mx-0">
           {collection.map((category) => {
             return (
-              <div
-                className="col-lg-4 col-md-6 col-sm-12 p-2"
-                key={category.id}
-              >
-                <div className={`card ${styles.catalogcontainer}`}>
-                  <Link
-                    to={`/fabricDesign/${category.id}`}
-                    className={styles.catalogText}
-                  >
-                    <img
-                      class="card-img-top"
-                      className={styles.cardImg}
-                      src={
-                        process.env.REACT_APP_IMAGE_BASE_URL +
-                        "/" +
-                        category.cover_img
-                      }
-                      alt={category.name}
-                    />
-                    <div
-                      class="card_body h-25 p-2"
-                      className={styles.card_body}
+              category.active && category.active === "true" && (
+                <div
+                  className="col-lg-4 col-md-6 col-sm-12 p-2"
+                  key={category.id}
+                >
+                  <div className={`card ${styles.catalogcontainer}`}>
+                    <Link
+                      to={`/fabricDesign/${category.id}`}
+                      className={styles.catalogText}
                     >
-                      <p class="card-text fw-bold">{category.title}</p>
-                    </div>
-                  </Link>
+                      <img
+                        class="card-img-top"
+                        className={styles.cardImg}
+                        src={
+                          process.env.REACT_APP_IMAGE_BASE_URL +
+                          "/" +
+                          category.cover_img
+                        }
+                        alt={category.name}
+                      />
+                      <div
+                        class="card_body h-25 p-2"
+                        className={styles.card_body}
+                      >
+                        <p class="card-text fw-bold">{category.title}</p>
+                      </div>
+                    </Link>
+                  </div>
                 </div>
-              </div>
+              )
             );
           })}
         </div>
