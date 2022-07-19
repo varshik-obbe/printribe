@@ -43,7 +43,7 @@ function Catagories() {
                                                 <Accordion.Body style={{ border: "none" ,padding:"0px" }}>
                                                     {
                                                         subproduct.subsubCategories ? subproduct.subsubCategories.map((subsubproduct) => {
-                                                            return <Accordion.Body><Link className='Link' to={`/products/${subsubproduct.id}`} style={{ textDecoration: "none", fontWeight:"600", color: "black" }} >  <span style={{ colorL: "black" }}>{subsubproduct.name}</span> </Link></Accordion.Body>
+                                                            return <Accordion.Body><Link className='Link' to={`/products/${subsubproduct.id}`} style={{ textDecoration: "none", fontWeight:"400", color: "black" }} >  <span style={{ colorL: "black" }}>{subsubproduct.name}</span> </Link></Accordion.Body>
                                                         }) : null
                                                     }
                                                 </Accordion.Body>
