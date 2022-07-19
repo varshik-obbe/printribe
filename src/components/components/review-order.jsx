@@ -148,6 +148,13 @@ function ReviewOrder({ handleNext }) {
       ];
     }
 
+    let totalDesignPrice = 0;
+
+    designPrice.map((curr) => {
+      totalDesignPrice += curr.totalDesignPrice
+    })
+    console.log(totalDesignPrice)
+
     const payData = {
       orderData: {
         customerShipping_id: customerShippingId,
@@ -162,6 +169,7 @@ function ReviewOrder({ handleNext }) {
         courier_id: courierId,
         customer_id: customerId,
         gst_details,
+        design_price:totalDesignPrice.toFixed(2)
       },
     };
 
