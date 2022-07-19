@@ -17,7 +17,8 @@ const Services = () => {
           <h1 className="col-12 my-5 text-center" style={{ color: "#0D3B66" }}>
             Custom Branding Services
           </h1>
-          <h3
+          <h1 className='col-12 mb-5 text-center' style={{color:'#EE3C2F'}}>COMING SOON!</h1>
+          {/* <h3
             className="col-xl-5 col-lg-10 col-md-12 col-sm-12 col-12 mb-4 text-center mx-auto"
             style={{ color: "#0D3B66" }}
           >
@@ -248,7 +249,8 @@ const Services = () => {
             alt="services img"
             className="col-xl-5 col-lg-5 col-md-6 col-sm-8 col-8 mx-auto img-fluid my-5"
           />
-        </div>
+        </div> */}
+      </div>
       </div>
       <Footer />
     </>
