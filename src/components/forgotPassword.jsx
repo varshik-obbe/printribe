@@ -93,7 +93,7 @@ function ForgotPassword() {
                 //   disabled={
                 //     state.email === "" || state.password === "" ? true : false
                 //   }
-                  style={{ background: "#EE3C2F", color: "#FFF" }}
+                  style={{ background: "#EE3C2F", color: "#FFF",whiteSpace:'nowrap' }}
                   onClick={handleForgotPassword}
                 >
                   Send Link
