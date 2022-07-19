@@ -291,7 +291,7 @@ function Signup() {
               </div>
 
               {/* ----- Sign in with Google Button ----- */}
-              <button
+              {/* <button
                 class="btn btn-outline-secondary w-100"
                 style={{ color: "#000" }}
                 onClick={handleGoogleSignUp}
@@ -300,7 +300,7 @@ function Signup() {
                 <span>
                   <FcGoogle style={{ fontSize: "25px" }} /> Sign up with Google
                 </span>
-              </button>
+              </button> */}
               <div>
                 <Link to={redirect_url === "from_wix_integrations" ? "/signin?redirect=from_wix_integrations" :"/signin?redirect=from_signup"}>
                   <button

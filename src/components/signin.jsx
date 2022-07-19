@@ -263,7 +263,7 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
               </div>
 
               {/* ----- Sign in with Google Button ----- */}
-              <button
+              {/* <button
                 type="button"
                 class="btn btn-outline-secondary w-100"
                 style={{ color: "#000" }}
@@ -273,7 +273,7 @@ const clientId = "46834513654-iea0lq8m5t6vksausg1ssh8ktk62vnlu.apps.googleuserco
                 <span>
                   <FcGoogle style={{ fontSize: "25px" }} /> Sign in with Google
                 </span>
-              </button>
+              </button> */}
               <div>
                 <Link to={redirect_url === "from_wix_integrations" ? "/signup?redirect=from_wix_integrations" :"/signup?redirect=from_signin"}>
                   <button
