@@ -49,6 +49,12 @@ function Hero() {
   const [heightInches, setHeightInches] = useState();
   const [aop, setAop] = useState(false);
   const [colorIndex, setColorIndex] = useState(0);
+  var left1 = 0;
+  var top1 = 0;
+  var scale1x = 0;
+  var scale1y = 0;
+  var width1 = 0;
+  var height1 = 0;
 
   const { editor, onReady } = useFabricJSEditor();
 
@@ -395,57 +401,55 @@ function Hero() {
       editor?.canvas.on("object:moving", function (e) {
         if (!aop) {
           let parent;
+          let objs = editor?.canvas.getObjects();
+          let parentObj;
+          objs.forEach((o) => {
+            if (o.type === "rect") {
+              parentObj = o;
+            }
+          });
           if (sides == "one") {
-            parent = new fabric.Rect({
-              width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
-              height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
-              left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
-              top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
-              selectable: false,
-              fill: "transparent",
-            });
+            parent = parentObj;
           } else if (sides == "two") {
-            parent = new fabric.Rect({
-              width: fabricInfo.variant[colorIndex].backImgDimensions.width,
-              height: fabricInfo.variant[colorIndex].backImgDimensions.height,
-              left: fabricInfo.variant[colorIndex].backImgDimensions.left,
-              top: fabricInfo.variant[colorIndex].backImgDimensions.top,
-              selectable: false,
-              fill: "transparent",
-            });
+            parent = parentObj;
           } else if (sides == "three") {
-            parent = new fabric.Rect({
-              width: fabricInfo.variant[colorIndex].leftImgDimensions.width,
-              height: fabricInfo.variant[colorIndex].leftImgDimensions.height,
-              left: fabricInfo.variant[colorIndex].leftImgDimensions.left,
-              top: fabricInfo.variant[colorIndex].leftImgDimensions.top,
-              selectable: false,
-              fill: "transparent",
-            });
+            parent = parentObj;
           } else if (sides == "four") {
-            parent = new fabric.Rect({
-              width: fabricInfo.variant[colorIndex].rightImgDimensions.width,
-              height: fabricInfo.variant[colorIndex].rightImgDimensions.height,
-              left: fabricInfo.variant[colorIndex].rightImgDimensions.left,
-              top: fabricInfo.variant[colorIndex].rightImgDimensions.top,
-              selectable: false,
-              fill: "transparent",
-            });
+            parent = parentObj;
           }
-          editor?.canvas.add(parent);
-          var cCoords = getCoords(parent);
-          var inBounds = inside(
-            { x: e.target.left + 1, y: e.target.top + 1 },
-            cCoords
-          );
+          // var cCoords = getCoords(parent);
+          // var inBounds = inside(
+          //   { x: e.target.left + 1, y: e.target.top + 1 },
+          //   cCoords
+          // );
 
-          if (inBounds) {
-            e.target.setCoords();
-            e.target.saveState();
-          } else {
-            e.target.left = e.target._stateProperties.left;
-            e.target.top = e.target._stateProperties.top;
-          }
+          // if (inBounds) {
+          //   e.target.setCoords();
+          //   e.target.saveState();
+          // } else {
+          //   e.target.left = e.target._stateProperties.left;
+          //   e.target.top = e.target._stateProperties.top;
+          // }
+
+          let movingBox = e.target;
+          var top = movingBox.top;
+          var bottom = top + movingBox.getScaledHeight();
+          var left = movingBox.left;
+          var right = left + movingBox.getScaledWidth();
+
+          let boundingBox = parent;
+          var topBound = boundingBox.top;
+          var bottomBound = topBound + boundingBox.height;
+          var leftBound = boundingBox.left;
+          var rightBound = leftBound + boundingBox.width;
+          movingBox.left = Math.min(
+            Math.max(left, leftBound),
+            rightBound - movingBox.getScaledWidth()
+          );
+          movingBox.top = Math.min(
+            Math.max(top, topBound),
+            bottomBound - movingBox.getScaledHeight()
+          );
         }
       });
 
@@ -454,6 +458,51 @@ function Hero() {
         editor?.canvas.getActiveObjects().forEach((o) => {
           if (o.type == "image") {
             if (!aop) {
+              let parent;
+              let objs = editor?.canvas.getObjects();
+              let parentObj;
+              objs.forEach((o) => {
+                if (o.type === "rect") {
+                  parentObj = o;
+                }
+              });
+              if (sides == "one") {
+                parent = parentObj;
+              } else if (sides == "two") {
+                parent = parentObj;
+              } else if (sides == "three") {
+                parent = parentObj;
+              } else if (sides == "four") {
+                parent = parentObj;
+              }
+
+              var obj = e.target;
+              obj.setCoords();
+              var brNew = obj.getBoundingRect();
+
+              if (
+                brNew.width + brNew.left >=
+                  parseInt(parentObj.width) + parseInt(parentObj.left) ||
+                brNew.height + brNew.top >=
+                  parseInt(parentObj.height) + parseInt(parentObj.top) ||
+                brNew.left < parseInt(parentObj.left) ||
+                brNew.top < parseInt(parentObj.top)
+              ) {
+                obj.left = left1;
+                obj.top = top1;
+                obj.scaleX = scale1x;
+                obj.scaleY = scale1y;
+                obj.width = width1;
+                obj.height = height1;
+              } else {
+                left1 = obj.left;
+                top1 = obj.top;
+                scale1x = obj.scaleX;
+                scale1y = obj.scaleY;
+                width1 = obj.width;
+                height1 = obj.height;
+              }
+
               let totPrice = 0;
               let scalePrice = 0;
               let widthInches = 0;
