@@ -38,12 +38,12 @@ function Catagories() {
                                         {/* {console.log(subproduct)} */}
                                         return subproduct.visible !== "false" && <Accordion style={{ border: "none" }}>
                                             <Accordion.Item eventKey="1" style={{ border: "none" }}>
-                                                <Accordion.Header style={{ border: "none" }}> <Link className='Link' style={{ textDecoration: "none", fontWeight:"600" }} to={`/products${subproduct.url}/${subproduct.id}`}><span>{subproduct.name}</span></Link></Accordion.Header>
+                                                <Accordion.Header style={{ border: "none" }}> <Link className='Link' style={{ textDecoration: "none", fontWeight:"400" }} to={`/products${subproduct.url}/${subproduct.id}`}><span>{subproduct.name}</span></Link></Accordion.Header>
 
-                                                <Accordion.Body style={{ border: "none" ,padding:"0px" }}>
+                                                <Accordion.Body style={{ border: "none" ,padding:"0" }}>
                                                     {
                                                         subproduct.subsubCategories ? subproduct.subsubCategories.map((subsubproduct) => {
-                                                            return <Accordion.Body><Link className='Link' to={`/products/${subsubproduct.id}`} style={{ textDecoration: "none", fontWeight:"400", color: "black" }} >  <span style={{ colorL: "black" }}>{subsubproduct.name}</span> </Link></Accordion.Body>
+                                                            return <Accordion.Body style={{ border: "none" ,padding:"0.6rem 1.25rem" }}><Link className='Link' to={`/products/${subsubproduct.id}`} style={{ textDecoration: "none", fontWeight:"400", color: "black" }} >  <span style={{ colorL: "black" }}>{subsubproduct.name}</span> </Link></Accordion.Body>
                                                         }) : null
                                                     }
                                                 </Accordion.Body>
