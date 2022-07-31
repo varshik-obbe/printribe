@@ -13,6 +13,7 @@ import logo from "../assets/Printibe-logo1.png";
 import styles from "../styles/howitworks.module.css";
 import { Accordion, Card, useAccordionButton } from "react-bootstrap";
 import {useNavigate} from 'react-router-dom'
+import Join from "../components/join";
 
 function CustomToggle({ children, eventKey }) {
   const decoratedOnClick = useAccordionButton(eventKey, () =>
@@ -457,7 +458,7 @@ const HowItWorks = () => {
       </div>
       <hr />
 
-      <div className={`col-12 mt-5 mx-auto ${styles.signup}`}>
+      {/* <div className={`col-12 mt-5 mx-auto ${styles.signup}`}>
         <img
           src={logo}
           alt="logo"
@@ -469,7 +470,13 @@ const HowItWorks = () => {
           </h3>
           <button onClick={() => navigate('/signup')}>Signup</button>
         </div>
+      </div> */}
+
+      <div className="my-5">
+      <Join />
+
       </div>
+
 
       <div className="container mb-5">
         <div className="row">
