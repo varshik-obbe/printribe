@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Footer from "../components/footer";
 import Header from "../components/header";
 import Navbar from "../components/navbar";
@@ -11,36 +11,45 @@ const OTPpage = () => {
   const navigate = useNavigate();
   const params = useParams();
 
-  const [OTP, setOTP] = useState();
+  const [OTP, setOTP] = useState(null);
 
   const handleClick = async () => {
     try {
-      await axios.post(
-        "https://api.theprintribe.com/api/customers/verifyMail",
-        {
-          data: {
-            email : params.id,
-            verificationId: OTP,
+      if (OTP == null) {
+        Swal.fire({
+          title: "Please Enter An OTP!",
+          icon: "info",
+          confirmButtonText: "Close",
+        });
+      } else {
+        await axios.post(
+          "https://api.theprintribe.com/api/customers/verifyMail",
+          {
+            data: {
+              email: params.id,
+              verificationId: OTP,
+            },
           },
-        },
-        {
-          "Content-Type": "application/json",
-        }
-      );
+          {
+            "Content-Type": "application/json",
+          }
+        );
 
-      Swal.fire({
-        title: "User Verified!",
-        icon: "success",
-        confirmButtonText: "Close",
-      }).then(() => navigate("/signin"));
+        Swal.fire({
+          title: "User Verified!",
+          icon: "success",
+          confirmButtonText: "Close",
+        }).then(() => navigate("/signin"));
+      }
     } catch (error) {
       Swal.fire({
         title: "Incorrect OTP entered! Please Try Again",
         icon: "error",
         confirmButtonText: "Close",
-      })
+      }).then(() => navigate("/signup"));;
     }
   };
+  console.log(params.id);
 
   return (
     <>

@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 // ---- import ApiUrl ----- //
 import Api from "../api/api";
@@ -63,40 +64,59 @@ function Signup() {
 
   // Add User Api Call //
   const handleSignUp = () => {
-    if (state.password === state.confPassword) {
-      axios
-        .post(Api.customers.SIGNUP, {
-          customerRegisterdata: {
-            email: state.email,
-            username: state.userName,
-            password: state.password,
-            role: "customer",
-          },
-        })
-        .then((res) => {
-          console.log(res.data.customerRecord._id);
-          // localStorage.setItem('customerId', res.data.customerRecord._id)
-          setState((prev) => ({ ...prev, error: false }));
-
-          // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
-          // else navigate(-1)
-
-          // if(redirect_url === "from_wix_integrations") navigate("/signin?redirect=from_wix_integrations")
-          // else navigate("/signin?redirect=from_signup");
-
-          if(redirect_url === "from_wix_integrations") navigate("/signin?redirect=from_wix_integrations")
-          else navigate(`/verify/${state.email}`);
-          
-        })
-        .catch((err) => {
-          // console.log(err.response.data.errors)
-          setState((prev) => ({ ...prev, error: err.response.data.errors }));
-        });
+    if (
+      state.email === "" ||
+      state.userName === "" ||
+      state.password === "" ||
+      state.confPassword === ""
+    ) {
+      Swal.fire({
+        position: "center",
+        icon: "info",
+        title: "Please Fill All The Fields!",
+        showConfirmButton: true,
+      });
     } else {
-      setState((prev) => ({
-        ...prev,
-        error: "Please make sure your passwords match",
-      }));
+      if (state.password === state.confPassword) {
+        axios
+          .post(Api.customers.SIGNUP, {
+            customerRegisterdata: {
+              email: state.email,
+              username: state.userName,
+              password: state.password,
+              role: "customer",
+            },
+          })
+          .then((res) => {
+            console.log(res.data.customerRecord._id);
+            // localStorage.setItem('customerId', res.data.customerRecord._id)
+
+            // if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
+            // else navigate(-1)
+
+            // if(redirect_url === "from_wix_integrations") navigate("/signin?redirect=from_wix_integrations")
+            // else navigate("/signin?redirect=from_signup");
+
+            if (redirect_url === "from_wix_integrations"){
+              navigate("/signin?redirect=from_wix_integrations");
+            }
+            else {
+              console.log(state.email)
+              navigate(`/verify/${state.email}`);
+            }
+            setState((prev) => ({ ...prev, error: false }));
+
+          })
+          .catch((err) => {
+            // console.log(err.response.data.errors)
+            setState((prev) => ({ ...prev, error: err.response.data.errors }));
+          });
+      } else {
+        setState((prev) => ({
+          ...prev,
+          error: "Please make sure your passwords match",
+        }));
+      }
     }
   };
 
@@ -139,10 +159,11 @@ function Signup() {
         // else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
         // else navigate(-1);
 
-        if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
-        else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
-        else navigate(`/verify/${state.email}`);
-
+        if (redirect_url === "from_signup" || redirect_url === "from_update")
+          navigate("/");
+        else if (redirect_url === "from_wix_integrations")
+          navigate("/integrations/wix");
+        else navigate(`/`);
       })
       .catch((err) => {
         setState((prev) => ({ ...prev, error: "Error in SignUp" }));
@@ -203,7 +224,7 @@ function Signup() {
                 />
               </div>
               {/* ----- Sign Up with Email Button ----- */}
-              
+
               <div class="d-flex mt-3">
                 <span>Don't Have an Account?</span>
                 <span class="mx-4">Sign up now</span>
@@ -302,7 +323,13 @@ function Signup() {
                 </span>
               </button> */}
               <div>
-                <Link to={redirect_url === "from_wix_integrations" ? "/signin?redirect=from_wix_integrations" :"/signin?redirect=from_signup"}>
+                <Link
+                  to={
+                    redirect_url === "from_wix_integrations"
+                      ? "/signin?redirect=from_wix_integrations"
+                      : "/signin?redirect=from_signup"
+                  }
+                >
                   <button
                     type="button"
                     class="btn btn-primary w-100 fw-bold"
