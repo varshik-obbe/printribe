@@ -13,8 +13,10 @@ const Catalogproducts = () => {
   const [subCat, setSubCat] = useState();
   const [subCatCat, setSubCatCat] = useState();
 
-  const [catURL,setCatURL] = useState()
-  const [subCatURL,setSubCatURL] = useState()
+  const [catURL, setCatURL] = useState();
+  const [subCatURL, setSubCatURL] = useState();
+
+  const [showAnother, setShowAnother] = useState(false);
 
   const navigate = useNavigate();
 
@@ -31,6 +33,15 @@ const Catalogproducts = () => {
               if (subproduct.id === productid) {
                 setcollection(subproduct.products);
                 console.log(subproduct.products);
+
+                setShowAnother(true);
+
+                setCat(product.name);
+                setSubCat(subproduct.name);
+
+                setCatURL(product.url + "/" + product.id);
+
+                setSubCatURL(subproduct.url + "/" + subproduct.id);
               }
             }
 
@@ -44,10 +55,9 @@ const Catalogproducts = () => {
                   setSubCat(subproduct.name);
                   setSubCatCat(subsubproduct.name);
 
-                  setCatURL(product.url + '/' + product.id)
-                  
-                  setSubCatURL(subproduct.url + '/' + subproduct.id)
-                 
+                  setCatURL(product.url + "/" + product.id);
+
+                  setSubCatURL(subproduct.url + "/" + subproduct.id);
                 }
               }
             });
@@ -65,36 +75,46 @@ const Catalogproducts = () => {
 
   return (
     <>
-      {cat && (
+      {cat && showAnother ? (
         <div>
           <span
             style={{ cursor: "pointer", color: "#000" }}
             onClick={() => navigate("/products")}
           >
             Products
-          </span>
-          {" "}
-          /
-          {" "}
+          </span>{" "}
+          /{" "}
           <span
             style={{ cursor: "pointer", color: "#000" }}
             onClick={() => navigate(`/products${catURL}`)}
           >
             {cat && cat}
-          </span>
-          {" "}
-          /
-          {" "}
+          </span>{" "}
+          / <span>{subCat && subCat}</span>
+        </div>
+      ) : (
+        <div>
+          <span
+            style={{ cursor: "pointer", color: "#000" }}
+            onClick={() => navigate("/products")}
+          >
+            Products
+          </span>{" "}
+          /{" "}
+          <span
+            style={{ cursor: "pointer", color: "#000" }}
+            onClick={() => navigate(`/products${catURL}`)}
+          >
+            {cat && cat}
+          </span>{" "}
+          /{" "}
           <span
             style={{ cursor: "pointer", color: "#000" }}
             onClick={() => navigate(`/products${subCatURL}`)}
           >
             {subCat && subCat}
-          </span>
-          {" "}
-          /
-          {" "} 
-          <span >{subCatCat && subCatCat}</span>
+          </span>{" "}
+          / <span>{subCatCat && subCatCat}</span>
         </div>
       )}
 

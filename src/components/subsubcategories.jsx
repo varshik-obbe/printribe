@@ -32,8 +32,8 @@ const SubCatalog = () => {
         axios
         .get(`/categories/getCategoryById/${data.category.categorydata[0].maincat}`)
         .then(({ data }) => {
-          // console.log(data.category.categorydata[0]);
-          
+          console.log(data.category.categorydata[0]);
+
           setCat(data.category.categorydata[0].name)
           setCatURL(data.category.categorydata[0].url + '/' + data.category.categorydata[0].id)             
         })
