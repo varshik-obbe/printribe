@@ -2,11 +2,21 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import styles from "../styles/catalog.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Catalogproducts = () => {
   const { productid } = useParams();
   const [products, setproducts] = useState([]);
   const [collection, setcollection] = useState([]);
+
+  const [cat, setCat] = useState();
+  const [subCat, setSubCat] = useState();
+  const [subCatCat, setSubCatCat] = useState();
+
+  const [catURL,setCatURL] = useState()
+  const [subCatURL,setSubCatURL] = useState()
+
+  const navigate = useNavigate();
 
   const getPost = () => {
     console.log("reached");
@@ -29,6 +39,15 @@ const Catalogproducts = () => {
                 if (subsubproduct.products) {
                   setcollection(subsubproduct.products);
                   console.log(subsubproduct.products);
+
+                  setCat(product.name);
+                  setSubCat(subproduct.name);
+                  setSubCatCat(subsubproduct.name);
+
+                  setCatURL(product.url + '/' + product.id)
+                  
+                  setSubCatURL(subproduct.url + '/' + subproduct.id)
+                 
                 }
               }
             });
@@ -46,11 +65,45 @@ const Catalogproducts = () => {
 
   return (
     <>
+      {cat && (
+        <div>
+          <span
+            style={{ cursor: "pointer", color: "#000" }}
+            onClick={() => navigate("/products")}
+          >
+            Products
+          </span>
+          {" "}
+          /
+          {" "}
+          <span
+            style={{ cursor: "pointer", color: "#000" }}
+            onClick={() => navigate(`/products${catURL}`)}
+          >
+            {cat && cat}
+          </span>
+          {" "}
+          /
+          {" "}
+          <span
+            style={{ cursor: "pointer", color: "#000" }}
+            onClick={() => navigate(`/products${subCatURL}`)}
+          >
+            {subCat && subCat}
+          </span>
+          {" "}
+          /
+          {" "} 
+          <span >{subCatCat && subCatCat}</span>
+        </div>
+      )}
+
       <div className={`container `}>
         <div className="row mt-3 mb-3 mx-0">
           {collection.map((category) => {
             return (
-              category.active && category.active === "true" && (
+              category.active &&
+              category.active === "true" && (
                 <div
                   className="col-lg-4 col-md-6 col-sm-12 p-2"
                   key={category.id}
