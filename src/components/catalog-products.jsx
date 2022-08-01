@@ -75,47 +75,51 @@ const Catalogproducts = () => {
 
   return (
     <>
-      {cat && showAnother ? (
-        <div>
-          <span
-            style={{ cursor: "pointer", color: "#000" }}
-            onClick={() => navigate("/products")}
-          >
-            Products
-          </span>{" "}
-          /{" "}
-          <span
-            style={{ cursor: "pointer", color: "#000" }}
-            onClick={() => navigate(`/products${catURL}`)}
-          >
-            {cat && cat}
-          </span>{" "}
-          / <span>{subCat && subCat}</span>
-        </div>
-      ) : (
-        <div>
-          <span
-            style={{ cursor: "pointer", color: "#000" }}
-            onClick={() => navigate("/products")}
-          >
-            Products
-          </span>{" "}
-          /{" "}
-          <span
-            style={{ cursor: "pointer", color: "#000" }}
-            onClick={() => navigate(`/products${catURL}`)}
-          >
-            {cat && cat}
-          </span>{" "}
-          /{" "}
-          <span
-            style={{ cursor: "pointer", color: "#000" }}
-            onClick={() => navigate(`/products${subCatURL}`)}
-          >
-            {subCat && subCat}
-          </span>{" "}
-          / <span>{subCatCat && subCatCat}</span>
-        </div>
+      {cat && (
+        <>
+          {showAnother ? (
+            <div>
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate("/products")}
+              >
+                Products
+              </span>{" "}
+              /{" "}
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate(`/products${catURL}`)}
+              >
+                {cat && cat}
+              </span>{" "}
+              / <span>{subCat && subCat}</span>
+            </div>
+          ) : (
+            <div>
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate("/products")}
+              >
+                Products
+              </span>{" "}
+              /{" "}
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate(`/products${catURL}`)}
+              >
+                {cat && cat}
+              </span>{" "}
+              /{" "}
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate(`/products${subCatURL}`)}
+              >
+                {subCat && subCat}
+              </span>{" "}
+              / <span>{subCatCat && subCatCat}</span>
+            </div>
+          )}
+        </>
       )}
 
       <div className={`container `}>
