@@ -473,7 +473,7 @@ const HowItWorks = () => {
       </div> */}
 
       <div className="my-5">
-      <Join />
+      <Join title="Signup Now and grow your brand with us." buttonTitle="Sign up"/>
 
       </div>
 
