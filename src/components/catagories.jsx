@@ -8,11 +8,21 @@ import styles from '../styles/catalog.module.css'
 function Catagories() {
 
     const [products, setproducts] = useState([])
+    const [productArrUnderSubCat,setProductArrUnderSubCat] = useState([])
 
     const getPost = () => {
         axios.get('/categories/getCategories')
             .then(({ data }) => {
                 setproducts(data.maincat.categories)
+            })
+            .catch(resp => {
+                console.log(resp);
+            })
+
+            axios.get('/products/getProducts')
+            .then(({ data }) => {                
+                setProductArrUnderSubCat(data.maincat.categories) 
+                console.log(data.maincat.categories)               
             })
             .catch(resp => {
                 console.log(resp);
@@ -45,6 +55,16 @@ function Catagories() {
                                                         subproduct.subsubCategories ? subproduct.subsubCategories.map((subsubproduct) => {
                                                             return <Accordion.Body style={{ border: "none" ,padding:"0.6rem 1.25rem" }}><Link className='Link' to={`/products/${subsubproduct.id}`} style={{ textDecoration: "none", fontWeight:"400", color: "black" }} >  <span style={{ colorL: "black" }}>{subsubproduct.name}</span> </Link></Accordion.Body>
                                                         }) : null
+                                                    }
+                                                    {                                                        
+                                                        productArrUnderSubCat.map((catProduct) =>{ 
+                                                           return catProduct.subCategories.map((subCatProduct) =>{                                                               
+                                                            return subCatProduct.products && subCatProduct.products.map((subCatProductData) =>{
+                                                                    return subCatProductData.category_id ===  subproduct.id ? <Accordion.Body style={{ border: "none" ,padding:"0.6rem 1.25rem" }}><Link className='Link' to={`/fabricDesign/${subCatProductData.id}`} style={{ textDecoration: "none", fontWeight:"400", color: "black" }} >  <span style={{ colorL: "black" }}>{subCatProductData.title}</span> </Link></Accordion.Body> : null
+                                                                }) 
+                                                            })                                                           
+                                                        })  
+                                                        
                                                     }
                                                 </Accordion.Body>
 

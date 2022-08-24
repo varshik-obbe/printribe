@@ -46,7 +46,7 @@ const SubCatalog = () => {
       <div className={`container `}>
         <div className="row mt-3 mb-3 mx-0">
           {products.map((category) => {
-            console.log(category);
+            {/* console.log(category); */}
             return (
               <div
                 className="col-lg-4 col-md-6 col-sm-12 p-2"
