@@ -129,10 +129,14 @@ const SubCatalog = () => {
                 );
               })
             : null}
+            </div>
+            </div>
+            <div className={`container `}>
+        <div className="row mt-5 mb-3 mx-0">
           {productArrUnderSubCat.length
             ? productArrUnderSubCat.map((subCatProduct) => {
                 return (
-                  id === subCatProduct.category_id && (
+                  id === subCatProduct.category_id && subCatProduct.quantities_updated && (
                     <div
                       className="col-lg-4 col-md-6 col-sm-12 p-2"
                       key={subCatProduct.id}
