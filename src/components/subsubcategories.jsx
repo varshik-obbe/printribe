@@ -64,7 +64,6 @@ const SubCatalog = () => {
             });
 
             setProductArrUnderSubCat([...tempArr]);
-            console.log([...tempArr]);
           })
           .catch((resp) => {
             console.log(resp);
@@ -129,18 +128,20 @@ const SubCatalog = () => {
                 );
               })
             : null}
-            </div>
-            </div>
-            <div className={`container `}>
+        </div>
+      </div>
+      <div className={`container `}>
         <div className="row mt-5 mb-3 mx-0">
           {productArrUnderSubCat.length
             ? productArrUnderSubCat.map((subCatProduct) => {
                 return (
-                  id === subCatProduct.category_id && subCatProduct.quantities_updated && (
+                  id === subCatProduct.category_id &&
+                  subCatProduct.quantities_updated && (
                     <div
                       className="col-lg-4 col-md-6 col-sm-12 p-2"
                       key={subCatProduct.id}
                     >
+                      {console.log(subCatProduct)}
                       <div className={`${styles.catalogcontainer}`}>
                         <Link
                           to={`/fabricDesign/${subCatProduct.id}`}
@@ -160,6 +161,33 @@ const SubCatalog = () => {
                               {subCatProduct.title}
                             </p>
                           </div>
+                          <p className="ms-5 fw-normal" style={{marginTop:'-5px'}}>
+                            Starting Price
+                            <br />₹{subCatProduct.price}{" "}
+                            <span style={{ color: "#3699ff" }}>incl. VAT</span>{" "}
+                            <br />
+                            {subCatProduct.productsizes[0]} -{" "}
+                            {
+                              subCatProduct.productsizes[
+                                subCatProduct.productsizes.length - 1
+                              ]
+                            }
+                            <br />
+                            <div className='d-flex mt-2'>
+                            {subCatProduct.productcolors.map((curr) => (                              
+                              <div
+                                style={{
+                                  height: "12px",
+                                  width: "12px",
+                                  background: curr.colorCode,
+                                  marginRight: "5px",
+                                  border: "1px solid #666",
+                                  borderRadius: "2px",
+                                }}
+                              />                            
+                            ))}
+                            </div>
+                          </p>
                         </Link>
                       </div>
                     </div>
