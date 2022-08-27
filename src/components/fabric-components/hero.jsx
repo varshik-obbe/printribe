@@ -46,6 +46,7 @@ function Hero() {
   const [priceSet, setPriceSet] = useState(0);
   const [addText, setAddText] = useState(false);
   const [widthInches, setWidthInches] = useState();
+  const [designPriced, setDesignPrice] = useState();
   const [heightInches, setHeightInches] = useState();
   const [aop, setAop] = useState(false);
   const [colorIndex, setColorIndex] = useState(0);
@@ -55,7 +56,10 @@ function Hero() {
   var scale1y = 0;
   var width1 = 0;
   var height1 = 0;
+  let maximumHeight = 0;
+  let maximumWidth = 0;
 
+  const Basecanvas = new fabric.Canvas();
   const { editor, onReady } = useFabricJSEditor();
 
   // get fabric and product info
@@ -86,28 +90,40 @@ function Hero() {
       .get(`/fabric/getFabricProductById/${prodid}`)
       .then(async ({ data }) => {
         console.log(data);
-        let imgsVariants = [];
-        if (data.productData && Object.keys(data.productData).length > 0) {
-          if (data.productData.variant[colorIndex].frontImgURL !== undefined) {
-            imgsVariants.push("front");
+        if (data) {
+          let imgsVariants = [];
+          if (data.productData && Object.keys(data.productData).length > 0) {
+            if (
+              data.productData.variant[colorIndex].frontImgURL !== undefined
+            ) {
+              imgsVariants.push("front");
+            }
+            if (data.productData.variant[colorIndex].backImgURL !== undefined) {
+              imgsVariants.push("back");
+            }
+            if (data.productData.variant[colorIndex].leftImgURL !== undefined) {
+              imgsVariants.push("left");
+            }
+            if (
+              data.productData.variant[colorIndex].rightImgURL !== undefined
+            ) {
+              imgsVariants.push("right");
+            }
+            setMainImg(
+              process.env.REACT_APP_IMAGE_BASE_URL +
+                data.productData.variant[colorIndex].frontImgURL
+            );
+            setColor(data.productData.variant[colorIndex].colorName);
+            setImgVariants(imgsVariants);
+            setFabricInfo(data.productData);
+            setIsCustomizeable(true);
           }
-          if (data.productData.variant[colorIndex].backImgURL !== undefined) {
-            imgsVariants.push("back");
-          }
-          if (data.productData.variant[colorIndex].leftImgURL !== undefined) {
-            imgsVariants.push("left");
-          }
-          if (data.productData.variant[colorIndex].rightImgURL !== undefined) {
-            imgsVariants.push("right");
-          }
+        } else {
           setMainImg(
             process.env.REACT_APP_IMAGE_BASE_URL +
-              data.productData.variant[colorIndex].frontImgURL
+              "/" +
+              data.product.productdata[0].img
           );
-          setColor(data.productData.variant[colorIndex].colorName);
-          setImgVariants(imgsVariants);
-          setFabricInfo(data.productData);
-          setIsCustomizeable(true);
         }
       })
       .catch((err) => {
@@ -793,8 +809,11 @@ function Hero() {
               let newWidth = widthInches;
               setWidthInches(parseFloat(newWidth.toFixed(2)));
               setHeightInches(parseFloat(newHeight.toFixed(2)));
+              maximumHeight = parseFloat(newHeight.toFixed(2));
+              maximumWidth = parseFloat(newWidth.toFixed(2));
               totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
               setPriceSet(totPrice);
+              setDesignPrice(parseInt(scalePrice, 10));
             }
           }
           // console.log("scaled height ", o.getScaledHeight());
@@ -1082,11 +1101,13 @@ function Hero() {
             setPriceSet(parseFloat(totPrice.toFixed(2)));
             setWidthInches(parseFloat(widthInches.toFixed(2)));
             setHeightInches(parseFloat(heightInches.toFixed(2)));
+            setDesignPrice(parseFloat(lastPrice.toFixed(2)));
           }
         },
         { crossOrigin: "anonymous" }
       );
       setImage(objectUrl);
+      event.target.value = null;
       return;
     }
   };
@@ -1767,11 +1788,21 @@ function Hero() {
                       className="product__modal-img product__thumb w-img"
                     >
                       {fabricInfo && fabricInfo.productId !== undefined ? (
-                        <img
-                          style={{ height: "612px", width: "470px" }}
-                          src={mainImg}
-                          alt=""
-                        />
+                        imgVariants.map((item, index) => {
+                          let urlImg = "";
+                          urlImg =
+                            process.env.REACT_APP_IMAGE_BASE_URL +
+                            fabricInfo.variant[colorIndex].frontImgURL;
+                          if (index == 0) {
+                            return (
+                              <img
+                                style={{ height: "612px", width: "470px" }}
+                                src={urlImg}
+                                alt=""
+                              />
+                            );
+                          }
+                        })
                       ) : (
                         <img
                           style={{ height: "612px", width: "470px" }}
@@ -1843,6 +1874,10 @@ function Hero() {
                     <div className="col-md-6">Height(inches)</div>
                     <div className="col-md-3">{heightInches}</div>
                   </div>
+                  <div className="row">
+                    <div className="col-md-6">Print Charges</div>
+                    <div className="col-md-3">{designPriced}</div>
+                  </div>
                 </div>
               ) : (
                 <></>
@@ -1901,7 +1936,9 @@ function Hero() {
                   <span className="old-price">$96.00</span>
                 </div> */}
                 <div class="product__modal-des mb-30">
-                  <p>{product.description}</p>
+                  <p style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+                    {product.description}
+                  </p>
                 </div>
                 <p className="mt-3 fw-bold choosingStyle">Choose color</p>
                 <div className="row">
