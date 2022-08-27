@@ -161,7 +161,7 @@ const SubCatalog = () => {
                               {subCatProduct.title}
                             </p>
                           </div>
-                          <p className="ms-5 fw-normal" style={{marginTop:'-5px'}}>
+                          <p className="mx-auto fw-normal" style={{marginTop:'-5px'}}>
                             Starting Price
                             <br />₹{subCatProduct.price}{" "}
                             <span style={{ color: "#3699ff" }}>incl. VAT</span>{" "}

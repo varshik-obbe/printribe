@@ -126,8 +126,9 @@ const Catalogproducts = () => {
         <div className="row mt-3 mb-3 mx-0">
           {collection.map((category) => {
             return (
-              category.active &&
-              category.active === "true" && (
+              <>
+                {console.log(category)}
+                {category.active && category.active === "true" && (
                 <div
                   className="col-lg-4 col-md-6 col-sm-12 p-2"
                   key={category.id}
@@ -156,7 +157,8 @@ const Catalogproducts = () => {
                     </Link>
                   </div>
                 </div>
-              )
+                )}
+              </>
             );
           })}
         </div>
