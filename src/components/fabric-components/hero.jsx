@@ -50,6 +50,20 @@ function Hero() {
   const [heightInches, setHeightInches] = useState();
   const [aop, setAop] = useState(false);
   const [colorIndex, setColorIndex] = useState(0);
+  const [cat, setCat] = useState();
+  const [subCat, setSubCat] = useState();
+  const [subCatCat, setSubCatCat] = useState();
+
+  const [catURL, setCatURL] = useState();
+  const [subCatURL, setSubCatURL] = useState();
+
+  const [showAnother, setShowAnother] = useState(false);
+
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   var left1 = 0;
   var top1 = 0;
   var scale1x = 0;
@@ -69,6 +83,51 @@ function Hero() {
     } else {
       setIsLogged(false);
     }
+
+    axios
+      .get("/products/getProducts")
+      .then(({ data }) => {
+        console.log(data.maincat.categories);
+        // setproducts(data.maincat.categories);
+        data.maincat.categories.map((product) => {
+          product.subCategories.map((subproduct) => {
+            if (subproduct.products) {
+              subproduct.products.map((productLast) => {
+                if (productLast.id === prodid) {
+                  setShowAnother(true);
+
+                  setCat(product.name);
+                  setSubCat(subproduct.name);
+
+                  setCatURL(product.url + "/" + product.id);
+
+                  setSubCatURL(subproduct.url + "/" + subproduct.id);
+                }
+              });
+            }
+
+            subproduct.subsubCategories.map((subsubproduct) => {
+              if (subsubproduct.products) {
+                subsubproduct.products.map((productLast) => {
+                  if (productLast.id === prodid) {
+                    setCat(product.name);
+                    setSubCat(subproduct.name);
+                    setSubCatCat(subsubproduct.name);
+
+                    setCatURL(product.url + "/" + product.id);
+
+                    setSubCatURL(subproduct.url + "/" + subproduct.id);
+                  }
+                });
+              }
+            });
+          });
+        });
+      })
+      .catch((resp) => {
+        console.log(resp);
+      });
+
     console.log("product id is:" + prodid);
     await axios
       .get(`/products/getproduct/${prodid}`)
@@ -394,6 +453,22 @@ function Hero() {
             )
           ).toFixed(2)
         );
+        maximumHeight = (
+          parseFloat(
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
+          ) /
+          parseFloat(
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleHeight
+          )
+        ).toFixed(2);
+        maximumWidth = (
+          parseFloat(
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
+          ) /
+          parseFloat(
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleWidth
+          )
+        ).toFixed(2);
         setHeightInches(
           (
             parseFloat(
@@ -466,6 +541,363 @@ function Hero() {
             Math.max(top, topBound),
             bottomBound - movingBox.getScaledHeight()
           );
+
+          objs = editor?.canvas.getObjects();
+
+          let diffObjs = [];
+          let ins = 0;
+          objs.forEach((obj, i) => {
+            if (obj.type === "image" || obj.type === "i-text") {
+              diffObjs[ins] = obj;
+              ins++;
+            }
+          });
+
+          let totalWidth = 0;
+          let totalHeight = 0;
+          let intersect = false;
+          let intersectArr = [];
+          let notIntersectArr = [];
+          diffObjs.forEach((ele, ind) => {
+            for (let i = 0; i < diffObjs.length; i++) {
+              if (i != ind) {
+                if (
+                  ((diffObjs[i].left < ele.left + ele.getScaledWidth() &&
+                    diffObjs[i].left >= ele.left) ||
+                    (ele.left <
+                      diffObjs[i].left + diffObjs[i].getScaledWidth() &&
+                      ele.left >= diffObjs[i].left)) &&
+                  ((diffObjs[i].top < ele.top + ele.getScaledHeight() &&
+                    diffObjs[i].top >= ele.top) ||
+                    (ele.top <
+                      diffObjs[i].top + diffObjs[i].getScaledHeight() &&
+                      ele.top >= diffObjs[i].top))
+                ) {
+                  intersectArr.push(ele);
+                } else {
+                  notIntersectArr.push(ele);
+                }
+              }
+            }
+            if (intersectArr.length > 0) {
+              let minvalWidth = intersectArr.reduce(function (prev, curr) {
+                return prev.left < curr.left ? prev : curr;
+              });
+              let maxvalWidth = intersectArr.reduce(function (prev, curr) {
+                return prev.left + prev.getScaledWidth() >
+                  curr.left + curr.getScaledWidth()
+                  ? prev
+                  : curr;
+              });
+              let minvalHeight = intersectArr.reduce(function (prev, curr) {
+                return prev.top < curr.top ? prev : curr;
+              });
+              let maxvalHeight = intersectArr.reduce(function (prev, curr) {
+                return prev.top + prev.getScaledHeight() >
+                  curr.top + curr.getScaledHeight()
+                  ? prev
+                  : curr;
+              });
+              totalWidth =
+                maxvalWidth.left +
+                maxvalWidth.getScaledWidth() -
+                minvalWidth.left;
+              totalHeight =
+                maxvalHeight.top +
+                maxvalHeight.getScaledHeight() -
+                minvalHeight.top;
+            }
+            if (notIntersectArr.length > 0) {
+              notIntersectArr.forEach((element) => {
+                totalWidth = totalWidth + element.getScaledWidth();
+                totalHeight = totalHeight + element.getScaledHeight();
+              });
+            }
+            if (intersectArr.length == 0 && notIntersectArr.length == 0) {
+              totalWidth = totalWidth + ele.getScaledWidth();
+              totalHeight = totalHeight + ele.getScaledHeight();
+            }
+          });
+
+          let widthInches = 0;
+          let heightInches = 0;
+          let scalePrice = 0;
+
+          if (sides == "one") {
+            fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
+              (val, index) => {
+                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (
+                      parseFloat(totalWidth) / parseFloat(val.scaleWidth) >
+                        parseFloat(val.width) &&
+                      parseFloat(totalHeight) / parseFloat(val.scaleHeight) >
+                        parseFloat(val.height)
+                    ) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        (widthnewInches / parseFloat(val.scaleWidth)) *
+                        (heightnewInches / parseFloat(val.scaleHeight)) *
+                        parseFloat(val.garment_price);
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                    }
+                  }
+                } else {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches = totalWidth / 10;
+                      heightInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (totalWidth > val.width && totalHeight > val.height) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(widthnewInches) *
+                        parseFloat(heightnewInches) *
+                        parseFloat(val.garment_price);
+                      widthInches = parseFloat(totalWidth) / 10;
+                      heightInches = parseFloat(totalHeight) / 10;
+                    }
+                  }
+                }
+              }
+            );
+          } else if (sides == "two") {
+            fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
+              (val, index) => {
+                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (
+                      parseFloat(totalWidth) / parseFloat(val.scaleWidth) >
+                        parseFloat(val.width) &&
+                      parseFloat(totalHeight) / parseFloat(val.scaleHeight) >
+                        parseFloat(val.height)
+                    ) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        (widthnewInches / parseFloat(val.scaleWidth)) *
+                        (heightnewInches / parseFloat(val.scaleHeight)) *
+                        parseFloat(val.garment_price);
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                    }
+                  }
+                } else {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches = totalWidth / 10;
+                      heightInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (totalWidth >= val.width && totalHeight >= val.height) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(widthnewInches) *
+                        parseFloat(heightnewInches) *
+                        parseFloat(val.garment_price);
+                      widthInches = parseFloat(totalWidth) / 10;
+                      heightInches = parseFloat(totalHeight) / 10;
+                    }
+                  }
+                }
+              }
+            );
+          } else if (sides == "three") {
+            fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
+              (val, index) => {
+                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (
+                      parseFloat(totalWidth) / parseFloat(val.scaleWidth) >
+                        parseFloat(val.width) &&
+                      parseFloat(totalHeight) / parseFloat(val.scaleHeight) >
+                        parseFloat(val.height)
+                    ) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        (widthnewInches / parseFloat(val.scaleWidth)) *
+                        (heightnewInches / parseFloat(val.scaleHeight)) *
+                        parseFloat(val.garment_price);
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                    }
+                  }
+                } else {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches = totalWidth / 10;
+                      heightInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (totalWidth >= val.width && totalHeight >= val.height) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(widthnewInches) *
+                        parseFloat(heightnewInches) *
+                        parseFloat(val.garment_price);
+                      widthInches = parseFloat(totalWidth) / 10;
+                      heightInches = parseFloat(totalHeight) / 10;
+                    }
+                  }
+                }
+              }
+            );
+          } else if (sides == "four") {
+            fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
+              (val, index) => {
+                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (
+                      parseFloat(totalWidth) / parseFloat(val.scaleWidth) >
+                        parseFloat(val.width) &&
+                      parseFloat(totalHeight) / parseFloat(val.scaleHeight) >
+                        parseFloat(val.height)
+                    ) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        (widthnewInches / parseFloat(val.scaleWidth)) *
+                        (heightnewInches / parseFloat(val.scaleHeight)) *
+                        parseFloat(val.garment_price);
+                      widthInches =
+                        parseFloat(totalWidth) /
+                        10 /
+                        parseFloat(val.scaleWidth);
+                      heightInches =
+                        parseFloat(totalHeight) /
+                        10 /
+                        parseFloat(val.scaleHeight);
+                    }
+                  }
+                } else {
+                  if (val.width && val.width !== null) {
+                    if (index == 0) {
+                      widthInches = totalWidth / 10;
+                      heightInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(val.widthInches) *
+                        parseFloat(val.heightInches) *
+                        parseFloat(val.garment_price);
+                    }
+                    if (totalWidth >= val.width && totalHeight >= val.height) {
+                      let widthnewInches = totalWidth / 10;
+                      let heightnewInches = totalHeight / 10;
+                      scalePrice =
+                        parseFloat(widthnewInches) *
+                        parseFloat(heightnewInches) *
+                        parseFloat(val.garment_price);
+                      widthInches = parseFloat(totalWidth) / 10;
+                      heightInches = parseFloat(totalHeight) / 10;
+                    }
+                  }
+                }
+              }
+            );
+          }
+          let totPrice = 0;
+          let newHeight = heightInches;
+          let newWidth = widthInches;
+          setWidthInches(parseFloat(newWidth.toFixed(2)));
+          setHeightInches(parseFloat(newHeight.toFixed(2)));
+          if (newWidth > maximumWidth) {
+            maximumWidth = parseFloat(newWidth.toFixed(2));
+          }
+          if (newHeight > maximumHeight) {
+            maximumHeight = parseFloat(newHeight.toFixed(2));
+          }
+          totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
+          setPriceSet(totPrice);
+          setDesignPrice(parseInt(scalePrice, 10));
         }
       });
 
@@ -497,9 +929,9 @@ function Hero() {
               var brNew = obj.getBoundingRect();
 
               if (
-                brNew.width + brNew.left >=
+                brNew.width + brNew.left >
                   parseInt(parentObj.width) + parseInt(parentObj.left) ||
-                brNew.height + brNew.top >=
+                brNew.height + brNew.top >
                   parseInt(parentObj.height) + parseInt(parentObj.top) ||
                 brNew.left < parseInt(parentObj.left) ||
                 brNew.top < parseInt(parentObj.top)
@@ -809,8 +1241,12 @@ function Hero() {
               let newWidth = widthInches;
               setWidthInches(parseFloat(newWidth.toFixed(2)));
               setHeightInches(parseFloat(newHeight.toFixed(2)));
-              maximumHeight = parseFloat(newHeight.toFixed(2));
-              maximumWidth = parseFloat(newWidth.toFixed(2));
+              if (newWidth > maximumWidth) {
+                maximumWidth = parseFloat(newWidth.toFixed(2));
+              }
+              if (newHeight > maximumHeight) {
+                maximumHeight = parseFloat(newHeight.toFixed(2));
+              }
               totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
               setPriceSet(totPrice);
               setDesignPrice(parseInt(scalePrice, 10));
@@ -853,8 +1289,6 @@ function Hero() {
     setSelectedFile(event.target.files[0]);
 
     let imageUploaded = await getUploadedFileDimensions(event.target.files[0]);
-
-    console.log("width is ", imageUploaded.width);
 
     if (imageUploaded.width < 1000 && imageUploaded.height < 1000) {
       alert("please upload a higher resolution image");
@@ -946,7 +1380,7 @@ function Hero() {
                   fabricInfo.variant[colorIndex].rightImgDimensions.width
                 ) / parseInt(img.width);
             }
-            let scaleY = 150 / parseInt(img.height);
+            let scaleY = 160 / parseInt(img.height);
             img.set({
               scaleX: scaleX,
               scaleY: scaleY,
@@ -959,6 +1393,83 @@ function Hero() {
             mb: false,
           });
           editor?.canvas.add(img);
+
+          let objs = editor?.canvas.getObjects();
+          let diffObjs = [];
+          let ins = 0;
+          objs.forEach((obj, i) => {
+            if (obj.type === "image" || obj.type === "i-text") {
+              diffObjs[ins] = obj;
+              ins++;
+            }
+          });
+          let totalWidth = 0;
+          let totalHeight = 0;
+
+          let intersect = false;
+          let intersectArr = [];
+          let notIntersectArr = [];
+          diffObjs.forEach((ele, ind) => {
+            for (let i = 0; i < diffObjs.length; i++) {
+              if (i != ind) {
+                if (
+                  ((diffObjs[i].left < ele.left + ele.getScaledWidth() &&
+                    diffObjs[i].left >= ele.left) ||
+                    (ele.left <
+                      diffObjs[i].left + diffObjs[i].getScaledWidth() &&
+                      ele.left >= diffObjs[i].left)) &&
+                  ((diffObjs[i].top < ele.top + ele.getScaledHeight() &&
+                    diffObjs[i].top >= ele.top) ||
+                    (ele.top <
+                      diffObjs[i].top + diffObjs[i].getScaledHeight() &&
+                      ele.top >= diffObjs[i].top))
+                ) {
+                  intersectArr.push(ele);
+                } else {
+                  notIntersectArr.push(ele);
+                }
+              }
+            }
+            if (intersectArr.length > 0) {
+              let minvalWidth = intersectArr.reduce(function (prev, curr) {
+                return prev.left < curr.left ? prev : curr;
+              });
+              let maxvalWidth = intersectArr.reduce(function (prev, curr) {
+                return prev.left + prev.getScaledWidth() >
+                  curr.left + curr.getScaledWidth()
+                  ? prev
+                  : curr;
+              });
+              let minvalHeight = intersectArr.reduce(function (prev, curr) {
+                return prev.top < curr.top ? prev : curr;
+              });
+              let maxvalHeight = intersectArr.reduce(function (prev, curr) {
+                return prev.top + prev.getScaledHeight() >
+                  curr.top + curr.getScaledHeight()
+                  ? prev
+                  : curr;
+              });
+              totalWidth =
+                maxvalWidth.left +
+                maxvalWidth.getScaledWidth() -
+                minvalWidth.left;
+              totalHeight =
+                maxvalHeight.top +
+                maxvalHeight.getScaledHeight() -
+                minvalHeight.top;
+            }
+            if (notIntersectArr.length > 0) {
+              notIntersectArr.forEach((element) => {
+                totalWidth = totalWidth + element.getScaledWidth();
+                totalHeight = totalHeight + element.getScaledHeight();
+              });
+            }
+            if (intersectArr.length == 0 && notIntersectArr.length == 0) {
+              totalWidth = totalWidth + ele.getScaledWidth();
+              totalHeight = totalHeight + ele.getScaledHeight();
+            }
+          });
+
           let newHeight = 0;
           let newWidth = 0;
           editor?.canvas.getObjects().forEach((o) => {
@@ -974,8 +1485,8 @@ function Hero() {
               null &&
             fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !== 0
           ) {
-            let heightInches = parseFloat(newHeight) / 10;
-            let widthInches = parseFloat(newWidth) / 10;
+            let heightInches = parseFloat(totalHeight) / 10;
+            let widthInches = parseFloat(totalWidth) / 10;
             let lastPrice = 0;
             let totPrice = 0;
             let lastWidthInches = 0;
@@ -1101,6 +1612,12 @@ function Hero() {
             setPriceSet(parseFloat(totPrice.toFixed(2)));
             setWidthInches(parseFloat(widthInches.toFixed(2)));
             setHeightInches(parseFloat(heightInches.toFixed(2)));
+            if (widthInches > maximumWidth) {
+              maximumWidth = parseFloat(widthInches.toFixed(2));
+            }
+            if (heightInches > maximumHeight) {
+              maximumHeight = parseFloat(heightInches.toFixed(2));
+            }
             setDesignPrice(parseFloat(lastPrice.toFixed(2)));
           }
         },
@@ -1700,14 +2217,66 @@ function Hero() {
           </div>
         </div>
       </div>
-      <div className="row mx-0">
+      {cat && (
+        <>
+          {showAnother ? (
+            <div
+              className="col-12 mx-4 my-2 py-4"
+              style={{ paddingLeft: "14%" }}
+            >
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate("/products")}
+              >
+                Products
+              </span>{" "}
+              /{" "}
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate(`/products${catURL}`)}
+              >
+                {cat && cat}
+              </span>{" "}
+              / <span>{subCat && subCat}</span>
+            </div>
+          ) : (
+            <div
+              className="col-12 mx-4 my-2 py-4"
+              style={{ paddingLeft: "14%" }}
+            >
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate("/products")}
+              >
+                Products
+              </span>{" "}
+              /{" "}
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate(`/products${catURL}`)}
+              >
+                {cat && cat}
+              </span>{" "}
+              /{" "}
+              <span
+                style={{ cursor: "pointer", color: "#000" }}
+                onClick={() => navigate(`/products${subCatURL}`)}
+              >
+                {subCat && subCat}
+              </span>{" "}
+              / <span>{subCatCat && subCatCat}</span>
+            </div>
+          )}
+        </>
+      )}
+      {/* <div className="row mx-0">
         <div className="col-12">
           <div className={"mx-4 my-2 py-4 breadCrumbs"}>
             <a href="/products">Product catalog</a> /{" "}
             <a href="/products">Men's Clothing</a> /{product.title}
           </div>
         </div>
-      </div>
+      </div> */}
       <section className={"product-details " + defaults["pb-50"]}>
         <div className="container">
           <div className="row">
@@ -1790,17 +2359,52 @@ function Hero() {
                       {fabricInfo && fabricInfo.productId !== undefined ? (
                         imgVariants.map((item, index) => {
                           let urlImg = "";
-                          urlImg =
-                            process.env.REACT_APP_IMAGE_BASE_URL +
-                            fabricInfo.variant[colorIndex].frontImgURL;
                           if (index == 0) {
-                            return (
-                              <img
-                                style={{ height: "612px", width: "470px" }}
-                                src={urlImg}
-                                alt=""
-                              />
-                            );
+                            if (sides == "one") {
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].frontImgURL;
+                              return (
+                                <img
+                                  style={{ height: "612px", width: "470px" }}
+                                  src={urlImg}
+                                  alt=""
+                                />
+                              );
+                            } else if (sides == "two") {
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].backImgURL;
+                              return (
+                                <img
+                                  style={{ height: "612px", width: "470px" }}
+                                  src={urlImg}
+                                  alt=""
+                                />
+                              );
+                            } else if (sides == "three") {
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].leftImgURL;
+                              return (
+                                <img
+                                  style={{ height: "612px", width: "470px" }}
+                                  src={urlImg}
+                                  alt=""
+                                />
+                              );
+                            } else if (sides == "four") {
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].rightImgURL;
+                              return (
+                                <img
+                                  style={{ height: "612px", width: "470px" }}
+                                  src={urlImg}
+                                  alt=""
+                                />
+                              );
+                            }
                           }
                         })
                       ) : (
@@ -1864,6 +2468,26 @@ function Hero() {
                   </div>
                 </div>
               </div>
+              {/* <Button variant="primary" onClick={handleShow}>
+                Other Images
+              </Button>
+
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Modal heading</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  Woohoo, you're reading this text in a modal!
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={handleClose}>
+                    Save Changes
+                  </Button>
+                </Modal.Footer>
+              </Modal> */}
               {widthInches ? (
                 <div className="product__modal-content-2">
                   <div className="row">
