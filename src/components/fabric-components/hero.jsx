@@ -5,6 +5,8 @@ import domtoimage from "dom-to-image";
 import { fabric } from "fabric";
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
 import { useEffect, useRef, useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import testImg from "../../assets/02-cat-training-NationalGeographic_1484324_3x4.jpg";
@@ -53,6 +55,8 @@ function Hero() {
   const [cat, setCat] = useState();
   const [subCat, setSubCat] = useState();
   const [subCatCat, setSubCatCat] = useState();
+  const [productColors, setProductColors] = useState();
+  const [productImgsArr, setProductImgsArr] = useState();
 
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
@@ -60,9 +64,31 @@ function Hero() {
   const [showAnother, setShowAnother] = useState(false);
 
   const [show, setShow] = useState(false);
+  const [showSize, setSizeShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleShow = () => {
+    setShow(true);
+  };
+  const handleCloseSize = () => setSizeShow(false);
+
+  const handleShowSize = () => setSizeShow(true);
+
+  const handleSizeEntered = () => {};
+
+  const handleEntered = async () => {
+    let imgsArr = [];
+    if (productColors && productColors.length > 0) {
+      await productColors.map(async (val, key) => {
+        if (val.imgs?.length > 0 && val.color == color) {
+          await val.imgs.map((imgsVal, keyVal) => {
+            imgsArr.push(imgsVal);
+          });
+        }
+      });
+      setProductImgsArr(imgsArr);
+    }
+  };
 
   var left1 = 0;
   var top1 = 0;
@@ -126,6 +152,26 @@ function Hero() {
       })
       .catch((resp) => {
         console.log(resp);
+      });
+
+    await axios
+      .get(`/products/getProductColorLinkById/${prodid}`)
+      .then(async ({ data }) => {
+        if (Object.keys(data.productColorData).length > 0) {
+          let imgsArr = [];
+          setProductColors(data.productColorData.color_links);
+          await data.productColorData.color_links.map(async (val, key) => {
+            if (val.imgs?.length > 0 && key == 0) {
+              await val.imgs.map((imgsVal, keyVal) => {
+                imgsArr.push(imgsVal);
+              });
+            }
+          });
+          setProductImgsArr(imgsArr);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
 
     console.log("product id is:" + prodid);
@@ -2468,6 +2514,50 @@ function Hero() {
                   </div>
                 </div>
               </div>
+
+              <div className="product__modal-content-2">
+                <div className="row">
+                  <Button variant="primary" onClick={handleShow}>
+                    Other Images
+                  </Button>
+
+                  <Modal
+                    show={show}
+                    onHide={handleClose}
+                    onEntered={handleEntered}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>{color}</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="rowImg">
+                        <div className="columnImg">
+                          {productImgsArr && productImgsArr.length > 0
+                            ? productImgsArr.map((val, key) => {
+                                return (
+                                  <img
+                                    src={
+                                      process.env.REACT_APP_IMAGE_BASE_URL + val
+                                    }
+                                    style={{ width: "100%" }}
+                                  />
+                                );
+                              })
+                            : null}
+                        </div>
+                        <div className="columnImg"></div>
+                        <div className="columnImg"></div>
+                        <div className="columnImg"></div>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
+                </div>
+              </div>
               {/* <Button variant="primary" onClick={handleShow}>
                 Other Images
               </Button>
@@ -2477,7 +2567,42 @@ function Hero() {
                   <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                  Woohoo, you're reading this text in a modal!
+                  <div class="rowImg"> 
+                    <div class="columnImg">
+                      <img src="/w3images/wedding.jpg" style="width:100%">
+                      <img src="/w3images/rocks.jpg" style="width:100%">
+                      <img src="/w3images/falls2.jpg" style="width:100%">
+                      <img src="/w3images/paris.jpg" style="width:100%">
+                      <img src="/w3images/nature.jpg" style="width:100%">
+                      <img src="/w3images/mist.jpg" style="width:100%">
+                      <img src="/w3images/paris.jpg" style="width:100%">
+                    </div>
+                    <div class="column">
+                      <img src="/w3images/underwater.jpg" style="width:100%">
+                      <img src="/w3images/ocean.jpg" style="width:100%">
+                      <img src="/w3images/wedding.jpg" style="width:100%">
+                      <img src="/w3images/mountainskies.jpg" style="width:100%">
+                      <img src="/w3images/rocks.jpg" style="width:100%">
+                      <img src="/w3images/underwater.jpg" style="width:100%">
+                    </div>  
+                    <div class="column">
+                      <img src="/w3images/wedding.jpg" style="width:100%">
+                      <img src="/w3images/rocks.jpg" style="width:100%">
+                      <img src="/w3images/falls2.jpg" style="width:100%">
+                      <img src="/w3images/paris.jpg" style="width:100%">
+                      <img src="/w3images/nature.jpg" style="width:100%">
+                      <img src="/w3images/mist.jpg" style="width:100%">
+                      <img src="/w3images/paris.jpg" style="width:100%">
+                    </div>
+                    <div class="column">
+                      <img src="/w3images/underwater.jpg" style="width:100%">
+                      <img src="/w3images/ocean.jpg" style="width:100%">
+                      <img src="/w3images/wedding.jpg" style="width:100%">
+                      <img src="/w3images/mountainskies.jpg" style="width:100%">
+                      <img src="/w3images/rocks.jpg" style="width:100%">
+                      <img src="/w3images/underwater.jpg" style="width:100%">
+                    </div>
+                  </div>
                 </Modal.Body>
                 <Modal.Footer>
                   <Button variant="secondary" onClick={handleClose}>
@@ -2608,6 +2733,41 @@ function Hero() {
                 <div className="d-flex mt-3 mb-3 ">
                   <div className="me-5 fw-bold choosingStyle">Choose size</div>
                   <div className="mx-5 px-5 choosingSize">Size chart</div>
+                  <Modal
+                    show={showSize}
+                    onHide={handleCloseSize}
+                    onEntered={handleSizeEntered}
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title>Sizes</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <div className="rowImg">
+                        <div className="columnImg">
+                          {productImgsArr && productImgsArr.length > 0
+                            ? productImgsArr.map((val, key) => {
+                                return (
+                                  <img
+                                    src={
+                                      process.env.REACT_APP_IMAGE_BASE_URL + val
+                                    }
+                                    style={{ width: "100%" }}
+                                  />
+                                );
+                              })
+                            : null}
+                        </div>
+                        <div className="columnImg"></div>
+                        <div className="columnImg"></div>
+                        <div className="columnImg"></div>
+                      </div>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleCloseSize}>
+                        Close
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </div>
                 <div className="d-flex mt-4 mb-4">
                   <div className="d-flex mb-3">
