@@ -487,7 +487,9 @@ function Hero() {
       }
       if (
         fabricInfo.variant[colorIndex].frontImgDimensions.scaleWidth !== 0 &&
-        fabricInfo.variant[colorIndex].frontImgDimensions.scaleWidth !== ""
+        fabricInfo.variant[colorIndex].frontImgDimensions.scaleWidth !== "" &&
+        fabricInfo.variant[colorIndex].frontImgDimensions.scaleHeight !== 0 &&
+        fabricInfo.variant[colorIndex].frontImgDimensions.scaleHeight !== ""
       ) {
         setWidthInches(
           (
@@ -672,7 +674,12 @@ function Hero() {
           if (sides == "one") {
             fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
               (val, index) => {
-                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                if (
+                  val.scaleWidth !== 0 &&
+                  val.scaleWidth !== "" &&
+                  val.scaleHeight !== 0 &&
+                  val.scaleHeight !== ""
+                ) {
                   if (val.width && val.width !== null) {
                     if (index == 0) {
                       widthInches =
@@ -737,7 +744,12 @@ function Hero() {
           } else if (sides == "two") {
             fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
               (val, index) => {
-                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                if (
+                  val.scaleWidth !== 0 &&
+                  val.scaleWidth !== "" &&
+                  val.scaleHeight !== 0 &&
+                  val.scaleHeight !== ""
+                ) {
                   if (val.width && val.width !== null) {
                     if (index == 0) {
                       widthInches =
@@ -802,7 +814,12 @@ function Hero() {
           } else if (sides == "three") {
             fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
               (val, index) => {
-                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                if (
+                  val.scaleWidth !== 0 &&
+                  val.scaleWidth !== "" &&
+                  val.scaleHeight !== 0 &&
+                  val.scaleHeight !== ""
+                ) {
                   if (val.width && val.width !== null) {
                     if (index == 0) {
                       widthInches =
@@ -867,7 +884,12 @@ function Hero() {
           } else if (sides == "four") {
             fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
               (val, index) => {
-                if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                if (
+                  val.scaleWidth !== 0 &&
+                  val.scaleWidth !== "" &&
+                  val.scaleHeight !== 0 &&
+                  val.scaleHeight !== ""
+                ) {
                   if (val.width && val.width !== null) {
                     if (index == 0) {
                       widthInches =
@@ -1004,7 +1026,12 @@ function Hero() {
               if (sides == "one") {
                 fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (
+                      val.scaleWidth !== 0 &&
+                      val.scaleWidth !== "" &&
+                      val.scaleHeight !== 0 &&
+                      val.scaleHeight !== ""
+                    ) {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -1074,7 +1101,12 @@ function Hero() {
               } else if (sides == "two") {
                 fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (
+                      val.scaleWidth !== 0 &&
+                      val.scaleWidth !== "" &&
+                      val.scaleHeight !== 0 &&
+                      val.scaleHeight !== ""
+                    ) {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -1144,7 +1176,12 @@ function Hero() {
               } else if (sides == "three") {
                 fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (
+                      val.scaleWidth !== 0 &&
+                      val.scaleWidth !== "" &&
+                      val.scaleHeight !== 0 &&
+                      val.scaleHeight !== ""
+                    ) {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -1214,7 +1251,12 @@ function Hero() {
               } else if (sides == "four") {
                 fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
                   (val, index) => {
-                    if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                    if (
+                      val.scaleWidth !== 0 &&
+                      val.scaleWidth !== "" &&
+                      val.scaleHeight !== 0 &&
+                      val.scaleHeight !== ""
+                    ) {
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -1426,7 +1468,29 @@ function Hero() {
                   fabricInfo.variant[colorIndex].rightImgDimensions.width
                 ) / parseInt(img.width);
             }
-            let scaleY = 160 / parseInt(img.height);
+            // 160 / parseInt(img.height);
+            let scaleY;
+            if (sides == "one") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].frontImgDimensions.height
+                ) / parseInt(img.height);
+            } else if (sides == "two") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].backImgDimensions.height
+                ) / parseInt(img.height);
+            } else if (sides == "three") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].leftImgDimensions.height
+                ) / parseInt(img.height);
+            } else if (sides == "four") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].rightImgDimensions.height
+                ) / parseInt(img.height);
+            }
             img.set({
               scaleX: scaleX,
               scaleY: scaleY,
@@ -1516,6 +1580,9 @@ function Hero() {
             }
           });
 
+          console.log("total width is", totalWidth);
+          console.log("total height is", totalHeight);
+
           let newHeight = 0;
           let newWidth = 0;
           editor?.canvas.getObjects().forEach((o) => {
@@ -1540,7 +1607,12 @@ function Hero() {
             if (sides == "one") {
               fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (
+                    val.scaleWidth !== 0 &&
+                    val.scaleWidth !== "" &&
+                    val.scaleHeight !== 0 &&
+                    val.scaleHeight !== ""
+                  ) {
                     if (val.width && val.width !== null) {
                       lastPrice =
                         (parseFloat(heightInches) /
@@ -1569,7 +1641,12 @@ function Hero() {
             } else if (sides == "two") {
               fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (
+                    val.scaleWidth !== 0 &&
+                    val.scaleWidth !== "" &&
+                    val.scaleHeight !== 0 &&
+                    val.scaleHeight !== ""
+                  ) {
                     if (val.width && val.width !== null) {
                       lastPrice =
                         (parseFloat(heightInches) /
@@ -1598,7 +1675,12 @@ function Hero() {
             } else if (sides == "three") {
               fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (
+                    val.scaleWidth !== 0 &&
+                    val.scaleWidth !== "" &&
+                    val.scaleHeight !== 0 &&
+                    val.scaleHeight !== ""
+                  ) {
                     if (val.width && val.width !== null) {
                       lastPrice =
                         (parseFloat(heightInches) /
@@ -1627,7 +1709,12 @@ function Hero() {
             } else if (sides == "four") {
               fabricInfo.variant[colorIndex].rightCanvasPricing.forEach(
                 (val, ind) => {
-                  if (val.scaleWidth !== 0 && val.scaleWidth !== "") {
+                  if (
+                    val.scaleWidth !== 0 &&
+                    val.scaleWidth !== "" &&
+                    val.scaleHeight !== 0 &&
+                    val.scaleHeight !== ""
+                  ) {
                     if (val.width && val.width !== null) {
                       lastPrice =
                         (parseFloat(heightInches) /
