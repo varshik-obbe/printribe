@@ -57,6 +57,7 @@ function Hero() {
   const [subCatCat, setSubCatCat] = useState();
   const [productColors, setProductColors] = useState();
   const [productImgsArr, setProductImgsArr] = useState();
+  const [canvasArr, setCanvasArr] = useState();
 
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
@@ -327,6 +328,16 @@ function Hero() {
 
   //default function which runs when the dom is loaded the first time
   useEffect(() => {
+    let canvasAddArr = [];
+    canvasAddArr[0] = new fabric.Canvas( "canvasOne",{
+      preserveObjectStacking: true,
+      controlsAboveOverlay: true,
+      width: 470,
+      height: 612
+      }
+      )
+      setCanvasArr(canvasAddArr);
+
     setImage(testImg);
 
     setSides("one");
@@ -444,11 +455,17 @@ function Hero() {
           top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
           left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
         });
-        if (editor?.canvas) {
-          editor.canvas.clipPath = clipPath;
-        }
+      //   if (editor?.canvas) {
+      //     editor.canvas.clipPath = clipPath;
+      //   }
+      // }
+      // editor?.canvas.add(Rect);
+      if (canvasArr[0]) {
+        console.log("canvas is present", canvasArr[0]);
+        canvasArr[0].clipPath = clipPath;
       }
-      editor?.canvas.add(Rect);
+    }
+    canvasArr[0].add(Rect);
       if (aop) {
         setMainImg(
           process.env.REACT_APP_IMAGE_BASE_URL +
@@ -2904,10 +2921,16 @@ function Hero() {
                           ref={designRef}
                           class={canvasStyles["canvas-container"]}
                         >
-                          <FabricJSCanvas
+                          {fabricInfo && fabricInfo.productId !== undefined && sides === "one" ? (
+                            <canvas id="canvasOne" className={canvasStyles.canvasSet} />
+                          ) : (
+                            <></>
+                          )
+                          }
+                          {/* <FabricJSCanvas
                             onReady={onReady}
                             className={canvasStyles.canvasSet}
-                          />
+                          /> */}
                         </div>
                       </div>
                       {/* <div className="product__sale ">
