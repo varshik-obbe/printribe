@@ -17,6 +17,9 @@ import defaults from "../../styles/defaults.module.css";
 import styles from "../../styles/home.module.css";
 import "../../styles/scss/components/_theme.scss";
 import "../../styles/scss/layout/_product.scss";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import Table from "react-bootstrap/Table";
 
 function Hero() {
   const { prodid } = useParams();
@@ -57,7 +60,9 @@ function Hero() {
   const [subCatCat, setSubCatCat] = useState();
   const [productColors, setProductColors] = useState();
   const [productImgsArr, setProductImgsArr] = useState();
-  const [canvasArr, setCanvasArr] = useState();
+  const [uploadedImgsArr, setuploadedImgsArr] = useState();
+  const [cmsSizeChart, setCmsSizeChart] = useState();
+  const [inchSizeChart, setInchSizeChart] = useState();
 
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
@@ -75,7 +80,20 @@ function Hero() {
 
   const handleShowSize = () => setSizeShow(true);
 
-  const handleSizeEntered = () => {};
+  const handleSizeEntered = async () => {
+    await axios
+    .get(`/products/getProductSizeChartById/${prodid}`)
+    .then(async ({ data }) => {
+      if (Object.keys(data.productSizeChartData).length > 0) {
+        let imgsArr = [];
+        setCmsSizeChart(data.productSizeChartData.centimeters);
+        setInchSizeChart(data.productSizeChartData.inches);
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  };
 
   const handleEntered = async () => {
     let imgsArr = [];
@@ -328,16 +346,6 @@ function Hero() {
 
   //default function which runs when the dom is loaded the first time
   useEffect(() => {
-    let canvasAddArr = [];
-    canvasAddArr[0] = new fabric.Canvas( "canvasOne",{
-      preserveObjectStacking: true,
-      controlsAboveOverlay: true,
-      width: 470,
-      height: 612
-      }
-      )
-      setCanvasArr(canvasAddArr);
-
     setImage(testImg);
 
     setSides("one");
@@ -373,6 +381,8 @@ function Hero() {
     //   editor?.canvas.centerObject(img);
     //   setIsSubmitted(true);
     // });
+    setWidthInches(0);
+    setHeightInches(0);
   }, []);
 
   function getCoords(rect) {
@@ -455,17 +465,11 @@ function Hero() {
           top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
           left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
         });
-      //   if (editor?.canvas) {
-      //     editor.canvas.clipPath = clipPath;
-      //   }
-      // }
-      // editor?.canvas.add(Rect);
-      if (canvasArr[0]) {
-        console.log("canvas is present", canvasArr[0]);
-        canvasArr[0].clipPath = clipPath;
+        if (editor?.canvas) {
+          editor.canvas.clipPath = clipPath;
+        }
       }
-    }
-    canvasArr[0].add(Rect);
+      editor?.canvas.add(Rect);
       if (aop) {
         setMainImg(
           process.env.REACT_APP_IMAGE_BASE_URL +
@@ -508,42 +512,24 @@ function Hero() {
         fabricInfo.variant[colorIndex].frontImgDimensions.scaleHeight !== 0 &&
         fabricInfo.variant[colorIndex].frontImgDimensions.scaleHeight !== ""
       ) {
-        setWidthInches(
-          (
-            parseFloat(
-              fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
-            ) /
-            parseFloat(
-              fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleWidth
-            )
-          ).toFixed(2)
-        );
-        maximumHeight = (
-          parseFloat(
-            fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
-          ) /
-          parseFloat(
-            fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleHeight
-          )
-        ).toFixed(2);
-        maximumWidth = (
-          parseFloat(
-            fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
-          ) /
-          parseFloat(
-            fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleWidth
-          )
-        ).toFixed(2);
-        setHeightInches(
-          (
-            parseFloat(
-              fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
-            ) /
-            parseFloat(
-              fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleHeight
-            )
-          ).toFixed(2)
-        );
+        // maximumHeight = (
+        //   parseFloat(
+        //     fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
+        //   ) /
+        //   parseFloat(
+        //     fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleHeight
+        //   )
+        // ).toFixed(2);
+        // maximumWidth = (
+        //   parseFloat(
+        //     fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
+        //   ) /
+        //   parseFloat(
+        //     fabricInfo.variant[colorIndex].frontCanvasPricing[0].scaleWidth
+        //   )
+        // ).toFixed(2);
+        maximumHeight = 0;
+        maximumWidth = 0;
       } else {
         setWidthInches(
           fabricInfo.variant[colorIndex].frontCanvasPricing[0].widthInches
@@ -1151,11 +1137,11 @@ function Hero() {
 
               if (
                 brNew.width + brNew.left >
-                  parseInt(parentObj.width) + parseInt(parentObj.left) ||
+                  parseFloat(parentObj.width) + parseFloat(parentObj.left) ||
                 brNew.height + brNew.top >
-                  parseInt(parentObj.height) + parseInt(parentObj.top) ||
-                brNew.left < parseInt(parentObj.left) ||
-                brNew.top < parseInt(parentObj.top)
+                  parseFloat(parentObj.height) + parseFloat(parentObj.top) ||
+                brNew.left < parseFloat(parentObj.left) ||
+                brNew.top < parseFloat(parentObj.top)
               ) {
                 obj.left = left1;
                 obj.top = top1;
@@ -1663,6 +1649,28 @@ function Hero() {
       alert("please upload a higher resolution image");
       return;
     } else {
+      let imageUloadedArr = [];
+      if(uploadedImgsArr) {
+        imageUloadedArr = uploadedImgsArr;
+      }
+      let base64data;
+      if(window.FileReader) {
+        if (event.target.files[0] && event.target.files[0].type.match('image.*')) {
+          var reader = new window.FileReader();
+          reader.readAsDataURL(event.target.files[0]);
+          reader.onloadend = function () {
+               base64data = reader.result;
+               imageUloadedArr.push(base64data.split(',')[1]);
+               setuploadedImgsArr(imageUloadedArr);
+          }
+        }
+        else {
+          console.log("file is not present or not image type", event.target.files[0])
+        }
+      }
+      else {
+        console.log("filereader not present");
+      }
       const objectUrl = URL.createObjectURL(event.target.files[0]);
       fabric.Image.fromURL(
         objectUrl,
@@ -1706,6 +1714,8 @@ function Hero() {
           } else {
             img.top = topRect;
             img.left = leftRect;
+            left1 = leftRect;
+            top1 = topRect;
             // let ih = img.height;
             // let iw = img.width;
             // let width_ratio =
@@ -1776,6 +1786,8 @@ function Hero() {
               scaleX: scaleX,
               scaleY: scaleY,
             });
+            scale1x = scaleX;
+            scale1y = scaleY;
           }
           img.setControlsVisibility({
             ml: false,
@@ -1867,6 +1879,8 @@ function Hero() {
             if (o.type === "image") {
               newHeight = o.getScaledHeight();
               newWidth = o.getScaledWidth();
+              width1 = o.width;
+              height1 = o.height;
               // o.lockScalingX = true;
               // o.lockScalingY = true;
             }
@@ -2130,23 +2144,30 @@ function Hero() {
       let url = "";
       const customerId = localStorage.getItem("customerId");
       var jsonData = JSON.stringify(editor?.canvas.toJSON());
-      axios
-        .post(`/fabricDesigns/addDesign`, {
+      if(uploadedImgsArr) {
+        axios
+        .post(`/fabricDesigns/addSavedDesign`, {
           data: {
             productId: prodid,
             customerId: customerId,
-            color: color,
-            side: sides,
-            data: jsonData,
-            url: url,
+            imgsArr: uploadedImgsArr,
           },
         })
         .then(({ data }) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Design saved successfully'
+          })
           console.log("data saved successfully");
         })
         .catch((err) => {
           console.log(err);
         });
+      }
+      else {
+        console.log("nothing to save");
+      }
     } else {
       window.location.href = "/signin";
     }
@@ -2921,16 +2942,10 @@ function Hero() {
                           ref={designRef}
                           class={canvasStyles["canvas-container"]}
                         >
-                          {fabricInfo && fabricInfo.productId !== undefined && sides === "one" ? (
-                            <canvas id="canvasOne" className={canvasStyles.canvasSet} />
-                          ) : (
-                            <></>
-                          )
-                          }
-                          {/* <FabricJSCanvas
+                          <FabricJSCanvas
                             onReady={onReady}
                             className={canvasStyles.canvasSet}
-                          /> */}
+                          />
                         </div>
                       </div>
                       {/* <div className="product__sale ">
@@ -3187,7 +3202,7 @@ function Hero() {
                 </div>
                 <div className="d-flex mt-3 mb-3 ">
                   <div className="me-5 fw-bold choosingStyle">Choose size</div>
-                  <div className="mx-5 px-5 choosingSize">Size chart</div>
+                  <div className="mx-5 px-5 choosingSize"><a href="#" onClick={handleShowSize}>Size chart</a></div>
                   <Modal
                     show={showSize}
                     onHide={handleCloseSize}
@@ -3197,25 +3212,62 @@ function Hero() {
                       <Modal.Title>Sizes</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <div className="rowImg">
-                        <div className="columnImg">
-                          {productImgsArr && productImgsArr.length > 0
-                            ? productImgsArr.map((val, key) => {
-                                return (
-                                  <img
-                                    src={
-                                      process.env.REACT_APP_IMAGE_BASE_URL + val
-                                    }
-                                    style={{ width: "100%" }}
-                                  />
-                                );
-                              })
-                            : null}
-                        </div>
-                        <div className="columnImg"></div>
-                        <div className="columnImg"></div>
-                        <div className="columnImg"></div>
-                      </div>
+                    <Tabs
+                    defaultActiveKey="home"
+                    id="uncontrolled-tab-example"
+                    className="mb-3"
+                  >
+                    <Tab eventKey="home" title="Centimeters">
+                      <Table bordered hover>
+                        <thead>
+                          <tr>
+                            <th>Size Label</th>
+                            <th>Length</th>
+                            <th>Chest</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {cmsSizeChart && cmsSizeChart !== undefined
+                          ? cmsSizeChart.map((item, index) => {
+                            return (
+                            <tr>
+                              <td>{item.size}</td>
+                              <td>{item.length}</td>
+                              <td>{item.chest}</td>
+                            </tr>
+                            )
+                          })
+                          : null
+                          }
+                        </tbody>
+                      </Table>
+                    </Tab>
+                    <Tab eventKey="profile" title="Inches">
+                      <Table bordered hover>
+                        <thead>
+                          <tr>
+                            <th>Size Label</th>
+                            <th>Length</th>
+                            <th>Chest</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {inchSizeChart && inchSizeChart !== undefined
+                          ? inchSizeChart.map((item, index) => {
+                            return (
+                            <tr>
+                              <td>{item.size}</td>
+                              <td>{item.length}</td>
+                              <td>{item.chest}</td>
+                            </tr>
+                            )
+                          })
+                          : null
+                          }
+                        </tbody>
+                      </Table>
+                    </Tab>
+                  </Tabs>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleCloseSize}>
