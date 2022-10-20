@@ -5,7 +5,9 @@ const Api = {
 		LOGIN: url.customer + 'login',
 		SIGNUP: url.customer + 'addCustomer',
 		GETBYID: url.customer + 'getCustomerbyid?id=',
-		UPDATECUSTOMER: url.customer + 'updatecustomer?id='
+		UPDATECUSTOMER: url.customer + 'updatecustomer?id=',
+		UPDATEPASSWORD: url.customer + 'updatePass'
+
 	}
 };
 

@@ -184,23 +184,32 @@ function Products({ handleNext }) {
   };
 
   const handleEdit = (editProduct) => {
-    zekekeData.forEach((ele) => {
-      customizeProduct.forEach((curr) => {
-        if (
-          editProduct.product_id === curr.product_id &&
-          editProduct.product_id === ele.ProductId
-        )
-          navigate(
-            `/customizer?productid=${
-              curr.color.color_name + curr.product_id
-            }&masterProductId=${curr.product_id}&quantity=${
-              curr.quantity
-            }&designId=${ele.designId}&colorId=${curr.color.colorId}&color=${
-              curr.color.color_name
-            }&title=${curr.title}`
-          );
+    console.log(editProduct,"editProduct",zekekeData)
+    if (zekekeData && zekekeData.length) {
+      zekekeData.forEach((ele) => {
+        customizeProduct.forEach((curr) => {
+          if (
+            editProduct.product_id === curr.product_id &&
+            editProduct.product_id === ele.ProductId
+          )
+            navigate(
+              `/customizer?productid=${
+                curr.color.color_name + curr.product_id
+              }&masterProductId=${curr.product_id}&quantity=${
+                curr.quantity
+              }&designId=${ele.designId}&colorId=${curr.color.colorId}&color=${
+                curr.color.color_name
+              }&title=${curr.title}`
+            );
+        });
       });
-    });
+    }
+    else{
+      navigate(
+        `/fabricDesign/${editProduct.product_id}?edit`
+      );
+    }
+   
   };
 
 

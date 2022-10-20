@@ -25,6 +25,8 @@ import FAQ_Ans from "./pages/FAQ_Ans.jsx"
 import Services from "./pages/Services.jsx";
 import HowItWorks from "./pages/HowItWorks.jsx";
 import OTPpage from "./components/OTPpage";
+import About from "./components/about-us";
+import Integrations from "./components/integrations";
 
 
 // import SubCatWomen from "./pages/SubCatWomen";
@@ -36,6 +38,9 @@ function App() {
       <Router>
         <Routes>
           <Route exact path="/" element={<Homelayout />} />
+          <Route exact path="/about" element={<About />} />
+          <Route exact path="/integrations" element={<Integrations />} />
+
           <Route exact path="/products" element={<Productataloglayout />} />
           {/* <Route exact path="/products/:category" element={<Productataloglayout />} /> */}
           <Route

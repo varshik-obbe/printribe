@@ -20,17 +20,17 @@ function Footer() {
           </div>
           <div className="col-6">
             <div className="d-flex justify-content-end">
-              <div className="p-2 h3">
-                <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon>
+            <div className="p-2 h3">
+         <a href="" style={{ color: 'gray'}}> <FontAwesomeIcon icon={faFacebook}></FontAwesomeIcon></a>
               </div>
               <div className="p-2 h3">
-                <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon>
+              <a href="" style={{ color: 'gray'}}>  <FontAwesomeIcon icon={faInstagram}></FontAwesomeIcon></a>
               </div>
               <div className="p-2 h3">
-                <FontAwesomeIcon icon={faYoutube}></FontAwesomeIcon>
+              <a href="" style={{ color: 'gray'}}>    <FontAwesomeIcon icon={faYoutube}></FontAwesomeIcon></a>
               </div>
               <div className="p-2 h3">
-                <FontAwesomeIcon icon={faTwitter}></FontAwesomeIcon>
+              <a href="" style={{ color: 'gray'}}> <FontAwesomeIcon icon={faTwitter}></FontAwesomeIcon></a>
               </div>
             </div>
           </div>
@@ -56,7 +56,7 @@ function Footer() {
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">About us</a>
+                  <a href="/about" class="text-white text-decoration-none ">About us</a>
                 </li>
                 <li className="mt-3">
                   <a href="/terms-conditions" class="text-white text-decoration-none ">Terms of service</a>
@@ -103,7 +103,7 @@ function Footer() {
                   <a href="/design-tribe" class="text-white text-decoration-none ">Design Tribe</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/privacy-policy" class="text-white text-decoration-none">Integrations</a>
+                  <a href="/integrations" class="text-white text-decoration-none">Integrations</a>
                 </li>
                 <li className="mt-3">
                   <a href="https://printribe-partner.web.app" class="text-white text-decoration-none">Merchant Panel</a>

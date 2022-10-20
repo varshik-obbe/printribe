@@ -316,7 +316,9 @@ function Shipping(props) {
                     <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+                    
+                          <span class="text-danger">*</span>
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -330,12 +332,10 @@ function Shipping(props) {
                           required
                         />
                       </div>
-                      {shippingErrorName ===
-                        "Full name should be at of least 2 characters" && (
+      
                         <span class="text-danger d-block">
                           {shippingErrorName}
                         </span>
-                      )}
                     </div>
                   </>
                 );
@@ -345,7 +345,9 @@ function Shipping(props) {
                     <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+                     
+                          <span class="text-danger ">*</span>
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -393,7 +395,9 @@ function Shipping(props) {
                     <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+            
+                          <span class="text-danger ">*</span>
                       </label>
                       <div class="input-group mb-2">
                         {shippingDetails ? (
@@ -468,7 +472,10 @@ function Shipping(props) {
                     <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+                       
+                          <span class="text-danger ">*</span>
+                
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -482,11 +489,10 @@ function Shipping(props) {
                           required
                         />
                       </div>
-                      {shippingErrorCity === "City field is required" && (
+         
                         <span class="text-danger d-block">
                           {shippingErrorCity}
                         </span>
-                      )}
                     </div>
                   </>
                 );
@@ -496,7 +502,9 @@ function Shipping(props) {
                     <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+         
+                          <span class="text-danger ">*</span>
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -510,9 +518,9 @@ function Shipping(props) {
                           required
                         />
                       </div>
-                      {shippingError !== "" && !savedShipAddress && (
+                 
                         <span class="text-danger d-block">{shippingError}</span>
-                      )}
+
                       {shippingErrorPostalCode ===
                         "Postal Code field is required" && (
                         <span class="text-danger d-block">
@@ -528,7 +536,10 @@ function Shipping(props) {
                     <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+                     
+                          <span class="text-danger ">*</span>
+                  
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -542,10 +553,10 @@ function Shipping(props) {
                         />
                       </div>
                       {shippingErrorGST === "Gst field is required" && (
-                      <span class="text-danger d-block">
-                        {shippingErrorGST}
-                      </span>
-                    )}
+                        <span class="text-danger d-block">
+                          {shippingErrorGST}
+                        </span>
+                      )}
                     </div>
                   </>
                 );
@@ -553,7 +564,10 @@ function Shipping(props) {
                 return (
                   <div class="col-12 col-sm-6 mt-2">
                     <label for="basic-url" class="form-label mb-1">
-                      <b>{ele.title}</b>
+                      <b>{ele.title}</b>{" "}
+                   
+                        <span class="text-danger ">*</span>
+                      
                     </label>
                     <div class="input-group mb-2">
                       <select
@@ -584,7 +598,10 @@ function Shipping(props) {
                   <>
                     <div class="col-12 col-sm-6 mt-2">
                       <label for="basic-url" class="form-label mb-1">
-                        <b>{ele.title}</b>
+                        <b>{ele.title}</b>{" "}
+          
+                          <span class="text-danger ">* </span>
+                        
                       </label>
                       <div class="input-group mb-2">
                         <button
@@ -624,7 +641,10 @@ function Shipping(props) {
                 return (
                   <div class="col-12 col-sm-6 mt-2">
                     <label for="basic-url" class="form-label mb-1">
-                      <b>{ele.title}</b>
+                      <b>{ele.title}</b>{" "}
+
+                        <span class="text-danger ">*</span>
+                      
                     </label>
                     <div class="input-group mb-2">
                       <select

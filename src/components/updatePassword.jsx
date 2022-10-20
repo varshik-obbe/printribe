@@ -9,6 +9,7 @@ import PrintribeLogo from "../assets/Printribe-logo.png";
 // ---- import Styles ---- //
 import classes from "../styles/signinsignup.module.css";
 import { useLocation } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const UpdatePassword = () => {
   const params = useParams();
@@ -53,7 +54,16 @@ const UpdatePassword = () => {
         })
         .then(({ data }) => {
           console.log(data);
-          navigate("/signin?redirect=from_update");
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title:data.success.global,
+            showConfirmButton: true,
+          })
+          setTimeout(() => {
+            navigate("/signin?redirect=from_update");
+
+          }, 1500);
         })
         .catch((err) => console.error(err));
     }

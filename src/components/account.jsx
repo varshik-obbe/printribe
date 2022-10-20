@@ -7,18 +7,37 @@ import account from "../assets/account.png";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
-
 import api from "../api/api";
 
 function Account() {
   const navigate = useNavigate();
   const [showImage, setShowImage] = React.useState("");
   const [imgBase64, setImgBase64] = useState("");
-
+  const [updatePassword, setUpdatePassword] = useState(false);
   const [state, setState] = React.useState();
-
+const[newPassword,setNewPassword]=useState("");
+const[confirmPassword,setConfirmPassword]=useState("");
   let customerId = localStorage.customerId ? localStorage.customerId : "";
+const updateNewPassword=()=>{
+  
+if(newPassword && confirmPassword && newPassword==confirmPassword){
 
+    const userId = localStorage.getItem('customerId')
+    console.log(userId,"userId")
+    const data= { 
+      "restData": {
+      "id": userId,
+      "password": newPassword
+  }}
+    axios
+    .put(api.customers.UPDATEPASSWORD,data).then(res=>   Swal.fire({
+      position: "center",
+      icon: "success",
+      title:res.data.success.global,
+      showConfirmButton: true,
+    }))
+}
+}
   const getByCustomerIdApiCall = React.useCallback(() => {
     axios
       .get(api.customers.GETBYID + customerId)
@@ -56,7 +75,7 @@ function Account() {
           icon: "success",
           title: "Account Updated!",
           showConfirmButton: true,
-        })
+        });
       })
       .catch((err) => {
         console.log(err);
@@ -64,13 +83,13 @@ function Account() {
           position: "center",
           icon: "error",
           title: "Error!",
-          text:"Error in Update your Account Information",
+          text: "Error in Update your Account Information",
           showConfirmButton: true,
-        })
+        });
       });
 
     //update user profile image api
-    console.log(imgBase64)
+    console.log(imgBase64);
     axios
       .put(
         `https://api.theprintribe.com/api/customers/updatecustomer?id=${customerId}`,
@@ -91,7 +110,7 @@ function Account() {
   };
 
   const handleImageUpload = (e) => {
-    console.log(e.target.files[0]);    
+    console.log(e.target.files[0]);
 
     if (e.target.files && e.target.files[0]) {
       var reader = new FileReader();
@@ -493,6 +512,72 @@ function Account() {
                       />
                     </div>
                   </div>
+               </div> </div>
+               <hr class="my-4" />
+               {!updatePassword && (
+                    <label
+                      class="text-primary"
+                      style={{ cursor: "pointer" }}
+                      onClick={() => setUpdatePassword(true)}
+                    >
+                      Update Password
+                    </label>
+                  )}
+                  {updatePassword && (
+                    <div className="row ">
+                      <label class="fs-5">Update Password</label>
+                      <label class="mt-2">
+                        Update & Edit the information you share with the
+                        community
+                      </label>
+                      <div class="row mt-4 ">
+                        <div class="col-12 col-sm-6">
+                          <label for="basic-url" class="form-label">
+                            New Password
+                          </label>
+                          <div class="input-group mb-3">
+                            <input
+                              type="password"
+                              class="form-control border-dark"
+                              value={newPassword}
+                              required
+                              onChange={(e) => setNewPassword(e.target.value)}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                          <label for="basic-url" class="form-label">
+                            Confirm Password
+                          </label>
+                          <div class="input-group mb-3">
+                            <input
+                              type="password"
+                              class="form-control border-dark"
+                              value={
+                                confirmPassword
+                              }
+                              required
+                              onChange={(e) =>
+                                setConfirmPassword(e.target.value)
+                              }
+                            />
+                          </div>
+                        </div>{" "}
+                        <div class="col-12 mt-3">
+                          <div className=" d-flex justify-content-end">
+                            <button
+                              className="btn btn-secondary ms-3"
+                              onClick={()=>updateNewPassword()}
+                            >
+                              Update Password
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                             
+
                   <div class="col-12 mt-3">
                     <div className=" d-flex justify-content-end">
                       <button
@@ -511,8 +596,8 @@ function Account() {
                       </button>
                     </div>
                   </div>
-                </div>
-              </div>
+                
+             
             </div>
           </div>
         </div>
