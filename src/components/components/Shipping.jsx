@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 
 import axios from "axios";
+import { Rating } from "@mui/material";
 
 const fieldsArray = [
+  { name: "Select Shipping", title: "Shipping Type", diff: "Shipping Type" },
+
   { name: "fullName", title: "Full Name", diff: false },
   {
     name: "state",
@@ -30,9 +33,14 @@ function Shipping(props) {
     localStorage.getItem("shipping_data") !== null
       ? JSON.parse(localStorage.getItem("shipping_data"))
       : null;
-
+const [countries,setCountries]=useState([])
+const getAllCountries=async()=>{
+const data = await axios.get('/customerShipping/getShipRocketCountries')
+setCountries(data.data.data)
+}
   useEffect(() => {
     if (savedShipAddress) {
+
       setFullName(savedShippingData.fullname);
       setState(savedShippingData.state);
       setAddress1(savedShippingData.address1);
@@ -48,6 +56,7 @@ function Shipping(props) {
       setShippingerrorCity("");
       setShippingerrorCountry("");
       setShippingerrorState("");
+      setShippingerrorType("")
       setShippingerrorPostalCode("");
       setShippingerrorCompany("");
       setShippingerrorMobile("");
@@ -107,7 +116,9 @@ function Shipping(props) {
       if (state === "") {
         setShippingerrorState("State field is required");
       }
-
+if(shippingType===""){
+  setShippingerrorType("Please Select Shipping Type")
+}
       if (postalCode === 0) {
         setShippingerrorPostalCode("Postal Code field is required");
       }
@@ -143,6 +154,7 @@ function Shipping(props) {
           visitor_id: visitorId,
           fullname: fullName,
           state: state,
+          shippingType:shippingType,
           address1: address1,
           company: company,
           address2: address2,
@@ -189,6 +201,7 @@ function Shipping(props) {
   const { handleNext } = props;
   const [fullName, setFullName] = useState("");
   const [state, setState] = useState("");
+  const [shippingType,setShippingType]=useState("");
   const [address1, setAddress1] = useState("");
   const [company, setCompany] = useState("");
   const [address2, setAddress2] = useState("");
@@ -209,6 +222,8 @@ function Shipping(props) {
   const [shippingErrorCity, setShippingerrorCity] = useState("");
   const [shippingErrorCompany, setShippingerrorCompany] = useState("");
   const [shippingErrorState, setShippingerrorState] = useState("");
+  const [shippingErrorType, setShippingerrorType] = useState("");
+
   const [shippingErrorPostalCode, setShippingerrorPostalCode] = useState("");
   const [shippingErrorCountry, setShippingerrorCountry] = useState("");
   const [shippingErrorGST, setShippingerrorGST] = useState("");
@@ -261,6 +276,7 @@ function Shipping(props) {
   // };
 
   useEffect(() => {
+    getAllCountries()
     //getting gst value from api if present
     let customerId = localStorage.getItem("customerId");
     axios
@@ -310,6 +326,39 @@ function Shipping(props) {
         <div class="row mt-4">
           {fieldsArray.map((ele, index) => {
             switch (ele.diff) {
+              case "Shipping Type":
+                return (
+                  <div class="col-12 col-sm-6 mt-2">
+                    <label for="basic-url" class="form-label mb-1">
+                      <b>{ele.title}</b>{" "}
+                   
+                        <span class="text-danger ">*</span>
+                      
+                    </label>
+                    <div class="input-group mb-2">
+                      <select
+                        class="form-select"
+                        aria-label="Default select example"
+                        onChange={(e) => {
+                          setShippingType(e.target.value);
+                          setShippingerrorType("");
+                        }}
+                        value={shippingType}
+                        required
+                      >
+                        <option selected>select Shipping Type</option>
+                        <option value="ship from us">Ship from us</option>
+                        <option value="self">Self shipping</option>
+                        <option value="international">International shiping</option>
+                      </select>
+                    </div>
+                    {shippingErrorType === "Please Select Shipping Type" && (
+                      <span class="text-danger d-block">
+                        {shippingErrorType}
+                      </span>
+                    )}
+                  </div>
+                );
               case false:
                 return (
                   <>
@@ -339,6 +388,7 @@ function Shipping(props) {
                     </div>
                   </>
                 );
+            
               case "address1":
                 return (
                   <>
@@ -392,7 +442,7 @@ function Shipping(props) {
               case "company":
                 return (
                   <>
-                    <div class="col-12 col-sm-6 mt-2">
+               {shippingType && shippingType == "ship from us"  &&   <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
@@ -444,7 +494,7 @@ function Shipping(props) {
                                       class="form-control"
                                       value={curr.courier_name}
                                     >
-                                      {curr.courier_name}
+                                      {curr.courier_name}{`( ${curr.rating})`}
                                     </option>
                                   ))}
                               </select>
@@ -463,7 +513,7 @@ function Shipping(props) {
                           {shippingErrorCompany}
                         </span>
                       )}
-                    </div>
+                    </div>}
                   </>
                 );
               case "city":
@@ -658,9 +708,9 @@ function Shipping(props) {
                         required
                       >
                         <option selected>Open this select menu</option>
-                        <option value="India">India</option>
-                        <option value="USA">USA</option>
-                        <option value="UK">UK</option>
+                        {countries &&countries.length && countries.map(data=><option value={data.name}>{data.name}</option>)}
+                        
+                 
                       </select>
                     </div>
                     {shippingErrorCountry === "Country field is required" && (

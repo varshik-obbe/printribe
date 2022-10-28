@@ -17,18 +17,22 @@ function Account() {
   const [state, setState] = React.useState();
 const[newPassword,setNewPassword]=useState("");
 const[confirmPassword,setConfirmPassword]=useState("");
+const[currentPassword,setCurrentPassword]=useState("")
   let customerId = localStorage.customerId ? localStorage.customerId : "";
 const updateNewPassword=()=>{
   
 if(newPassword && confirmPassword && newPassword==confirmPassword){
 
     const userId = localStorage.getItem('customerId')
-    console.log(userId,"userId")
-    const data= { 
-      "restData": {
-      "id": userId,
-      "password": newPassword
-  }}
+
+
+const data ={
+  "restData": {
+    "id": userId,
+    "old_password": currentPassword,
+    "password":newPassword
+}
+}
     axios
     .put(api.customers.UPDATEPASSWORD,data).then(res=>   Swal.fire({
       position: "center",
@@ -531,6 +535,20 @@ if(newPassword && confirmPassword && newPassword==confirmPassword){
                         community
                       </label>
                       <div class="row mt-4 ">
+                      <div class="col-12 col-sm-6 col-md-12 ">
+                          <label for="basic-url" class="form-label">
+                            Current Password
+                          </label>
+                          <div class="input-group mb-3">
+                            <input
+                              type="password"
+                              class="form-control border-dark"
+                              value={currentPassword}
+                              required
+                              onChange={(e) => setCurrentPassword(e.target.value)}
+                            />
+                          </div>
+                        </div>
                         <div class="col-12 col-sm-6">
                           <label for="basic-url" class="form-label">
                             New Password

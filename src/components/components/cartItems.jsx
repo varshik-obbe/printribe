@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import Delayed from "../Delayed";
 import Loader from "../Loader/Loader";
-
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import {AiFillCloseCircle} from 'react-icons/ai'
 const CartItems = ({
   cartProduct,
   customizeProduct,
@@ -15,7 +17,9 @@ const CartItems = ({
   
 }) => {
   const [quantity, setQuantity] = useState(cartProduct.quantity);
-
+  const[retail,setRetail]=useState(cartProduct.retail_price)
+  const[previewUrl,setPreviewUrl]=useState();
+  const[open,setOpen]=useState(false)
   const navigate = useNavigate();
 
   var subTotal = localStorage.getItem("subTotal");
@@ -39,6 +43,8 @@ const CartItems = ({
         curr.size === cartProduct.size &&
         curr.color.color_code === cartProduct.color.color_code
       ) {
+        console.log(curr,"crrrrrrrr")
+        curr.retail_price= Number(retail)
         curr.quantity = Number(quantity);
         return localStorage.setItem(
           "customizeProduct",
@@ -46,17 +52,71 @@ const CartItems = ({
         );
       }
     });
-  }, [quantity]);
+  }, [quantity,retail]);
 
   const checkQty = (e) => {
     if (e.target.value < 1 || e.target.value === "") {
       setQuantity(1);
     }
   };
+const handlePreview=(img)=>{
+  setPreviewUrl(img);
+  setOpen(true)
+
+}
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 2,
+};
 
   return (
+    <>   <Modal
+    open={open}
+    onClose={()=>setOpen(false)}
+    aria-labelledby="modal-modal-title"
+    aria-describedby="modal-modal-description"
+    
+  >
+    <Box sx={style}>
+      <AiFillCloseCircle size={25} onClick={()=>setOpen(false)} className="preview-close-icon" style={{position:'absolute',right:0,top:0}} />
+
+    <img 
+                src={previewUrl}
+                alt=""
+                style={{
+                  objectFit: "contain",
+                  height: "90%",
+                  width: "100%",
+                }}
+              />
+    </Box>
+  </Modal>
     <div class="row">
-      <div class="col-12 col-md-6 col-lg-4 px-0">
+      <div class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="col-12 col-md-6 col-lg-2 px-0">
         <span class="fs-6">PRODUCTS</span>
         <hr
           class="w-100 mt-2 mb-4"
@@ -80,8 +140,8 @@ const CartItems = ({
             <span>Thread colors</span>
             <br />
             <div class="d-flex mt-1">
-              {cartItems &&
-                cartItems.map((ele) => (
+              {/* {cartItems &&
+                cartItems.map((ele) => ( */}
                   <div
                     style={{
                       height: "12px",
@@ -92,7 +152,7 @@ const CartItems = ({
                       borderRadius: "2px",
                     }}
                   />
-                ))}
+                {/* ))} */}
             </div>
             <div class="mt-3" />
             <button
@@ -114,6 +174,7 @@ const CartItems = ({
           class="w-100 mt-2 mb-4"
           style={{ height: "2px", background: "#999" }}
         />
+
         <div class="row">
           <div class="col-6 col-lg-7">
             <div
@@ -122,7 +183,8 @@ const CartItems = ({
                 borderRadius: "5px 5px 0 0",
               }}
             >
-              <img
+              <img 
+              onClick={()=>handlePreview(cartProduct.link)}
                 src={cartProduct.link}
                 alt=""
                 style={{
@@ -220,6 +282,44 @@ const CartItems = ({
             ₹
           </div>
           <input
+            value={retail}
+            onChange={(e)=>setRetail(e.target.value)}
+            style={{
+              height: "40px",
+              width: "80px",
+              border: "1px solid #999",
+              textAlign: "center",
+              borderRadius: "0 5px 5px 0",
+            }}
+          />
+        </div>
+      </div>
+      <div
+        class={[
+          "col-4 col-sm-4 col-lg-2 px-0 d-flex align-items-center flex-column",
+          classes.productGrid5,
+        ].join(" ")}
+      >
+        <span class="fs-6">Total</span>
+        <hr
+          class="w-100 mt-2 mb-4"
+          style={{ height: "2px", background: "#999" }}
+        />
+        <div class="d-flex">
+          <div
+            style={{
+              height: "40px",
+              width: "30px",
+              borderTop: "1px solid #999",
+              borderLeft: "1px solid #999",
+              borderBottom: "1px solid #999",
+              borderRadius: "5px 0 0 5px",
+            }}
+            class="d-flex justify-content-center align-items-center"
+          >
+            ₹
+          </div>
+          <input
             value={(quantity * cartProduct.price)+(quantity * cartProduct.design_price)}
             style={{
               height: "40px",
@@ -268,7 +368,7 @@ const CartItems = ({
           }}
         />
       </div>
-    </div>
+    </div></>
   );
 };
 

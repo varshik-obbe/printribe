@@ -184,7 +184,7 @@ const FAQ = () => {
         <div className={styles.faq_second_row_card} onClick={() => navigate(`/FAQ/integrations/questions`)}>
           <img
             className={styles.faq_second_row_img}
-            src="//theme.zdassets.com/theme_assets/2383316/062949ac53bb6fa8072b4793092d510f0705f369.svg"
+            src="https://cdni.iconscout.com/illustration/premium/thumb/integration-3839615-3202632.png"
             alt="Integrations"
           />{" "}
           <div>

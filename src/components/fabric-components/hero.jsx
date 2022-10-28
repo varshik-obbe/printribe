@@ -2984,7 +2984,57 @@ function Hero() {
                   </div>
                 </div>
               </div>
-
+<div className="other-images">
+<div
+                            className="d-flex no-wrap"
+                            id="other-images"
+                            role="tablist"
+                            style={{width: "35rem",
+                              overflowX: "auto",
+                              overflowY:'hidden',
+                              whiteSpace: "nowrap"}}
+                    >
+                      {fabricInfo && fabricInfo.productId !== undefined
+                        ? imgVariants.map((item, index) => {
+                            let letterNumber = "";
+                            let urlImg = "";
+                            if (index == 0) {
+                              letterNumber = "one";
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].frontImgURL;
+                            } else if (index == 1) {
+                              letterNumber = "two";
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].backImgURL;
+                            } else if (index == 2) {
+                              letterNumber = "three";
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].leftImgURL;
+                            } else if (index == 3) {
+                              letterNumber = "four";
+                              urlImg =
+                                process.env.REACT_APP_IMAGE_BASE_URL +
+                                fabricInfo.variant[colorIndex].rightImgURL;
+                            }
+                            return (
+                      
+                                <div className="product__nav-img w-img" style={{width:"80px",margin:"4px"}}>
+                                  <img
+                                    width={100}
+                                    height={115}
+                                    src={urlImg}
+                                    alt=""
+                                  />
+                                </div>
+                                
+                            );
+                          })
+                        : null}
+                    </div>
+</div>
               <div className="product__modal-content-2">
                 <div className="row">
                   <Button variant="primary" onClick={handleShow}>

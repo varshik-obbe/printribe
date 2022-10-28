@@ -19,6 +19,7 @@ function ReviewOrder({ handleNext }) {
   const [walletAmount, setWalletAmount] = useState(0);
   const [razorPayInitData, setRazorPayInitData] = useState();
   const [totalBillingAmount, setTotalBillingAmount] = useState(0);
+  const[totalRetailAmount,setTotalRetailAmount]=useState(0);
   const [designPrice,setDesignPrice] = useState([])
 
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
@@ -779,14 +780,15 @@ function ReviewOrder({ handleNext }) {
     let shipping_data = JSON.parse(localStorage.getItem("shipping_data"));
 
     let tempsubTotal = 0;
-
+    let tempSubRetail=0
     customizeProduct &&
       customizeProduct.forEach((curr) => {
+        tempSubRetail+=(Number(curr.retail_price))
         tempsubTotal += (Number(curr.quantity) * Number(curr.price)) + (Number(curr.quantity) * Number(curr.design_price));
       });
 
       localStorage.setItem("subTotal",tempsubTotal);
-
+      
     if (shipping_data.state === "Karnataka") {
       tempSGSTArr.forEach((item) => {
         totalSgst += Number(item.value);
@@ -821,8 +823,8 @@ function ReviewOrder({ handleNext }) {
         ) / 100;
     }
 
-    console.log("result", result);
-
+    console.log("result", tempSubRetail);
+    setTotalRetailAmount(tempSubRetail)
     setTotalBillingAmount(result);
   };
 
@@ -1167,6 +1169,10 @@ function ReviewOrder({ handleNext }) {
                 <div class="col-12 d-flex justify-content-between">
                   <b class="fs-4">Total</b>
                   <b class="fs-4">{`₹${totalBillingAmount}`}</b>
+                </div>
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >Retail</b>
+                  <b >{`₹${totalRetailAmount}`}</b>
                 </div>
               </div>
               <div class="col-12 d-flex justify-content-center mt-5 mb-3">
