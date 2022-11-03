@@ -81,13 +81,13 @@ function Footer() {
                   <a href="#!" class="text-white text-decoration-none ">Blog</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/terms-conditions" class="text-white text-decoration-none ">Help Center</a>
+                  <a href="/FAQ" class="text-white text-decoration-none ">Help Center</a>
                 </li>
                 <li className="mt-3">
                   <a href="/design-tribe" class="text-white text-decoration-none">Mockup generator</a>
                 </li>
                 <li className="mt-3">
-                  <a href="/return-refund" class="text-white text-decoration-none">Community</a>
+                  <a href="/community" class="text-white text-decoration-none">Community</a>
                 </li>
 
               </ul>

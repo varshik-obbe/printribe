@@ -27,6 +27,7 @@ import HowItWorks from "./pages/HowItWorks.jsx";
 import OTPpage from "./components/OTPpage";
 import About from "./components/about-us";
 import Integrations from "./components/integrations";
+import Community from "./components/community";
 
 
 // import SubCatWomen from "./pages/SubCatWomen";
@@ -60,6 +61,7 @@ function App() {
           />
           {/* <Route exact path="/products/:category/:subCat" element={<Productataloglayout />} />
           <Route exact path="/products/:category/:subCat/:subSubCat" element={<Productataloglayout />} /> */}
+          <Route exact path="/community" element={<Community />} />
 
           <Route exact path="/cart" element={<Cart />} />
           <Route exact path="/product/:prodid" element={<Productpage />} />

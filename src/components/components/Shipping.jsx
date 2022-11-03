@@ -75,6 +75,13 @@ setCountries(data.data.data)
     }
   }, [savedShipAddress]);
 
+  useEffect(()=>{
+    if (props.checkSavedShipAddress) {
+      setSavedShipAddress(!savedShipAddress)
+ 
+    }
+    console.log(props.checkSavedShipAddress,"props.checkSavedShipAddress")
+  },[props.checkSavedShipAddress])
   //to check whether a string contains a number or not
   const checkIfStringContainsNumber = (_string) => {
     return /\d/.test(_string);
@@ -154,7 +161,7 @@ if(shippingType===""){
           visitor_id: visitorId,
           fullname: fullName,
           state: state,
-          shippingType:shippingType,
+          shipping_type:shippingType,
           address1: address1,
           company: company,
           address2: address2,
@@ -232,7 +239,12 @@ if(shippingType===""){
 
   //product quantity from LS
   const total_quantity = localStorage.getItem("total_quantity");
-
+useEffect(()=>{
+  console.log(country,"country")
+if(country=='India'){
+  setShippingType('domestic shipping')
+}
+},[country])
   useEffect(() => {
     console.log(postalCode.toString().length);
 
@@ -291,7 +303,9 @@ if(shippingType===""){
       })
       .catch((err) => console.log(err));
   }, []);
-
+  function order(a, b) {
+    return a.rating < b.rating ? -1 : (a.rating > b.rating ? 1 : 0);
+}
   return (
     <React.Fragment>
       <div
@@ -347,7 +361,7 @@ if(shippingType===""){
                         required
                       >
                         <option selected>select Shipping Type</option>
-                        <option value="ship from us">Ship from us</option>
+                        <option value="domestic shipping">Domestic shipping</option>
                         <option value="self">Self shipping</option>
                         <option value="international">International shiping</option>
                       </select>
@@ -442,7 +456,7 @@ if(shippingType===""){
               case "company":
                 return (
                   <>
-               {shippingType && shippingType == "ship from us"  &&   <div class="col-12 col-sm-6 mt-2">
+               {(shippingType == "domestic shipping" || shippingType =="international") &&   <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
@@ -488,13 +502,13 @@ if(shippingType===""){
                                 )}
 
                                 {shippingCompanies &&
-                                  shippingCompanies.map((curr, index) => (
+                                  shippingCompanies.sort(order).map((curr, index) => (
                                     <option
                                       type="text"
                                       class="form-control"
                                       value={curr.courier_name}
                                     >
-                                      {curr.courier_name}{`( ${curr.rating})`}
+                                      {curr.courier_name}{`( ${curr.rating})`}{typeof(curr.rating)}
                                     </option>
                                   ))}
                               </select>

@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./layout";
 import Navbar from "./navbar";
 import { IoIosArrowForward } from "react-icons/io";
-import { FaShopify, FaEtsy } from "react-icons/fa";
+import { FaShopify, FaEtsy, FaWix } from "react-icons/fa";
 import IntegrationCard from "./integration-card";
 
 function Integrations() {
@@ -25,8 +25,8 @@ function Integrations() {
         "Shopify is an easy to use platform. It has a quick and intuitive setup, user-friendly interface, and it comes with hosting. Our integration also has a product personalization tool that lets your customers personalize your designs.",
     },
     {
-      name: "Etsy",
-      image:'https://files.cdn.printful.com/upload/integration-comp/9c/9c76a020b9ae1fb4e5e6071057ea4023_t?v=1661240229',
+      name: "WIX",
+      image:'https://files.cdn.printful.com/upload/integration-comp/7c/7c813cae863a6c2e92868ff6afbdb495_t?v=1661240229',
       type: "Marketplace",
       details: {
         setupTime: "Very Fast",
@@ -73,7 +73,7 @@ function Integrations() {
                 style={{ width: "fit-content" }}
                 className="FaEtsy bg-white  integration-icon2 rounded-circle m-4 p-4"
               >
-                <FaEtsy color="#F37122" size={45} />
+                <FaWix color="#F37122" size={45} />
               </div>
             </div>
           </div>

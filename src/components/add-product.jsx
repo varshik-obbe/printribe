@@ -115,7 +115,11 @@ const AddProduct = () => {
     // console.log(+new Date());
     // this.setState({
   }, []);
-
+  const[checkSavedShipAddress,setCheckSavedShipAddress]=useState(false)
+const handleBack=()=>{
+  setCheckSavedShipAddress(true)
+  setActiveStep(activeStep-1)
+}
   const renderComp = () => {
     switch (activeStep) {
       case 0: {
@@ -131,12 +135,14 @@ const AddProduct = () => {
       }
 
       case 1:
-        return <Shipping handleNext={() => setActiveStep(activeStep + 1)} />;
+        return <Shipping             checkSavedShipAddress={checkSavedShipAddress}
+        handleNext={() => setActiveStep(activeStep + 1)} />;
       case 2:
         return (
           products && (
             <Delayed delay={2000} loader={<Loader />}>
             <ReviewOrder
+            handleBack={()=>handleBack()}
               handleNext={() => setActiveStep(activeStep - 2)}
             />
             </Delayed>

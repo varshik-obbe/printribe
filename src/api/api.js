@@ -8,6 +8,9 @@ const Api = {
 		UPDATECUSTOMER: url.customer + 'updatecustomer?id=',
 		UPDATEPASSWORD: url.customer + 'checkupdatePass'
 
+	},
+	users:{
+		BULK:url.user+'sendBulkMail'
 	}
 };
 

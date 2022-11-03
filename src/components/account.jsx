@@ -39,7 +39,16 @@ const data ={
       icon: "success",
       title:res.data.success.global,
       showConfirmButton: true,
-    }))
+    })).catch((error)=> { Swal.fire({
+      position: "center",
+      icon: "error",
+      title:"Invalid old password",
+      showConfirmButton: true,
+    })
+    setConfirmPassword("")
+    setCurrentPassword("")
+    setNewPassword("")
+  })
 }
 }
   const getByCustomerIdApiCall = React.useCallback(() => {

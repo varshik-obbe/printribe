@@ -9,7 +9,7 @@ import CartItems from "./cartItems";
 import Swal from "sweetalert2";
 import useRazorpay from "react-razorpay";
 
-function ReviewOrder({ handleNext }) {
+function ReviewOrder({ handleNext,handleBack }) {
   const [mess, setMess] = React.useState(false);
   const [giftCard, setGiftCard] = React.useState(false);
   const [fulfillment, setFulfillment] = React.useState(false);
@@ -24,6 +24,7 @@ function ReviewOrder({ handleNext }) {
 
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
   var customerShippingId = localStorage.getItem("customerShipping_id");
+  var shippingType = JSON.parse(localStorage.getItem("shipping_data"));
   // var total_quantity = localStorage.getItem("total_quantity");
   var shipping_charges = JSON.parse(
     localStorage.getItem("shipping_data")
@@ -168,6 +169,7 @@ function ReviewOrder({ handleNext }) {
         customer_email: customerEmail,
         visitor_id: visitor_id,
         courier_id: courierId,
+        shipping_type:shippingType.shipping_type,
         customer_id: customerId,
         gst_details,
         design_price:totalDesignPrice.toFixed(2)
@@ -186,7 +188,7 @@ function ReviewOrder({ handleNext }) {
                 ? (walletAmount - totalBillingAmount).toFixed(2)
                 : 0
             );
-            window.location.href = "https://printribe-partner.web.app/";
+            window.location.href = "https://partner.theprintribe.com/";
           }
         );
       })
@@ -212,6 +214,7 @@ function ReviewOrder({ handleNext }) {
             quantity: String(ele.quantity),
             designID: ele.designId,
             zakeke_price: "0",
+            retail_price:ele.retail_price
           };
           productInfo.push(dataObject);
 
@@ -975,6 +978,7 @@ function ReviewOrder({ handleNext }) {
                     border: "0",
                     color: "blue",
                   }}
+                  onClick={() => handleBack()}
                 >
                   Edit
                 </button>
@@ -1150,7 +1154,7 @@ function ReviewOrder({ handleNext }) {
                         <div class="col-12 mt-3 d-flex justify-content-between">
                           <b>{`CGST (${cgstArr[itemIndex].percentage}%)`}</b>
                           <b>{`₹${(
-                            (cgstArr[itemIndex].percentage * subTotal) /
+                            (cgstArr[itemIndex].percentage * totalBillingAmount) /
                             100
                           ).toFixed(2)}`}</b>
                         </div>
@@ -1159,7 +1163,7 @@ function ReviewOrder({ handleNext }) {
                       <div class="col-12 mt-3 d-flex justify-content-between">
                         <b>{`IGST (${igstArr[itemIndex].percentage}%)`}</b>
                         <b>{`₹${(
-                          (igstArr[itemIndex].percentage * subTotal) /
+                          (igstArr[itemIndex].percentage * totalBillingAmount) /
                           100
                         ).toFixed(2)}`}</b>
                       </div>
@@ -1173,6 +1177,10 @@ function ReviewOrder({ handleNext }) {
                 <div class="col-12 mt-3 d-flex justify-content-between">
                   <b >Retail</b>
                   <b >{`₹${totalRetailAmount}`}</b>
+                </div>
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >profit</b>
+                  <b >{`₹${totalRetailAmount-totalBillingAmount}`}</b>
                 </div>
               </div>
               <div class="col-12 d-flex justify-content-center mt-5 mb-3">
