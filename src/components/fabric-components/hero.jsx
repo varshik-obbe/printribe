@@ -20,7 +20,12 @@ import "../../styles/scss/layout/_product.scss";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import Table from "react-bootstrap/Table";
-
+import how1 from "../../assets/howItWorks/howitworks_1.jpg";
+import how2 from "../../assets/howItWorks/howitworks_2.jpg";
+import how3 from "../../assets/howItWorks/howitworks_3.jpg";
+import how4 from "../../assets/howItWorks/howitworks_4.jpg";
+import how5 from "../../assets/howItWorks/howitworks_5.jpg";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 function Hero() {
   const { prodid } = useParams();
   const navigate = useNavigate();
@@ -61,9 +66,10 @@ function Hero() {
   const [productColors, setProductColors] = useState();
   const [productImgsArr, setProductImgsArr] = useState();
   const [uploadedImgsArr, setuploadedImgsArr] = useState();
+  const [savedImgsArr, setSavedImgsArr] = useState();
   const [cmsSizeChart, setCmsSizeChart] = useState();
   const [inchSizeChart, setInchSizeChart] = useState();
-
+  const otherImages = [how1, how2, how3, how4, how5];
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
 
@@ -71,7 +77,31 @@ function Hero() {
 
   const [show, setShow] = useState(false);
   const [showSize, setSizeShow] = useState(false);
+  const [otherImg, setOtherImg] = useState(otherImages[0])
+  const [count, setCount] = useState(1)
+  const handleNext = () => {
 
+    setOtherImg(otherImages[count])
+    setCount(count + 1)
+    if (count > otherImages.length - 2) {
+      setCount(0)
+    }
+
+
+  }
+  const handleChangeImage = (data, letter) => {
+    setOtherImg(data)
+    setSides(letter)
+
+  }
+  const handlePrevious = () => {
+    setOtherImg(otherImages[count])
+    setCount(count - 1)
+    if (count == 1) {
+      setCount(4)
+    }
+
+  }
   const handleClose = () => setShow(false);
   const handleShow = () => {
     setShow(true);
@@ -82,31 +112,48 @@ function Hero() {
 
   const handleSizeEntered = async () => {
     await axios
-    .get(`/products/getProductSizeChartById/${prodid}`)
-    .then(async ({ data }) => {
-      if (Object.keys(data.productSizeChartData).length > 0) {
-        let imgsArr = [];
-        setCmsSizeChart(data.productSizeChartData.centimeters);
-        setInchSizeChart(data.productSizeChartData.inches);
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+      .get(`/products/getProductSizeChartById/${prodid}`)
+      .then(async ({ data }) => {
+        if (Object.keys(data.productSizeChartData).length > 0) {
+          let imgsArr = [];
+          setCmsSizeChart(data.productSizeChartData.centimeters);
+          setInchSizeChart(data.productSizeChartData.inches);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleEntered = async () => {
+    const customerId = localStorage.getItem("customerId");
     let imgsArr = [];
-    if (productColors && productColors.length > 0) {
-      await productColors.map(async (val, key) => {
-        if (val.imgs?.length > 0 && val.color == color) {
-          await val.imgs.map((imgsVal, keyVal) => {
-            imgsArr.push(imgsVal);
-          });
+    if(customerId) {
+      await axios
+      .get(`/fabricDesigns/getSavedDesign/${customerId}`)
+      .then(async ({ data }) => {
+        if (data.designsSaved.length > 0) {
+          await data.designsSaved.map((val,key) => {
+            imgsArr.push(val.imgsArr);
+          })
+          setSavedImgsArr(imgsArr);
         }
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      setProductImgsArr(imgsArr);
     }
+    // if (productColors && productColors.length > 0) {
+    //   await productColors.map(async (val, key) => {
+    //     if (val.imgs?.length > 0 && val.color == color) {
+    //       await val.imgs.map((imgsVal, keyVal) => {
+    //         imgsArr.push(imgsVal);
+    //       });
+    //     }
+    //   });
+    //   setProductImgsArr(imgsArr);
+    // }
+
   };
 
   var left1 = 0;
@@ -235,7 +282,7 @@ function Hero() {
             }
             setMainImg(
               process.env.REACT_APP_IMAGE_BASE_URL +
-                data.productData.variant[colorIndex].frontImgURL
+              data.productData.variant[colorIndex].frontImgURL
             );
             setColor(data.productData.variant[colorIndex].colorName);
             setImgVariants(imgsVariants);
@@ -245,8 +292,8 @@ function Hero() {
         } else {
           setMainImg(
             process.env.REACT_APP_IMAGE_BASE_URL +
-              "/" +
-              data.product.productdata[0].img
+            "/" +
+            data.product.productdata[0].img
           );
         }
       })
@@ -415,29 +462,8 @@ function Hero() {
     if (fabricInfo && Object.keys(fabricInfo).length > 0) {
       console.log(
         "fabric data dimensions:" +
-          fabricInfo.variant[colorIndex].frontImgDimensions
+        fabricInfo.variant[colorIndex].frontImgDimensions
       );
-
-      const customerId = localStorage.getItem("customerId");
-      if (customerId) {
-        axios
-          .get(
-            `/fabricDesigns/getFabricDesign/${prodid}/${fabricInfo.variant[colorIndex].colorName}/${sides}/${customerId}`
-          )
-          .then((dataFabr) => {
-            if (Object.keys(dataFabr.data).length > 0) {
-              setDesignHistory(dataFabr.data.fabricData);
-
-              editor?.canvas.loadFromJSON(
-                JSON.parse(dataFabr.data.fabricData.data)
-              );
-              editor?.canvas.renderAll();
-            }
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }
 
       //defining the Rectangle constraint for users designs
       var Rect = new fabric.Rect({
@@ -473,7 +499,7 @@ function Hero() {
       if (aop) {
         setMainImg(
           process.env.REACT_APP_IMAGE_BASE_URL +
-            "/uploads/whiteBackgroundforAOP.png"
+          "/uploads/whiteBackgroundforAOP.png"
         );
         let urlTshirt =
           process.env.REACT_APP_IMAGE_BASE_URL +
@@ -537,6 +563,51 @@ function Hero() {
         setHeightInches(
           fabricInfo.variant[colorIndex].frontCanvasPricing[0].heightInches
         );
+      }
+
+
+      const customerId = localStorage.getItem("customerId");
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      if (customerId && urlParams.has('edit')) {
+        axios
+          .get(
+            `/fabricDesigns/getFabricDesign/${prodid}/${fabricInfo.variant[colorIndex].colorName}/${sides}/${customerId}`
+          )
+          .then((dataFabr) => {
+            if (Object.keys(dataFabr.data).length > 0) {
+              setDesignHistory(dataFabr.data.fabricData);
+              fabric.Image.fromURL(
+                process.env.REACT_APP_IMAGE_BASE_URL + dataFabr.data.fabricData.uploadedImgsArr[0],
+                function (img) {
+                  console.log("saved data is ", dataFabr.data.fabricData.savedImgsInfo)
+                  img.top = dataFabr.data.fabricData.savedImgsInfo[0].top;
+                  img.left = dataFabr.data.fabricData.savedImgsInfo[0].left;
+                  img.scaleX = dataFabr.data.fabricData.savedImgsInfo[0].scaleX;
+                  img.scaleY = dataFabr.data.fabricData.savedImgsInfo[0].scaleY;
+                  img.set({
+                    scaleX: dataFabr.data.fabricData.savedImgsInfo[0].scaleX,
+                    scaleY: dataFabr.data.fabricData.savedImgsInfo[0].scaleY
+                  })
+                  img.setControlsVisibility({
+                    ml: false,
+                    mt: false,
+                    mr: false,
+                    mb: false,
+                  });
+                  editor?.canvas.add(img);
+                }
+              )
+
+              // editor?.canvas.loadFromJSON(
+              //   JSON.parse(dataFabr.data.fabricData.data)
+              // );
+              // editor?.canvas.renderAll();
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       }
 
       //images moved inside the canvas
@@ -710,17 +781,17 @@ function Hero() {
                     }
                     if (
                       parseFloat(totalWidth) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleWidth
-                        ) >
-                        parseFloat(val.width) &&
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      ) >
+                      parseFloat(val.width) &&
                       parseFloat(totalHeight) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleHeight
-                        ) >
-                        parseFloat(val.height)
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      ) >
+                      parseFloat(val.height)
                     ) {
                       let widthnewInches = totalWidth / 10;
                       let heightnewInches = totalHeight / 10;
@@ -812,17 +883,17 @@ function Hero() {
                     }
                     if (
                       parseFloat(totalWidth) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleWidth
-                        ) >
-                        parseFloat(val.width) &&
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      ) >
+                      parseFloat(val.width) &&
                       parseFloat(totalHeight) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleHeight
-                        ) >
-                        parseFloat(val.height)
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      ) >
+                      parseFloat(val.height)
                     ) {
                       let widthnewInches = totalWidth / 10;
                       let heightnewInches = totalHeight / 10;
@@ -914,17 +985,17 @@ function Hero() {
                     }
                     if (
                       parseFloat(totalWidth) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleWidth
-                        ) >
-                        parseFloat(val.width) &&
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      ) >
+                      parseFloat(val.width) &&
                       parseFloat(totalHeight) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleHeight
-                        ) >
-                        parseFloat(val.height)
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      ) >
+                      parseFloat(val.height)
                     ) {
                       let widthnewInches = totalWidth / 10;
                       let heightnewInches = totalHeight / 10;
@@ -1016,17 +1087,17 @@ function Hero() {
                     }
                     if (
                       parseFloat(totalWidth) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleWidth
-                        ) >
-                        parseFloat(val.width) &&
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      ) >
+                      parseFloat(val.width) &&
                       parseFloat(totalHeight) /
-                        parseFloat(
-                          fabricInfo.variant[colorIndex].frontImgDimensions
-                            .scaleHeight
-                        ) >
-                        parseFloat(val.height)
+                      parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      ) >
+                      parseFloat(val.height)
                     ) {
                       let widthnewInches = totalWidth / 10;
                       let heightnewInches = totalHeight / 10;
@@ -1137,9 +1208,9 @@ function Hero() {
 
               if (
                 brNew.width + brNew.left >
-                  parseFloat(parentObj.width) + parseFloat(parentObj.left) ||
+                parseFloat(parentObj.width) + parseFloat(parentObj.left) ||
                 brNew.height + brNew.top >
-                  parseFloat(parentObj.height) + parseFloat(parentObj.top) ||
+                parseFloat(parentObj.height) + parseFloat(parentObj.top) ||
                 brNew.left < parseFloat(parentObj.left) ||
                 brNew.top < parseFloat(parentObj.top)
               ) {
@@ -1198,17 +1269,17 @@ function Hero() {
                         }
                         if (
                           parseFloat(o.getScaledWidth()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleWidth
-                            ) >
-                            parseFloat(val.width) &&
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          ) >
+                          parseFloat(val.width) &&
                           parseFloat(o.getScaledHeight()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleHeight
-                            ) >
-                            parseFloat(val.height)
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          ) >
+                          parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -1303,17 +1374,17 @@ function Hero() {
                         }
                         if (
                           parseFloat(o.getScaledWidth()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleWidth
-                            ) >
-                            parseFloat(val.width) &&
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          ) >
+                          parseFloat(val.width) &&
                           parseFloat(o.getScaledHeight()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleHeight
-                            ) >
-                            parseFloat(val.height)
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          ) >
+                          parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -1408,17 +1479,17 @@ function Hero() {
                         }
                         if (
                           parseFloat(o.getScaledWidth()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleWidth
-                            ) >
-                            parseFloat(val.width) &&
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          ) >
+                          parseFloat(val.width) &&
                           parseFloat(o.getScaledHeight()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleHeight
-                            ) >
-                            parseFloat(val.height)
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          ) >
+                          parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -1513,17 +1584,17 @@ function Hero() {
                         }
                         if (
                           parseFloat(o.getScaledWidth()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleWidth
-                            ) >
-                            parseFloat(val.width) &&
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          ) >
+                          parseFloat(val.width) &&
                           parseFloat(o.getScaledHeight()) /
-                            parseFloat(
-                              fabricInfo.variant[colorIndex].frontImgDimensions
-                                .scaleHeight
-                            ) >
-                            parseFloat(val.height)
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          ) >
+                          parseFloat(val.height)
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -1650,25 +1721,29 @@ function Hero() {
       return;
     } else {
       let imageUloadedArr = [];
-      if(uploadedImgsArr) {
+      if (uploadedImgsArr) {
         imageUloadedArr = uploadedImgsArr;
       }
       let base64data;
-      if(window.FileReader) {
-        if (event.target.files[0] && event.target.files[0].type.match('image.*')) {
+      if (window.FileReader) {
+        if (
+          event.target.files[0] &&
+          event.target.files[0].type.match("image.*")
+        ) {
           var reader = new window.FileReader();
           reader.readAsDataURL(event.target.files[0]);
           reader.onloadend = function () {
-               base64data = reader.result;
-               imageUloadedArr.push(base64data.split(',')[1]);
-               setuploadedImgsArr(imageUloadedArr);
-          }
+            base64data = reader.result;
+            imageUloadedArr.push(base64data.split(",")[1]);
+            setuploadedImgsArr(imageUloadedArr);
+          };
+        } else {
+          console.log(
+            "file is not present or not image type",
+            event.target.files[0]
+          );
         }
-        else {
-          console.log("file is not present or not image type", event.target.files[0])
-        }
-      }
-      else {
+      } else {
         console.log("filereader not present");
       }
       const objectUrl = URL.createObjectURL(event.target.files[0]);
@@ -1887,7 +1962,7 @@ function Hero() {
           });
           if (
             fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !==
-              null &&
+            null &&
             fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !== 0
           ) {
             let heightInches = parseFloat(totalHeight) / 10;
@@ -2144,28 +2219,27 @@ function Hero() {
       let url = "";
       const customerId = localStorage.getItem("customerId");
       var jsonData = JSON.stringify(editor?.canvas.toJSON());
-      if(uploadedImgsArr) {
+      if (uploadedImgsArr) {
         axios
-        .post(`/fabricDesigns/addSavedDesign`, {
-          data: {
-            productId: prodid,
-            customerId: customerId,
-            imgsArr: uploadedImgsArr,
-          },
-        })
-        .then(({ data }) => {
-          Swal.fire({
-            icon: 'success',
-            title: 'Success',
-            text: 'Design saved successfully'
+          .post(`/fabricDesigns/addSavedDesign`, {
+            data: {
+              productId: prodid,
+              customerId: customerId,
+              imgsArr: uploadedImgsArr,
+            },
           })
-          console.log("data saved successfully");
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      }
-      else {
+          .then(({ data }) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Design saved successfully",
+            });
+            console.log("data saved successfully");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
         console.log("nothing to save");
       }
     } else {
@@ -2300,10 +2374,22 @@ function Hero() {
                   // link.click();
                   var jsonData = JSON.stringify(editor?.canvas.toJSON());
                   let objRect;
+                  let configArr = [];
                   let objs = editor?.canvas.getObjects();
                   objs.forEach((o) => {
                     if (o.type === "rect") {
                       objRect = o.getBoundingRect();
+                    }
+                    if (o.type === "image") {
+                      let spec = {
+                        "width": o.getScaledWidth(),
+                        "height": o.getScaledHeight(),
+                        "left": o.left,
+                        "top": o.top,
+                        "scaleX": o.scaleX,
+                        "scaleY": o.scaleY
+                      }
+                      configArr.push(spec);
                     }
                   });
                   var imgdata = editor?.canvas.toDataURL({
@@ -2323,6 +2409,8 @@ function Hero() {
                         data: jsonData,
                         url: dataUrl,
                         imgUrl: imgdata,
+                        imgsArr: uploadedImgsArr,
+                        savedImgsInfo: configArr
                       },
                     })
                     .then((datasavedFabr) => {
@@ -2501,12 +2589,13 @@ function Hero() {
 
   //executes when an image is changed
   const changeImg = (e, letter) => {
+    console.log("eeeee", e, letter)
     e.preventDefault();
     const obj = editor?.canvas.getObjects();
     if (letter == "one") {
       setMainImg(
         process.env.REACT_APP_IMAGE_BASE_URL +
-          fabricInfo.variant[colorIndex].frontImgURL
+        fabricInfo.variant[colorIndex].frontImgURL
       );
       obj?.forEach((o) => {
         editor?.canvas.remove(o);
@@ -2519,7 +2608,7 @@ function Hero() {
       });
       setMainImg(
         process.env.REACT_APP_IMAGE_BASE_URL +
-          fabricInfo.variant[colorIndex].backImgURL
+        fabricInfo.variant[colorIndex].backImgURL
       );
       setSides("two");
       changeCanvas(letter);
@@ -2529,7 +2618,7 @@ function Hero() {
       });
       setMainImg(
         process.env.REACT_APP_IMAGE_BASE_URL +
-          fabricInfo.variant[colorIndex].leftImgURL
+        fabricInfo.variant[colorIndex].leftImgURL
       );
       setSides("three");
       changeCanvas(letter);
@@ -2539,7 +2628,7 @@ function Hero() {
       });
       setMainImg(
         process.env.REACT_APP_IMAGE_BASE_URL +
-          fabricInfo.variant[colorIndex].rightImgURL
+        fabricInfo.variant[colorIndex].rightImgURL
       );
       setSides("four");
       changeCanvas(letter);
@@ -2807,56 +2896,73 @@ function Hero() {
                     >
                       {fabricInfo && fabricInfo.productId !== undefined
                         ? imgVariants.map((item, index) => {
-                            let letterNumber = "";
-                            let urlImg = "";
-                            if (index == 0) {
-                              letterNumber = "one";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].frontImgURL;
-                            } else if (index == 1) {
-                              letterNumber = "two";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].backImgURL;
-                            } else if (index == 2) {
-                              letterNumber = "three";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].leftImgURL;
-                            } else if (index == 3) {
-                              letterNumber = "four";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].rightImgURL;
-                            }
-                            return (
-                              <a
-                                className={`nav-item nav-link` + classActive}
-                                id={`pro-` + letterNumber + `-tab`}
-                                data-bs-toggle="tab"
-                                href={`#pro-` + letterNumber}
-                                onClick={(e) => {
-                                  changeImg(e, letterNumber);
-                                }}
-                                role="tab"
-                                aria-controls={`pro-` + letterNumber}
-                                aria-selected="true"
-                              >
-                                <div className="product__nav-img w-img">
-                                  <img
-                                    width={90}
-                                    height={115}
-                                    src={urlImg}
-                                    alt=""
-                                  />
-                                </div>
-                              </a>
-                            );
-                          })
+                          let letterNumber = "";
+                          let urlImg = "";
+                          if (index == 0) {
+                            letterNumber = "one";
+                            urlImg =
+                              process.env.REACT_APP_IMAGE_BASE_URL +
+                              fabricInfo.variant[colorIndex].frontImgURL;
+                          } else if (index == 1) {
+                            letterNumber = "two";
+                            urlImg =
+                              process.env.REACT_APP_IMAGE_BASE_URL +
+                              fabricInfo.variant[colorIndex].backImgURL;
+                          } else if (index == 2) {
+                            letterNumber = "three";
+                            urlImg =
+                              process.env.REACT_APP_IMAGE_BASE_URL +
+                              fabricInfo.variant[colorIndex].leftImgURL;
+                          } else if (index == 3) {
+                            letterNumber = "four";
+                            urlImg =
+                              process.env.REACT_APP_IMAGE_BASE_URL +
+                              fabricInfo.variant[colorIndex].rightImgURL;
+                          }
+                          return (
+                            <a
+                              className={`nav-item nav-link` + classActive}
+                              id={`pro-` + letterNumber + `-tab`}
+                              data-bs-toggle="tab"
+                              href={`#pro-` + letterNumber}
+                              onClick={(e) => {
+                                changeImg(e, letterNumber);
+                              }}
+                              role="tab"
+                              aria-controls={`pro-` + letterNumber}
+                              aria-selected="true"
+                            >
+                              <div className="product__nav-img w-img">
+                                <img
+                                  width={90}
+                                  height={115}
+                                  src={urlImg}
+                                  alt=""
+                                />
+                              </div>
+                            </a>
+                          );
+                        })
                         : null}
-                    </div>
+                    </div>{" "}
+
                   </nav>
+                  <div style={{ position: 'relative' }} className="other-images d-flex align-items-center w-img">
+                    <div style={{ position: 'absolute', left: -10, cursor: 'pointer' }} onClick={() => handlePrevious()}>
+                      <BiChevronLeft />{" "}
+                    </div>{" "}
+
+                    <img
+                      width={90}
+                      height={100}
+                      src={otherImg}
+                      onClick={() => handleChangeImage(otherImg, 'otherImage')}
+                      alt=""
+                    />
+                    <div style={{ position: 'absolute', right: -10, cursor: 'pointer' }} onClick={() => handleNext()}>
+                      <BiChevronRight />
+                    </div>
+                  </div>
                 </div>
                 <div
                   className={"tab-content " + defaults["mb-20"]}
@@ -2876,6 +2982,15 @@ function Hero() {
                         imgVariants.map((item, index) => {
                           let urlImg = "";
                           if (index == 0) {
+                            if (sides == 'otherImage') {
+                              return (
+                                <img
+                                  style={{ height: "612px", width: "470px" }}
+                                  src={otherImg}
+                                  alt=""
+                                />
+                              );
+                            }
                             if (sides == "one") {
                               urlImg =
                                 process.env.REACT_APP_IMAGE_BASE_URL +
@@ -2984,62 +3099,9 @@ function Hero() {
                   </div>
                 </div>
               </div>
-<div className="other-images">
-<div
-                            className="d-flex no-wrap"
-                            id="other-images"
-                            role="tablist"
-                            style={{width: "35rem",
-                              overflowX: "auto",
-                              overflowY:'hidden',
-                              whiteSpace: "nowrap"}}
-                    >
-                      {fabricInfo && fabricInfo.productId !== undefined
-                        ? imgVariants.map((item, index) => {
-                            let letterNumber = "";
-                            let urlImg = "";
-                            if (index == 0) {
-                              letterNumber = "one";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].frontImgURL;
-                            } else if (index == 1) {
-                              letterNumber = "two";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].backImgURL;
-                            } else if (index == 2) {
-                              letterNumber = "three";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].leftImgURL;
-                            } else if (index == 3) {
-                              letterNumber = "four";
-                              urlImg =
-                                process.env.REACT_APP_IMAGE_BASE_URL +
-                                fabricInfo.variant[colorIndex].rightImgURL;
-                            }
-                            return (
-                      
-                                <div className="product__nav-img w-img" style={{width:"80px",margin:"4px"}}>
-                                  <img
-                                    width={100}
-                                    height={115}
-                                    src={urlImg}
-                                    alt=""
-                                  />
-                                </div>
-                                
-                            );
-                          })
-                        : null}
-                    </div>
-</div>
+
               <div className="product__modal-content-2">
                 <div className="row">
-                  <Button variant="primary" onClick={handleShow}>
-                    Other Images
-                  </Button>
 
                   <Modal
                     show={show}
@@ -3050,25 +3112,37 @@ function Hero() {
                       <Modal.Title>{color}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                      <div className="rowImg">
-                        <div className="columnImg">
-                          {productImgsArr && productImgsArr.length > 0
-                            ? productImgsArr.map((val, key) => {
-                                return (
-                                  <img
-                                    src={
-                                      process.env.REACT_APP_IMAGE_BASE_URL + val
-                                    }
-                                    style={{ width: "100%" }}
-                                  />
-                                );
-                              })
-                            : null}
-                        </div>
-                        <div className="columnImg"></div>
-                        <div className="columnImg"></div>
-                        <div className="columnImg"></div>
-                      </div>
+                    <Tabs
+                        defaultActiveKey="home"
+                        id="uncontrolled-tab-example"
+                        className="mb-3"
+                      >
+                        <Tab style={{ textAlign: "center" }} eventKey="home" title="Upload">
+                          <span className={"btn btn-primary " + styles.fileUploadBtn}>
+                            Browse{" "}
+                            <input
+                              type="file"
+                              id="fileUp"
+                              name="fileUp"
+                              onChange={changeHandler}
+                            />
+                          </span>
+                        </Tab>
+                        <Tab eventKey="profile" title="My Designs">
+                          <div class="rowImg"> 
+                              <div class="columnImg">
+                                {savedImgsArr && savedImgsArr !== undefined
+                                 ? savedImgsArr.map((val,key) => {
+                                  return (
+                                    <img src={process.env.REACT_APP_IMAGE_BASE_URL + val} height={100} width={100} />
+                                  )
+                                 })
+                                 : null
+                                }
+                              </div>
+                          </div>                          
+                        </Tab>
+                      </Tabs>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleClose}>
@@ -3078,6 +3152,7 @@ function Hero() {
                   </Modal>
                 </div>
               </div>
+              <hr />
               {/* <Button variant="primary" onClick={handleShow}>
                 Other Images
               </Button>
@@ -3214,45 +3289,49 @@ function Hero() {
                   <div className="d-flex mb-3">
                     {product && product.productcolors !== undefined
                       ? product.productcolors.map((item, index) => {
-                          return (
-                            <div
-                              id={item.colorName}
-                              className="mx-1 colors shadow-lg border"
-                              style={{
-                                height: "20px",
-                                width: "20px",
-                                borderRadius: "5px",
-                                backgroundColor: item.colorCode,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                              }}
-                              onClick={(e) => {
-                                setColorIndex(index);
-                                handleColorsclick(e);
-                                setColor(item.colorName);
-                                setColorId(index + 1);
-                                setColorCode(item.colorCode);
-                                changeImg(e, sides);
-                              }}
-                            >
-                              {
-                                // console.log(color,item.colorName)
-                                color === item.colorName ? (
-                                  <i class="fa fa-check" aria-hidden="true"></i>
-                                ) : (
-                                  <></>
-                                )
-                              }
-                            </div>
-                          );
-                        })
+                        return (
+                          <div
+                            id={item.colorName}
+                            className="mx-1 colors shadow-lg border"
+                            style={{
+                              height: "20px",
+                              width: "20px",
+                              borderRadius: "5px",
+                              backgroundColor: item.colorCode,
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                            }}
+                            onClick={(e) => {
+                              setColorIndex(index);
+                              handleColorsclick(e);
+                              setColor(item.colorName);
+                              setColorId(index + 1);
+                              setColorCode(item.colorCode);
+                              changeImg(e, sides);
+                            }}
+                          >
+                            {
+                              // console.log(color,item.colorName)
+                              color === item.colorName ? (
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                              ) : (
+                                <></>
+                              )
+                            }
+                          </div>
+                        );
+                      })
                       : null}
                   </div>
                 </div>
                 <div className="d-flex mt-3 mb-3 ">
                   <div className="me-5 fw-bold choosingStyle">Choose size</div>
-                  <div className="mx-5 px-5 choosingSize"><a href="#" onClick={handleShowSize}>Size chart</a></div>
+                  <div className="mx-5 px-5 choosingSize">
+                    <a href="#" onClick={handleShowSize}>
+                      Size chart
+                    </a>
+                  </div>
                   <Modal
                     show={showSize}
                     onHide={handleCloseSize}
@@ -3262,62 +3341,60 @@ function Hero() {
                       <Modal.Title>Sizes</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    <Tabs
-                    defaultActiveKey="home"
-                    id="uncontrolled-tab-example"
-                    className="mb-3"
-                  >
-                    <Tab eventKey="home" title="Centimeters">
-                      <Table bordered hover>
-                        <thead>
-                          <tr>
-                            <th>Size Label</th>
-                            <th>Length</th>
-                            <th>Chest</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {cmsSizeChart && cmsSizeChart !== undefined
-                          ? cmsSizeChart.map((item, index) => {
-                            return (
-                            <tr>
-                              <td>{item.size}</td>
-                              <td>{item.length}</td>
-                              <td>{item.chest}</td>
-                            </tr>
-                            )
-                          })
-                          : null
-                          }
-                        </tbody>
-                      </Table>
-                    </Tab>
-                    <Tab eventKey="profile" title="Inches">
-                      <Table bordered hover>
-                        <thead>
-                          <tr>
-                            <th>Size Label</th>
-                            <th>Length</th>
-                            <th>Chest</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {inchSizeChart && inchSizeChart !== undefined
-                          ? inchSizeChart.map((item, index) => {
-                            return (
-                            <tr>
-                              <td>{item.size}</td>
-                              <td>{item.length}</td>
-                              <td>{item.chest}</td>
-                            </tr>
-                            )
-                          })
-                          : null
-                          }
-                        </tbody>
-                      </Table>
-                    </Tab>
-                  </Tabs>
+                      <Tabs
+                        defaultActiveKey="home"
+                        id="uncontrolled-tab-example"
+                        className="mb-3"
+                      >
+                        <Tab eventKey="home" title="Centimeters">
+                          <Table bordered hover>
+                            <thead>
+                              <tr>
+                                <th>Size Label</th>
+                                <th>Length</th>
+                                <th>Chest</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {cmsSizeChart && cmsSizeChart !== undefined
+                                ? cmsSizeChart.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td>{item.size}</td>
+                                      <td>{item.length}</td>
+                                      <td>{item.chest}</td>
+                                    </tr>
+                                  );
+                                })
+                                : null}
+                            </tbody>
+                          </Table>
+                        </Tab>
+                        <Tab eventKey="profile" title="Inches">
+                          <Table bordered hover>
+                            <thead>
+                              <tr>
+                                <th>Size Label</th>
+                                <th>Length</th>
+                                <th>Chest</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {inchSizeChart && inchSizeChart !== undefined
+                                ? inchSizeChart.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td>{item.size}</td>
+                                      <td>{item.length}</td>
+                                      <td>{item.chest}</td>
+                                    </tr>
+                                  );
+                                })
+                                : null}
+                            </tbody>
+                          </Table>
+                        </Tab>
+                      </Tabs>
                     </Modal.Body>
                     <Modal.Footer>
                       <Button variant="secondary" onClick={handleCloseSize}>
@@ -3345,7 +3422,7 @@ function Hero() {
                 </div>
                 <div className="row">
                   <div className="col-md-3">
-                    <span className={"btn btn-primary " + styles.fileUploadBtn}>
+                    {/* <span className={"btn btn-primary " + styles.fileUploadBtn}>
                       Browse{" "}
                       <input
                         type="file"
@@ -3353,7 +3430,11 @@ function Hero() {
                         name="fileUp"
                         onChange={changeHandler}
                       />
-                    </span>
+                    </span> */}
+
+                    <Button variant="primary" onClick={handleShow}>
+                      Browse
+                    </Button>
                   </div>
                 </div>
                 <br />
@@ -3546,7 +3627,12 @@ function Hero() {
                 </div>
                 {isCustomizeable ? (
                   <button
-                    className="fw-bold h3 text-light btn px-5 py-2 descriptionBtn"
+                    className={
+                      "btn" +
+                      " " +
+                      styles.startSellingBtn +
+                      "  px-4 py-2 avenier"
+                    }
                     id="btnCustomize"
                     // onClick={(e) => {customize(e); customize(e);}}
                     onClick={(e) => customize(e)}
