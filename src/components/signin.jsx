@@ -96,7 +96,7 @@ function Signin() {
     var googleUser = res.profileObj
 
     axios
-      .post(Api.customers.LOGIN, {
+      .post('https://api.theprintribe.com/api/customers/customerGoogleSign', {
         credentials: {
           password: googleUser.googleId,
           email: googleUser.email,
