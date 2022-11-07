@@ -72,6 +72,8 @@ function Hero() {
   const otherImages = [how1, how2, how3, how4, how5];
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
+  const [imageDesignUploaded, setImageDesignUploaded] = useState();
+  const [designSelected, setDesignSelected] = useState();
 
   const [showAnother, setShowAnother] = useState(false);
 
@@ -167,6 +169,10 @@ function Hero() {
 
   const Basecanvas = new fabric.Canvas();
   const { editor, onReady } = useFabricJSEditor();
+
+  const handleMydesginChange = (evt) => {
+    setDesignSelected(evt.target.value);
+  }
 
   // get fabric and product info
   const getProduct = async () => {
@@ -1706,6 +1712,515 @@ function Hero() {
       }
     });
 
+  //get height and width of image url
+  const getUploadedDesignFileDimensions = (file) =>
+  new Promise((resolve, reject) => {
+    try {
+      let img = new Image();
+
+      img.onload = () => {
+        const width = img.naturalWidth,
+          height = img.naturalHeight;
+
+        window.URL.revokeObjectURL(img.src);
+
+        return resolve({ width, height });
+      };
+
+      img.src = file;
+    } catch (exception) {
+      return reject(exception);
+    }
+  });
+
+
+  //function which excutes when saved image is uploaded  
+  const uploadSavedDesign = async (event) => {
+    if (!designSelected || designSelected === undefined) {
+      return;
+    }
+    let imageUploaded = await getUploadedDesignFileDimensions(designSelected);
+    let uploadedObj = {
+      width : imageUploaded.width,
+      height: imageUploaded.height
+    }
+    setImageDesignUploaded(uploadedObj);
+    if (imageUploaded.width < 1000 && imageUploaded.height < 1000) {
+      alert("please upload a higher resolution image");
+      return;
+    } else {
+      let imageUloadedArr = [];
+      if (uploadedImgsArr) {
+        imageUloadedArr = uploadedImgsArr;
+      }
+      let base64data;
+      const objectUrl = designSelected;
+      fabric.Image.fromURL(
+        objectUrl,
+        function (img) {
+          // const objs = editor?.canvas.getObjects();
+          // objs?.forEach((o) => {
+          //   if (o.type === "image") {
+          //     editor?.canvas.remove(o);
+          //   }
+          // });
+          let topRect = 0;
+          let leftRect = 0;
+          let objHeight = 0;
+          let objWidth = 0;
+          const obj = editor?.canvas.getObjects();
+          obj?.forEach((o) => {
+            if (o.type === "rect") {
+              topRect = o.top;
+              leftRect = o.left;
+              objWidth = o.width;
+              objHeight = o.height;
+            }
+          });
+          if (aop) {
+            img.objectCaching = false;
+            img.globalCompositeOperation = "source-atop";
+            img.opacity = 0.8;
+            let scaleX;
+            scaleX = parseInt(470) / parseInt(img.width);
+            let scaleY = 612 / parseInt(img.height);
+            img.set({
+              scaleX: scaleX,
+              scaleY: scaleY,
+            });
+            img.setControlsVisibility({
+              ml: false,
+              mt: false,
+              mr: false,
+              mb: false,
+            });
+          } else {
+            img.top = topRect;
+            img.left = leftRect;
+            left1 = leftRect;
+            top1 = topRect;
+            // let ih = img.height;
+            // let iw = img.width;
+            // let width_ratio =
+            //   parseInt(fabricInfo.variant[colorIndex].frontImgDimensions.width) /
+            //   parseInt(iw);
+            // let height_ratio =
+            //   parseInt(fabricInfo.variant[colorIndex].frontImgDimensions.height) /
+            //   parseInt(ih);
+            // let fw = 0;
+            // let fh = 0;
+            // if (width_ratio > height_ratio) {
+            //   fw = parseInt(iw) * width_ratio;
+            //   fh = (parseInt(ih) * parseInt(fw)) / parseInt(iw);
+            // } else {
+            //   fh = parseInt(ih) * height_ratio;
+            //   fw = (parseInt(iw) * parseInt(fh)) / parseInt(ih);
+            // }
+            // img.set({
+            //   width: fw,
+            //   height: fh,
+            // });
+            let scaleX;
+            if (sides == "one") {
+              scaleX =
+                parseInt(
+                  fabricInfo.variant[colorIndex].frontImgDimensions.width
+                ) / parseInt(img.width);
+            } else if (sides == "two") {
+              scaleX =
+                parseInt(
+                  fabricInfo.variant[colorIndex].backImgDimensions.width
+                ) / parseInt(img.width);
+            } else if (sides == "three") {
+              scaleX =
+                parseInt(
+                  fabricInfo.variant[colorIndex].leftImgDimensions.width
+                ) / parseInt(img.width);
+            } else if (sides == "four") {
+              scaleX =
+                parseInt(
+                  fabricInfo.variant[colorIndex].rightImgDimensions.width
+                ) / parseInt(img.width);
+            }
+            // 160 / parseInt(img.height);
+            let scaleY;
+            if (sides == "one") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].frontImgDimensions.height
+                ) / parseInt(img.height);
+            } else if (sides == "two") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].backImgDimensions.height
+                ) / parseInt(img.height);
+            } else if (sides == "three") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].leftImgDimensions.height
+                ) / parseInt(img.height);
+            } else if (sides == "four") {
+              scaleY =
+                parseInt(
+                  fabricInfo.variant[colorIndex].rightImgDimensions.height
+                ) / parseInt(img.height);
+            }
+            img.set({
+              scaleX: scaleX,
+              scaleY: scaleY,
+            });
+            scale1x = scaleX;
+            scale1y = scaleY;
+          }
+          img.setControlsVisibility({
+            ml: false,
+            mt: false,
+            mr: false,
+            mb: false,
+          });
+          editor?.canvas.add(img);
+
+          let objs = editor?.canvas.getObjects();
+          let diffObjs = [];
+          let ins = 0;
+          objs.forEach((obj, i) => {
+            if (obj.type === "image" || obj.type === "i-text") {
+              diffObjs[ins] = obj;
+              ins++;
+            }
+          });
+          let totalWidth = 0;
+          let totalHeight = 0;
+
+          let intersect = false;
+          let intersectArr = [];
+          let notIntersectArr = [];
+          diffObjs.forEach((ele, ind) => {
+            for (let i = 0; i < diffObjs.length; i++) {
+              if (i != ind) {
+                if (
+                  ((diffObjs[i].left < ele.left + ele.getScaledWidth() &&
+                    diffObjs[i].left >= ele.left) ||
+                    (ele.left <
+                      diffObjs[i].left + diffObjs[i].getScaledWidth() &&
+                      ele.left >= diffObjs[i].left)) &&
+                  ((diffObjs[i].top < ele.top + ele.getScaledHeight() &&
+                    diffObjs[i].top >= ele.top) ||
+                    (ele.top <
+                      diffObjs[i].top + diffObjs[i].getScaledHeight() &&
+                      ele.top >= diffObjs[i].top))
+                ) {
+                  intersectArr.push(ele);
+                } else {
+                  notIntersectArr.push(ele);
+                }
+              }
+            }
+            if (intersectArr.length > 0) {
+              let minvalWidth = intersectArr.reduce(function (prev, curr) {
+                return prev.left < curr.left ? prev : curr;
+              });
+              let maxvalWidth = intersectArr.reduce(function (prev, curr) {
+                return prev.left + prev.getScaledWidth() >
+                  curr.left + curr.getScaledWidth()
+                  ? prev
+                  : curr;
+              });
+              let minvalHeight = intersectArr.reduce(function (prev, curr) {
+                return prev.top < curr.top ? prev : curr;
+              });
+              let maxvalHeight = intersectArr.reduce(function (prev, curr) {
+                return prev.top + prev.getScaledHeight() >
+                  curr.top + curr.getScaledHeight()
+                  ? prev
+                  : curr;
+              });
+              totalWidth =
+                maxvalWidth.left +
+                maxvalWidth.getScaledWidth() -
+                minvalWidth.left;
+              totalHeight =
+                maxvalHeight.top +
+                maxvalHeight.getScaledHeight() -
+                minvalHeight.top;
+            }
+            if (notIntersectArr.length > 0) {
+              notIntersectArr.forEach((element) => {
+                totalWidth = totalWidth + element.getScaledWidth();
+                totalHeight = totalHeight + element.getScaledHeight();
+              });
+            }
+            if (intersectArr.length == 0 && notIntersectArr.length == 0) {
+              totalWidth = totalWidth + ele.getScaledWidth();
+              totalHeight = totalHeight + ele.getScaledHeight();
+            }
+          });
+
+          let newHeight = 0;
+          let newWidth = 0;
+          editor?.canvas.getObjects().forEach((o) => {
+            if (o.type === "image") {
+              newHeight = o.getScaledHeight();
+              newWidth = o.getScaledWidth();
+              width1 = o.width;
+              height1 = o.height;
+              // o.lockScalingX = true;
+              // o.lockScalingY = true;
+            }
+          });
+          if (
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !==
+            null &&
+            fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !== 0
+          ) {
+            let heightInches = parseFloat(totalHeight) / 10;
+            let widthInches = parseFloat(totalWidth) / 10;
+            let lastPrice = 0;
+            let totPrice = 0;
+            let lastWidthInches = 0;
+            let lastHeightInches = 0;
+            if (sides == "one") {
+              fabricInfo.variant[colorIndex].frontCanvasPricing.forEach(
+                (val, ind) => {
+                  if (
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== "" &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== ""
+                  ) {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          )) *
+                        (parseFloat(widthInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          )) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleWidth
+                        );
+                      heightInches =
+                        parseFloat(heightInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleHeight
+                        );
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(heightInches) *
+                        parseFloat(widthInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
+                  }
+                }
+              );
+            } else if (sides == "two") {
+              fabricInfo.variant[colorIndex].backCanvasPricing.forEach(
+                (val, ind) => {
+                  if (
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== "" &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== ""
+                  ) {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          )) *
+                        (parseFloat(widthInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          )) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleWidth
+                        );
+                      heightInches =
+                        parseFloat(heightInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleHeight
+                        );
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(widthInches) *
+                        parseFloat(heightInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
+                  }
+                }
+              );
+            } else if (sides == "three") {
+              fabricInfo.variant[colorIndex].leftCanvasPricing.forEach(
+                (val, ind) => {
+                  if (
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== "" &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== ""
+                  ) {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          )) *
+                        (parseFloat(widthInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          )) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleWidth
+                        );
+                      heightInches =
+                        parseFloat(heightInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleHeight
+                        );
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(widthInches) *
+                        parseFloat(heightInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
+                  }
+                }
+              );
+            } else if (sides == "four") {
+              fabricInfo.variant[colorIndex].rightCanvasPricing.forEach(
+                (val, ind) => {
+                  if (
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleWidth !== "" &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== 0 &&
+                    fabricInfo.variant[colorIndex].frontImgDimensions
+                      .scaleHeight !== ""
+                  ) {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        (parseFloat(heightInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleHeight
+                          )) *
+                        (parseFloat(widthInches) /
+                          parseFloat(
+                            fabricInfo.variant[colorIndex].frontImgDimensions
+                              .scaleWidth
+                          )) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                      widthInches =
+                        parseFloat(widthInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleWidth
+                        );
+                      heightInches =
+                        parseFloat(heightInches) /
+                        parseFloat(
+                          fabricInfo.variant[colorIndex].frontImgDimensions
+                            .scaleHeight
+                        );
+                    }
+                  } else {
+                    if (val.width && val.width !== null) {
+                      lastPrice =
+                        parseFloat(widthInches) *
+                        parseFloat(heightInches) *
+                        parseFloat(val.garment_price);
+                      lastWidthInches = val.widthInches;
+                      lastHeightInches = val.heightInches;
+                    }
+                  }
+                }
+              );
+            }
+            totPrice = parseInt(product.price, 10) + parseFloat(lastPrice);
+            setPriceSet(parseFloat(totPrice.toFixed(2)));
+            if (parseFloat(widthInches) >= 14) {
+              setWidthInches(14.0);
+            } else {
+              setWidthInches(parseFloat(widthInches.toFixed(2)));
+            }
+            if (parseFloat(heightInches) >= 16) {
+              setHeightInches(16.0);
+            } else {
+              setHeightInches(parseFloat(heightInches.toFixed(2)));
+            }
+            if (widthInches > maximumWidth) {
+              maximumWidth = parseFloat(widthInches.toFixed(2));
+            }
+            if (heightInches > maximumHeight) {
+              maximumHeight = parseFloat(heightInches.toFixed(2));
+            }
+            setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+          }
+        },
+        { crossOrigin: "anonymous" }
+      );
+      setImage(objectUrl);
+      handleClose();
+      return;
+    }
+  }
+
   //function which executes when an image is uploaded
   const changeHandler = async (event) => {
     if (!event.target.files || event.target.files.length === 0) {
@@ -1715,6 +2230,12 @@ function Hero() {
     setSelectedFile(event.target.files[0]);
 
     let imageUploaded = await getUploadedFileDimensions(event.target.files[0]);
+    let uploadedObj = {
+      width : imageUploaded.width,
+      height: imageUploaded.height
+    }
+
+    setImageDesignUploaded(uploadedObj);
 
     if (imageUploaded.width < 1000 && imageUploaded.height < 1000) {
       alert("please upload a higher resolution image");
@@ -2209,6 +2730,7 @@ function Hero() {
       );
       setImage(objectUrl);
       event.target.value = null;
+      handleClose();
       return;
     }
   };
@@ -3134,13 +3656,23 @@ function Hero() {
                                 {savedImgsArr && savedImgsArr !== undefined
                                  ? savedImgsArr.map((val,key) => {
                                   return (
-                                    <img src={process.env.REACT_APP_IMAGE_BASE_URL + val} height={100} width={100} />
+                                    <label>
+                                      <input type="radio" name="myDesigns" value={process.env.REACT_APP_IMAGE_BASE_URL + val} checked={designSelected === process.env.REACT_APP_IMAGE_BASE_URL + val} onChange={handleMydesginChange} />
+                                      <img src={process.env.REACT_APP_IMAGE_BASE_URL + val} height={100} width={100} />
+                                    </label>
                                   )
                                  })
                                  : null
                                 }
                               </div>
                           </div>                          
+                          <div className="rowImg">
+                            <div className="columnImg" style={{"text-align": "center"}}>
+                              {savedImgsArr && savedImgsArr ? (
+                                    <Button variant="primary" onClick={uploadSavedDesign}>Upload</Button>
+                                  ): (<></>)}
+                            </div>
+                          </div>
                         </Tab>
                       </Tabs>
                     </Modal.Body>
@@ -3226,6 +3758,14 @@ function Hero() {
               ) : (
                 <></>
               )}
+              {imageDesignUploaded ? (
+                <div className="product__modal-content-2">
+                <div className="row">
+                  <div className="col-md-6">Uploaded Image(pixels)</div>
+                  <div className="col-md-3">{imageDesignUploaded.width}px x {imageDesignUploaded.height}px</div>
+                </div>
+              </div>                
+              ): null}
             </div>
             <div className="col-xl-6 col-lg-6">
               <div className="product__modal-content-2">

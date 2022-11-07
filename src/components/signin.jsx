@@ -97,7 +97,7 @@ function Signin() {
 
     axios
       .post('https://api.theprintribe.com/api/customers/customerGoogleSign', {
-        credentials: {
+        saveData:  {
           password: googleUser.googleId,
           email: googleUser.email,
           role: "customer",
@@ -107,19 +107,19 @@ function Signin() {
         console.log("login success", res);
         localStorage.setItem(
           "token",
-          res.data.customer.token ? res.data.customer.token : ""
+          res.data?.savedData?.token ? res.data?.savedData?.token : ""
         );
         localStorage.setItem(
           "customerId",
-          res.data.customer.id ? res.data.customer.id : "",
+          res.data.savedData._id ? res.data.savedData._id : "",
         );
         setState((prev) => ({ ...prev, error: false }));
 
-        localStorage.setItem("customer_email" , res.data.customer.email ? res.data.customer.email : "")
+        localStorage.setItem("customer_email" , res.data.savedData.email ? res.data.savedData.email : "")
 
         if(redirect_url === "from_signup" || redirect_url === "from_update") navigate('/')
         else if(redirect_url === "from_wix_integrations") navigate('/integrations/wix')
-        else navigate(-1);
+        else navigate('/');
 
       })
       .catch((err) => {
