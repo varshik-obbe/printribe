@@ -83,7 +83,7 @@ function Hero() {
   const [count, setCount] = useState(1)
   const handleNext = () => {
 
-    setOtherImg(productImgsArr[count])
+    setOtherImg(otherImages[count])
     setCount(count + 1)
     if (count > productImgsArr.length - 2) {
       setCount(0)
@@ -97,7 +97,7 @@ function Hero() {
 
   }
   const handlePrevious = () => {
-    setOtherImg(productImgsArr[count])
+    setOtherImg(otherImages[count])
     setCount(count - 1)
     if (count == 1) {
       setCount(4)
@@ -240,7 +240,7 @@ function Hero() {
             }
           });
           setProductImgsArr(imgsArr);
-          setOtherImg(imgsArr[0]);
+          // setOtherImg(imgsArr[0])
         }
       })
       .catch((err) => {

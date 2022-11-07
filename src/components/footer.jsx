@@ -68,7 +68,7 @@ function Footer() {
                   <a href="/return-refund" class="text-white text-decoration-none">Returns and Refunds</a>
                 </li>
                 <li className="mt-3">
-                  <a href="#!" class="text-white text-decoration-none ">Dropship terms</a>
+                  <a href="/return-refund" class="text-white text-decoration-none ">Dropship terms</a>
                 </li>
 
               </ul>

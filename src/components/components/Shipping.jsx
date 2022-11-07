@@ -161,6 +161,7 @@ if(shippingType===""){
           visitor_id: visitorId,
           fullname: fullName,
           state: state,
+          expectedDelivery:expectedDelivery,
           shipping_type:shippingType,
           address1: address1,
           company: company,
@@ -221,7 +222,7 @@ if(shippingType===""){
   //state to store shipping shipping
   const [shippingDetails, setShippingDetails] = useState("");
   const [shippingCompanies, setShippingCompanies] = useState();
-
+const[expectedDelivery,setExpectedDelivery]=useState("")
   const [shippingError, setShippingerror] = useState("");
   const [shippingErrorName, setShippingerrorName] = useState("");
   const [shippingErrorAddress1, setShippingerrorAddress1] = useState("");
@@ -253,6 +254,9 @@ if(country=='India'){
       setShippingerror("Invalid Postal Code");
 
       if (postalCode.toString().length === 6) {
+        axios.get('http://www.postalpincode.in/api/pincode/202001').then((res)=>{
+console.log(res,"responsessssssss")
+        })
         axios
           .get(
             `/customerShipping/getShipRocketCharges/${postalCode}/${
@@ -331,6 +335,7 @@ if(country=='India'){
               class="form-check-input"
               type="checkbox"
               id="checkboxNoLabel"
+              checked={savedShipAddress}
               onChange={() => setSavedShipAddress(!savedShipAddress)}
             />
             <span style={{ marginTop: "3px" }}>Use Your Saved Address</span>
@@ -473,12 +478,14 @@ if(country=='India'){
                                 onChange={(e) => {
                                   setCompany(e.target.value);
                                   setShippingerrorCompany("");
+                   
                                 }}
                                 onClick={() => {
                                   shippingCompanies.find((curr) => {
                                     if (company === "clear")
                                       setRetailShippingPprice("");
                                     else if (curr.courier_name === company) {
+                                      setExpectedDelivery(curr.estimated_delivery_days)
                                       setRetailShippingPprice(curr.rate);
                                       localStorage.setItem(
                                         "shipping_charges",
