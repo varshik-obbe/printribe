@@ -83,9 +83,9 @@ function Hero() {
   const [count, setCount] = useState(1)
   const handleNext = () => {
 
-    setOtherImg(otherImages[count])
+    setOtherImg(productImgsArr[count])
     setCount(count + 1)
-    if (count > otherImages.length - 2) {
+    if (count > productImgsArr.length - 2) {
       setCount(0)
     }
 
@@ -97,7 +97,7 @@ function Hero() {
 
   }
   const handlePrevious = () => {
-    setOtherImg(otherImages[count])
+    setOtherImg(productImgsArr[count])
     setCount(count - 1)
     if (count == 1) {
       setCount(4)
@@ -235,11 +235,12 @@ function Hero() {
           await data.productColorData.color_links.map(async (val, key) => {
             if (val.imgs?.length > 0 && key == 0) {
               await val.imgs.map((imgsVal, keyVal) => {
-                imgsArr.push(imgsVal);
+                imgsArr.push(process.env.REACT_APP_IMAGE_BASE_URL + imgsVal);
               });
             }
           });
           setProductImgsArr(imgsArr);
+          setOtherImg(imgsArr[0]);
         }
       })
       .catch((err) => {

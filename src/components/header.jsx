@@ -127,12 +127,13 @@ function Header() {
                 )}
             </div>
           </div>
-          <div className="col-2 col-sm-3 col-md-3 col-lg-4 order-1 order-md-2">
+          
+          <div className=" col-sm-3 col-md-3 col-lg-4 order-1 order-md-2">
             <Navbar expand="lg" className="">
               <Navbar.Toggle
                 aria-controls="basic-navbar-nav"
                 className="px-2"
-                style={{ width: "45px" }}
+                style={{ width: "45px",position:'absolute',right:0,top:"-65px" }}
               />
               <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mx-auto justify-content-evenly w-100">
