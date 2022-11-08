@@ -228,9 +228,9 @@ function ReviewOrder({ handleNext,handleBack }) {
 
   var visitorId = JSON.parse(localStorage.getItem("visitorId"));
   const [ShippingTo, setShippingTo] = useState();
-// const getEstimatedDate=()=>{
-//   return ShippingTo.expectedDelivery
-// }
+const getEstimatedDate=()=>{
+  return ShippingTo?.expectedDelivery
+}
   //setting cartempty state to true if cart is empty , else setting cart items & shipping data
   useEffect(() => {
     if (localStorage.getItem("customizeProduct") === null) {
@@ -1011,7 +1011,7 @@ function ReviewOrder({ handleNext,handleBack }) {
                 </button>
               </div>
               <span class="text-break">
-                Flat Rate (Estimated delivery: 3-4 days)
+                Flat Rate (Estimated delivery: {getEstimatedDate()} days)
               </span>
             </div>
           </div>
@@ -1182,7 +1182,7 @@ function ReviewOrder({ handleNext,handleBack }) {
                 </div>
                 <div class="col-12 mt-3 d-flex justify-content-between">
                   <b >profit</b>
-                  <b >{`₹${totalRetailAmount-totalBillingAmount}`}</b>
+                  <b >{`₹${(totalRetailAmount-totalBillingAmount).toFixed(2)}`}</b>
                 </div>
               </div>
               <div class="col-12 d-flex justify-content-center mt-5 mb-3">

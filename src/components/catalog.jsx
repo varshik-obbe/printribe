@@ -35,7 +35,7 @@ const Catalog = () => {
               <div className={`container `}>
              <div className="row mt-3 mb-3 mx-0">
              {products.map((category)=>{ 
-                return  category.visible=="true"&& <div className="col-lg-4 col-md-6 col-sm-12 p-2" key={category.id}>
+                return  category.visible == "true" && <div className="col-lg-4 col-md-6 col-sm-12 p-2" key={category.id}>
                 <div className={`${styles.catalogcontainer}`} >
                     <Link to={`/products${category.url}/${category.id}`} className={styles.catalogText}>
                         <img class={`${styles.cardImg}`} src={process.env.REACT_APP_IMAGE_BASE_URL+category.img} alt={category.name} />

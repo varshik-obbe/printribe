@@ -41,18 +41,18 @@ function Footer() {
       <div className="conatiner-fluid" style={{ background: "#1F649F", padding:"0 8%"}}>
         <div className="container" >
           <div className ={`row ${styles.footerrow}`} style={{width:"100%"}} >
-            <div className={`col-lg-3 col-md-12  text-light mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
-              <p className="h2  text-uppercase fw-bold " style={{fontSize:"18px" ,fontFamily:"Avenir"}}>contact us</p>
+            <div className={`col-lg-3 col-md-12  text-light mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir !important"}}>
+              <p className="h2  text-uppercase fw-bold " style={{fontSize:"18px" ,fontFamily:"Avenir !important"}}>contact us</p>
 
-              <p className="h4 fw-bold" style={{fontSize:"15px" ,fontFamily:"Avenir"}}><b>Address:</b></p>
+              <p className="h4 fw-bold" style={{fontSize:"15px" ,fontFamily:"Avenir !important"}}><b>Address:</b></p>
               Kereguddadahalli, Chikkabanavara, Bangalore, Karnataka - 560032
 
-              <div className="h4 fw-bold" style={{marginTop:"20px", fontSize:"15px" ,fontFamily:"Avenir"}}>Email:</div>
+              <div className="h4 fw-bold" style={{marginTop:"20px", fontSize:"15px" ,fontFamily:"Avenir !important"}}>Email:</div>
               info@theprintribe.com
             </div>
 
-            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
-              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>Company</p>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir !important"}}>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir !important"}}>Company</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
@@ -73,8 +73,8 @@ function Footer() {
 
               </ul>
             </div>
-            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
-              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>RESOURCES</p>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir !important"}}>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir !important"}}>RESOURCES</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">
@@ -92,8 +92,8 @@ function Footer() {
 
               </ul>
             </div>
-            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir"}}>
-              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir"}}>SELL WITH PRINTRIBE</p>
+            <div className={`col-lg-3 col-md-6 mb-4 mb-md-0 ${styles.footerdivs}`} style={{fontSize:"15px" ,fontFamily:"Avenir !important"}}>
+              <p className="h3 text-light text-uppercase fw-bold" style={{fontSize:"18px" ,fontFamily:"Avenir !important"}}>SELL WITH PRINTRIBE</p>
 
               <ul class="list-unstyled mb-0">
                 <li className="mt-3">

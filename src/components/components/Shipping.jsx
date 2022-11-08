@@ -80,7 +80,6 @@ setCountries(data.data.data)
       setSavedShipAddress(!savedShipAddress)
  
     }
-    console.log(props.checkSavedShipAddress,"props.checkSavedShipAddress")
   },[props.checkSavedShipAddress])
   //to check whether a string contains a number or not
   const checkIfStringContainsNumber = (_string) => {
@@ -180,14 +179,12 @@ if(shippingType===""){
         JSON.stringify(formData.shipping_data)
       );
 
-      console.log(formData);
 
       if (savedShipAddress) handleNext();
       else {
         axios
           .post(`/customerShipping/addShipping`, formData)
           .then(({ data }) => {
-            console.log(data);
             localStorage.setItem("customerShipping_id", data.saveddata._id);
             handleNext();
           });
@@ -254,8 +251,10 @@ if(country=='India'){
       setShippingerror("Invalid Postal Code");
 
       if (postalCode.toString().length === 6) {
-        axios.get('http://www.postalpincode.in/api/pincode/202001').then((res)=>{
-console.log(res,"responsessssssss")
+        axios.get('https://api.theprintribe.com/api/customerShipping/getStatesAndCity/'+postalCode).then((res)=>{
+setCity(res?.data?.PostOffice[0]?.District)
+setState(res?.data?.PostOffice[0]?.State)
+console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
         })
         axios
           .get(

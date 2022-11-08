@@ -218,7 +218,7 @@ function Signup() {
                       onClick={renderProps.onClick} // Sign Up with Google Click Event //
                     >
                       <FcGoogle style={{ fontSize: "25px" }} /> Sign up with
-                      Googles
+                      Google
                     </button>
                   )}
                 />
