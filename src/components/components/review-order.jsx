@@ -772,7 +772,12 @@ const getEstimatedDate=()=>{
     this.$delete(this.productsData, i);
     this.invoiceProductsTableKey++;
   };
-
+const getTotalPrice=()=>{
+  
+  const data =   customizeProduct &&
+    customizeProduct.length !== 0 && customizeProduct.map(curr=>(curr.quantity * curr.price)+(curr.quantity * curr.design_price))
+   return data
+}
   const getTotalValue = () => {
     let result = 0;
     let totalSgst = 0;
@@ -1149,14 +1154,14 @@ const getEstimatedDate=()=>{
                         <div class="col-12 mt-3 d-flex justify-content-between">
                           <b>{`SGST (${sgstArr[itemIndex].percentage}%)`}</b>
                           <b>{`₹${(
-                            (sgstArr[itemIndex].percentage * totalBillingAmount) /
+                            (sgstArr[itemIndex].percentage * getTotalPrice()) /
                             100
                           ).toFixed(2)}`}</b>
                         </div>
                         <div class="col-12 mt-3 d-flex justify-content-between">
                           <b>{`CGST (${cgstArr[itemIndex].percentage}%)`}</b>
                           <b>{`₹${(
-                            (cgstArr[itemIndex].percentage * totalBillingAmount) /
+                            (cgstArr[itemIndex].percentage * getTotalPrice()) /
                             100
                           ).toFixed(2)}`}</b>
                         </div>
