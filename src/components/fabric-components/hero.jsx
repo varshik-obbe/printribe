@@ -1734,6 +1734,31 @@ function Hero() {
     }
   });
 
+  function getBase64Image(imgUrl) {
+    return new Promise(
+      function(resolve, reject) {
+  
+        var img = new Image();
+        img.src = imgUrl;
+        img.setAttribute('crossOrigin', 'anonymous');
+  
+        img.onload = function() {
+          var canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          var ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          var dataURL = canvas.toDataURL("image/png");
+          resolve(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
+        }
+        img.onerror = function() {
+          reject("The image could not be loaded.");
+        }
+  
+      });
+  
+  }  
+
 
   //function which excutes when saved image is uploaded  
   const uploadSavedDesign = async (event) => {
@@ -1754,7 +1779,12 @@ function Hero() {
       if (uploadedImgsArr) {
         imageUloadedArr = uploadedImgsArr;
       }
-      let base64data;
+      let base64data = getBase64Image(designSelected).then(function(base64image) {
+        imageUloadedArr.push(base64image);
+        setuploadedImgsArr(imageUloadedArr);
+      }, function(reason) {
+        console.log(reason); // Error!
+      });
       const objectUrl = designSelected;
       fabric.Image.fromURL(
         objectUrl,
