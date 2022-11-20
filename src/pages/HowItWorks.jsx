@@ -436,7 +436,7 @@ const HowItWorks = () => {
       </div>
 
       <hr />
-      <div className="col-12 d-flex justify-content-center flex-column py-5">
+      {/* <div className="col-12 d-flex justify-content-center flex-column py-5">
         <button
           className={`btn p-3 col-10 mx-auto ${styles.whyPrintribeBtn}`}
           style={{
@@ -456,7 +456,7 @@ const HowItWorks = () => {
           above.
         </h4>
       </div>
-      <hr />
+      <hr /> */}
 
       {/* <div className={`col-12 mt-5 mx-auto ${styles.signup}`}>
         <img
@@ -472,10 +472,10 @@ const HowItWorks = () => {
         </div>
       </div> */}
 
-      <div className="my-5">
+      {/* <div className="my-5">
       <Join title="Signup Now and grow your brand with us." buttonTitle="Sign up"/>
 
-      </div>
+      </div> */}
 
 
       <div className="container mb-5">

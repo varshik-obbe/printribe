@@ -55,9 +55,9 @@ function Integrations() {
               <h3 className="text-muted py-2">
                 Find the best Printful integration for your store
               </h3>
-              <button className="btn btn-danger mt-4 p-3">
+              {/* <button className="btn btn-danger mt-4 p-3">
                 Take a quiz <IoIosArrowForward />
-              </button>
+              </button> */}
             </div>
             <div
               className="col-lg-4 "

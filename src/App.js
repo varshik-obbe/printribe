@@ -28,6 +28,8 @@ import OTPpage from "./components/OTPpage";
 import About from "./components/about-us";
 import Integrations from "./components/integrations";
 import Community from "./components/community";
+import Shopify from "./components/Shopify";
+import Wix from "./components/Wix";
 
 
 // import SubCatWomen from "./pages/SubCatWomen";
@@ -64,6 +66,9 @@ function App() {
           <Route exact path="/community" element={<Community />} />
 
           <Route exact path="/cart" element={<Cart />} />
+          <Route exact path="/integrations/Shopify" element={<Shopify />} />
+          <Route exact path="/integrations/Wix" element={<Wix />} />
+
           <Route exact path="/product/:prodid" element={<Productpage />} />
           <Route exact path="/design-tribe" element={<DesignTribe />} />
           <Route exact path="/privacy-policy" element={<PrivacyPolicy />} />

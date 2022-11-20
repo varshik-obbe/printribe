@@ -11,6 +11,7 @@ import PrintribeLogo from "../assets/Printribe-logo.png";
 import classes from "../styles/signinsignup.module.css";
 import {useLocation} from 'react-router-dom'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import md5 from 'md5-hash'
 
 function Signin() {
   let navigate = useNavigate();
@@ -105,9 +106,11 @@ function Signin() {
       })
       .then((res) => {
         console.log("login success", res);
+       const token =  md5(res?.data?.savedData?._id + res?.data?.savedData?.email )
+
         localStorage.setItem(
           "token",
-          res.data?.savedData?.token ? res.data?.savedData?.token : ""
+          res.data?.savedData?.token ? res.data?.savedData?.token : token
         );
         localStorage.setItem(
           "customerId",

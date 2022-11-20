@@ -214,7 +214,9 @@ function ReviewOrder({ handleNext,handleBack }) {
             quantity: String(ele.quantity),
             designID: ele.designId,
             zakeke_price: "0",
-            retail_price:ele.retail_price
+            retail_price:ele.retail_price,
+            handling_gst:ele.handling_gst,
+            design_gst:ele.design_gst
           };
           productInfo.push(dataObject);
 
@@ -531,6 +533,17 @@ const getEstimatedDate=()=>{
   };
 
   //initializing gst , igst, cgst,sgst arrays
+  const getFinalPrice=()=>{
+    const price =getTotalPrice()
+    const data =gstArr &&
+    gstArr.map((curr, itemIndex) =>{
+      
+        return (cgstArr[itemIndex].percentage * getTotalPrice()) /100+(sgstArr[itemIndex].percentage * getTotalPrice()) /100+ price[0]+shipping_charges
+    
+    })
+
+    return data && data.length ? data[0].toFixed(2): 0
+  }
   const addProduct = (cartItem) => {
     // console.log(cartItem)
 
@@ -1179,7 +1192,7 @@ const getTotalPrice=()=>{
                 <hr class="my-3" style={{ height: "1px", width: "100%" }} />
                 <div class="col-12 d-flex justify-content-between">
                   <b class="fs-4">Total</b>
-                  <b class="fs-4">{`₹${totalBillingAmount}`}</b>
+                  <b class="fs-4">{`₹${getFinalPrice()}`}</b>
                 </div>
                 <div class="col-12 mt-3 d-flex justify-content-between">
                   <b >Retail</b>

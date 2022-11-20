@@ -5,29 +5,45 @@ import logo from "../assets/Printribe-logo.png";
 import styles from "../styles/home.module.css";
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
-
+import { Navigate, useNavigate } from "react-router-dom";
+import {searchData} from "./searchData.js"
 function Header() {
   const [messageVisible, setMessageVisible] = useState(false);
   const [searchItem, setSearchItem] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const[searchCategories,setSearchCategories]=useState([])
+  const[searchLinks,setSearchLinks]=useState([])
   const [adminSettings, setAdminSettings] = useState([]);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (searchItem.length > 0) {
+      const search= searchData.filter(item=>item.title.toLowerCase().includes(searchItem.toLowerCase()))
+      setSearchLinks(search)
+
       axios
         .get(
           `https://api.theprintribe.com/api/products/getSearchProducts/${searchItem}`
         )
         .then(({ data }) => {
-          console.log(data.products);
-          setSearchResults(data.products);
+
+
+const products = data.products.filter(item=>item.active=="true")
+            setSearchResults(products);
+            setSearchCategories(data.categories)
+
+          
         })
         .catch((err) => console.log(err));
+
+
+
     } else {
       setSearchResults([]);
+      setSearchLinks([])
+
+      setSearchCategories([])
     }
   }, [searchItem]);
 
@@ -116,15 +132,27 @@ function Header() {
                   </span>
                 )}
                 
-                {searchResults && (
+                {(searchResults || searchCategories || searchLinks) && (
                   <div className={styles.searchItemsList}>
-                    {searchResults.map((curr, index) => (
-                      <li value={curr.title} key={index}>
+                { searchResults.length>0 &&   <><strong className="ms-3">Products</strong><ul> {searchResults.map((curr, index) => (
+                      <li value={curr.title} key={index}  onClick={()=>navigate(`/products/${curr.category_id}`)}>
                         {curr.title}
                       </li>
-                    ))}
+                    ))}</ul></>}
+                 {searchCategories.length>0 &&    <><strong className="ms-3">Categories</strong> <ul>{searchCategories.map((curr, index) => (
+                      <li value={curr.category} key={index} onClick={()=>navigate(`/products${curr.url}/${curr._id}`)}>
+                        {curr.category}
+                      </li>
+                    ))}</ul></>}
+            {searchLinks.length>0 &&         <><strong className="ms-3">Others</strong><ul> {searchLinks.map((curr, index) => (
+                      <li value={curr.title} key={index} onClick={()=>navigate(curr.path)}>
+                        {curr.title}
+                      </li>
+                    ))}</ul></>}
+                   
                   </div>
                 )}
+                
             </div>
           </div>
           

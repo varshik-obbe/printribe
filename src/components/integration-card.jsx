@@ -1,8 +1,10 @@
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function IntegrationCard({data}) {
     const[active,setActive]=useState(true)
+    const navigate = useNavigate()
   return (
     <div className='integration-card card'>
         <div className='row d-flex align-items-center'>
@@ -43,7 +45,7 @@ function IntegrationCard({data}) {
                 </li>:<></>}
             </ul>:
             <ul  style={{lineHeight:'25px'}}><li>Description: {data.description}</li></ul>}
-            <button className='btn btn-secondary mb-3'>Learn more</button>
+            <button className='btn btn-secondary mb-3' onClick={()=>navigate(`${data.name}`)}>Learn more</button>
         </div>
     </div>
   )

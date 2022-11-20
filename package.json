@@ -23,6 +23,7 @@
     "fabric": "^4.6.0",
     "fabricjs-react": "^1.0.8",
     "font-awesome": "^4.7.0",
+    "md5-hash": "^1.0.1",
     "otp-input-react": "^0.3.0",
     "razorpay": "^2.8.1",
     "react": "^17.0.2",

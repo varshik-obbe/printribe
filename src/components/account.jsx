@@ -469,6 +469,20 @@ const data ={
                   Update & Edit the information you share with the community
                 </label>
                 <div class="row mt-4">
+                <div class="col-12 col-sm-6">
+                    <label for="basic-url" class="form-label">
+                      Bank Account Holder Name
+                    </label>
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control border-dark"
+                        value={state.bank_account_name ? state.bank_account_name : ""}
+                        required
+                        onChange={(e) => handleChange(e, "bank_account_name")}
+                      />
+                    </div>
+                  </div>
                   <div class="col-12 col-sm-6">
                     <label for="basic-url" class="form-label">
                       Bank Name

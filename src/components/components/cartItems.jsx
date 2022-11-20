@@ -18,10 +18,14 @@ const CartItems = ({
 }) => {
   const [quantity, setQuantity] = useState(cartProduct.quantity);
   const[retail,setRetail]=useState(cartProduct.retail_price)
+  const[designGst,setDesignGst]=useState(cartProduct.design_gst)
+
+  const[handlingGst,setHandlingGst]=useState(cartProduct.handling_gst)
+
   const[previewUrl,setPreviewUrl]=useState();
   const[open,setOpen]=useState(false)
   const navigate = useNavigate();
-
+console.log(cartProduct.quantity,cartProduct.retail_price,"cartprodut")
   var subTotal = localStorage.getItem("subTotal");
 
   const handleChangeQty = (task) => {
@@ -45,6 +49,9 @@ const CartItems = ({
       ) {
         console.log(curr,"crrrrrrrr")
         curr.retail_price= Number(retail)
+        curr.handling_gst=Number(handlingGst)
+        curr.design_gst=Number(designGst)
+
         curr.quantity = Number(quantity);
         return localStorage.setItem(
           "customizeProduct",
@@ -52,7 +59,7 @@ const CartItems = ({
         );
       }
     });
-  }, [quantity,retail]);
+  }, [quantity,retail,handlingGst,designGst]);
 
   const checkQty = (e) => {
     if (e.target.value < 1 || e.target.value === "") {
@@ -175,7 +182,7 @@ const style = {
           style={{ height: "2px", background: "#999" }}
         />
 
-        <div class="row">
+        <div class="row g-0">
           <div class="col-6 col-lg-7">
             <div
               style={{
@@ -258,7 +265,7 @@ const style = {
       </div>
       <div
         class={[
-          "col-4 col-sm-4 col-lg-2 px-0 d-flex align-items-center flex-column",
+          "col-4 col-sm-4 col-lg-1 px-0 d-flex align-items-center flex-column",
           classes.productGrid5,
         ].join(" ")}
       >
@@ -286,7 +293,7 @@ const style = {
             onChange={(e)=>setRetail(e.target.value)}
             style={{
               height: "40px",
-              width: "80px",
+              width: "60px",
               border: "1px solid #999",
               textAlign: "center",
               borderRadius: "0 5px 5px 0",
@@ -296,7 +303,83 @@ const style = {
       </div>
       <div
         class={[
-          "col-4 col-sm-4 col-lg-2 px-0 d-flex align-items-center flex-column",
+          "col-4 col-sm-4 col-lg-1 px-0 d-flex align-items-center flex-column",
+          classes.productGrid5,
+        ].join(" ")}
+      >
+        <span class="fs-6">Design GST</span>
+        <hr
+          class="w-100 mt-2 mb-4"
+          style={{ height: "2px", background: "#999" }}
+        />
+        <div class="d-flex">
+          <div
+            style={{
+              height: "40px",
+              width: "30px",
+              borderTop: "1px solid #999",
+              borderLeft: "1px solid #999",
+              borderBottom: "1px solid #999",
+              borderRadius: "5px 0 0 5px",
+            }}
+            class="d-flex justify-content-center align-items-center"
+          >
+            ₹
+          </div>
+          <input
+            value={designGst}
+            onChange={(e)=>setDesignGst(e.target.value)}
+            style={{
+              height: "40px",
+              width: "60px",
+              border: "1px solid #999",
+              textAlign: "center",
+              borderRadius: "0 5px 5px 0",
+            }}
+          />
+        </div>
+      </div>
+      <div
+        class={[
+          "col-4 col-sm-4 col-lg-1 px-0 d-flex align-items-center flex-column",
+          classes.productGrid5,
+        ].join(" ")}
+      >
+        <span class="fs-6">Handling GST</span>
+        <hr
+          class="w-100 mt-2 mb-4"
+          style={{ height: "2px", background: "#999" }}
+        />
+        <div class="d-flex">
+          <div
+            style={{
+              height: "40px",
+              width: "30px",
+              borderTop: "1px solid #999",
+              borderLeft: "1px solid #999",
+              borderBottom: "1px solid #999",
+              borderRadius: "5px 0 0 5px",
+            }}
+            class="d-flex justify-content-center align-items-center"
+          >
+            ₹
+          </div>
+          <input
+            value={handlingGst}
+            onChange={(e)=>setHandlingGst(e.target.value)}
+            style={{
+              height: "40px",
+              width: "60px",
+              border: "1px solid #999",
+              textAlign: "center",
+              borderRadius: "0 5px 5px 0",
+            }}
+          />
+        </div>
+      </div>
+      <div
+        class={[
+          "col-4 col-sm-4 col-lg-1 px-0 d-flex align-items-center flex-column",
           classes.productGrid5,
         ].join(" ")}
       >

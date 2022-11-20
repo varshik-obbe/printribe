@@ -37,6 +37,9 @@ function Hero() {
   const [fabricInfo, setFabricInfo] = useState({});
   const [mainImg, setMainImg] = useState("");
   const [productName, setProductName] = useState("");
+  const[designGst,setDesignGst]=useState("")
+
+  const[handlingGst,setHandlingGst]=useState("")
   const [color, setColor] = useState("");
   const [colorCode, setColorCode] = useState("");
   const [colorId, setColorId] = useState("0");
@@ -74,7 +77,7 @@ function Hero() {
   const [subCatURL, setSubCatURL] = useState();
   const [imageDesignUploaded, setImageDesignUploaded] = useState();
   const [designSelected, setDesignSelected] = useState();
-
+const[retailPrice,setRetialPrice]=useState("")
   const [showAnother, setShowAnother] = useState(false);
 
   const [show, setShow] = useState(false);
@@ -254,7 +257,10 @@ function Hero() {
         console.log(data);
         console.log(data.product.productdata[0]);
         setproduct(data.product.productdata[0]);
+      setRetialPrice(data.product.productdata[0].retail_price)
         setProductName(data.product.productdata[0].title);
+        setHandlingGst(data.product.productdata[0].handling_gst)
+        setDesignGst(data.product.productdata[0].design_gst)
         setPriceSet(data.product.productdata[0].price);
         if (data.product.productdata[0].AOP == "true") {
           setAop(true);
@@ -3261,6 +3267,9 @@ function Hero() {
                     },
                     link: dataUrl,
                     title: productName,
+                    handling_gst:handlingGst,
+                    design_gst:designGst,
+                    retail_price:retailPrice,
                     designId: dataFabr.data.fabricData._id,
                     design_price: parseFloat(designPrice.toFixed(2)),
                     price: product.price,
@@ -3338,6 +3347,9 @@ function Hero() {
                         },
                         link: dataUrl,
                         title: productName,
+                        handling_gst:handlingGst,
+                        design_gst:designGst,
+                        retail_price:retailPrice,
                         designId: datasavedFabr.data.data._id,
                         design_price: parseFloat(designPrice.toFixed(2)),
                         price: product.price,

@@ -45,7 +45,7 @@ function Footer() {
               <p className="h2  text-uppercase fw-bold " style={{fontSize:"18px" ,fontFamily:"Avenir !important"}}>contact us</p>
 
               <p className="h4 fw-bold" style={{fontSize:"15px" ,fontFamily:"Avenir !important"}}><b>Address:</b></p>
-              Kereguddadahalli, Chikkabanavara, Bangalore, Karnataka - 560032
+              Mallayya Industrial Area, Bangalore -560032
 
               <div className="h4 fw-bold" style={{marginTop:"20px", fontSize:"15px" ,fontFamily:"Avenir !important"}}>Email:</div>
               info@theprintribe.com
