@@ -4384,7 +4384,7 @@ const[retailPrice,setRetialPrice]=useState("")
                 <br />
                 <div className="row">
                   <div className="d-flex mb-3">
-                    <div className="pe-3">
+                    {/* <div className="pe-3">
                       <button
                         onClick={handleAddText}
                         className={
@@ -4396,7 +4396,7 @@ const[retailPrice,setRetialPrice]=useState("")
                       >
                         Add Text
                       </button>
-                    </div>
+                    </div> */}
                     <div className="ps-3">
                       <a href="#">
                         <button
