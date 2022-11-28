@@ -3661,7 +3661,10 @@ const[retailPrice,setRetialPrice]=useState("")
                     height: objRect.height,
                   });
                   if(interText) {
-                    let arrImages = uploadedImgsArr;
+                    let arrImages = [];
+                    if(uploadedImgsArr) {
+                      arrImages = uploadedImgsArr;
+                    }
                     arrImages.push(imgdata.replace(/^data:image\/(png|jpg);base64,/, ""));
                     setuploadedImgsArr(arrImages);
                     
@@ -3675,7 +3678,7 @@ const[retailPrice,setRetialPrice]=useState("")
                         data: jsonData,
                         url: dataUrl,
                         imgUrl: imgdata,
-                        imgsArr: uploadedImgsArr,
+                        imgsArr: arrImages,
                         savedImgsInfo: configArr,
                         textDesign: "yes"
                       },
