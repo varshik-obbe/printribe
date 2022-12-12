@@ -3641,6 +3641,20 @@ function Hero() {
   const customize = (evt) => {
     evt.preventDefault();
 
+    let no = 0;
+    if (sides == "one") {
+      no = 0;
+    }
+    else if (sides == "two") {
+      no = 1;
+    }
+    else if (sides == "three") {
+      no = 2;
+    }
+    else if (sides == "four") {
+      no = 3;
+    }
+
     var customizeProduct = [];
 
     console.log(localStorage.getItem("customizeProduct"));
@@ -3715,10 +3729,10 @@ function Hero() {
                   // link.download = "my-image-name.jpeg";
                   // link.href = dataUrl;
                   // link.click();
-                  var jsonData = JSON.stringify(canvasArr[0].toJSON());
+                  var jsonData = JSON.stringify(canvasArr[no].toJSON());
                   let objRect;
                   let configArr = [];
-                  let objs = canvasArr[0].getObjects();
+                  let objs = canvasArr[no].getObjects();
                   let interText = false;
                   objs.forEach((o) => {
                     if (o.type === "rect") {
@@ -3739,7 +3753,7 @@ function Hero() {
                       interText = true;
                     }
                   });
-                  var imgdata = canvasArr[0].toDataURL({
+                  var imgdata = canvasArr[no].toDataURL({
                     multiplier: 1,
                     left: objRect.left,
                     top: objRect.top,
@@ -4040,19 +4054,19 @@ function Hero() {
           }
           if(o.type == "image" || o.type == "i-text") {
             if(i==1) {
-              let jsonOfSecondCan = JSON.stringify(canvasArr[0].toDatalessJSON(['selectable', '_controlsVisibility', 'scaledWidth', 'scaledHeight','scaleX', 'scaleY']));
+              let jsonOfSecondCan = JSON.stringify(canvasArr[1].toDatalessJSON(['selectable', '_controlsVisibility', 'scaledWidth', 'scaledHeight','scaleX', 'scaleY']));
               localStorage.setItem("secondCanvas"+prodid, jsonOfSecondCan);
             }
           }
           if(o.type == "image" || o.type == "i-text") {
             if(i==2) {
-              let jsonOfThirdCan = JSON.stringify(canvasArr[0].toDatalessJSON(['selectable', '_controlsVisibility', 'scaledWidth', 'scaledHeight','scaleX', 'scaleY']));
+              let jsonOfThirdCan = JSON.stringify(canvasArr[2].toDatalessJSON(['selectable', '_controlsVisibility', 'scaledWidth', 'scaledHeight','scaleX', 'scaleY']));
               localStorage.setItem("thridCanvas"+prodid, jsonOfThirdCan);
             }
           }
           if(o.type == "image" || o.type == "i-text") {
             if(i==3) {
-              let jsonOfFourthCan = JSON.stringify(canvasArr[0].toDatalessJSON(['selectable', '_controlsVisibility', 'scaledWidth', 'scaledHeight','scaleX', 'scaleY']));
+              let jsonOfFourthCan = JSON.stringify(canvasArr[3].toDatalessJSON(['selectable', '_controlsVisibility', 'scaledWidth', 'scaledHeight','scaleX', 'scaleY']));
               localStorage.setItem("fourthCanvas"+prodid, jsonOfFourthCan);
             }
           }        
