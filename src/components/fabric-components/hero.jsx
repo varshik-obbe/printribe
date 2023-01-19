@@ -3897,7 +3897,7 @@ function Hero() {
     else if (sides == "four") {
       no = 3;
     }
-    canvasArr[no].remove(editor?.canvas.getActiveObject());
+    canvasArr[no].remove(canvasArr[no].getActiveObject());
 
     // const obj = editor?.canvas.getObjects();
     // obj?.forEach((o) => {
