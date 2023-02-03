@@ -4,7 +4,7 @@ import axios from "axios";
 import domtoimage from "dom-to-image";
 import { fabric } from "fabric";
 import { FabricJSCanvas, useFabricJSEditor } from "fabricjs-react";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useReducer } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate, useParams } from "react-router-dom";
@@ -26,6 +26,9 @@ import how3 from "../../assets/howItWorks/howitworks_3.jpg";
 import how4 from "../../assets/howItWorks/howitworks_4.jpg";
 import how5 from "../../assets/howItWorks/howitworks_5.jpg";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import Tooltip from "react-bootstrap/Tooltip";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+
 function Hero() {
   const { prodid } = useParams();
   const navigate = useNavigate();
@@ -72,7 +75,8 @@ function Hero() {
   const [savedImgsArr, setSavedImgsArr] = useState();
   const [cmsSizeChart, setCmsSizeChart] = useState();
   const [inchSizeChart, setInchSizeChart] = useState();
-  const otherImages = [how1, how2, how3, how4, how5];
+  const[otherImages,setOtherImages]=useState();
+  // const otherImages = [how1, how2, how3, how4, how5];
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
   const [imageDesignUploaded, setImageDesignUploaded] = useState();
@@ -80,33 +84,47 @@ function Hero() {
   const [retailPrice, setRetialPrice] = useState("")
   const [showAnother, setShowAnother] = useState(false);
   const [canvasArr, setCanvasArr] = useState();
+  const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
+
+  function handleClick() {
+    forceUpdate();
+  }
 
 
   const [show, setShow] = useState(false);
   const [showSize, setSizeShow] = useState(false);
-  const [otherImg, setOtherImg] = useState(otherImages[0])
+  const [otherImg, setOtherImg] = useState()
   const [count, setCount] = useState(1)
   const handleNext = () => {
 
     setOtherImg(otherImages[count])
     setCount(count + 1)
-    if (count > productImgsArr.length - 2) {
+    if (count > productImgsArr.length - 1) {
       setCount(0)
     }
 
 
   }
+  useEffect(()=>{
+    if (otherImages?.length) {
+      setOtherImg(otherImages[0])
+
+    }
+  },[otherImages])
   const handleChangeImage = (data, letter) => {
+    console.log(data,"data")
     setOtherImg(data)
     setSides(letter)
 
   }
   const handlePrevious = () => {
-    setOtherImg(otherImages[count])
-    setCount(count - 1)
+    console.log(count,"count",otherImages.length)
+    setOtherImg(otherImages[count-1])
     if (count == 1) {
-      setCount(4)
+      setCount(otherImages.length)
     }
+    setCount(count - 1)
+   
 
   }
   const handleClose = () => setShow(false);
@@ -237,6 +255,7 @@ function Hero() {
       .then(async ({ data }) => {
         if (Object.keys(data.productColorData).length > 0) {
           let imgsArr = [];
+          setOtherImages(data.productColorData.color_links[0].imgs)
           setProductColors(data.productColorData.color_links);
           await data.productColorData.color_links.map(async (val, key) => {
             if (val.imgs?.length > 0 && key == 0) {
@@ -421,7 +440,9 @@ function Hero() {
       });
     }
   }, [colorPick]);
-
+  const renderTooltip = props => (
+    <Tooltip id="tooltip" style={{backgroundColor:'white'}} {...props}><div >{props}</div></Tooltip>
+  );
   //default function which runs when the dom is loaded the first time
   useEffect(() => {
     setImage(testImg);
@@ -2264,47 +2285,47 @@ function Hero() {
             let scaleX;
             if (sides == "one") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].frontImgDimensions.width
-                ) / parseInt(img.width);
+                ) - 10) / parseInt(img.width);
             } else if (sides == "two") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].backImgDimensions.width
-                ) / parseInt(img.width);
+                ) - 10) / parseInt(img.width);
             } else if (sides == "three") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].leftImgDimensions.width
-                ) / parseInt(img.width);
+                )- 10) / parseInt(img.width);
             } else if (sides == "four") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].rightImgDimensions.width
-                ) / parseInt(img.width);
+                )  - 10) / parseInt(img.width);
             }
             // 160 / parseInt(img.height);
             let scaleY;
             if (sides == "one") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].frontImgDimensions.height
-                ) / parseInt(img.height);
+                )  - 10) / parseInt(img.height);
             } else if (sides == "two") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].backImgDimensions.height
-                ) / parseInt(img.height);
+                )  - 10) / parseInt(img.height);
             } else if (sides == "three") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].leftImgDimensions.height
-                ) / parseInt(img.height);
+                ) - 10) / parseInt(img.height);
             } else if (sides == "four") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].rightImgDimensions.height
-                ) / parseInt(img.height);
+                ) - 10) / parseInt(img.height);
             }
             img.set({
               scaleX: scaleX,
@@ -2790,47 +2811,47 @@ function Hero() {
             let scaleX;
             if (sides == "one") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].frontImgDimensions.width
-                ) / parseInt(img.width);
+                ) - 10) / parseInt(img.width);
             } else if (sides == "two") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].backImgDimensions.width
-                ) / parseInt(img.width);
+                ) - 10) / parseInt(img.width);
             } else if (sides == "three") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].leftImgDimensions.width
-                ) / parseInt(img.width);
+                ) - 10) / parseInt(img.width);
             } else if (sides == "four") {
               scaleX =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].rightImgDimensions.width
-                ) / parseInt(img.width);
+                ) - 10) / parseInt(img.width);
             }
             // 160 / parseInt(img.height);
             let scaleY;
             if (sides == "one") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].frontImgDimensions.height
-                ) / parseInt(img.height);
+                ) - 10) / parseInt(img.height);
             } else if (sides == "two") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].backImgDimensions.height
-                ) / parseInt(img.height);
+                ) - 10) / parseInt(img.height);
             } else if (sides == "three") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].leftImgDimensions.height
-                ) / parseInt(img.height);
+                ) - 10) / parseInt(img.height);
             } else if (sides == "four") {
               scaleY =
-                parseInt(
+                (parseInt(
                   fabricInfo.variant[colorIndex].rightImgDimensions.height
-                ) / parseInt(img.height);
+                ) - 10) / parseInt(img.height);
             }
             img.set({
               scaleX: scaleX,
@@ -2935,6 +2956,12 @@ function Hero() {
               // o.lockScalingY = true;
             }
           });
+          console.log("left1 val is",left1);
+          console.log("top1 val is",top1);
+          console.log("scalex val is",scale1x);
+          console.log("scaley val is",scale1y);
+          console.log("width val is",width1);
+          console.log("height val is",height1);
           if (
             fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !==
             null &&
@@ -3185,6 +3212,7 @@ function Hero() {
       setImage(objectUrl);
       event.target.value = null;
       handleClose();
+      forceUpdate();
       return;
     }
   };
@@ -5191,6 +5219,13 @@ function Hero() {
               obj.setCoords();
               var brNew = obj.getBoundingRect();
 
+              console.log("left1 val in scaled is",left1);
+              console.log("top1 val in scaled is",top1);
+              console.log("scalex val in scaled is",scale1x);
+              console.log("scaley val in scaled is",scale1y);
+              console.log("width val in scaled is",width1);
+              console.log("height val in scaled is",height1);
+
               if (
                 brNew.width + brNew.left >
                 parseFloat(parentObj.width) + parseFloat(parentObj.left) ||
@@ -5231,6 +5266,16 @@ function Hero() {
                       fabricInfo.variant[colorIndex].frontImgDimensions
                         .scaleHeight !== ""
                     ) {
+                      let widthmulval = o.getScaledWidth() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      );
+                      let heightmulval = o.getScaledHeight() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      );
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -5264,7 +5309,7 @@ function Hero() {
                             fabricInfo.variant[colorIndex].frontImgDimensions
                               .scaleHeight
                           ) >
-                          parseFloat(val.height)
+                          parseFloat(val.height) || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5297,6 +5342,10 @@ function Hero() {
                         }
                       }
                     } else {
+                      let widthmulval = o.getScaledWidth() / 10;
+                      let heightmulval = o.getScaledHeight() / 10;
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches = o.getScaledWidth() / 10;
@@ -5308,7 +5357,7 @@ function Hero() {
                         }
                         if (
                           o.getScaledWidth() > val.width &&
-                          o.getScaledHeight() > val.height
+                          o.getScaledHeight() > val.height  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5336,6 +5385,16 @@ function Hero() {
                       fabricInfo.variant[colorIndex].frontImgDimensions
                         .scaleHeight !== ""
                     ) {
+                      let widthmulval = o.getScaledWidth() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      );
+                      let heightmulval = o.getScaledHeight() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      );
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -5369,7 +5428,7 @@ function Hero() {
                             fabricInfo.variant[colorIndex].frontImgDimensions
                               .scaleHeight
                           ) >
-                          parseFloat(val.height)
+                          parseFloat(val.height)  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5402,6 +5461,10 @@ function Hero() {
                         }
                       }
                     } else {
+                      let widthmulval = o.getScaledWidth() / 10;
+                      let heightmulval = o.getScaledHeight() / 10;
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches = o.getScaledWidth() / 10;
@@ -5413,7 +5476,7 @@ function Hero() {
                         }
                         if (
                           o.getScaledWidth() >= val.width &&
-                          o.getScaledHeight() >= val.height
+                          o.getScaledHeight() >= val.height  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5441,6 +5504,16 @@ function Hero() {
                       fabricInfo.variant[colorIndex].frontImgDimensions
                         .scaleHeight !== ""
                     ) {
+                      let widthmulval = o.getScaledWidth() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      );
+                      let heightmulval = o.getScaledHeight() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      );
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -5474,7 +5547,7 @@ function Hero() {
                             fabricInfo.variant[colorIndex].frontImgDimensions
                               .scaleHeight
                           ) >
-                          parseFloat(val.height)
+                          parseFloat(val.height)  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5507,6 +5580,10 @@ function Hero() {
                         }
                       }
                     } else {
+                      let widthmulval = o.getScaledWidth() / 10;
+                      let heightmulval = o.getScaledHeight() / 10;
+                      let basePrice = widthmulval * heightmulval;
+                      
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches = o.getScaledWidth() / 10;
@@ -5518,7 +5595,7 @@ function Hero() {
                         }
                         if (
                           o.getScaledWidth() >= val.width &&
-                          o.getScaledHeight() >= val.height
+                          o.getScaledHeight() >= val.height  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5546,6 +5623,16 @@ function Hero() {
                       fabricInfo.variant[colorIndex].frontImgDimensions
                         .scaleHeight !== ""
                     ) {
+                      let widthmulval = o.getScaledWidth() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleWidth
+                      );
+                      let heightmulval = o.getScaledHeight() / 10 / parseFloat(
+                        fabricInfo.variant[colorIndex].frontImgDimensions
+                          .scaleHeight
+                      );
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches =
@@ -5579,7 +5666,7 @@ function Hero() {
                             fabricInfo.variant[colorIndex].frontImgDimensions
                               .scaleHeight
                           ) >
-                          parseFloat(val.height)
+                          parseFloat(val.height)  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -5612,6 +5699,10 @@ function Hero() {
                         }
                       }
                     } else {
+                      let widthmulval = o.getScaledWidth() / 10;
+                      let heightmulval = o.getScaledHeight() / 10;
+                      let basePrice = widthmulval * heightmulval;
+
                       if (val.width && val.width !== null) {
                         if (index == 0) {
                           widthInches = o.getScaledWidth() / 10;
@@ -5623,7 +5714,7 @@ function Hero() {
                         }
                         if (
                           o.getScaledWidth() >= val.width &&
-                          o.getScaledHeight() >= val.height
+                          o.getScaledHeight() >= val.height  || basePrice > 49.00
                         ) {
                           let widthnewInches = o.getScaledWidth() / 10;
                           let heightnewInches = o.getScaledHeight() / 10;
@@ -6239,7 +6330,7 @@ function Hero() {
                     </div>{" "}
 
                   </nav>
-                  <div style={{ position: 'relative' }} className="other-images d-flex align-items-center w-img">
+                 {otherImages?.length&& <div style={{ position: 'relative' }} className="other-images d-flex align-items-center w-img">
                     <div style={{ position: 'absolute', left: -10, cursor: 'pointer' }} onClick={() => handlePrevious()}>
                       <BiChevronLeft />{" "}
                     </div>{" "}
@@ -6247,14 +6338,14 @@ function Hero() {
                     <img
                       width={90}
                       height={100}
-                      src={otherImg}
+                      src={ process.env.REACT_APP_IMAGE_BASE_URL +otherImg}
                       onClick={() => handleChangeImage(otherImg, 'otherImage')}
                       alt=""
                     />
                     <div style={{ position: 'absolute', right: -10, cursor: 'pointer' }} onClick={() => handleNext()}>
                       <BiChevronRight />
                     </div>
-                  </div>
+                  </div>}
                 </div>
                 <div
                   className={"tab-content " + defaults["mb-20"]}
@@ -6270,6 +6361,7 @@ function Hero() {
                       ref={imageref}
                       className="product__modal-img product__thumb w-img"
                     >
+
                       {fabricInfo && fabricInfo.productId !== undefined ? (
                         imgVariants.map((item, index) => {
                           let urlImg = "";
@@ -6278,7 +6370,7 @@ function Hero() {
                               return (
                                 <img
                                   style={{ height: "612px", width: "470px" }}
-                                  src={otherImg}
+                                  src={process.env.REACT_APP_IMAGE_BASE_URL +otherImg}
                                   alt=""
                                 />
                               );
@@ -6613,6 +6705,8 @@ function Hero() {
                     {product && product.productcolors !== undefined
                       ? product.productcolors.map((item, index) => {
                         return (
+                          <OverlayTrigger placement="top" overlay={renderTooltip(item.colorName)}>
+
                           <div
                             id={item.colorName}
                             className="mx-1 colors shadow-lg border"
@@ -6642,7 +6736,7 @@ function Hero() {
                                 <></>
                               )
                             }
-                          </div>
+                          </div></OverlayTrigger>
                         );
                       })
                       : null}

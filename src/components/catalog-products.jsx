@@ -127,8 +127,9 @@ const Catalogproducts = () => {
             return (
               <>
                 {console.log(category)}
-                {category.active && category.active === "true" && (
-                  <div
+                {category.active && category.active === "true" &&  (
+                  <>
+                  {category.quantities_updated&&<div
                     className="col-lg-4 col-md-6 col-sm-12 p-2"
                     key={category.id}
                   >
@@ -147,15 +148,50 @@ const Catalogproducts = () => {
                           }
                           alt={category.name}
                         />
+
                         <div
                           class="card_body h-25 p-2"
                           className={styles.card_body}
                         >
+                          <p class="card-text fw-bold">Price: {category.price}</p>
+{console.log(category)}
+                          <div className="d-flex mb-3">
+                            {category && category.productcolors !== undefined
+                              ? category.productcolors.map((item, index) => {
+                                return (
+
+                                  <div
+                                    id={item.colorName}
+                                    className="mx-1 colors shadow-lg border"
+                                    style={{
+                                      height: "20px",
+                                      width: "20px",
+                                      borderRadius: "5px",
+                                      backgroundColor: item.colorCode,
+                                      display: "flex",
+                                      justifyContent: "center",
+                                      alignItems: "center",
+                                    }}
+                                  // onClick={(e) => {
+                                  //   setColorIndex(index);
+                                  //   handleColorsclick(e);
+                                  //   setColor(item.colorName);
+                                  //   setColorId(index + 1);
+                                  //   setColorCode(item.colorCode);
+                                  //   changeImg(e, sides);
+                                  // }}
+                                  >
+
+                                  </div>
+                                );
+                              })
+                              : null}</div>
+
                           <p class="card-text fw-bold">{category.title}</p>
                         </div>
                       </Link>
                     </div>
-                  </div>
+                  </div>}</>
                 )}
               </>
             );
