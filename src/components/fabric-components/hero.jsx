@@ -76,12 +76,18 @@ function Hero() {
   const [cmsSizeChart, setCmsSizeChart] = useState();
   const [inchSizeChart, setInchSizeChart] = useState();
   const[otherImages,setOtherImages]=useState();
+  const [frontPrice, setFrontPrice] = useState(0);
+  const [backPrice, setBackPrice] = useState(0);
+  const [leftPrice, setLeftPrice] = useState(0);
+  const [rightPrice, setRightPrice] = useState(0);
+
   // const otherImages = [how1, how2, how3, how4, how5];
   const [catURL, setCatURL] = useState();
   const [subCatURL, setSubCatURL] = useState();
   const [imageDesignUploaded, setImageDesignUploaded] = useState();
   const [designSelected, setDesignSelected] = useState();
   const [retailPrice, setRetialPrice] = useState("")
+  const [productGst, setProductGst] = useState("")
   const [showAnother, setShowAnother] = useState(false);
   const [canvasArr, setCanvasArr] = useState();
   const [ignored, forceUpdate] = useReducer(x => x + 1, 0);
@@ -279,7 +285,8 @@ function Hero() {
         console.log(data);
         console.log(data.product.productdata[0]);
         setproduct(data.product.productdata[0]);
-        setRetialPrice(data.product.productdata[0].retail_price)
+        setRetialPrice(data.product.productdata[0].retail_price);
+        setProductGst(data.product.productdata[0].gst);
         setProductName(data.product.productdata[0].title);
         setHandlingGst(data.product.productdata[0].handling_gst)
         setDesignGst(data.product.productdata[0].design_gst)
@@ -1252,6 +1259,7 @@ function Hero() {
           totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
           setPriceSet(totPrice);
           setDesignPrice(parseInt(scalePrice, 10));
+          setFrontPrice(parseInt(scalePrice, 10));
         }
       });
 
@@ -1752,6 +1760,7 @@ function Hero() {
               totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
               setPriceSet(totPrice);
               setDesignPrice(parseInt(scalePrice, 10));
+              setFrontPrice(parseInt(scalePrice, 10));
             }
           }
           // console.log("scaled height ", o.getScaledHeight());
@@ -2128,6 +2137,18 @@ function Hero() {
         maximumHeight = parseFloat(heightInches.toFixed(2));
       }
       setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+      if (sides == "one") {
+        setFrontPrice(parseFloat(lastPrice.toFixed(2)));
+      }
+      else if (sides == "two") {
+        setBackPrice(parseFloat(lastPrice.toFixed(2)));
+      }
+      else if (sides == "three") {
+        setLeftPrice(parseFloat(lastPrice.toFixed(2)));
+      }
+      else if (sides == "four") {
+        setRightPrice(parseFloat(lastPrice.toFixed(2)));
+      }
     }
   }
 
@@ -2672,7 +2693,20 @@ function Hero() {
             if (heightInches > maximumHeight) {
               maximumHeight = parseFloat(heightInches.toFixed(2));
             }
+            
             setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+            if (sides == "one") {
+              setFrontPrice(parseFloat(lastPrice.toFixed(2)));
+            }
+            else if (sides == "two") {
+              setBackPrice(parseFloat(lastPrice.toFixed(2)));
+            }
+            else if (sides == "three") {
+              setLeftPrice(parseFloat(lastPrice.toFixed(2)));
+            }
+            else if (sides == "four") {
+              setRightPrice(parseFloat(lastPrice.toFixed(2)));
+            }
           }
         },
         { crossOrigin: "anonymous" }
@@ -3205,6 +3239,18 @@ function Hero() {
               maximumHeight = parseFloat(heightInches.toFixed(2));
             }
             setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+            if (sides == "one") {
+              setFrontPrice(parseFloat(lastPrice.toFixed(2)));
+            }
+            else if (sides == "two") {
+              setBackPrice(parseFloat(lastPrice.toFixed(2)));
+            }
+            else if (sides == "three") {
+              setLeftPrice(parseFloat(lastPrice.toFixed(2)));
+            }
+            else if (sides == "four") {
+              setRightPrice(parseFloat(lastPrice.toFixed(2)));
+            }
           }
         },
         { crossOrigin: "anonymous" }
@@ -3661,6 +3707,18 @@ function Hero() {
           maximumHeight = parseFloat(heightInches.toFixed(2));
         }
         setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+        if (sides == "one") {
+          setFrontPrice(parseFloat(lastPrice.toFixed(2)));
+        }
+        else if (sides == "two") {
+          setBackPrice(parseFloat(lastPrice.toFixed(2)));
+        }
+        else if (sides == "three") {
+          setLeftPrice(parseFloat(lastPrice.toFixed(2)));
+        }
+        else if (sides == "four") {
+          setRightPrice(parseFloat(lastPrice.toFixed(2)));
+        }
       }
     }
   };
@@ -3733,8 +3791,12 @@ function Hero() {
                     handling_gst: handlingGst,
                     design_gst: designGst,
                     retail_price: retailPrice,
+                    gst: productGst,
                     designId: dataFabr.data.fabricData._id,
-                    design_price: parseFloat(designPrice.toFixed(2)),
+                    front_price: frontPrice,
+                    back_price: backPrice,
+                    left_price: leftPrice,
+                    right_price: rightPrice,
                     price: product.price,
                     productImg: `https://api.theprintribe.com/${product.img}`,
                   });
@@ -3826,8 +3888,12 @@ function Hero() {
                           handling_gst: handlingGst,
                           design_gst: designGst,
                           retail_price: retailPrice,
+                          gst: productGst,
                           designId: datasavedFabr.data.data._id,
-                          design_price: parseFloat(designPrice.toFixed(2)),
+                          front_price: frontPrice,
+                          back_price: backPrice,
+                          left_price: leftPrice,
+                          right_price: rightPrice,
                           price: product.price,
                           productImg: `https://api.theprintribe.com/${product.img}`,
                         });
@@ -3876,8 +3942,12 @@ function Hero() {
                           handling_gst: handlingGst,
                           design_gst: designGst,
                           retail_price: retailPrice,
+                          gst: productGst,
                           designId: datasavedFabr.data.data._id,
-                          design_price: parseFloat(designPrice.toFixed(2)),
+                          front_price: frontPrice,
+                          back_price: backPrice,
+                          left_price: leftPrice,
+                          right_price: rightPrice,
                           price: product.price,
                           productImg: `https://api.theprintribe.com/${product.img}`,
                         });
@@ -5189,6 +5259,18 @@ function Hero() {
           totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
           setPriceSet(totPrice);
           setDesignPrice(parseInt(scalePrice, 10));
+          if (sides == "one") {
+            setFrontPrice(parseInt(scalePrice, 10));
+          }
+          else if (sides == "two") {
+            setBackPrice(parseInt(scalePrice, 10));
+          }
+          else if (sides == "three") {
+            setLeftPrice(parseInt(scalePrice, 10));
+          }
+          else if (sides == "four") {
+            setRightPrice(parseInt(scalePrice, 10));
+          }
         }
       });
 
@@ -5752,6 +5834,15 @@ function Hero() {
               totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
               setPriceSet(totPrice);
               setDesignPrice(parseInt(scalePrice, 10));
+              if (sides == "one") {
+                setFrontPrice(parseInt(scalePrice, 10));
+              } else if (sides == "two") {
+                setBackPrice(parseInt(scalePrice, 10));
+              } else if (sides == "three") {
+                setLeftPrice(parseInt(scalePrice, 10));
+              } else if (sides == "four") {
+                setRightPrice(parseInt(scalePrice, 10));
+              }
             }
           }
           // console.log("scaled height ", o.getScaledHeight());
@@ -6159,6 +6250,18 @@ function Hero() {
           maximumHeight = parseFloat(heightInches.toFixed(2));
         }
         setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+        if (sides == "one") {
+          setFrontPrice(parseFloat(lastPrice.toFixed(2)));
+        }
+        else if (sides == "two") {
+          setBackPrice(parseFloat(lastPrice.toFixed(2)));
+        }
+        else if (sides == "three") {
+          setLeftPrice(parseFloat(lastPrice.toFixed(2)));
+        }
+        else if (sides == "four") {
+          setRightPrice(parseFloat(lastPrice.toFixed(2)));
+        }
       }
     }
   }
