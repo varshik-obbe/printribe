@@ -5301,12 +5301,6 @@ function Hero() {
               obj.setCoords();
               var brNew = obj.getBoundingRect();
 
-              console.log("left1 val in scaled is",left1);
-              console.log("top1 val in scaled is",top1);
-              console.log("scalex val in scaled is",scale1x);
-              console.log("scaley val in scaled is",scale1y);
-              console.log("width val in scaled is",width1);
-              console.log("height val in scaled is",height1);
 
               if (
                 brNew.width + brNew.left >
@@ -5848,6 +5842,42 @@ function Hero() {
           // console.log("scaled height ", o.getScaledHeight());
           // console.log("scaled width ", o.getScaledWidth());
         });
+      });
+
+      canvasArr[no].on('object:modified', function(event) {
+        if(event.target.type == "i-text") {
+          // if(o.type == "i-text") {
+          //   console.log("font size is", o.getCurrentCharFontSize().toString())
+          //   if(o.getCurrentCharFontSize().toString() == "10") {
+          //     console.log("changed font size to 10")
+          //     setFontSize(o.getCurrentCharFontSize().toString());
+          //   }
+          // }          
+          if (event.target) {
+            event.target.fontSize *= event.target.scaleX;
+            event.target.fontSize = event.target.fontSize.toFixed(0);
+            event.target.scaleX = 1;
+            event.target.scaleY = 1;
+            event.target._clearCache();
+            if(event.target.fontSize.toString() >9 && event.target.fontSize.toString() < 20) {
+              setFontSize("10");
+            }
+            if(event.target.fontSize.toString() >19 && event.target.fontSize.toString() < 30) {
+              setFontSize("20");
+            }
+            if(event.target.fontSize.toString() >29 && event.target.fontSize.toString() < 40) {
+              setFontSize("30");
+            }
+            if(event.target.fontSize.toString() >39 && event.target.fontSize.toString() < 50) {
+              setFontSize("40");
+            }
+            if(event.target.fontSize.toString() >49 && event.target.fontSize.toString() < 60) {
+              setFontSize("50");
+            }
+            // $("textarea#add-text-value").val(event.target.text);
+            // $("#text-font-size").val(event.target.fontSize);
+          }
+        }
       });
 
       if(no == 0) {
@@ -7017,11 +7047,14 @@ function Hero() {
                         onChange={fontsizeChange}
                         value={fontSize}
                       >
+                        <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
-                        <option onMouseOver={fontChangeHover} value="40">
+                        <option value="40">
                           40
                         </option>
+                        <option value="50">50</option>
+                        <option value="60">60</option>
                       </select>
                     </div>
                     <div className="col-md-12">
