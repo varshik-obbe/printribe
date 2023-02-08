@@ -100,7 +100,7 @@ const products = data.products.filter(item=>item.active=="true")
         <div className="row">
           <div
             className="col-10 col-sm-9 col-md-3 logo mb-3 mb-sm-0 py-2 text-center text-lg-end ps-sm-5 ps-lg-2 pe-lg-5"
-            style={{ lineHeight: "45px" }}
+            style={{ lineHeight: "45px",position:'relative' }}
           >
             <a href="/">
               <img
@@ -109,6 +109,7 @@ const products = data.products.filter(item=>item.active=="true")
                 style={{ height: "40px", width: "206px", maxWidth: "100%" }}
               />
             </a>
+            <p style={{position:'absolute',right:20,top:0}}>Beta</p>
           </div>
           <div className="col-12 col-md-6 col-lg-5 px-4 py-2 ps-sm-5 ps-lg-6 order-2 order-md-1">
             <div className={styles.searchBox}>

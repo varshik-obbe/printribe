@@ -18,7 +18,9 @@ const CartItems = ({
 }) => {
   const [quantity, setQuantity] = useState(cartProduct.quantity);
   const[retail,setRetail]=useState(cartProduct.retail_price)
-  const[designGst,setDesignGst]=useState(cartProduct.design_gst)
+  const dgst=(Number(cartProduct?.design_price)*Number(cartProduct?.design_gst))/100
+
+  const[designGst,setDesignGst]=useState(dgst.toFixed(2))
 
   const[handlingGst,setHandlingGst]=useState(cartProduct.handling_gst)
 
@@ -130,7 +132,7 @@ const style = {
           style={{ height: "2px", background: "#999" }}
         />
         <div class="row" style={{ paddingRight: "25px" }}>
-          <div class="col-4 col-sm-3 pe-0">
+          {/* <div class="col-4 col-sm-3 pe-0">
             <img
               src={cartProduct.productImg}
               alt="product img"
@@ -139,11 +141,13 @@ const style = {
                 objectFit: "contain",
               }}
             />
-          </div>
+          </div> */}
 
           <div class="col-8 col-sm-9">
             <b class=" text-break">{cartProduct.title}</b>
             <hr class="my-2" />
+            <div className="d-flex justify-content-between">
+            <div>
             <span>Thread colors</span>
             <br />
             <div class="d-flex mt-1">
@@ -161,6 +165,12 @@ const style = {
                   />
                 {/* ))} */}
             </div>
+            </div>
+            <div><span>Size</span>
+            <br />
+            <div class="d-flex mt-1">
+              {cartProduct.size}
+            </div></div></div>
             <div class="mt-3" />
             <button
               class="p-0 border-0 bg-transparent text-primary"
@@ -339,7 +349,7 @@ const style = {
           />
         </div>
       </div>
-      <div
+      {/* <div
         class={[
           "col-4 col-sm-4 col-lg-1 px-0 d-flex align-items-center flex-column",
           classes.productGrid5,
@@ -376,10 +386,10 @@ const style = {
             }}
           />
         </div>
-      </div>
+      </div> */}
       <div
         class={[
-          "col-4 col-sm-4 col-lg-1 px-0 d-flex align-items-center flex-column",
+          "col-4 col-sm-4 col-lg-2 px-0 d-flex align-items-center flex-column",
           classes.productGrid5,
         ].join(" ")}
       >

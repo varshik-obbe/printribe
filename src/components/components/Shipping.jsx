@@ -243,6 +243,17 @@ if(country=='India'){
   setShippingType('domestic shipping')
 }
 },[country])
+useEffect(()=>{
+if (shippingType=='domestic shipping') {
+  setCountry('India')
+}
+
+if (shippingType=='international') {
+  console.log(shippingType,"shipping")
+
+  setCountry('')
+}
+},[shippingType])
   useEffect(() => {
     console.log(postalCode.toString().length);
 

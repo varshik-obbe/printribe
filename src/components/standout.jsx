@@ -13,7 +13,7 @@ function Standout() {
                     </div>
                     <div className={`col-lg-4 col-md-12 p-4 ${styles.standoutText}` }>
                         <p  className={` ${styles.avenir}`}style={{fontSize:"22px", fontWeight:"950"}}><b>No order minimums</b></p>
-                        <p className={` ${styles.avenir}`} >Avoid maintaining inventory and leftover stock. Order single products without any commitments.</p>
+                        <p className={` ${styles.avenir}`}  style={{fontSize:"19px"}}>Avoid maintaining inventory and leftover stock. Order single products without any commitments.</p>
                     </div>
                     <div className={`col-lg-4 col-md-12 p-4 ${styles.standoutText}` }>
                         <p   className={` ${styles.avenir}`}  style={{fontSize:"22px", fontWeight:"950"}}><b>Quick dispatch</b></p>
@@ -21,7 +21,7 @@ function Standout() {
                     </div>
                     <div className={`col-lg-4 col-md-12 p-4 ${styles.standoutText}` }>
                         <p   className={` ${styles.avenir}`}  style={{fontSize:"22px", fontWeight:"950"}}><b>Lowest pricing</b></p>
-                        <p   className={` ${styles.avenir}`} >Competitive and affordable product pricing reflects into higher profits for you.</p>
+                        <p   className={` ${styles.avenir}`}  style={{fontSize:"19px"}}>Competitive and affordable product pricing reflects into higher profits for you.</p>
                     </div>
                     <div className={`col-lg-4 col-md-12 p-4 ${styles.standoutText}` }>
                         <p  className={` ${styles.avenir}`}   style={{fontSize:"22px", fontWeight:"950"}}><b>Premium quality</b></p>

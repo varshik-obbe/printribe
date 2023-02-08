@@ -448,7 +448,7 @@ function Hero() {
     }
   }, [colorPick]);
   const renderTooltip = props => (
-    <Tooltip id="tooltip" style={{backgroundColor:'white'}} {...props}><div >{props}</div></Tooltip>
+    <Tooltip id="tooltip" style={{backgroundColor:'white'}} {...props}><div >{props.colorName +' '+ props.colorCode}</div></Tooltip>
   );
   //default function which runs when the dom is loaded the first time
   useEffect(() => {
@@ -6838,7 +6838,7 @@ function Hero() {
                     {product && product.productcolors !== undefined
                       ? product.productcolors.map((item, index) => {
                         return (
-                          <OverlayTrigger placement="top" overlay={renderTooltip(item.colorName)}>
+                          <OverlayTrigger placement="top" overlay={renderTooltip(item)}>
 
                           <div
                             id={item.colorName}
