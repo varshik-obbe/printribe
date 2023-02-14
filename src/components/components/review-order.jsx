@@ -341,7 +341,7 @@ const getEstimatedDate=()=>{
       customizeProduct.forEach((curr) => {
         tempsubTotal += Number(curr.quantity) * Number(curr.price);
         temptotal_quantity += Number(curr.quantity);
-        design_price.push({designPrice:Number(curr.design_price),totalDesignPrice:Number(curr.quantity)*Number(curr.design_price)})
+        design_price.push({designPrice:Number(curr.left_price+curr.right_price+curr.front_price+curr.back_price),totalDesignPrice:Number(curr.quantity)*Number(curr.left_price+curr.right_price+curr.front_price+curr.back_price)})
 
         //setting gst,igst,cgst,sgst arrays
         addProduct(curr);
@@ -349,6 +349,7 @@ const getEstimatedDate=()=>{
     // setCartValue(tempsubTotal)
     setSubTotal(tempsubTotal);
     setTotal_Quantity(temptotal_quantity);
+    console.log(design_price,"design_price")
     setDesignPrice(design_price)
     // setTotalBillingAmount(
     //   tempsubTotal + Number(localStorage.getItem("shipping_charges"))
@@ -538,11 +539,11 @@ const getEstimatedDate=()=>{
     const data =gstArr &&
     gstArr.map((curr, itemIndex) =>{
       
-        return (cgstArr[itemIndex].percentage * getTotalPrice()) /100+(sgstArr[itemIndex].percentage * getTotalPrice()) /100+ price[0]+shipping_charges
+        return ((cgstArr[itemIndex].percentage * getTotalPrice()) /100+(sgstArr[itemIndex].percentage * getTotalPrice()) /100+ price+shipping_charges).toFixed(2)
     
     })
 
-    return data && data.length ? data[0].toFixed(2): 0
+    return data && data.length ? data[0]: 0
   }
   const addProduct = (cartItem) => {
     // console.log(cartItem)
@@ -786,9 +787,17 @@ const getEstimatedDate=()=>{
     this.invoiceProductsTableKey++;
   };
 const getTotalPrice=()=>{
+  const data1 =customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst), 0)
+    const cgst =(Number(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price)*Number(data1))/100
+  const data =   customizeProduct &&
+    customizeProduct.length !== 0 && customizeProduct.map(curr=>(curr.quantity * curr.price)+(curr.quantity *(curr.left_price+curr.right_price+curr.front_price+curr.back_price)))
+    console.log(data[0],"data",cgst)
+   return Number(data[0])+Number(cgst)
+}
+const getproductPrice=()=>{
   
   const data =   customizeProduct &&
-    customizeProduct.length !== 0 && customizeProduct.map(curr=>(curr.quantity * curr.price)+(curr.quantity * curr.design_price))
+    customizeProduct.length !== 0 && customizeProduct.map(curr=>(curr.quantity * curr.price))
    return data
 }
   const getTotalValue = () => {
@@ -807,7 +816,7 @@ const getTotalPrice=()=>{
     customizeProduct &&
       customizeProduct.forEach((curr) => {
         tempSubRetail+=(Number(curr.retail_price))
-        tempsubTotal += (Number(curr.quantity) * Number(curr.price)) + (Number(curr.quantity) * Number(curr.design_price));
+        tempsubTotal += (Number(curr.quantity) * Number(curr.price)) + (Number(curr.quantity) * Number(curr.left_price+curr.right_price+curr.front_price+curr.back_price));
       });
 
       localStorage.setItem("subTotal",tempsubTotal);
@@ -850,6 +859,19 @@ const getTotalPrice=()=>{
     setTotalRetailAmount(tempSubRetail)
     setTotalBillingAmount(result);
   };
+  const getDesignCGST=()=>{
+    const data =customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)
+    console.log(getFinalPrice(),'=======')
+    const cgst =(Number(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price)*Number(data))/100
+
+    return cgst.toFixed(2)
+  }
+  const getDesignSGST=()=>{
+    const data =customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)
+    const cgst =(Number(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price)*Number(data))/100
+
+    return cgst.toFixed(2)
+  }
 
   return (
     <>
@@ -1155,10 +1177,32 @@ const getTotalPrice=()=>{
                     </div>
                   </div>
                 </div>
-                <div class="col-12 mt-3 d-flex justify-content-between">
-                  <b>Shipping</b>
-                  <b>{`₹${shipping_charges}`}</b>
+                <hr class="my-3" style={{ height: "1px", width: "100%" }} />
+
+                <div class="col-12 d-flex  mt-4 justify-content-between">
+                  <b class="fs-4">Product Price</b>
+                  <b class="fs-4">{`₹${getproductPrice()}`}</b>
                 </div>
+                <div class="col-12 d-flex  mt-4 justify-content-between">
+                  <b class="fs-4">Design Price</b>
+                  <b class="fs-4">{`₹${designPrice[0]?.designPrice}`}</b>
+                </div>
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >Design CGST</b>
+                  <b >{`₹${getDesignCGST()}`}</b>
+                </div>
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >Design SGST</b>
+                  <b >{`₹${getDesignSGST()}`}</b>
+                </div>
+                <hr class="my-3" style={{ height: "1px", width: "100%" }} />
+
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b class="fs-4">Shipping Price</b>
+                  <b class="fs-4">{`₹${shipping_charges}`}</b>
+                </div>
+                <hr class="my-3" style={{ height: "1px", width: "100%" }} />
+
                 {gstArr &&
                   gstArr.map((curr, itemIndex) =>
                     JSON.parse(localStorage.getItem("shipping_data")).state ===
@@ -1181,7 +1225,7 @@ const getTotalPrice=()=>{
                       </>
                     ) : (
                       <div class="col-12 mt-3 d-flex justify-content-between">
-                        <b>{`IGST (${igstArr[itemIndex].percentage}%)`}</b>
+                        <b>{`Shipping IGST (${igstArr[itemIndex].percentage}%)`}</b>
                         <b>{`₹${(
                           (igstArr[itemIndex].percentage * totalBillingAmount) /
                           100

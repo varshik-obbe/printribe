@@ -18,18 +18,18 @@ const CartItems = ({
 }) => {
   const [quantity, setQuantity] = useState(cartProduct.quantity);
   const[retail,setRetail]=useState(cartProduct.retail_price)
-  const dgst=(Number(cartProduct?.design_price)*Number(cartProduct?.design_gst))/100
-
-  const[designGst,setDesignGst]=useState(dgst.toFixed(2))
+  const[designGst,setDesignGst]=useState()
 
   const[handlingGst,setHandlingGst]=useState(cartProduct.handling_gst)
 
   const[previewUrl,setPreviewUrl]=useState();
   const[open,setOpen]=useState(false)
   const navigate = useNavigate();
-console.log(cartProduct.quantity,cartProduct.retail_price,"cartprodut")
-  var subTotal = localStorage.getItem("subTotal");
-
+console.log(customizeProduct,"customizeProduct")
+  var subTotal = localStorage.getItem("customizeProduct");
+const design_gst=()=>{
+ console.log(customizeProduct.map(item=>item.designGst)) 
+}
   const handleChangeQty = (task) => {
     if (task === "increase") {
       setQuantity(Number(quantity) + 1);
@@ -52,7 +52,7 @@ console.log(cartProduct.quantity,cartProduct.retail_price,"cartprodut")
         console.log(curr,"crrrrrrrr")
         curr.retail_price= Number(retail)
         curr.handling_gst=Number(handlingGst)
-        curr.design_gst=Number(designGst)
+        curr.design_gst=curr.design_gst
 
         curr.quantity = Number(quantity);
         return localStorage.setItem(
@@ -270,8 +270,8 @@ const style = {
           class="w-100 mt-2 mb-4"
           style={{ height: "2px", background: "#999" }}
         />
-
-        <b class="fs-5">{`₹${cartProduct.design_price}`}</b>
+{console.log(customizeProduct,"customizeProductcustomizeProduct")}
+        <b class="fs-5">{`₹${customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price}`}</b>
       </div>
       <div
         class={[
@@ -336,8 +336,9 @@ const style = {
           >
             ₹
           </div>
+          {console.log(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price,Number(cartProduct.design_gst),"=======================")}
           <input
-            value={designGst}
+            value={(Number(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price)*Number(cartProduct.design_gst))/100}
             onChange={(e)=>setDesignGst(e.target.value)}
             style={{
               height: "40px",
@@ -413,7 +414,7 @@ const style = {
             ₹
           </div>
           <input
-            value={(quantity * cartProduct.price)+(quantity * cartProduct.design_price)}
+            value={(quantity * cartProduct.price)+(quantity * (customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price))}
             style={{
               height: "40px",
               width: "80px",

@@ -26,7 +26,152 @@ const fieldsArray = [
   { name: "city", title: "City", diff: "city" },
   { name: "gst", title: "GST", diff: "gst" },
 ];
-
+const stateList=[
+  {
+  "key": "AN",
+  "name": "Andaman and Nicobar Islands"
+  },
+  {
+  "key": "AP",
+  "name": "Andhra Pradesh"
+  },
+  {
+  "key": "AR",
+  "name": "Arunachal Pradesh"
+  },
+  {
+  "key": "AS",
+  "name": "Assam"
+  },
+  {
+  "key": "BR",
+  "name": "Bihar"
+  },
+  {
+  "key": "CG",
+  "name": "Chandigarh"
+  },
+  {
+  "key": "CH",
+  "name": "Chhattisgarh"
+  },
+  {
+  "key": "DH",
+  "name": "Dadra and Nagar Haveli"
+  },
+  {
+  "key": "DD",
+  "name": "Daman and Diu"
+  },
+  {
+  "key": "DL",
+  "name": "Delhi"
+  },
+  {
+  "key": "GA",
+  "name": "Goa"
+  },
+  {
+  "key": "GJ",
+  "name": "Gujarat"
+  },
+  {
+  "key": "HR",
+  "name": "Haryana"
+  },
+  {
+  "key": "HP",
+  "name": "Himachal Pradesh"
+  },
+  {
+  "key": "JK",
+  "name": "Jammu and Kashmir"
+  },
+  {
+  "key": "JH",
+  "name": "Jharkhand"
+  },
+  {
+  "key": "KA",
+  "name": "Karnataka"
+  },
+  {
+  "key": "KL",
+  "name": "Kerala"
+  },
+  {
+  "key": "LD",
+  "name": "Lakshadweep"
+  },
+  {
+  "key": "MP",
+  "name": "Madhya Pradesh"
+  },
+  {
+  "key": "MH",
+  "name": "Maharashtra"
+  },
+  {
+  "key": "MN",
+  "name": "Manipur"
+  },
+  {
+  "key": "ML",
+  "name": "Meghalaya"
+  },
+  {
+  "key": "MZ",
+  "name": "Mizoram"
+  },
+  {
+  "key": "NL",
+  "name": "Nagaland"
+  },
+  {
+  "key": "OR",
+  "name": "Odisha"
+  },
+  {
+  "key": "PY",
+  "name": "Puducherry"
+  },
+  {
+  "key": "PB",
+  "name": "Punjab"
+  },
+  {
+  "key": "RJ",
+  "name": "Rajasthan"
+  },
+  {
+  "key": "SK",
+  "name": "Sikkim"
+  },
+  {
+  "key": "TN",
+  "name": "Tamil Nadu"
+  },
+  {
+  "key": "TS",
+  "name": "Telangana"
+  },
+  {
+  "key": "TR",
+  "name": "Tripura"
+  },
+  {
+  "key": "UK",
+  "name": "Uttar Pradesh"
+  },
+  {
+  "key": "UP",
+  "name": "Uttarakhand"
+  },
+  {
+  "key": "WB",
+  "name": "West Bengal"
+  }
+  ]
 function Shipping(props) {
   const [savedShipAddress, setSavedShipAddress] = useState(false);
   const savedShippingData =
@@ -643,7 +788,8 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                 );
               case "state":
                 return (
-                  <div class="col-12 col-sm-6 mt-2">
+                  <>
+                 { country=='India' &&<div class="col-12 col-sm-6 mt-2">
                     <label for="basic-url" class="form-label mb-1">
                       <b>{ele.title}</b>{" "}
                    
@@ -662,9 +808,10 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                         required
                       >
                         <option selected>Open this select menu</option>
-                        <option value="Karnataka">Karnataka</option>
+                        {stateList.map(item=><option value={item.name}>{item.name}</option>)}
+                        {/* <option value="Karnataka">Karnataka</option>
                         <option value="Mumbai">Mumbai</option>
-                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Rajasthan">Rajasthan</option> */}
                       </select>
                     </div>
                     {shippingErrorState === "State field is required" && (
@@ -672,7 +819,7 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                         {shippingErrorState}
                       </span>
                     )}
-                  </div>
+                  </div>}</>
                 );
               case "mobile":
                 return (

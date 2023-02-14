@@ -12,9 +12,10 @@ function Footer() {
     <>
       <div className="container" style={{padding:"0 8%"}}>
         <div className="row px-sm-5">
-          <div className="col-6 text-center text-sm-start mb-3 mb-sm-0 py-2">
+          <div className="col-6 text-center text-sm-start mb-3 mb-sm-0 py-2" style={{position:'relative'}}>
 
                         <img src={logo} alt="" style={{ height: "30px", maxWidth: "100%" }} />
+                        <p style={{position:'absolute',left:'34%',top:0}}>Beta</p>
 
                     
           </div>
