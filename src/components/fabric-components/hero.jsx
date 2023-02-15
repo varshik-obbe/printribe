@@ -3263,6 +3263,71 @@ function Hero() {
     }
   };
 
+  //when save with product is clicked
+  const handleSaveWithProd = (e) => {
+    if (checkLogin()) {
+      let no = 0;
+      let sideName = "";
+      if (sides == "one") {
+        no = 0;
+        sideName = "front";
+      }
+      else if (sides == "two") {
+        no = 1;
+        sideName = "back";
+      }
+      else if (sides == "three") {
+        no = 2;
+        sideName = "left";
+      }
+      else if (sides == "four") {
+        no = 3;
+        sideName = "right";
+      }
+      let url = "";
+      var node = imageref.current;
+      const customerId = localStorage.getItem("customerId");
+      if (uploadedImgsArr) {
+        domtoimage
+        .toJpeg(node, { quality: 0.95, bgcolor: "white" })
+        .then(function (dataUrl) {
+          axios
+          .post(`/fabricDesigns/addProductWithDesign`, {
+            data: {
+              productId: prodid,
+              customerId: customerId,
+              name: product.title,
+              description: product.description,
+              color: color,
+              side: sideName,
+              size: size,
+              price: priceSet,
+              img: dataUrl
+            },
+          })
+          .then(({ data }) => {
+            Swal.fire({
+              icon: "success",
+              title: "Success",
+              text: "Product with design saved successfully",
+            });
+            console.log("data saved successfully");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        })
+        .catch((err) => {
+          console.log("error",err);
+        })
+      } else {
+        console.log("nothing to save");
+      }
+    } else {
+      window.location.href = "/signin";
+    }
+  }
+
   //when clicked on save design
   const handleSave = (e) => {
     if (checkLogin()) {
@@ -7175,6 +7240,14 @@ function Hero() {
                     <p style={{ cursor: "pointer" }}>
                       <i className="fas fa-save"></i>
                       <u onClick={handleSave}>Save design</u>
+                    </p>
+                  </div>
+                </div>
+                <div className="d-flex mt-4 mb-4">
+                  <div className="d-flex mb-3">
+                    <p style={{ cursor: "pointer" }}>
+                      <i className="fas fa-save"></i>
+                      <u onClick={handleSaveWithProd}>Save design with product</u>
                     </p>
                   </div>
                 </div>
