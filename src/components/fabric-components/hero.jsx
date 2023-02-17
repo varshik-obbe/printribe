@@ -3268,24 +3268,69 @@ function Hero() {
     if (checkLogin()) {
       let no = 0;
       let sideName = "";
+      let designPrice = 0;
       if (sides == "one") {
         no = 0;
         sideName = "front";
+        designPrice = frontPrice;
       }
       else if (sides == "two") {
         no = 1;
         sideName = "back";
+        designPrice = backPrice;
       }
       else if (sides == "three") {
         no = 2;
         sideName = "left";
+        designPrice = leftPrice;
       }
       else if (sides == "four") {
         no = 3;
         sideName = "right";
+        designPrice = rightPrice;
       }
       let url = "";
+      let objRect;
+      let configArr = [];
+      let interText = false;
+      let textdesignVal = "no";
+      let objs = canvasArr[no].getObjects();
+      objs.forEach((o) => {
+        if (o.type === "rect") {
+          objRect = o.getBoundingRect();
+        }
+        if (o.type === "image" || o.type == "i-text") {
+          let spec = {
+            "width": o.getScaledWidth(),
+            "height": o.getScaledHeight(),
+            "left": o.left,
+            "top": o.top,
+            "scaleX": o.scaleX,
+            "scaleY": o.scaleY
+          }
+          configArr.push(spec);  
+        }
+        if (o.type == "i-text") {
+          interText = true;
+        }                    
+      })
+      let arrImages;
+      if (uploadedImgsArr) {
+        arrImages = uploadedImgsArr;
+      }      
+      if (interText) {
+        arrImages.push(imgdata.replace(/^data:image\/(png|jpg);base64,/, ""));
+        textdesignVal = "yes";
+      }
+      var jsonData = JSON.stringify(canvasArr[no].toJSON());      
       var node = imageref.current;
+      var imgdata = canvasArr[no].toDataURL({
+        multiplier: 1,
+        left: objRect.left,
+        top: objRect.top,
+        width: objRect.width,
+        height: objRect.height,
+      });      
       const customerId = localStorage.getItem("customerId");
       if (uploadedImgsArr) {
         domtoimage
@@ -3302,7 +3347,15 @@ function Hero() {
               side: sideName,
               size: size,
               price: priceSet,
-              img: dataUrl
+              img: dataUrl,
+              design_price: designPrice,
+              design_img: imgdata,
+              gst: productGst,
+              design_gst: designGst,
+              data: jsonData,
+              imgsArr: arrImages,
+              savedImgsInfo: configArr,
+              textDesign: textdesignVal         
             },
           })
           .then(({ data }) => {
