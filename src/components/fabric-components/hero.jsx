@@ -37,6 +37,7 @@ function Hero() {
   const [selectedFile, setSelectedFile] = useState();
   const [size, setSize] = useState("");
   const [product, setproduct] = useState({});
+  const [sizePrices, setSizePrices] = useState();
   const [fabricInfo, setFabricInfo] = useState({});
   const [mainImg, setMainImg] = useState("");
   const [productName, setProductName] = useState("");
@@ -60,6 +61,7 @@ function Hero() {
   const [designHistory, setDesignHistory] = useState({});
   const [colorPick, setColorPick] = useState("");
   const [priceSet, setPriceSet] = useState(0);
+  const [previousPrice, setPreviousPrice] = useState();
   const [addText, setAddText] = useState(false);
   const [widthInches, setWidthInches] = useState();
   const [designPriced, setDesignPrice] = useState();
@@ -255,6 +257,17 @@ function Hero() {
       .catch((resp) => {
         console.log(resp);
       });
+
+    await axios
+      .get(`/products/getProductSizeLinkById/${prodid}`)
+      .then(async ({ data }) => {
+        if (Object.keys(data.productSizeData).length > 0) {
+          setSizePrices(data.productSizeData.size_link);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });      
 
     await axios
       .get(`/products/getProductColorLinkById/${prodid}`)
@@ -4114,6 +4127,25 @@ function Hero() {
       no = 3;
     }
     canvasArr[no].remove(canvasArr[no].getActiveObject());
+    setWidthInches(0);
+    setHeightInches(0);
+    setPriceSet(product.price);
+    var items1 = localStorage.getItem("firstCanvas"+prodid);
+    if(items1) {
+      localStorage.removeItem("firstCanvas"+prodid);
+    }
+    var items2 = localStorage.getItem("secondCanvas"+prodid);
+    if(items2) {
+      localStorage.removeItem("secondCanvas"+prodid);
+    }
+    var items3 = localStorage.getItem("thirdCanvas"+prodid);
+    if(items3) {
+      localStorage.removeItem("thirdCanvas"+prodid);
+    }
+    var items4 = localStorage.getItem("fourthCanvas"+prodid);
+    if(items3) {
+      localStorage.removeItem("fourthCanvas"+prodid);
+    }
 
     // const obj = editor?.canvas.getObjects();
     // obj?.forEach((o) => {
@@ -4504,6 +4536,59 @@ function Hero() {
   const handleSizeChange = (e) => {
     console.log(e.target.id);
     setSize(e.target.id);
+    if(sizePrices) {
+      if (sides == "one") {
+        if(frontPrice) {
+          setPreviousPrice(frontPrice + product.price);
+        }
+        else {
+          setPreviousPrice(product.price);
+        }
+      }
+      else if (sides == "two") {
+        if(backPrice) {
+          setPreviousPrice(backPrice + product.price);
+        }
+        else {
+          setPreviousPrice(product.price);
+        }
+      }
+      else if (sides == "three") {
+        if(leftPrice) {
+          setPreviousPrice(leftPrice + product.price);
+        }
+        else {
+          setPreviousPrice(product.price);
+        }
+      }
+      else if (sides == "four") {
+        if(rightPrice) {
+          setPreviousPrice(rightPrice + product.price);
+        }
+        else {
+          setPreviousPrice(product.price);
+        }
+      }
+      sizePrices.map((item, index) => {
+        if(item.size == e.target.id) {
+          if(item.price == 0) {
+            if(previousPrice) {
+              setPriceSet(previousPrice);              
+            }
+          }
+          else {
+            if(previousPrice) {
+              let total = parseInt(previousPrice) + parseInt(item.price);
+              setPriceSet(total);
+            }
+            else {
+              let total = parseInt(priceSet) + parseInt(item.price);
+              setPriceSet(total);
+            }
+          }
+        }
+      })
+    }
     const color = document.getElementById(e.target.id).style.backgroundColor;
     for (var i = 0; i < product.productsizes.length; i++) {
       document.getElementById(product.productsizes[i]).style.backgroundColor =
@@ -7154,9 +7239,29 @@ function Hero() {
                         <option value="Comic Sans">Comic Sans</option>
                         <option value="Times New Roman">Times New Roman</option>
                         <option value="Georgia">Georgia</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Arial"> Arial </option>
+                        <option value="Arial Black"> Arial Black</option>
+                        <option value="Verdana"> Verdana</option>
+                        <option value="Tahoma"> Tahoma</option>
+                        <option value="Trebuchet MS"> Trebuchet MS</option>
+                        <option value="Impact"> Impact</option>
+                        <option value="Gill Sans"> Gill Sans</option>
+                        <option value="Times New Roman"> Times New Roman</option>
+                        <option value="Georgia"> Georgia</option>
+                        <option value="Palatino"> Palatino</option>
+                        <option value="Baskerville"> Baskerville</option>
+                        <option value="Andalé Mono"> Andalé Mono</option>
+                        <option value="Courier"> Courier</option>
+                        <option value="Lucida"> Lucida</option>
+                        <option value="Monaco"> Monaco</option>
+                        <option value="Bradley Hand"> Bradley Hand</option>
+                        <option value="Brush Script MT"> Brush Script MT</option>
+                        <option value="Luminari"> Luminari</option>
+                        <option value="Comic Sans MS"> Comic Sans MS</option>
                       </select>
                     </div>
-                    <div className="col-md-6 mt-2">
+                    {/* <div className="col-md-6 mt-2">
                       <select
                         id="selFontSize"
                         name="selFontSize"
@@ -7174,7 +7279,7 @@ function Hero() {
                         <option value="50">50</option>
                         <option value="60">60</option>
                       </select>
-                    </div>
+                    </div> */}
                     <div className="col-md-12">
                       <i
                         className="fa fa-align-left shadow rounded"
