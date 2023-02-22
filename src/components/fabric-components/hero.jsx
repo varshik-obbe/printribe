@@ -28,6 +28,10 @@ import how5 from "../../assets/howItWorks/howitworks_5.jpg";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import Tooltip from "react-bootstrap/Tooltip";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAlignRight } from "@fortawesome/free-solid-svg-icons";
+import { faAlignLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAlignCenter } from "@fortawesome/free-solid-svg-icons";
 
 function Hero() {
   const { prodid } = useParams();
@@ -3003,12 +3007,12 @@ function Hero() {
               // o.lockScalingY = true;
             }
           });
-          console.log("left1 val is",left1);
-          console.log("top1 val is",top1);
-          console.log("scalex val is",scale1x);
-          console.log("scaley val is",scale1y);
-          console.log("width val is",width1);
-          console.log("height val is",height1);
+          // console.log("left1 val is",left1);
+          // console.log("top1 val is",top1);
+          // console.log("scalex val is",scale1x);
+          // console.log("scaley val is",scale1y);
+          // console.log("width val is",width1);
+          // console.log("height val is",height1);
           if (
             fabricInfo.variant[colorIndex].frontCanvasPricing[0].width !==
             null &&
@@ -6854,6 +6858,291 @@ function Hero() {
     }
   }
 
+  const handleLeftAlignDesign = (e) => {
+    let no = 0;
+    if (sides == "one") {
+      no = 0;
+    }
+    else if (sides == "two") {
+      no = 1;
+    }
+    else if (sides == "three") {
+      no = 2;
+    }
+    else if (sides == "four") {
+      no = 3;
+    }
+
+    var Rect;
+
+    if (sides == "one") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "two") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].backImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].backImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].backImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].backImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "three") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].leftImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].leftImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].leftImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].leftImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "four") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].rightImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].rightImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].rightImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].rightImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    }
+
+    var object = canvasArr[no].getActiveObject();
+    if(object) {
+      object.set({
+        left: parseInt(Rect.left) + 1 
+      });
+  
+      object.setCoords();
+      canvasArr[no].renderAll();
+    }
+    else {
+      alert("please select a design");
+    }
+  }
+
+  const handleCenterAlignDesign = (e) => {
+    let no = 0;
+    if (sides == "one") {
+      no = 0;
+    }
+    else if (sides == "two") {
+      no = 1;
+    }
+    else if (sides == "three") {
+      no = 2;
+    }
+    else if (sides == "four") {
+      no = 3;
+    }
+
+    var Rect;
+
+    if (sides == "one") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "two") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].backImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].backImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].backImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].backImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "three") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].leftImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].leftImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].leftImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].leftImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "four") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].rightImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].rightImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].rightImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].rightImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    }
+
+    var object = canvasArr[no].getActiveObject();
+
+    if(object) {
+      const rectCenter = parseInt(Rect.width) / 2;
+
+      object.set({
+        left: parseInt(rectCenter) + parseInt(Rect.left) - parseInt(object.getScaledWidth()) / 2
+      });
+  
+      object.setCoords();
+      canvasArr[no].renderAll();
+    }
+    else {
+      alert("please select a design");
+    }
+
+  }
+
+  const handleRightAlignDesign = (e) => {
+    let no = 0;
+    if (sides == "one") {
+      no = 0;
+    }
+    else if (sides == "two") {
+      no = 1;
+    }
+    else if (sides == "three") {
+      no = 2;
+    }
+    else if (sides == "four") {
+      no = 3;
+    }
+
+    var Rect;
+
+    if (sides == "one") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].frontImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].frontImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].frontImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].frontImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "two") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].backImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].backImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].backImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].backImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "three") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].leftImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].leftImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].leftImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].leftImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    } else if (sides == "four") {
+      if (fabricInfo && Object.keys(fabricInfo).length > 0) {
+        Rect = new fabric.Rect({
+          width: fabricInfo.variant[colorIndex].rightImgDimensions.width,
+          height: fabricInfo.variant[colorIndex].rightImgDimensions.height,
+          top: fabricInfo.variant[colorIndex].rightImgDimensions.top,
+          left: fabricInfo.variant[colorIndex].rightImgDimensions.left,
+          selectable: false,
+          strokeDashArray: [5, 2],
+          stroke: "grey",
+          fill: "transparent",
+        });
+      }
+    }
+
+    var object = canvasArr[no].getActiveObject();
+
+    if(object) {
+      object.set({
+        left: parseInt(Rect.width) + parseInt(Rect.left) - parseInt(object.getScaledWidth()) - 1
+      });
+  
+      object.setCoords();
+      canvasArr[no].renderAll();
+    }
+    else {
+      alert("please select a design");
+    }
+  }
+
+  document.onkeydown = function(e) {
+       if(e.key == "Delete") {
+        let no = 0;
+        if (sides == "one") {
+          no = 0;
+        }
+        else if (sides == "two") {
+          no = 1;
+        }
+        else if (sides == "three") {
+          no = 2;
+        }
+        else if (sides == "four") {
+          no = 3;
+        }
+        var object = canvasArr[no].getActiveObject();
+
+        if(object) {
+          canvasArr[no].remove(object);
+        }
+        else {
+          alert("please select a design to delete");
+        }
+       }
+  }
 
   return (
     <>
@@ -7433,6 +7722,20 @@ function Hero() {
                       : null}
                   </div>
                 </div>
+                <p className="mt-3 fw-bold choosingStyle">Alignment</p>
+                <div className="row">
+                  <div className="d-flex mb-3">
+                    <div className="mx-2" style={{cursor: "pointer"}}>
+                      <FontAwesomeIcon onClick={handleLeftAlignDesign} icon={faAlignLeft} />
+                    </div>
+                    <div className="mx-2" style={{cursor: "pointer"}}>
+                      <FontAwesomeIcon onClick={handleCenterAlignDesign} icon={faAlignCenter} />
+                    </div>
+                    <div className="mx-2" style={{cursor: "pointer"}}>
+                      <FontAwesomeIcon onClick={handleRightAlignDesign} icon={faAlignRight} />
+                    </div>
+                  </div>
+                </div>                
                 <div className="d-flex mt-3 mb-3 ">
                   <div className="me-5 fw-bold choosingStyle">Choose size</div>
                   <div className="mx-5 px-5 choosingSize">
