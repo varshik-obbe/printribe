@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import logo from "../assets/Printribe-logo.png";
 import styles from "../styles/home.module.css";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes, faUserPlus, faUserAlt } from "@fortawesome/free-solid-svg-icons";
 
 import { Navigate, useNavigate } from "react-router-dom";
 import {searchData} from "./searchData.js"
@@ -90,7 +92,8 @@ const products = data.products.filter(item=>item.active=="true")
             style={{ position: "absolute", right: "17%", top: "5px" }}
             onClick={() => setMessageVisible(!messageVisible)}
           >
-            <i className={styles.crossIcon + " " + "fa fa-times"}></i>
+            <FontAwesomeIcon icon={faTimes} className={styles.crossIcon} />
+           {/* <i className={styles.crossIcon + " " + "fa fa-times"}></i> */}
           </div>
         </div>
       ) : (
@@ -225,10 +228,11 @@ const products = data.products.filter(item=>item.active=="true")
                   ) : (
                     <>
                       <Nav.Link href="/signup">
-                        <i
+                        <FontAwesomeIcon icon={faUserPlus} style={{ fontSize: 20 }} />
+                        {/* <i
                           class="fas fa-user-plus"
                           style={{ fontSize: 20 }}
-                        ></i>
+                  ></i> */}
                         <span
                           style={{
                             fontSize: 20,
@@ -241,7 +245,8 @@ const products = data.products.filter(item=>item.active=="true")
                         </span>
                       </Nav.Link>
                       <Nav.Link href="/signin">
-                        <i class="fas fa-user-alt" style={{ fontSize: 20 }}></i>
+                      <FontAwesomeIcon icon={faUserAlt} style={{ fontSize: 20 }} />
+                        {/* <i class="fas fa-user-alt" style={{ fontSize: 20 }}></i> */}
                         <span
                           style={{
                             fontSize: 20,

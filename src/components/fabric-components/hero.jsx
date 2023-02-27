@@ -2320,50 +2320,79 @@ function Hero() {
             //   width: fw,
             //   height: fh,
             // });
+
+            
+            let aspectRatioHeight = 0;
+
+            let aspectRatioWidth = 0;
+
+            aspectRatioHeight = imageUploaded.height / imageUploaded.width;
+
+            aspectRatioWidth = imageUploaded.width/ imageUploaded.height;
+
+            let adjHeight = 0;
+            let adjWidth = 0;
+
+            if (sides == "one") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].frontImgDimensions.width) * aspectRatioHeight;
+              adjWidth = parseInt(
+                  fabricInfo.variant[colorIndex].frontImgDimensions.height) * aspectRatioWidth;                
+            } else if (sides == "two") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].backImgDimensions.width
+              ) * aspectRatioHeight;
+              adjWidth = parseInt(
+                fabricInfo.variant[colorIndex].backImgDimensions.height
+              ) * aspectRatioWidth;              
+            } else if (sides == "three") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].leftImgDimensions.width
+              ) * aspectRatioHeight;
+              adjWidth = parseInt(
+                fabricInfo.variant[colorIndex].leftImgDimensions.height
+              ) * aspectRatioWidth;              
+            } else if (sides == "four") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].rightImgDimensions.width
+              ) * aspectRatioHeight;
+              adjWidth = parseInt(
+                fabricInfo.variant[colorIndex].rightImgDimensions.height
+              ) * aspectRatioWidth;              
+            }
+
+
+            adjWidth = adjWidth - 40;
+            adjHeight = adjHeight - 40;
+
             let scaleX;
             if (sides == "one") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].frontImgDimensions.width
-                ) - 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             } else if (sides == "two") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].backImgDimensions.width
-                ) - 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             } else if (sides == "three") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].leftImgDimensions.width
-                )- 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             } else if (sides == "four") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].rightImgDimensions.width
-                )  - 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             }
             // 160 / parseInt(img.height);
             let scaleY;
             if (sides == "one") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].frontImgDimensions.height
-                )  - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             } else if (sides == "two") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].backImgDimensions.height
-                )  - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             } else if (sides == "three") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].leftImgDimensions.height
-                ) - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             } else if (sides == "four") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].rightImgDimensions.height
-                ) - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             }
             img.set({
               scaleX: scaleX,
@@ -2859,50 +2888,77 @@ function Hero() {
             //   width: fw,
             //   height: fh,
             // });
+
+            let aspectRatioHeight = 0;
+
+            let aspectRatioWidth = 0;
+
+            aspectRatioHeight = imageUploaded.height / imageUploaded.width;
+
+            aspectRatioWidth = imageUploaded.width/ imageUploaded.height;
+
+            let adjHeight = 0;
+            let adjWidth = 0;
+
+            if (sides == "one") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].frontImgDimensions.width) * aspectRatioHeight;
+              adjWidth = parseInt(
+                  fabricInfo.variant[colorIndex].frontImgDimensions.height) * aspectRatioWidth;                
+            } else if (sides == "two") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].backImgDimensions.width
+              ) * aspectRatioHeight;
+              adjWidth = parseInt(
+                fabricInfo.variant[colorIndex].backImgDimensions.height
+              ) * aspectRatioWidth;              
+            } else if (sides == "three") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].leftImgDimensions.width
+              ) * aspectRatioHeight;
+              adjWidth = parseInt(
+                fabricInfo.variant[colorIndex].leftImgDimensions.height
+              ) * aspectRatioWidth;              
+            } else if (sides == "four") {
+              adjHeight = parseInt(
+                fabricInfo.variant[colorIndex].rightImgDimensions.width
+              ) * aspectRatioHeight;
+              adjWidth = parseInt(
+                fabricInfo.variant[colorIndex].rightImgDimensions.height
+              ) * aspectRatioWidth;              
+            }
+
+
+            adjWidth = adjWidth - 40;
+            adjHeight = adjHeight - 40;
+
             let scaleX;
             if (sides == "one") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].frontImgDimensions.width
-                ) - 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             } else if (sides == "two") {
-              scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].backImgDimensions.width
-                ) - 10) / parseInt(img.width);
+              scaleX = adjWidth / parseInt(img.width);
             } else if (sides == "three") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].leftImgDimensions.width
-                ) - 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             } else if (sides == "four") {
               scaleX =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].rightImgDimensions.width
-                ) - 10) / parseInt(img.width);
+                adjWidth / parseInt(img.width);
             }
             // 160 / parseInt(img.height);
             let scaleY;
             if (sides == "one") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].frontImgDimensions.height
-                ) - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             } else if (sides == "two") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].backImgDimensions.height
-                ) - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             } else if (sides == "three") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].leftImgDimensions.height
-                ) - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             } else if (sides == "four") {
               scaleY =
-                (parseInt(
-                  fabricInfo.variant[colorIndex].rightImgDimensions.height
-                ) - 10) / parseInt(img.height);
+                adjHeight / parseInt(img.height);
             }
             img.set({
               scaleX: scaleX,
