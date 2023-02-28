@@ -166,7 +166,7 @@ function ReviewOrder({ handleNext,handleBack }) {
         customerShipping_id: customerShippingId,
         product_info: productInfo,
         total_quantity: String(total_quantity),
-        total_price: totalBillingAmount.toFixed(2),
+        total_price: getFinalPrice(),
         shipping_charges: String(shipping_charges),
         payment_type: "cash on delivery",
         design_gst:shipping_data.state === "Karnataka"?[
