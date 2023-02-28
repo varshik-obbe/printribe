@@ -26,166 +26,202 @@ const fieldsArray = [
   { name: "city", title: "City", diff: "city" },
   { name: "gst", title: "GST", diff: "gst" },
 ];
-const stateList=[
+const stateList = [
   {
-  "key": "AN",
-  "name": "Andaman and Nicobar Islands"
+    "key": "AN",
+    "name": "Andaman and Nicobar Islands",
+    "code":35
   },
   {
-  "key": "AP",
-  "name": "Andhra Pradesh"
+    "key": "AP",
+    "name": "Andhra Pradesh",
+    "code":37
   },
   {
-  "key": "AR",
-  "name": "Arunachal Pradesh"
+    "key": "AR",
+    "name": "Arunachal Pradesh",
+    "code":12
   },
   {
-  "key": "AS",
-  "name": "Assam"
+    "key": "AS",
+    "name": "Assam",
+    "code":18
   },
   {
-  "key": "BR",
-  "name": "Bihar"
+    "key": "BR",
+    "name": "Bihar",
+    "code":10
   },
   {
-  "key": "CG",
-  "name": "Chandigarh"
+    "key": "CG",
+    "name": "Chandigarh",
+    "code":'04'
   },
   {
-  "key": "CH",
-  "name": "Chhattisgarh"
+    "key": "CH",
+    "name": "Chhattisgarh",
+    "code":22
   },
   {
-  "key": "DH",
-  "name": "Dadra and Nagar Haveli"
+    "key": "DH",
+    "name": "Dadra and Nagar Haveli",
+    "code":26
+  },
+  // {
+  //   "key": "DD",
+  //   "name": "Daman and Diu",
+  //   "code":35
+  // },
+  {
+    "key": "DL",
+    "name": "Delhi",
+    "code":"07"
   },
   {
-  "key": "DD",
-  "name": "Daman and Diu"
+    "key": "GA",
+    "name": "Goa",
+    "code":30
   },
   {
-  "key": "DL",
-  "name": "Delhi"
+    "key": "GJ",
+    "name": "Gujarat",
+    "code":24
   },
   {
-  "key": "GA",
-  "name": "Goa"
+    "key": "HR",
+    "name": "Haryana",
+    "code":"06"
   },
   {
-  "key": "GJ",
-  "name": "Gujarat"
+    "key": "HP",
+    "name": "Himachal Pradesh",
+    "code":"02"
   },
   {
-  "key": "HR",
-  "name": "Haryana"
+    "key": "JK",
+    "name": "Jammu and Kashmir",
+    "code":"01"
   },
   {
-  "key": "HP",
-  "name": "Himachal Pradesh"
+    "key": "JH",
+    "name": "Jharkhand",
+    "code":20
   },
   {
-  "key": "JK",
-  "name": "Jammu and Kashmir"
+    "key": "KA",
+    "name": "Karnataka",
+    "code":29
   },
   {
-  "key": "JH",
-  "name": "Jharkhand"
+    "key": "KL",
+    "name": "Kerala",
+    "code":32
   },
   {
-  "key": "KA",
-  "name": "Karnataka"
+    "key": "LD",
+    "name": "Lakshadweep",
+    "code":31
   },
   {
-  "key": "KL",
-  "name": "Kerala"
+    "key": "MP",
+    "name": "Madhya Pradesh",
+    "code":23
   },
   {
-  "key": "LD",
-  "name": "Lakshadweep"
+    "key": "MH",
+    "name": "Maharashtra",
+    "code":27
   },
   {
-  "key": "MP",
-  "name": "Madhya Pradesh"
+    "key": "MN",
+    "name": "Manipur",
+    "code":14
   },
   {
-  "key": "MH",
-  "name": "Maharashtra"
+    "key": "ML",
+    "name": "Meghalaya",
+    "code":17
   },
   {
-  "key": "MN",
-  "name": "Manipur"
+    "key": "MZ",
+    "name": "Mizoram",
+    "code":15
   },
   {
-  "key": "ML",
-  "name": "Meghalaya"
+    "key": "NL",
+    "name": "Nagaland",
+    "code":13
   },
   {
-  "key": "MZ",
-  "name": "Mizoram"
+    "key": "OR",
+    "name": "Odisha",
+    "code":21
   },
   {
-  "key": "NL",
-  "name": "Nagaland"
+    "key": "PY",
+    "name": "Puducherry",
+    "code":34
   },
   {
-  "key": "OR",
-  "name": "Odisha"
+    "key": "PB",
+    "name": "Punjab",
+    "code":"03"
   },
   {
-  "key": "PY",
-  "name": "Puducherry"
+    "key": "RJ",
+    "name": "Rajasthan",
+    "code":"08"
   },
   {
-  "key": "PB",
-  "name": "Punjab"
+    "key": "SK",
+    "name": "Sikkim",
+    "code":11
   },
   {
-  "key": "RJ",
-  "name": "Rajasthan"
+    "key": "TN",
+    "name": "Tamil Nadu",
+    "code":13
   },
   {
-  "key": "SK",
-  "name": "Sikkim"
+    "key": "TS",
+    "name": "Telangana",
+    "code":36
   },
   {
-  "key": "TN",
-  "name": "Tamil Nadu"
+    "key": "TR",
+    "name": "Tripura",
+    "code":16
   },
   {
-  "key": "TS",
-  "name": "Telangana"
+    "key": "UK",
+    "name": "Uttar Pradesh",
+    "code":"09"
   },
   {
-  "key": "TR",
-  "name": "Tripura"
+    "key": "UP",
+    "name": "Uttarakhand",
+    "code":"05"
   },
   {
-  "key": "UK",
-  "name": "Uttar Pradesh"
-  },
-  {
-  "key": "UP",
-  "name": "Uttarakhand"
-  },
-  {
-  "key": "WB",
-  "name": "West Bengal"
+    "key": "WB",
+    "name": "West Bengal",
+    "code":19
   }
-  ]
+]
 function Shipping(props) {
   const [savedShipAddress, setSavedShipAddress] = useState(false);
   const savedShippingData =
     localStorage.getItem("shipping_data") !== null
       ? JSON.parse(localStorage.getItem("shipping_data"))
       : null;
-const [countries,setCountries]=useState([])
-const getAllCountries=async()=>{
-const data = await axios.get('/customerShipping/getShipRocketCountries')
-setCountries(data.data.data)
-}
+  const [countries, setCountries] = useState([])
+  const getAllCountries = async () => {
+    const data = await axios.get('/customerShipping/getShipRocketCountries')
+    setCountries(data.data.data)
+  }
   useEffect(() => {
     if (savedShipAddress) {
-
+console.log(savedShippingData,"code");
       setFullName(savedShippingData.fullname);
       setState(savedShippingData.state);
       setAddress1(savedShippingData.address1);
@@ -220,12 +256,12 @@ setCountries(data.data.data)
     }
   }, [savedShipAddress]);
 
-  useEffect(()=>{
+  useEffect(() => {
     if (props.checkSavedShipAddress) {
       setSavedShipAddress(!savedShipAddress)
- 
+
     }
-  },[props.checkSavedShipAddress])
+  }, [props.checkSavedShipAddress])
   //to check whether a string contains a number or not
   const checkIfStringContainsNumber = (_string) => {
     return /\d/.test(_string);
@@ -267,9 +303,9 @@ setCountries(data.data.data)
       if (state === "") {
         setShippingerrorState("State field is required");
       }
-if(shippingType===""){
-  setShippingerrorType("Please Select Shipping Type")
-}
+      if (shippingType === "") {
+        setShippingerrorType("Please Select Shipping Type")
+      }
       if (postalCode === 0) {
         setShippingerrorPostalCode("Postal Code field is required");
       }
@@ -305,8 +341,9 @@ if(shippingType===""){
           visitor_id: visitorId,
           fullname: fullName,
           state: state,
-          expectedDelivery:expectedDelivery,
-          shipping_type:shippingType,
+          state_code:stateCode,
+          expectedDelivery: expectedDelivery,
+          shipping_type: shippingType,
           address1: address1,
           company: company,
           address2: address2,
@@ -351,7 +388,8 @@ if(shippingType===""){
   const { handleNext } = props;
   const [fullName, setFullName] = useState("");
   const [state, setState] = useState("");
-  const [shippingType,setShippingType]=useState("");
+  const[stateCode,setStateCode]=useState("")
+  const [shippingType, setShippingType] = useState("");
   const [address1, setAddress1] = useState("");
   const [company, setCompany] = useState("");
   const [address2, setAddress2] = useState("");
@@ -364,7 +402,7 @@ if(shippingType===""){
   //state to store shipping shipping
   const [shippingDetails, setShippingDetails] = useState("");
   const [shippingCompanies, setShippingCompanies] = useState();
-const[expectedDelivery,setExpectedDelivery]=useState("")
+  const [expectedDelivery, setExpectedDelivery] = useState("")
   const [shippingError, setShippingerror] = useState("");
   const [shippingErrorName, setShippingerrorName] = useState("");
   const [shippingErrorAddress1, setShippingerrorAddress1] = useState("");
@@ -379,26 +417,27 @@ const[expectedDelivery,setExpectedDelivery]=useState("")
   const [shippingErrorGST, setShippingerrorGST] = useState("");
 
   const [gst, setGst] = useState(null);
+  var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
 
   //product quantity from LS
   const total_quantity = localStorage.getItem("total_quantity");
-useEffect(()=>{
-  console.log(country,"country")
-if(country=='India'){
-  setShippingType('domestic shipping')
-}
-},[country])
-useEffect(()=>{
-if (shippingType=='domestic shipping') {
-  setCountry('India')
-}
+  useEffect(() => {
+    console.log(country, "country")
+    if (country == 'India') {
+      setShippingType('domestic shipping')
+    }
+  }, [country])
+  useEffect(() => {
+    if (shippingType == 'domestic shipping') {
+      setCountry('India')
+    }
 
-if (shippingType=='international') {
-  console.log(shippingType,"shipping")
+    if (shippingType == 'international') {
+      console.log(shippingType, "shipping")
 
-  setCountry('')
-}
-},[shippingType])
+      setCountry('')
+    }
+  }, [shippingType])
   useEffect(() => {
     console.log(postalCode.toString().length);
 
@@ -407,15 +446,19 @@ if (shippingType=='international') {
       setShippingerror("Invalid Postal Code");
 
       if (postalCode.toString().length === 6) {
-        axios.get('https://api.theprintribe.com/api/customerShipping/getStatesAndCity/'+postalCode).then((res)=>{
-setCity(res?.data?.PostOffice[0]?.District)
-setState(res?.data?.PostOffice[0]?.State)
-console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
+        axios.get('https://api.theprintribe.com/api/customerShipping/getStatesAndCity/' + postalCode).then((res) => {
+          setCity(res?.data?.PostOffice[0]?.District)
+          setState(res?.data?.PostOffice[0]?.State)
+          console.log(res?.data?.PostOffice[0]?.District, res?.data?.PostOffice[0],"code")
         })
-        axios
+        axios.get('/products/getproduct/'+customizeProduct[0].product_id).then(({data})=>{
+          console.log(data.product.productdata[0].weight          ,"response")
+        
+        
+        
+          axios
           .get(
-            `/customerShipping/getShipRocketCharges/${postalCode}/${
-              total_quantity * 0.3
+            `/customerShipping/getShipRocketCharges/${postalCode}/${total_quantity * data.product.productdata[0].weight 
             }`
           )
           .then(({ data }) => {
@@ -429,6 +472,8 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
           .catch((err) => {
             console.log(err);
           });
+        })
+
       }
     } else if (postalCode.toString().length === 0) {
       console.log("shiiping error");
@@ -464,7 +509,7 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
   }, []);
   function order(a, b) {
     return a.rating < b.rating ? -1 : (a.rating > b.rating ? 1 : 0);
-}
+  }
   return (
     <React.Fragment>
       <div
@@ -505,9 +550,9 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                   <div class="col-12 col-sm-6 mt-2">
                     <label for="basic-url" class="form-label mb-1">
                       <b>{ele.title}</b>{" "}
-                   
-                        <span class="text-danger ">*</span>
-                      
+
+                      <span class="text-danger ">*</span>
+
                     </label>
                     <div class="input-group mb-2">
                       <select
@@ -540,8 +585,8 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-                    
-                          <span class="text-danger">*</span>
+
+                        <span class="text-danger">*</span>
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -555,14 +600,14 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                           required
                         />
                       </div>
-      
-                        <span class="text-danger d-block">
-                          {shippingErrorName}
-                        </span>
+
+                      <span class="text-danger d-block">
+                        {shippingErrorName}
+                      </span>
                     </div>
                   </>
                 );
-            
+
               case "address1":
                 return (
                   <>
@@ -570,8 +615,8 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-                     
-                          <span class="text-danger ">*</span>
+
+                        <span class="text-danger ">*</span>
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -587,10 +632,10 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                       </div>
                       {shippingErrorAddress1 ===
                         "Address is not long enough" && (
-                        <span class="text-danger d-block">
-                          {shippingErrorAddress1}
-                        </span>
-                      )}
+                          <span class="text-danger d-block">
+                            {shippingErrorAddress1}
+                          </span>
+                        )}
                     </div>
                   </>
                 );
@@ -616,12 +661,12 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
               case "company":
                 return (
                   <>
-               {(shippingType == "domestic shipping" || shippingType =="international") &&   <div class="col-12 col-sm-6 mt-2">
+                    {(shippingType == "domestic shipping" || shippingType == "international") && <div class="col-12 col-sm-6 mt-2">
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-            
-                          <span class="text-danger ">*</span>
+
+                        <span class="text-danger ">*</span>
                       </label>
                       <div class="input-group mb-2">
                         {shippingDetails ? (
@@ -633,7 +678,7 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                                 onChange={(e) => {
                                   setCompany(e.target.value);
                                   setShippingerrorCompany("");
-                   
+
                                 }}
                                 onClick={() => {
                                   shippingCompanies.find((curr) => {
@@ -670,7 +715,7 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                                       class="form-control"
                                       value={curr.courier_name}
                                     >
-                                      {curr.courier_name}{`( ${curr.rating})`}{typeof(curr.rating)}
+                                      {curr.courier_name}{`( ${curr.rating})`}{typeof (curr.rating)}
                                     </option>
                                   ))}
                               </select>
@@ -699,9 +744,9 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-                       
-                          <span class="text-danger ">*</span>
-                
+
+                        <span class="text-danger ">*</span>
+
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -715,10 +760,10 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                           required
                         />
                       </div>
-         
-                        <span class="text-danger d-block">
-                          {shippingErrorCity}
-                        </span>
+
+                      <span class="text-danger d-block">
+                        {shippingErrorCity}
+                      </span>
                     </div>
                   </>
                 );
@@ -729,8 +774,8 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-         
-                          <span class="text-danger ">*</span>
+
+                        <span class="text-danger ">*</span>
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -744,15 +789,15 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                           required
                         />
                       </div>
-                 
-                        <span class="text-danger d-block">{shippingError}</span>
+
+                      <span class="text-danger d-block">{shippingError}</span>
 
                       {shippingErrorPostalCode ===
                         "Postal Code field is required" && (
-                        <span class="text-danger d-block">
-                          {shippingErrorPostalCode}
-                        </span>
-                      )}
+                          <span class="text-danger d-block">
+                            {shippingErrorPostalCode}
+                          </span>
+                        )}
                     </div>
                   </>
                 );
@@ -763,9 +808,9 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                       {/* <div class="mt-2"> */}
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-                     
-                          <span class="text-danger ">*</span>
-                  
+
+                        <span class="text-danger ">*</span>
+
                       </label>
                       <div class="input-group mb-2">
                         <input
@@ -789,37 +834,40 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
               case "state":
                 return (
                   <>
-                 { country=='India' &&<div class="col-12 col-sm-6 mt-2">
-                    <label for="basic-url" class="form-label mb-1">
-                      <b>{ele.title}</b>{" "}
-                   
+                    {country == 'India' && <div class="col-12 col-sm-6 mt-2">
+                      <label for="basic-url" class="form-label mb-1">
+                        <b>{ele.title}</b>{" "}
+
                         <span class="text-danger ">*</span>
-                      
-                    </label>
-                    <div class="input-group mb-2">
-                      <select
-                        class="form-select"
-                        aria-label="Default select example"
-                        onChange={(e) => {
-                          setState(e.target.value);
-                          setShippingerrorState("");
-                        }}
-                        value={state}
-                        required
-                      >
-                        <option selected>Open this select menu</option>
-                        {stateList.map(item=><option value={item.name}>{item.name}</option>)}
-                        {/* <option value="Karnataka">Karnataka</option>
+
+                      </label>
+                      <div class="input-group mb-2">
+                        <select
+                          class="form-select"
+                          aria-label="Default select example"
+                          onChange={(e) => {
+const code =e.target.options[e.target.options['selectedIndex']].getAttribute('code')
+                            setState(e.target.value);
+
+                            setStateCode(code);
+                            setShippingerrorState("");
+                          }}
+                          value={state}
+                          required
+                        >
+                          <option selected>Open this select menu</option>
+                          {stateList.map(item => <option code={item.code} value={item.name}>{item.name}</option>)}
+                          {/* <option value="Karnataka">Karnataka</option>
                         <option value="Mumbai">Mumbai</option>
                         <option value="Rajasthan">Rajasthan</option> */}
-                      </select>
-                    </div>
-                    {shippingErrorState === "State field is required" && (
-                      <span class="text-danger d-block">
-                        {shippingErrorState}
-                      </span>
-                    )}
-                  </div>}</>
+                        </select>
+                      </div>
+                      {shippingErrorState === "State field is required" && (
+                        <span class="text-danger d-block">
+                          {shippingErrorState}
+                        </span>
+                      )}
+                    </div>}</>
                 );
               case "mobile":
                 return (
@@ -827,9 +875,9 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                     <div class="col-12 col-sm-6 mt-2">
                       <label for="basic-url" class="form-label mb-1">
                         <b>{ele.title}</b>{" "}
-          
-                          <span class="text-danger ">* </span>
-                        
+
+                        <span class="text-danger ">* </span>
+
                       </label>
                       <div class="input-group mb-2">
                         <button
@@ -871,8 +919,8 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                     <label for="basic-url" class="form-label mb-1">
                       <b>{ele.title}</b>{" "}
 
-                        <span class="text-danger ">*</span>
-                      
+                      <span class="text-danger ">*</span>
+
                     </label>
                     <div class="input-group mb-2">
                       <select
@@ -886,9 +934,9 @@ console.log(res?.data?.PostOffice[0]?.District,res?.data?.PostOffice[0]?.State)
                         required
                       >
                         <option selected>Open this select menu</option>
-                        {countries &&countries.length && countries.map(data=><option value={data.name}>{data.name}</option>)}
-                        
-                 
+                        {countries && countries.length && countries.map(data => <option value={data.name}>{data.name}</option>)}
+
+
                       </select>
                     </div>
                     {shippingErrorCountry === "Country field is required" && (

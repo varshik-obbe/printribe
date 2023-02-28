@@ -21,8 +21,12 @@ function ReviewOrder({ handleNext,handleBack }) {
   const [totalBillingAmount, setTotalBillingAmount] = useState(0);
   const[totalRetailAmount,setTotalRetailAmount]=useState(0);
   const [designPrice,setDesignPrice] = useState([])
-
   var customizeProduct = JSON.parse(localStorage.getItem("customizeProduct"));
+  
+  const data =customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)
+    const cgst =(Number(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price)*Number(data))/100
+    const[designGst,setDesignGst]=useState((cgst*2).toFixed(2))
+
   var customerShippingId = localStorage.getItem("customerShipping_id");
   var shippingType = JSON.parse(localStorage.getItem("shipping_data"));
   // var total_quantity = localStorage.getItem("total_quantity");
@@ -102,24 +106,24 @@ function ReviewOrder({ handleNext,handleBack }) {
         ) {
           sgstPercentage = sgstArr[itemIndex].percentage;
           sgstValue = (
-            (sgstArr[itemIndex].percentage * subTotal) /
+            (sgstArr[itemIndex].percentage * getTotalPrice()) /
             100
           ).toFixed(2);
 
           cgstPercentage = cgstArr[itemIndex].percentage;
           cgstValue = (
-            (cgstArr[itemIndex].percentage * subTotal) /
+            (cgstArr[itemIndex].percentage * getTotalPrice()) /
             100
           ).toFixed(2);
         } else {
           igstPercentage = igstArr[itemIndex].percentage;
           igstValue = (
-            (igstArr[itemIndex].percentage * subTotal) /
+            (igstArr[itemIndex].percentage * getTotalPrice()) /
             100
           ).toFixed(2);
         }
       });
-
+   
     // console.log(sgstPercentage)
     // console.log(sgstValue)
     // console.log(cgstPercentage)
@@ -131,12 +135,12 @@ function ReviewOrder({ handleNext,handleBack }) {
       gst_details = [
         {
           gst_percent: String(sgstPercentage),
-          gst_amount: String(sgstValue),
+          gst_amount: String((Number(sgstPercentage)*getproductPrice())/100),
           gst_type: "sgst",
         },
         {
           gst_percent: String(cgstPercentage),
-          gst_amount: String(cgstValue),
+          gst_amount: String((Number(cgstPercentage)*getproductPrice())/100),
           gst_type: "cgst",
         },
       ];
@@ -144,7 +148,7 @@ function ReviewOrder({ handleNext,handleBack }) {
       gst_details = [
         {
           gst_percent: String(igstPercentage),
-          gst_amount: String(igstValue),
+          gst_amount: String((Number(igstPercentage)*getproductPrice())/100),
           gst_type: "igst",
         },
       ];
@@ -165,6 +169,25 @@ function ReviewOrder({ handleNext,handleBack }) {
         total_price: totalBillingAmount.toFixed(2),
         shipping_charges: String(shipping_charges),
         payment_type: "cash on delivery",
+        design_gst:shipping_data.state === "Karnataka"?[
+          {
+            gst_percent: String(customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)),
+            gst_amount: String(Number(designGst)/2),
+            gst_type: "cgst",
+          },
+          {
+            gst_percent: String(customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)),
+            gst_amount: String(Number(designGst)/2),
+            gst_type: "sgst",
+          },
+        ]:[
+          {
+            gst_percent: String(customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)),
+            gst_amount: String(Number(designGst)),
+            gst_type: "igst",
+          },
+         
+        ],
         payment_ref_id: "23451AAX",
         customer_email: customerEmail,
         visitor_id: visitor_id,
@@ -175,7 +198,7 @@ function ReviewOrder({ handleNext,handleBack }) {
         design_price:totalDesignPrice.toFixed(2)
       },
     };
-
+console.log(payData,"pydata")
     axios
       .post("https://api.theprintribe.com/api/orders/addOrder", payData, {
         "Content-Type": "application/json",
@@ -359,6 +382,7 @@ const getEstimatedDate=()=>{
   }, []);
 
   const handlePay = () => {
+    console.log("====>>>>>>>>>>>>>>>>>>",customizeProduct);
     customizeProduct.forEach((prod) => {
       axios
         .get(`/products/getproduct/${prod.product_id}`)
@@ -493,7 +517,7 @@ const getEstimatedDate=()=>{
         // console.log(parseFloat(totalBillingAmount.toFixed(2)));
 
         if (
-          parseFloat(data.wallet.amount.toFixed(2)) >=
+          parseFloat(data?.wallet?.amount.toFixed(2)) >=
           parseFloat(totalBillingAmount.toFixed(2))
         ) {
           Swal.fire({
@@ -511,7 +535,7 @@ const getEstimatedDate=()=>{
         } else {
           let remainingAmount =
             parseFloat(totalBillingAmount).toFixed(2) -
-            parseFloat(data.wallet.amount).toFixed(2);
+            parseFloat(data?.wallet?.amount).toFixed(2);
 
           Swal.fire({
             title: "Add remaining amount to wallet and pay?",
@@ -539,7 +563,7 @@ const getEstimatedDate=()=>{
     const data =gstArr &&
     gstArr.map((curr, itemIndex) =>{
       
-        return ((cgstArr[itemIndex].percentage * getTotalPrice()) /100+(sgstArr[itemIndex].percentage * getTotalPrice()) /100+ price+shipping_charges).toFixed(2)
+        return ((cgstArr[itemIndex].percentage * getproductPrice()) /100+(sgstArr[itemIndex].percentage * getproductPrice()) /100+ price+shipping_charges).toFixed(2)
     
     })
 
@@ -857,11 +881,15 @@ const getproductPrice=()=>{
 
     console.log("result", tempSubRetail);
     setTotalRetailAmount(tempSubRetail)
-    setTotalBillingAmount(result);
+    const a=(
+      (sgstArr[0].percentage * getTotalPrice()) /
+      100
+    ).toFixed(2)
+    setTotalBillingAmount(tempsubTotal+Number(designGst)+shipping_data.shipping_charges+a*2);
   };
   const getDesignCGST=()=>{
     const data =customizeProduct.reduce((n, {design_gst}) => n + Number(design_gst)/2, 0)
-    console.log(getFinalPrice(),'=======')
+    console.log(data,"==================.........")
     const cgst =(Number(customizeProduct[0].left_price+customizeProduct[0].right_price+customizeProduct[0].front_price+customizeProduct[0].back_price)*Number(data))/100
 
     return cgst.toFixed(2)
@@ -1183,24 +1211,6 @@ const getproductPrice=()=>{
                   <b class="fs-4">Product Price</b>
                   <b class="fs-4">{`₹${getproductPrice()}`}</b>
                 </div>
-                <div class="col-12 d-flex  mt-4 justify-content-between">
-                  <b class="fs-4">Design Price</b>
-                  <b class="fs-4">{`₹${designPrice[0]?.designPrice}`}</b>
-                </div>
-                <div class="col-12 mt-3 d-flex justify-content-between">
-                  <b >Design CGST</b>
-                  <b >{`₹${getDesignCGST()}`}</b>
-                </div>
-                <div class="col-12 mt-3 d-flex justify-content-between">
-                  <b >Design SGST</b>
-                  <b >{`₹${getDesignSGST()}`}</b>
-                </div>
-                <hr class="my-3" style={{ height: "1px", width: "100%" }} />
-
-                <div class="col-12 mt-3 d-flex justify-content-between">
-                  <b class="fs-4">Shipping Price</b>
-                  <b class="fs-4">{`₹${shipping_charges}`}</b>
-                </div>
                 <hr class="my-3" style={{ height: "1px", width: "100%" }} />
 
                 {gstArr &&
@@ -1211,14 +1221,14 @@ const getproductPrice=()=>{
                         <div class="col-12 mt-3 d-flex justify-content-between">
                           <b>{`SGST (${sgstArr[itemIndex].percentage}%)`}</b>
                           <b>{`₹${(
-                            (sgstArr[itemIndex].percentage * getTotalPrice()) /
+                            (sgstArr[itemIndex].percentage * getproductPrice()) /
                             100
                           ).toFixed(2)}`}</b>
                         </div>
                         <div class="col-12 mt-3 d-flex justify-content-between">
                           <b>{`CGST (${cgstArr[itemIndex].percentage}%)`}</b>
                           <b>{`₹${(
-                            (cgstArr[itemIndex].percentage * getTotalPrice()) /
+                            (cgstArr[itemIndex].percentage * getproductPrice()) /
                             100
                           ).toFixed(2)}`}</b>
                         </div>
@@ -1227,12 +1237,39 @@ const getproductPrice=()=>{
                       <div class="col-12 mt-3 d-flex justify-content-between">
                         <b>{`Shipping IGST (${igstArr[itemIndex].percentage}%)`}</b>
                         <b>{`₹${(
-                          (igstArr[itemIndex].percentage * totalBillingAmount) /
+                          (igstArr[itemIndex].percentage * getproductPrice()) /
                           100
                         ).toFixed(2)}`}</b>
                       </div>
                     )
                   )}
+                <div class="col-12 d-flex  mt-4 justify-content-between">
+                  <b class="fs-4">Design Price</b>
+                  <b class="fs-4">{`₹${designPrice[0]?.designPrice}`}</b>
+                </div>
+             {   shippingType.state ===
+                    "Karnataka" ?<>
+                      <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >Design CGST</b>
+                  <b >{`₹${getDesignCGST()}`}</b>
+                </div>
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >Design SGST</b>
+                  <b >{`₹${getDesignSGST()}`}</b>
+                </div></> :
+               
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b >Design IGST</b>
+                  <b >{`₹${2*getDesignSGST()}`}</b>
+                </div>}
+              
+                <hr class="my-3" style={{ height: "1px", width: "100%" }} />
+
+                <div class="col-12 mt-3 d-flex justify-content-between">
+                  <b class="fs-4">Shipping Price</b>
+                  <b class="fs-4">{`₹${shipping_charges}`}</b>
+                </div>
+                
                 <hr class="my-3" style={{ height: "1px", width: "100%" }} />
                 <div class="col-12 d-flex justify-content-between">
                   <b class="fs-4">Total</b>
@@ -1243,8 +1280,8 @@ const getproductPrice=()=>{
                   <b >{`₹${totalRetailAmount}`}</b>
                 </div>
                 <div class="col-12 mt-3 d-flex justify-content-between">
-                  <b >profit</b>
-                  <b >{`₹${(totalRetailAmount-totalBillingAmount).toFixed(2)}`}</b>
+                  <b >{(totalRetailAmount-getFinalPrice()).toFixed(2)<0?"Loss":"profit"}</b>
+                  <b >{`₹${(totalRetailAmount-getFinalPrice()).toFixed(2)}`}</b>
                 </div>
               </div>
               <div class="col-12 d-flex justify-content-center mt-5 mb-3">
