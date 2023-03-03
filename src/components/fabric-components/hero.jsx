@@ -2362,8 +2362,14 @@ function Hero() {
             }
 
 
-            adjWidth = adjWidth - 40;
-            adjHeight = adjHeight - 40;
+            if((parseInt(imageUploaded.height) > parseInt(imageUploaded.width)  + 500) || (parseInt(imageUploaded.width) > parseInt(imageUploaded.height) + 500)) {
+              adjWidth = adjWidth - 200;
+              adjHeight = adjHeight - 200;              
+            }
+            else {
+              adjWidth = adjWidth - 40;
+              adjHeight = adjHeight - 40;
+            }
 
             let scaleX;
             if (sides == "one") {
@@ -2929,8 +2935,14 @@ function Hero() {
             }
 
 
-            adjWidth = adjWidth - 40;
-            adjHeight = adjHeight - 40;
+            if((parseInt(imageUploaded.height) > parseInt(imageUploaded.width)  + 500) || (parseInt(imageUploaded.width) > parseInt(imageUploaded.height) + 500)) {
+              adjWidth = adjWidth - 200;
+              adjHeight = adjHeight - 200;              
+            }
+            else {
+              adjWidth = adjWidth - 40;
+              adjHeight = adjHeight - 40;
+            }
 
             let scaleX;
             if (sides == "one") {

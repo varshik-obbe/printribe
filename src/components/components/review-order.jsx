@@ -212,6 +212,14 @@ console.log(payData,"pydata")
                 : 0
             );
             window.location.href = "https://partner.theprintribe.com/";
+            localStorage.removeItem('customizeProduct')
+            localStorage.removeItem('total_quantity')
+            localStorage.removeItem('subTotal')
+            localStorage.removeItem('courier_id')
+            localStorage.removeItem('shipping_data')
+            localStorage.removeItem('customerShipping_id')
+            localStorage.removeItem('shipping_charges')
+            localStorage.removeItem('visitorId')
           }
         );
       })
@@ -414,7 +422,7 @@ const getEstimatedDate=()=>{
   };
 
   const addAmount = (amountToBeAdded, purpose) => {
-    let amount = amountToBeAdded * 100;
+    let amount = amountToBeAdded ;
 
     let razorPayData = {
       insdata: {
