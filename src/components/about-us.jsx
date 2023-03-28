@@ -23,12 +23,11 @@ function About() {
           <div className="col-lg-5 float-end">
             <h1 className="">We’re here for you and your brand</h1>
             <p>
-              Printful is an on-demand printing and fulfillment company that
-              helps people turn their ideas into brands and products. Whether
-              you wish to create your own online brand or gift someone a
-              personalized t-shirt, we can help you get it done. Whenever
-              someone—you or your customer—makes a purchase, we'll automatically
-              receive the order, fulfill, and ship it.
+              Welcome to Printribe!
+              
+              We're a print on demand and order fulfillment company that can help anyone who wants to sell products online without inventory, custom printing, processing and logistics hurdles. We enable anyone to signup on theprintribe.com and start selling products online.
+
+              People without resources for inventory and without knowledge for merchandising can simply design and sell products online with custom printing and custom branding.
             </p>
           </div>
           <div className="col-lg-5 ">
