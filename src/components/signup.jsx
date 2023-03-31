@@ -102,7 +102,16 @@ function Signup() {
             }
             else {
               console.log(state.email)
-              navigate(`/verify/${state.email}`);
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                title: "Registered Successfully!",
+                text: "please check your mail",
+                showConfirmButton: true,
+              }).then(function () {
+                window.location.href = "/signin"
+              });
+              //navigate(`/verify/${state.email}`);
             }
             setState((prev) => ({ ...prev, error: false }));
 
