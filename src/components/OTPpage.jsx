@@ -12,6 +12,47 @@ const OTPpage = () => {
   const params = useParams();
 
   const [OTP, setOTP] = useState(null);
+  const [text, setText] = useState("");
+  const [navtext, setNavText] = useState("");
+
+  useEffect(async () => {
+    try {
+        await axios.post(
+          "https://api.theprintribe.com/api/customers/verifyMail",
+          {
+            data: {
+              email: params.email,
+              verificationId: params.id,
+            },
+          },
+          {
+            "Content-Type": "application/json",
+          }
+        ).then((data) => {
+          setText("email verified successfully");
+          setNavText("Redirecting to login in 5 seconds");
+          setTimeout(() => {
+            navigate("/signin")
+          }, 5000);
+        })
+        .catch((err) => {
+          console.log("err", err);
+          setText("could not verify");
+          setNavText("Redirecting to signup in 5 seconds");
+          setTimeout(() => {
+            navigate("/signup")
+          }, 5000);
+        })
+        
+    } catch (error) {
+      console.log("err", error);
+      setText("could not verify");
+      setNavText("Redirecting to signup in 5 seconds");
+      setTimeout(() => {
+        navigate("/signup")
+      }, 5000);
+    }
+  }, [])
 
   const handleClick = async () => {
     try {
@@ -26,8 +67,8 @@ const OTPpage = () => {
           "https://api.theprintribe.com/api/customers/verifyMail",
           {
             data: {
-              email: params.id,
-              verificationId: OTP,
+              email: params.email,
+              verificationId: params.id,
             },
           },
           {
@@ -56,7 +97,7 @@ const OTPpage = () => {
       <Header />
       <Navbar />
       <div className="container mb-5 ">
-        <div className="row d-flex flex-column justify-content-center align-items-center">
+        {/* <div className="row d-flex flex-column justify-content-center align-items-center">
           <h3 className="mt-5 mb-4 text-center">Enter the OTP</h3>
           <div className="mx-auto d-flex flex-column justify-content-center align-items-center">
             <OTPInput
@@ -76,6 +117,10 @@ const OTPpage = () => {
               Verify
             </button>
           </div>
+        </div> */}
+        <div className="row d-flex flex-column justify-content-center align-items-center">
+          <h3 className="mt-5 mb-4 text-center">{text}</h3>
+          <a href="/signin" style={{ color: "blue"}} className="mt-5 mb-4 text-center">{navtext}</a>
         </div>
       </div>
       <Footer />

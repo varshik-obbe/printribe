@@ -96,7 +96,7 @@ function App() {
 
           <Route exact path="/services" element={<Services />} />
           <Route exact path="/howitworks" element={<HowItWorks />} />
-          <Route exact path="/verify/:id" element={<OTPpage />} />
+          <Route exact path="/verify/:email/:id" element={<OTPpage />} />
 
         </Routes>
       </Router>
