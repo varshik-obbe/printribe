@@ -43,7 +43,18 @@ function ForgotPassword() {
       })
 
     })
-    .catch(err => console.error(err));
+    .catch(err => {
+      if(err.response.data.error.global == "this is a gmail id") {
+        Swal.fire({
+          position: "center",
+          icon: "error",
+          title: "Google Sign In ID!",
+          text:"this is a google signup id please use google to login",
+          showConfirmButton: true,
+        })
+  
+      }
+    });
   }
 
 

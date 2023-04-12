@@ -4560,18 +4560,22 @@ function Hero() {
     var items1 = localStorage.getItem("firstCanvas"+prodid);
     if(items1) {
       localStorage.removeItem("firstCanvas"+prodid);
+      setFrontPrice(0);
     }
     var items2 = localStorage.getItem("secondCanvas"+prodid);
     if(items2) {
       localStorage.removeItem("secondCanvas"+prodid);
+      setBackPrice(0);
     }
     var items3 = localStorage.getItem("thirdCanvas"+prodid);
     if(items3) {
       localStorage.removeItem("thirdCanvas"+prodid);
+      setLeftPrice(0);
     }
     var items4 = localStorage.getItem("fourthCanvas"+prodid);
-    if(items3) {
+    if(items4) {
       localStorage.removeItem("fourthCanvas"+prodid);
+      setRightPrice(0);
     }
 
     // const obj = editor?.canvas.getObjects();
@@ -4713,7 +4717,7 @@ function Hero() {
   };
 
   //executes when an image is changed
-  const changeImg = (e, letter) => {
+  const changeImg = async (e, letter) => {
     console.log("eeeee", e, letter)
     e.preventDefault();
     if(canvasArr) {
@@ -4789,6 +4793,7 @@ function Hero() {
       setSides("four");
       // changeCanvas(letter);
     }
+   await setCanvasArrEditImg();
   };
 
   const fontChangeHover = (event) => {
@@ -5888,7 +5893,36 @@ function Hero() {
           }
           totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
           setPriceSet(totPrice);
-          setDesignPrice(parseInt(scalePrice, 10));
+          let totalDesign = 0;
+          if(frontPrice != 0 && sides != "one") {
+            totalDesign = totalDesign + parseInt(frontPrice) + parseInt(scalePrice, 10);
+          }
+          else if(frontPrice != 0 && sides == "one") {
+            totalDesign = totalDesign + parseInt(frontPrice);
+          }
+          if(backPrice != 0 && sides != "two") {
+            totalDesign = totalDesign + parseInt(backPrice) + parseInt(scalePrice, 10);
+          }
+          else if(backPrice != 0 && sides == "two") {
+            totalDesign = totalDesign + parseInt(backPrice);
+          }
+          if(leftPrice != 0 && sides != "three") {
+            totalDesign = totalDesign + parseInt(leftPrice) + parseInt(scalePrice, 10);
+          }
+          else if(leftPrice!= 0 && sides == "three") {
+            totalDesign = totalDesign + parseInt(leftPrice);
+          }
+          if(rightPrice != 0 && sides != "four")
+          {
+            totalDesign = totalDesign + parseInt(rightPrice) + parseInt(scalePrice, 10);
+          }
+          else if(rightPrice != 0 && sides == "four") {
+            totalDesign = totalDesign + parseInt(rightPrice);
+          }
+          else if(frontPrice == 0 && backPrice == 0 && leftPrice == 0 && rightPrice == 0) {
+            totalDesign = totalDesign + parseInt(scalePrice, 10)
+          }
+          setDesignPrice(parseInt(totalDesign, 10));
           if (sides == "one") {
             setFrontPrice(parseInt(scalePrice, 10));
           }
@@ -6457,7 +6491,36 @@ function Hero() {
               }
               totPrice = parseInt(product.price, 10) + parseInt(scalePrice, 10);
               setPriceSet(totPrice);
-              setDesignPrice(parseInt(scalePrice, 10));
+              let totalDesign = 0;
+              if(frontPrice != 0 && sides != "one") {
+                totalDesign = totalDesign + parseInt(frontPrice) + parseInt(scalePrice, 10);
+              }
+              else if(frontPrice != 0 && sides == "one") {
+                totalDesign = totalDesign + parseInt(frontPrice);
+              }
+              if(backPrice != 0 && sides != "two") {
+                totalDesign = totalDesign + parseInt(backPrice) + parseInt(scalePrice, 10);
+              }
+              else if(backPrice != 0 && sides == "two") {
+                totalDesign = totalDesign + parseInt(backPrice);
+              }
+              if(leftPrice != 0 && sides != "three") {
+                totalDesign = totalDesign + parseInt(leftPrice) + parseInt(scalePrice, 10);
+              }
+              else if(leftPrice!= 0 && sides == "three") {
+                totalDesign = totalDesign + parseInt(leftPrice);
+              }
+              if(rightPrice != 0 && sides != "four")
+              {
+                totalDesign = totalDesign + parseInt(rightPrice) + parseInt(scalePrice, 10);
+              }
+              else if(rightPrice != 0 && sides == "four") {
+                totalDesign = totalDesign + parseInt(rightPrice);
+              }
+              else if(frontPrice == 0 && backPrice == 0 && leftPrice == 0 && rightPrice == 0) {
+                totalDesign = totalDesign + parseInt(scalePrice, 10)
+              }
+              setDesignPrice(parseInt(totalDesign, 10));
               if (sides == "one") {
                 setFrontPrice(parseInt(scalePrice, 10));
               } else if (sides == "two") {
@@ -6909,7 +6972,36 @@ function Hero() {
         if (heightInches > maximumHeight) {
           maximumHeight = parseFloat(heightInches.toFixed(2));
         }
-        setDesignPrice(parseFloat(lastPrice.toFixed(2)));
+        let totalDesign = 0;
+        if(frontPrice != 0 && sides != "one") {
+          totalDesign = totalDesign + parseInt(frontPrice) + parseInt(lastPrice, 10);
+        }
+        else if(frontPrice != 0 && sides == "one") {
+          totalDesign = totalDesign + parseInt(frontPrice);
+        }
+        if(backPrice != 0 && sides != "two") {
+          totalDesign = totalDesign + parseInt(backPrice) + parseInt(lastPrice, 10);
+        }
+        else if(backPrice != 0 && sides == "two") {
+          totalDesign = totalDesign + parseInt(backPrice);
+        }
+        if(leftPrice != 0 && sides != "three") {
+          totalDesign = totalDesign + parseInt(leftPrice) + parseInt(lastPrice, 10);
+        }
+        else if(leftPrice!= 0 && sides == "three") {
+          totalDesign = totalDesign + parseInt(leftPrice);
+        }
+        if(rightPrice != 0 && sides != "four")
+        {
+          totalDesign = totalDesign + parseInt(rightPrice) + parseInt(lastPrice, 10);
+        }
+        else if(rightPrice != 0 && sides == "four") {
+          totalDesign = totalDesign + parseInt(rightPrice);
+        }
+        if(frontPrice == 0 && backPrice == 0 && leftPrice == 0 && rightPrice == 0) {
+          totalDesign = totalDesign + parseInt(lastPrice, 10)
+        }
+        setDesignPrice(parseFloat(totalDesign.toFixed(2)));
         if (sides == "one") {
           setFrontPrice(parseFloat(lastPrice.toFixed(2)));
         }
