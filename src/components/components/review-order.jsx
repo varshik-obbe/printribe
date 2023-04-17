@@ -211,15 +211,32 @@ console.log(payData,"pydata")
                 ? (walletAmount - totalBillingAmount).toFixed(2)
                 : 0
             );
+            if(localStorage.getItem("customizeProduct")) {
+              localStorage.removeItem('customizeProduct')
+            }
+            if(localStorage.getItem('total_quantity')) {
+              localStorage.removeItem('total_quantity')
+            }
+            if(localStorage.getItem('subTotal')) {
+              localStorage.removeItem('subTotal')
+            }
+            if(localStorage.getItem('courier_id')) {
+              localStorage.removeItem('courier_id')
+            }
+            if(localStorage.getItem('shipping_data')) {
+              localStorage.removeItem('shipping_data')
+            }
+            if(localStorage.getItem('customerShipping_id')) {
+              localStorage.removeItem('customerShipping_id')              
+            }
+            if(localStorage.getItem('shipping_charges')) {
+              localStorage.removeItem('shipping_charges')
+            }
+            if(localStorage.getItem('visitorId')) {
+              localStorage.removeItem('visitorId')
+            }
+            
             window.location.href = "https://partner.theprintribe.com/";
-            localStorage.removeItem('customizeProduct')
-            localStorage.removeItem('total_quantity')
-            localStorage.removeItem('subTotal')
-            localStorage.removeItem('courier_id')
-            localStorage.removeItem('shipping_data')
-            localStorage.removeItem('customerShipping_id')
-            localStorage.removeItem('shipping_charges')
-            localStorage.removeItem('visitorId')
           }
         );
       })
