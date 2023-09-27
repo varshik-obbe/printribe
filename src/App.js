@@ -31,6 +31,8 @@ import Community from "./components/community";
 import Shopify from "./components/Shopify";
 import Wix from "./components/Wix";
 import PaymentComponent from "./pages/payment";
+import Success from "./pages/Success";
+import Error from "./pages/Error";
 
 
 // import SubCatWomen from "./pages/SubCatWomen";
@@ -45,6 +47,8 @@ function App() {
           <Route exact path="/about" element={<About />} />
           <Route exact path="/integrations" element={<Integrations />} />
           <Route exact path="/payment" element={<PaymentComponent />} />
+          <Route exact path="/success" element={<Success />} />
+          <Route exact path="/payment-error" element={<Error />} />
 
           <Route exact path="/products" element={<Productataloglayout />} />
           {/* <Route exact path="/products/:category" element={<Productataloglayout />} /> */}

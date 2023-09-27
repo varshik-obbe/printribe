@@ -5,8 +5,8 @@ var ccav = require('./ccavutil.js'),
 
 export const pay = (request)=>{
     var body = '',
-	workingKey = 'D5093E020022C36B496B082F42B51DD6',		//Put in the 32-Bit key shared by CCAvenues.
-	accessCode = 'AVYJ01KH46BS11JYSB',		//Put in the access code shared by CCAvenues.
+	workingKey = '5145800ADC02588D9F8E7BDB52DC401C',		//Put in the 32-Bit key shared by CCAvenues.
+	accessCode = 'AVMG02KH55BY50GMYB',		//Put in the access code shared by CCAvenues.
 	encRequest = '',
 	formbody = '';
 
