@@ -30,6 +30,7 @@ import Integrations from "./components/integrations";
 import Community from "./components/community";
 import Shopify from "./components/Shopify";
 import Wix from "./components/Wix";
+import PaymentComponent from "./pages/payment";
 
 
 // import SubCatWomen from "./pages/SubCatWomen";
@@ -43,6 +44,7 @@ function App() {
           <Route exact path="/" element={<Homelayout />} />
           <Route exact path="/about" element={<About />} />
           <Route exact path="/integrations" element={<Integrations />} />
+          <Route exact path="/payment" element={<PaymentComponent />} />
 
           <Route exact path="/products" element={<Productataloglayout />} />
           {/* <Route exact path="/products/:category" element={<Productataloglayout />} /> */}
