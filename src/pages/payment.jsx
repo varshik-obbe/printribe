@@ -22,7 +22,7 @@ function PaymentComponent() {
     formData.append("order_id", orderId);
     formData.append("currency", "INR");
     formData.append("amount", amount);
-    formData.append("redirect_url", "https://www.theprintribe.com");
+    formData.append("redirect_url", "https://www.theprintribe.com/success");
     formData.append("cancle_url", "/payment-error");
     formData.append("integration_type", "iframe_normal");
     formData.append("language", "en");

@@ -450,14 +450,15 @@ const getEstimatedDate=()=>{
     };
 
     axios
-      .post(`/customerWallet/razorPayInstantiate`, razorPayData)
+      .post(`/customerWallet/ccAvenueInstantiate`, razorPayData)
       .then(({ data }) => {
         setRazorPayInitData(data.savedhistoryData);
-        razorPayCheckout(
-          amountToBeAdded,
-          data.savedhistoryData.payment_order_id,
-          purpose
-        );
+        window.open('https://api.theprintribe.com/CCAvenueForm?order_id='+data.savedhistoryData.payment_order_id+'&amount='+amountToBeAdded, 'sharer', 'toolbar=0,status=0,width=748,height=425,left=300,top=300');
+        // razorPayCheckout(
+        //   amountToBeAdded,
+        //   data.savedhistoryData.payment_order_id,
+        //   purpose
+        // );
       })
       .catch((resp) => {
         console.log(resp);

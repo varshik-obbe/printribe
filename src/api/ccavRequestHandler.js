@@ -5,6 +5,7 @@ var ccav = require('./ccavutil.js'),
 
 export const pay = (request)=>{
     var body = '',
+    merchantkey = '2777089',
 	workingKey = '5145800ADC02588D9F8E7BDB52DC401C',		//Put in the 32-Bit key shared by CCAvenues.
 	accessCode = 'AVMG02KH55BY50GMYB',		//Put in the access code shared by CCAvenues.
 	encRequest = '',
@@ -22,6 +23,6 @@ export const pay = (request)=>{
 	encRequest = ccav.encrypt(body, keyBase64, ivBase64);
     console.log(encRequest,"encrytpssss",body, keyBase64, ivBase64) 
 	const POST =  qs.parse(body);
-	formbody = '<html><head><title>Sub-merchant checkout page</title><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script></head><body><center><!-- width required mininmum 482px --><iframe  width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id='+POST.merchant_id+'&encRequest='+encRequest+'&access_code='+accessCode+'"></iframe></center><script type="text/javascript">$(document).ready(function(){$("iframe#paymentFrame").load(function() {window.addEventListener("message", function(e) {$("#paymentFrame").css("height",e.data["newHeight"]+"px"); }, false);}); });</script></body></html>';
+	formbody = '<html><head><title>Sub-merchant checkout page</title><script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script></head><body><center><!-- width required mininmum 482px --><iframe  width="482" height="500" scrolling="No" frameborder="0"  id="paymentFrame" src="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction&merchant_id='+merchantkey+'&encRequest='+encRequest+'&access_code='+accessCode+'"></iframe></center><script type="text/javascript">$(document).ready(function(){$("iframe#paymentFrame").load(function() {window.addEventListener("message", function(e) {$("#paymentFrame").css("height",e.data["newHeight"]+"px"); }, false);}); });</script></body></html>';
    return formbody
 };
